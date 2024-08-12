@@ -233,6 +233,22 @@
         }
     }
     
+            blockquote {
+                margin-left: 20px;
+                padding: 10px 20px;
+                background-color: #f8f8f8;
+                border-left: 4px solid #e0e0e0;
+                font-style: italic;
+                position: relative;
+            }
+            .page-number {
+                font-size: 0.8em;
+                color: #888;
+                font-style: normal;
+                position: absolute;
+                bottom: 5px;
+                right: 10px;
+            }
         </style>
     </head>
     <body>
@@ -258,7 +274,7 @@
                 </button>
                 <div id="summary-content" class="expandable-content">
                     <h3>Overview</h3>
-                    <p>This study investigates the influence of Large Language Models (LLMs), specifically ChatGPT, on scientific writing by analyzing changes in vocabulary usage within a dataset of 14 million PubMed abstracts from 2010 to 2024. The researchers employed a novel "excess word usage" approach, inspired by excess mortality studies, to identify words with unusually high-frequency increases after ChatGPT's release. This method allows for an unbiased assessment of LLM impact without relying on pre-existing assumptions about LLM usage patterns.</p>
+                    <p>This study investigates the influence of Large Language Models (LLMs), specifically ChatGPT, on scientific writing by analyzing changes in vocabulary usage within a dataset of 14 million PubMed abstracts from 2010 to 2024. The researchers employed a novel &quot;excess word usage&quot; approach, inspired by excess mortality studies, to identify words with unusually high-frequency increases after ChatGPT&#x27;s release. This method allows for an unbiased assessment of LLM impact without relying on pre-existing assumptions about LLM usage patterns.</p>
                     
                     <h3>Key Findings</h3>
                     <ul>
@@ -267,7 +283,7 @@
                     
                     <h3>Strengths</h3>
                     <ul>
-                        <li>The study utilizes a novel and unbiased "excess word usage" approach, avoiding the limitations of existing LLM detection methods that rely on ground-truth training sets.</li><li>The analysis is based on a vast dataset of 14 million PubMed abstracts, providing a comprehensive and robust assessment of LLM impact on scientific writing.</li><li>The researchers meticulously documented their methodology, ensuring transparency and reproducibility of the findings.</li><li>The study provides a balanced discussion of both the potential benefits and risks associated with LLM usage in scientific writing.</li><li>The findings highlight the significant and unprecedented influence of LLMs on scientific writing, prompting a critical discussion on the ethical and practical implications of this emerging trend.</li>
+                        <li>The study utilizes a novel and unbiased &quot;excess word usage&quot; approach, avoiding the limitations of existing LLM detection methods that rely on ground-truth training sets.</li><li>The analysis is based on a vast dataset of 14 million PubMed abstracts, providing a comprehensive and robust assessment of LLM impact on scientific writing.</li><li>The researchers meticulously documented their methodology, ensuring transparency and reproducibility of the findings.</li><li>The study provides a balanced discussion of both the potential benefits and risks associated with LLM usage in scientific writing.</li><li>The findings highlight the significant and unprecedented influence of LLMs on scientific writing, prompting a critical discussion on the ethical and practical implications of this emerging trend.</li>
                     </ul>
                     
                     <h3>Areas for Improvement</h3>
@@ -297,12 +313,44 @@
                 
                 <h3>Strengths</h3>
                 <ul>
-                    <li>The abstract effectively summarizes the key findings of the study, including the estimated prevalence of LLM usage in PubMed abstracts.</li><li>The abstract highlights the novelty of the approach, emphasizing its unbiased and data-driven nature.</li><li>The abstract clearly states the significance of the findings, emphasizing the unprecedented impact of LLMs on scientific writing.</li>
+                    
+            <li>
+                <p>The abstract effectively summarizes the key findings of the study, including the estimated prevalence of LLM usage in PubMed abstracts.</p>
+                <blockquote>
+                    "Our analysis based on excess words usage suggests that at least 10% of 2024 abstracts were processed with LLMs."
+                    <span class="page-number">p. 1</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The abstract highlights the novelty of the approach, emphasizing its unbiased and data-driven nature.</p>
+                <blockquote>
+                    "To answer this question, we use an unbiased, large-scale approach, free from any assumptions on academic LLM usage."
+                    <span class="page-number">p. 1</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The abstract clearly states the significance of the findings, emphasizing the unprecedented impact of LLMs on scientific writing.</p>
+                <blockquote>
+                    "We show that the appearance of LLM-based writing assistants has had an unprecedented impact in the scientific literature, surpassing the effect of major world events such as the Covid pandemic."
+                    <span class="page-number">p. 1</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 <h3>Suggestions for Improvement</h3>
                 <ul>
-                    <li>While the abstract mentions variations in LLM usage across different categories, it could briefly mention specific examples of these variations to provide a more concrete understanding of the findings.</li>
+                    
+            <li>
+                <p>While the abstract mentions variations in LLM usage across different categories, it could briefly mention specific examples of these variations to provide a more concrete understanding of the findings.</p>
+                <blockquote>
+                    "This lower bound differed across disciplines, countries, and journals, and was as high as 30% for some PubMed sub-corpora."
+                    <span class="page-number">p. 1</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 
@@ -317,16 +365,56 @@
             </button>
             <div id="content-2" class="expandable-content">
                 <h3>Summary</h3>
-                <p>The introduction of this paper discusses the impact of major events and technological advancements on human writing, particularly in the context of scientific literature. It highlights the emergence of LLMs, specifically ChatGPT, and their growing integration into academic writing tasks. The authors acknowledge both the potential benefits and concerns associated with LLM usage, including improved writing quality, potential factual errors, bias reinforcement, and plagiarism. The introduction reviews existing approaches to quantify LLM usage in scientific papers, such as LLM detectors, word frequency distribution models, and marker word lists. It identifies limitations of these approaches, particularly their reliance on ground-truth training sets and assumptions about LLM usage patterns. The authors propose a novel, data-driven approach called "excess word usage" to track LLM influence, inspired by studies of excess mortality during the Covid pandemic. This approach aims to identify words with unusually high frequency increases after the release of ChatGPT compared to pre-LLM years, without relying on pre-existing assumptions about LLM usage.</p>
+                <p>The introduction of this paper discusses the impact of major events and technological advancements on human writing, particularly in the context of scientific literature. It highlights the emergence of LLMs, specifically ChatGPT, and their growing integration into academic writing tasks. The authors acknowledge both the potential benefits and concerns associated with LLM usage, including improved writing quality, potential factual errors, bias reinforcement, and plagiarism. The introduction reviews existing approaches to quantify LLM usage in scientific papers, such as LLM detectors, word frequency distribution models, and marker word lists. It identifies limitations of these approaches, particularly their reliance on ground-truth training sets and assumptions about LLM usage patterns. The authors propose a novel, data-driven approach called &quot;excess word usage&quot; to track LLM influence, inspired by studies of excess mortality during the Covid pandemic. This approach aims to identify words with unusually high frequency increases after the release of ChatGPT compared to pre-LLM years, without relying on pre-existing assumptions about LLM usage.</p>
                 
                 <h3>Strengths</h3>
                 <ul>
-                    <li>The introduction effectively establishes the context of the study by discussing the impact of historical events and technological advancements on writing styles.</li><li>The introduction provides a comprehensive overview of existing methods for detecting LLM usage in scientific papers, highlighting their strengths and limitations.</li><li>The introduction clearly articulates the limitations of existing approaches and justifies the need for a novel, data-driven method.</li><li>The introduction clearly introduces the proposed "excess word usage" approach and explains its inspiration from excess mortality studies.</li>
+                    
+            <li>
+                <p>The introduction effectively establishes the context of the study by discussing the impact of historical events and technological advancements on writing styles.</p>
+                <blockquote>
+                    "When the world changes, human-written text changes. Major events like wars and revolutions affect word frequency distributions in text corpora (Bochkarev et al., 2014)."
+                    <span class="page-number">p. 1</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The introduction provides a comprehensive overview of existing methods for detecting LLM usage in scientific papers, highlighting their strengths and limitations.</p>
+                <blockquote>
+                    "Recent approaches attempting to quantify the increasing use of LLMs in scientific papers fall in three groups."
+                    <span class="page-number">p. 1</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The introduction clearly articulates the limitations of existing approaches and justifies the need for a novel, data-driven method.</p>
+                <blockquote>
+                    "All of these approaches share a common limitation: they require a ground-truth training set of LLM- and human-written texts."
+                    <span class="page-number">p. 1</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The introduction clearly introduces the proposed &quot;excess word usage&quot; approach and explains its inspiration from excess mortality studies.</p>
+                <blockquote>
+                    "Here, we suggest a novel, data-driven, and unbiased approach to track LLM usage in academic texts without these limitations: excess word usage."
+                    <span class="page-number">p. 2</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 <h3>Suggestions for Improvement</h3>
                 <ul>
-                    <li>The introduction could benefit from a more explicit statement of the research questions or hypotheses guiding the study.</li>
+                    
+            <li>
+                <p>The introduction could benefit from a more explicit statement of the research questions or hypotheses guiding the study.</p>
+                <blockquote>
+                    "This begs the question if the nature and magnitude of the observed changes are comparable to changes that regularly occur due to changing fashions, rising research topics, and global events such as the Covid-19 pandemic—or if LLMs impact scientific writing in an unprecedented way."
+                    <span class="page-number">p. 2</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 <h3>Visual Elements Analysis</h3>
@@ -335,8 +423,8 @@
         <h4>Figure 1</h4>
         <p><strong>Type:</strong> Figure</p>
         <p><strong>Visual Type:</strong> Line Graph</p>
-        <p><strong>Description:</strong> Figure 1 presents nine line graphs arranged in a 3x3 grid, each depicting the frequency of a specific word in PubMed abstracts over time (2012-2024). The words are: 'delves', 'crucial', 'potential', 'these', 'significant', 'important', 'pandemic', 'ebola', and 'convolutional'. Each graph shows a blue line representing the observed frequency and a black line extending from 2021-2022, representing the counterfactual extrapolation of frequencies to 2023-2024. The first six words are identified as potentially affected by ChatGPT, while the last three are related to major events. Notably, words like 'delves', 'crucial', and 'potential' show a sharp increase in frequency in 2023-2024, deviating from the extrapolated trend. In contrast, words like 'pandemic' and 'ebola' show peaks corresponding to specific events but follow the extrapolated trend in 2023-2024.</p>
-        <p><strong>Relevance:</strong> Figure 1 supports the introduction's argument about the impact of events and technologies on word usage. It visually demonstrates how certain words experience a sudden surge in frequency after the release of ChatGPT, suggesting a potential LLM influence. The comparison with event-related words highlights the distinct pattern observed for words potentially affected by LLMs.</p>
+        <p><strong>Description:</strong> Figure 1 presents nine line graphs arranged in a 3x3 grid, each depicting the frequency of a specific word in PubMed abstracts over time (2012-2024). The words are: &#x27;delves&#x27;, &#x27;crucial&#x27;, &#x27;potential&#x27;, &#x27;these&#x27;, &#x27;significant&#x27;, &#x27;important&#x27;, &#x27;pandemic&#x27;, &#x27;ebola&#x27;, and &#x27;convolutional&#x27;. Each graph shows a blue line representing the observed frequency and a black line extending from 2021-2022, representing the counterfactual extrapolation of frequencies to 2023-2024. The first six words are identified as potentially affected by ChatGPT, while the last three are related to major events. Notably, words like &#x27;delves&#x27;, &#x27;crucial&#x27;, and &#x27;potential&#x27; show a sharp increase in frequency in 2023-2024, deviating from the extrapolated trend. In contrast, words like &#x27;pandemic&#x27; and &#x27;ebola&#x27; show peaks corresponding to specific events but follow the extrapolated trend in 2023-2024.</p>
+        <p><strong>Relevance:</strong> Figure 1 supports the introduction&#x27;s argument about the impact of events and technologies on word usage. It visually demonstrates how certain words experience a sudden surge in frequency after the release of ChatGPT, suggesting a potential LLM influence. The comparison with event-related words highlights the distinct pattern observed for words potentially affected by LLMs.</p>
         
         <h4>Visual Critique</h4>
         <div class="collapsible">
@@ -362,7 +450,7 @@
                 <span class="icon"></span> Expand Detailed Critique
             </button>
             <div class="collapsible-content">
-                <p><strong>Analysis Of Presented Data:</strong> The figure effectively presents frequency trends for multiple words over time (2012-2024). It effectively shows the sudden increase in frequency for certain words (e.g., 'delves') after 2022, coinciding with the release of ChatGPT.</p><p><strong>Statistical Methods:</strong> The use of frequency counts and counterfactual extrapolation is a reasonable approach to visualize potential changes in word usage. However, the figure could benefit from the inclusion of confidence intervals or error bars to indicate the precision of these frequency estimates.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that changes in word frequency are primarily due to the influence of LLMs. It's limited by the lack of control for other factors that might influence word usage in scientific writing. The counterfactual extrapolation assumes a linear trend, which may not always hold true.</p><p><strong>Improvements And Alternatives:</strong> 1) Include a statistical test for the significance of frequency changes pre- and post-2022. 2) Consider using a normalized frequency measure (e.g., words per million) to account for potential changes in the total volume of abstracts over time. 3) Explore alternative extrapolation methods or statistical models to account for non-linear trends.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent across different words, facilitating easy comparison. However, it would be beneficial to include a baseline trend of overall abstract volume or total word count for reference.</p><p><strong>Sample Size And Reliability:</strong> While the figure doesn't explicitly state the sample size, it's based on a large corpus of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed each year would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure effectively illustrates the dramatic increase in usage of certain words post-2022, supporting the hypothesis of LLM influence on scientific writing. However, it's important to note that correlation doesn't imply causation, and other factors could contribute to these trends.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> This analysis is based on standard practices in corpus linguistics and trend analysis. The large dataset and clear trends provide high confidence in the observations. However, the lack of statistical significance testing and control for confounding factors prevents a perfect confidence score.</p>
+                <p><strong>Analysis Of Presented Data:</strong> The figure effectively presents frequency trends for multiple words over time (2012-2024). It effectively shows the sudden increase in frequency for certain words (e.g., &#x27;delves&#x27;) after 2022, coinciding with the release of ChatGPT.</p><p><strong>Statistical Methods:</strong> The use of frequency counts and counterfactual extrapolation is a reasonable approach to visualize potential changes in word usage. However, the figure could benefit from the inclusion of confidence intervals or error bars to indicate the precision of these frequency estimates.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that changes in word frequency are primarily due to the influence of LLMs. It&#x27;s limited by the lack of control for other factors that might influence word usage in scientific writing. The counterfactual extrapolation assumes a linear trend, which may not always hold true.</p><p><strong>Improvements And Alternatives:</strong> 1) Include a statistical test for the significance of frequency changes pre- and post-2022. 2) Consider using a normalized frequency measure (e.g., words per million) to account for potential changes in the total volume of abstracts over time. 3) Explore alternative extrapolation methods or statistical models to account for non-linear trends.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent across different words, facilitating easy comparison. However, it would be beneficial to include a baseline trend of overall abstract volume or total word count for reference.</p><p><strong>Sample Size And Reliability:</strong> While the figure doesn&#x27;t explicitly state the sample size, it&#x27;s based on a large corpus of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed each year would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure effectively illustrates the dramatic increase in usage of certain words post-2022, supporting the hypothesis of LLM influence on scientific writing. However, it&#x27;s important to note that correlation doesn&#x27;t imply causation, and other factors could contribute to these trends.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> This analysis is based on standard practices in corpus linguistics and trend analysis. The large dataset and clear trends provide high confidence in the observations. However, the lack of statistical significance testing and control for confounding factors prevents a perfect confidence score.</p>
             </div>
         </div>
     </div>
@@ -377,16 +465,64 @@
             </button>
             <div id="content-3" class="expandable-content">
                 <h3>Summary</h3>
-                <p>The Results section details the researchers' analysis of a vast dataset of 14.4 million PubMed abstracts spanning from 2010 to 2024. They calculated the frequency of each word per year, focusing on words with a frequency above 10^-4 in both 2023 and 2024. To quantify the increase in word frequency after the release of ChatGPT, they calculated the counterfactual expected frequency in 2024 based on a linear extrapolation of word frequencies from 2021 and 2022. They defined two measures of excess usage: excess frequency gap (δ) and excess frequency ratio (r). The analysis revealed a significant increase in the frequency of certain words in 2024, particularly style words like 'delves', 'showcasing', and 'underscores'. This increase was unprecedented compared to previous years, including the period of the Covid pandemic, which mainly saw an increase in content words. The researchers categorized excess words into content words and style words, finding that the 2024 excess vocabulary consisted almost entirely of style words, primarily verbs and adjectives. This finding suggests a potential influence of LLMs like ChatGPT on scientific writing.</p>
+                <p>The Results section details the researchers&#x27; analysis of a vast dataset of 14.4 million PubMed abstracts spanning from 2010 to 2024. They calculated the frequency of each word per year, focusing on words with a frequency above 10^-4 in both 2023 and 2024. To quantify the increase in word frequency after the release of ChatGPT, they calculated the counterfactual expected frequency in 2024 based on a linear extrapolation of word frequencies from 2021 and 2022. They defined two measures of excess usage: excess frequency gap (δ) and excess frequency ratio (r). The analysis revealed a significant increase in the frequency of certain words in 2024, particularly style words like &#x27;delves&#x27;, &#x27;showcasing&#x27;, and &#x27;underscores&#x27;. This increase was unprecedented compared to previous years, including the period of the Covid pandemic, which mainly saw an increase in content words. The researchers categorized excess words into content words and style words, finding that the 2024 excess vocabulary consisted almost entirely of style words, primarily verbs and adjectives. This finding suggests a potential influence of LLMs like ChatGPT on scientific writing.</p>
                 
                 <h3>Strengths</h3>
                 <ul>
-                    <li>The Results section clearly presents the methodology for calculating word frequencies and excess usage, making the analysis transparent and reproducible.</li><li>The section effectively uses visual representations (Figure 2) to illustrate the distribution of excess words and their frequency changes, making the findings more accessible and impactful.</li><li>The researchers acknowledge the potential influence of the Covid pandemic on word usage and provide a comparative analysis, strengthening the validity of their findings about the unique impact of LLMs.</li>
+                    
+            <li>
+                <p>The Results section clearly presents the methodology for calculating word frequencies and excess usage, making the analysis transparent and reproducible.</p>
+                <blockquote>
+                    "We then computed the matrix of word occurrences that shows which abstracts contain which words, resulting in a 14.4 M × 2.4 M sparse binary matrix. For each word, we obtained its occurrence frequency per year by normalizing with the total number of papers published in that year."
+                    <span class="page-number">p. 2</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The section effectively uses visual representations (Figure 2) to illustrate the distribution of excess words and their frequency changes, making the findings more accessible and impactful.</p>
+                <blockquote>
+                    "Across all these words, we found many with strong excess usage in 2024 (Figure 2)."
+                    <span class="page-number">p. 2</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The researchers acknowledge the potential influence of the Covid pandemic on word usage and provide a comparative analysis, strengthening the validity of their findings about the unique impact of LLMs.</p>
+                <blockquote>
+                    "This changed during the Covid pandemic: in 2020–2022 words like coronavirus, lockdown, and pandemic showed very large excess usages (up to r &gt; 1000 and δ = 0.037), in agreement with the observation that the Covid pandemic had an unprecedented effect on biomedical publishing (González-Márquez et al., 2024)."
+                    <span class="page-number">p. 2</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 <h3>Suggestions for Improvement</h3>
                 <ul>
-                    <li>While the section mentions a linear extrapolation for calculating counterfactual frequencies, it could benefit from a more detailed explanation of this method and its potential limitations. Providing a formula or a visual illustration of the extrapolation process would enhance clarity.</li><li>The section could include a statistical analysis of the significance of the observed frequency changes. Performing hypothesis tests to compare pre- and post-ChatGPT word frequencies would provide stronger evidence for the claim of LLM influence.</li><li>The analysis focuses on words with a frequency above 10^-4. While this threshold is justified, it could be informative to explore the frequency changes of less common words as well. Analyzing a wider range of word frequencies might reveal additional insights into the impact of LLMs.</li>
+                    
+            <li>
+                <p>While the section mentions a linear extrapolation for calculating counterfactual frequencies, it could benefit from a more detailed explanation of this method and its potential limitations. Providing a formula or a visual illustration of the extrapolation process would enhance clarity.</p>
+                <blockquote>
+                    "To quantify this increase, we calculated counterfactual expected frequency in 2024 based on the linear extrapolation of word frequencies in 2021 and 2022 (see Methods)."
+                    <span class="page-number">p. 2</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The section could include a statistical analysis of the significance of the observed frequency changes. Performing hypothesis tests to compare pre- and post-ChatGPT word frequencies would provide stronger evidence for the claim of LLM influence.</p>
+                <blockquote>
+                    "We found that we could obtain a very similar lower bound using a non-overlapping group of only ten excess style words with high individual δ values: across, additionally, comprehensive, crucial, enhancing, exhibited, insights, notably, particularly, within."
+                    <span class="page-number">p. 4</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The analysis focuses on words with a frequency above 10^-4. While this threshold is justified, it could be informative to explore the frequency changes of less common words as well. Analyzing a wider range of word frequencies might reveal additional insights into the impact of LLMs.</p>
+                <blockquote>
+                    "In the following analysis, we focused on 26.6 K words with frequency p above 10−4 in both 2023 and 2024."
+                    <span class="page-number">p. 2</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 <h3>Visual Elements Analysis</h3>
@@ -395,7 +531,7 @@
         <h4>Figure 2</h4>
         <p><strong>Type:</strong> Figure</p>
         <p><strong>Visual Type:</strong> Scatter Plot</p>
-        <p><strong>Description:</strong> Figure 2 consists of two scatter plots, labeled (a) and (b), showing words with increased frequency in 2024. Plot (a) has word frequency in 2024 on the x-axis (logarithmic scale) and frequency ratio between 2024 and 2022 (r) on the y-axis (logarithmic scale). A dashed line represents the threshold for defining excess words. Words with r > 90 are shown at r = 90. Plot (b) has the same x-axis but shows the frequency gap (δ) between 2024 and 2022 on the y-axis. Both plots highlight specific words with significant frequency increases, such as 'delves', 'showcasing', 'underscores', 'potential', 'findings', and 'crucial'.</p>
+        <p><strong>Description:</strong> Figure 2 consists of two scatter plots, labeled (a) and (b), showing words with increased frequency in 2024. Plot (a) has word frequency in 2024 on the x-axis (logarithmic scale) and frequency ratio between 2024 and 2022 (r) on the y-axis (logarithmic scale). A dashed line represents the threshold for defining excess words. Words with r &gt; 90 are shown at r = 90. Plot (b) has the same x-axis but shows the frequency gap (δ) between 2024 and 2022 on the y-axis. Both plots highlight specific words with significant frequency increases, such as &#x27;delves&#x27;, &#x27;showcasing&#x27;, &#x27;underscores&#x27;, &#x27;potential&#x27;, &#x27;findings&#x27;, and &#x27;crucial&#x27;.</p>
         <p><strong>Relevance:</strong> Figure 2 directly supports the key findings of the Results section by visually demonstrating the significant increase in frequency of certain words in 2024, particularly style words. It highlights the magnitude of these changes and allows for easy identification of words with the most pronounced increases.</p>
         
         <h4>Visual Critique</h4>
@@ -422,7 +558,7 @@
                 <span class="icon"></span> Expand Detailed Critique
             </button>
             <div class="collapsible-content">
-                <p><strong>Analysis Of Presented Data:</strong> The figure effectively presents the distribution of words with increased frequency in 2024, showing a clear trend of higher frequency ratios and gaps for certain style words. The logarithmic scales allow for the visualization of both frequent and infrequent words.</p><p><strong>Statistical Methods:</strong> The use of frequency ratios and gaps is a straightforward approach to quantify changes in word usage. However, the figure could benefit from the inclusion of confidence intervals or error bars to indicate the precision of these estimates.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the observed frequency changes are primarily due to the influence of LLMs. It's limited by the lack of control for other factors that might influence word usage in scientific writing.</p><p><strong>Improvements And Alternatives:</strong> 1) Perform statistical tests to assess the significance of frequency changes pre- and post-ChatGPT. 2) Consider using a normalized frequency measure (e.g., words per million) to account for potential changes in the total volume of abstracts over time.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent with the textual description of the results, providing a clear visual representation of the findings. However, it would be beneficial to include a reference point or baseline trend for comparison.</p><p><strong>Sample Size And Reliability:</strong> The figure is based on a large dataset of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed each year would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure supports the hypothesis of LLM influence on scientific writing by showing a significant increase in the frequency of certain style words in 2024. However, it's important to note that correlation doesn't imply causation, and other factors could contribute to these trends.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The figure effectively visualizes the data and highlights key findings. However, the lack of statistical significance testing and control for confounding factors prevents a perfect confidence score.</p>
+                <p><strong>Analysis Of Presented Data:</strong> The figure effectively presents the distribution of words with increased frequency in 2024, showing a clear trend of higher frequency ratios and gaps for certain style words. The logarithmic scales allow for the visualization of both frequent and infrequent words.</p><p><strong>Statistical Methods:</strong> The use of frequency ratios and gaps is a straightforward approach to quantify changes in word usage. However, the figure could benefit from the inclusion of confidence intervals or error bars to indicate the precision of these estimates.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the observed frequency changes are primarily due to the influence of LLMs. It&#x27;s limited by the lack of control for other factors that might influence word usage in scientific writing.</p><p><strong>Improvements And Alternatives:</strong> 1) Perform statistical tests to assess the significance of frequency changes pre- and post-ChatGPT. 2) Consider using a normalized frequency measure (e.g., words per million) to account for potential changes in the total volume of abstracts over time.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent with the textual description of the results, providing a clear visual representation of the findings. However, it would be beneficial to include a reference point or baseline trend for comparison.</p><p><strong>Sample Size And Reliability:</strong> The figure is based on a large dataset of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed each year would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure supports the hypothesis of LLM influence on scientific writing by showing a significant increase in the frequency of certain style words in 2024. However, it&#x27;s important to note that correlation doesn&#x27;t imply causation, and other factors could contribute to these trends.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The figure effectively visualizes the data and highlights key findings. However, the lack of statistical significance testing and control for confounding factors prevents a perfect confidence score.</p>
             </div>
         </div>
     </div>
@@ -431,8 +567,8 @@
         <h4>Figure 3</h4>
         <p><strong>Type:</strong> Figure</p>
         <p><strong>Visual Type:</strong> Combination Chart (Line Graph and Bar Chart)</p>
-        <p><strong>Description:</strong> Figure 3 comprises two subplots: (a) shows the number of excess words per year, categorized into content words, style words, and other words. It also highlights the word with the highest frequency ratio (r) among excess words with p > 10^-3 and r > 3 for each year. (b) presents the number of excess words per year, categorized into nouns, verbs, adjectives, and other parts of speech. The figure highlights a significant increase in excess style words in 2024, primarily verbs and adjectives, compared to previous years, which were dominated by content words, mostly nouns.</p>
-        <p><strong>Relevance:</strong> Figure 3 provides further evidence for the impact of LLMs on scientific writing by showing the unprecedented increase in excess style words in 2024. It supports the researchers' claim that the 2024 excess vocabulary is qualitatively different from previous years, suggesting a distinct influence of LLMs on writing style.</p>
+        <p><strong>Description:</strong> Figure 3 comprises two subplots: (a) shows the number of excess words per year, categorized into content words, style words, and other words. It also highlights the word with the highest frequency ratio (r) among excess words with p &gt; 10^-3 and r &gt; 3 for each year. (b) presents the number of excess words per year, categorized into nouns, verbs, adjectives, and other parts of speech. The figure highlights a significant increase in excess style words in 2024, primarily verbs and adjectives, compared to previous years, which were dominated by content words, mostly nouns.</p>
+        <p><strong>Relevance:</strong> Figure 3 provides further evidence for the impact of LLMs on scientific writing by showing the unprecedented increase in excess style words in 2024. It supports the researchers&#x27; claim that the 2024 excess vocabulary is qualitatively different from previous years, suggesting a distinct influence of LLMs on writing style.</p>
         
         <h4>Visual Critique</h4>
         <div class="collapsible">
@@ -458,7 +594,7 @@
                 <span class="icon"></span> Expand Detailed Critique
             </button>
             <div class="collapsible-content">
-                <p><strong>Analysis Of Presented Data:</strong> The figure effectively illustrates the dramatic increase in excess style words in 2024, particularly verbs and adjectives, compared to previous years, which were dominated by content words, mostly nouns. This pattern supports the hypothesis of LLM influence on scientific writing.</p><p><strong>Statistical Methods:</strong> The use of frequency counts and categorization based on word type is a reasonable approach to analyze changes in vocabulary. However, the figure could benefit from the inclusion of statistical tests to assess the significance of these changes.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the observed changes in word usage are primarily due to the influence of LLMs. It's limited by the lack of control for other factors that might influence word choice in scientific writing.</p><p><strong>Improvements And Alternatives:</strong> 1) Perform statistical tests to compare the proportion of content words and style words in excess vocabulary pre- and post-ChatGPT. 2) Explore alternative categorization schemes based on word function or semantic categories.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent with the textual description of the results, providing a clear visual representation of the findings. The comparison across different years highlights the unique pattern observed in 2024.</p><p><strong>Sample Size And Reliability:</strong> The figure is based on a large dataset of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed each year would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure supports the hypothesis of LLM influence on scientific writing by showing a significant shift in the type of excess words in 2024. However, it's important to note that correlation doesn't imply causation, and other factors could contribute to these trends.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The figure effectively visualizes the data and highlights key findings. However, the lack of statistical significance testing and control for confounding factors prevents a perfect confidence score.</p>
+                <p><strong>Analysis Of Presented Data:</strong> The figure effectively illustrates the dramatic increase in excess style words in 2024, particularly verbs and adjectives, compared to previous years, which were dominated by content words, mostly nouns. This pattern supports the hypothesis of LLM influence on scientific writing.</p><p><strong>Statistical Methods:</strong> The use of frequency counts and categorization based on word type is a reasonable approach to analyze changes in vocabulary. However, the figure could benefit from the inclusion of statistical tests to assess the significance of these changes.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the observed changes in word usage are primarily due to the influence of LLMs. It&#x27;s limited by the lack of control for other factors that might influence word choice in scientific writing.</p><p><strong>Improvements And Alternatives:</strong> 1) Perform statistical tests to compare the proportion of content words and style words in excess vocabulary pre- and post-ChatGPT. 2) Explore alternative categorization schemes based on word function or semantic categories.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent with the textual description of the results, providing a clear visual representation of the findings. The comparison across different years highlights the unique pattern observed in 2024.</p><p><strong>Sample Size And Reliability:</strong> The figure is based on a large dataset of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed each year would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure supports the hypothesis of LLM influence on scientific writing by showing a significant shift in the type of excess words in 2024. However, it&#x27;s important to note that correlation doesn&#x27;t imply causation, and other factors could contribute to these trends.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The figure effectively visualizes the data and highlights key findings. However, the lack of statistical significance testing and control for confounding factors prevents a perfect confidence score.</p>
             </div>
         </div>
     </div>
@@ -494,7 +630,7 @@
                 <span class="icon"></span> Expand Detailed Critique
             </button>
             <div class="collapsible-content">
-                <p><strong>Analysis Of Presented Data:</strong> The figure effectively demonstrates how the frequency gap between observed and expected frequencies varies with the threshold for word frequency. It highlights the optimal threshold for maximizing the frequency gap, which is used to estimate the lower bound on LLM usage.</p><p><strong>Statistical Methods:</strong> The use of frequency counts and counterfactual extrapolation is a reasonable approach to estimate LLM usage. However, the figure could benefit from the inclusion of statistical tests to assess the significance of the observed frequency gap.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the observed frequency gap is primarily due to the influence of LLMs. It's limited by the lack of control for other factors that might influence word usage in scientific writing. The counterfactual extrapolation assumes a linear trend, which may not always hold true.</p><p><strong>Improvements And Alternatives:</strong> 1) Perform statistical tests to compare the observed frequency with the expected frequency at the optimal threshold. 2) Explore alternative extrapolation methods or statistical models to account for non-linear trends.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent with the textual description of the method, providing a clear visual representation of the analysis. However, it would be beneficial to include a reference point or baseline trend for comparison.</p><p><strong>Sample Size And Reliability:</strong> The figure is based on a large dataset of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed each year would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure supports the hypothesis of LLM influence on scientific writing by showing a significant frequency gap at the optimal threshold. However, it's important to note that this is only a lower bound estimate, and the true LLM usage is likely higher.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The figure effectively visualizes the data and highlights key findings. However, the lack of statistical significance testing and control for confounding factors prevents a perfect confidence score.</p>
+                <p><strong>Analysis Of Presented Data:</strong> The figure effectively demonstrates how the frequency gap between observed and expected frequencies varies with the threshold for word frequency. It highlights the optimal threshold for maximizing the frequency gap, which is used to estimate the lower bound on LLM usage.</p><p><strong>Statistical Methods:</strong> The use of frequency counts and counterfactual extrapolation is a reasonable approach to estimate LLM usage. However, the figure could benefit from the inclusion of statistical tests to assess the significance of the observed frequency gap.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the observed frequency gap is primarily due to the influence of LLMs. It&#x27;s limited by the lack of control for other factors that might influence word usage in scientific writing. The counterfactual extrapolation assumes a linear trend, which may not always hold true.</p><p><strong>Improvements And Alternatives:</strong> 1) Perform statistical tests to compare the observed frequency with the expected frequency at the optimal threshold. 2) Explore alternative extrapolation methods or statistical models to account for non-linear trends.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent with the textual description of the method, providing a clear visual representation of the analysis. However, it would be beneficial to include a reference point or baseline trend for comparison.</p><p><strong>Sample Size And Reliability:</strong> The figure is based on a large dataset of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed each year would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure supports the hypothesis of LLM influence on scientific writing by showing a significant frequency gap at the optimal threshold. However, it&#x27;s important to note that this is only a lower bound estimate, and the true LLM usage is likely higher.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The figure effectively visualizes the data and highlights key findings. However, the lack of statistical significance testing and control for confounding factors prevents a perfect confidence score.</p>
             </div>
         </div>
     </div>
@@ -513,12 +649,68 @@
                 
                 <h3>Strengths</h3>
                 <ul>
-                    <li>The Discussion section effectively contextualizes the findings by comparing them to previous studies and highlighting the novelty and comprehensiveness of the current research.</li><li>The section provides a balanced discussion of both the potential benefits and risks associated with LLM usage in scientific writing, acknowledging the complexities of this emerging trend.</li><li>The section explores potential explanations for the observed heterogeneity in LLM usage across different categories, considering factors beyond simple adoption rates and highlighting the need for further investigation.</li><li>The authors conclude with a call for action, urging the academic community to reassess policies and regulations surrounding LLM use in science, and emphasizing the need for ongoing monitoring and research.</li>
+                    
+            <li>
+                <p>The Discussion section effectively contextualizes the findings by comparing them to previous studies and highlighting the novelty and comprehensiveness of the current research.</p>
+                <blockquote>
+                    "Our results go beyond other studies on detecting LLM fingerprints in academic writing."
+                    <span class="page-number">p. 5</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The section provides a balanced discussion of both the potential benefits and risks associated with LLM usage in scientific writing, acknowledging the complexities of this emerging trend.</p>
+                <blockquote>
+                    "Scientists use LLM-assisted writing because LLMs can improve grammar, rhetoric, and overall readability of their texts, help translate to English, and quickly generate summaries (Van Veen et al., 2024; Zhang et al., 2024). However, LLMs are infamous for making up references (Walters and Wilder, 2023), providing inaccurate summaries (Tang et al., 2024; Kim et al., 2024), and making false claims that sound authoritative and convincing (Mittelstadt et al., 2023; Ji et al., 2023; Zhang et al., 2023; Zheng and Zhan, 2023)."
+                    <span class="page-number">p. 5</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The section explores potential explanations for the observed heterogeneity in LLM usage across different categories, considering factors beyond simple adoption rates and highlighting the need for further investigation.</p>
+                <blockquote>
+                    "However, the heterogeneity in lower bounds could also point to other factors beyond actual differences in LLM adoption."
+                    <span class="page-number">p. 5</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The authors conclude with a call for action, urging the academic community to reassess policies and regulations surrounding LLM use in science, and emphasizing the need for ongoing monitoring and research.</p>
+                <blockquote>
+                    "This trend calls for a reassessment of current policies and regulations around the use of LLMs for science."
+                    <span class="page-number">p. 5</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 <h3>Suggestions for Improvement</h3>
                 <ul>
-                    <li>While the section discusses potential explanations for the heterogeneity in LLM usage, it could benefit from a more systematic analysis of these factors. Exploring the relationship between LLM usage and variables like author demographics, journal policies, and research funding could provide more concrete insights.</li><li>The section could delve deeper into the ethical implications of widespread LLM usage in science, particularly regarding issues of authorship, plagiarism, and the potential for bias reinforcement. Discussing strategies for mitigating these risks would enhance the practical relevance of the findings.</li><li>The section briefly mentions the potential for LLMs to homogenize scientific writing. Expanding on this point and discussing the implications for creativity, innovation, and the diversity of ideas in scientific discourse would enrich the discussion.</li>
+                    
+            <li>
+                <p>While the section discusses potential explanations for the heterogeneity in LLM usage, it could benefit from a more systematic analysis of these factors. Exploring the relationship between LLM usage and variables like author demographics, journal policies, and research funding could provide more concrete insights.</p>
+                <blockquote>
+                    "This heterogeneity could correspond to actual differences in LLM adoption."
+                    <span class="page-number">p. 5</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The section could delve deeper into the ethical implications of widespread LLM usage in science, particularly regarding issues of authorship, plagiarism, and the potential for bias reinforcement. Discussing strategies for mitigating these risks would enhance the practical relevance of the findings.</p>
+                <blockquote>
+                    "Even worse, it is likely that malign actors such as paper mills will employ LLMs to produce fake publications (Kendall and Teixeira da Silva, 2024)."
+                    <span class="page-number">p. 6</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The section briefly mentions the potential for LLMs to homogenize scientific writing. Expanding on this point and discussing the implications for creativity, innovation, and the diversity of ideas in scientific discourse would enrich the discussion.</p>
+                <blockquote>
+                    "Such homogenisation can degrade the quality of scientific writing."
+                    <span class="page-number">p. 5</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 <h3>Visual Elements Analysis</h3>
@@ -527,8 +719,8 @@
         <h4>Figure 5</h4>
         <p><strong>Type:</strong> Figure</p>
         <p><strong>Visual Type:</strong> Combination Chart (Line Graph and Scatter Plot)</p>
-        <p><strong>Description:</strong> Figure 5 presents a comprehensive overview of the estimated LLM usage across various categories. Subplot (a) shows the frequency of abstracts containing at least one word from two word groups: 'common words' and 'rare words'. Subplots (b), (c), and (d) display scatter plots comparing the frequency gap based on 'rare words' and 'common words' for different fields, countries, and journals, respectively. Subplot (e) shows the frequency of abstracts containing specific words for various PubMed subsets, with the average frequency gap (Δ) indicated for each subset. The figure highlights significant variations in estimated LLM usage, with higher usage in computational fields, certain non-English speaking countries, and journals with expedited review processes.</p>
-        <p><strong>Relevance:</strong> Figure 5 directly supports the discussion on the heterogeneity in estimated LLM usage across different categories. It provides a visual representation of the variations in frequency gaps, allowing for easy comparison across fields, countries, and journals. The figure reinforces the authors' argument that LLM usage is widespread but varies significantly depending on contextual factors.</p>
+        <p><strong>Description:</strong> Figure 5 presents a comprehensive overview of the estimated LLM usage across various categories. Subplot (a) shows the frequency of abstracts containing at least one word from two word groups: &#x27;common words&#x27; and &#x27;rare words&#x27;. Subplots (b), (c), and (d) display scatter plots comparing the frequency gap based on &#x27;rare words&#x27; and &#x27;common words&#x27; for different fields, countries, and journals, respectively. Subplot (e) shows the frequency of abstracts containing specific words for various PubMed subsets, with the average frequency gap (Δ) indicated for each subset. The figure highlights significant variations in estimated LLM usage, with higher usage in computational fields, certain non-English speaking countries, and journals with expedited review processes.</p>
+        <p><strong>Relevance:</strong> Figure 5 directly supports the discussion on the heterogeneity in estimated LLM usage across different categories. It provides a visual representation of the variations in frequency gaps, allowing for easy comparison across fields, countries, and journals. The figure reinforces the authors&#x27; argument that LLM usage is widespread but varies significantly depending on contextual factors.</p>
         
         <h4>Visual Critique</h4>
         <div class="collapsible">
@@ -554,7 +746,7 @@
                 <span class="icon"></span> Expand Detailed Critique
             </button>
             <div class="collapsible-content">
-                <p><strong>Analysis Of Presented Data:</strong> The figure effectively presents the estimated LLM usage across various categories, highlighting significant variations in frequency gaps. The line graph in subplot (a) shows a clear upward trend for both 'common words' and 'rare words', indicating an increasing prevalence of LLM-influenced abstracts. The scatter plots in subplots (b), (c), and (d) reveal distinct patterns of LLM usage across fields, countries, and journals.</p><p><strong>Statistical Methods:</strong> The use of frequency gaps based on two word groups ('common words' and 'rare words') is a reasonable approach to estimate LLM usage. However, the figure could benefit from the inclusion of confidence intervals or error bars to indicate the precision of these estimates.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the observed frequency gaps are primarily due to the influence of LLMs. It's limited by the lack of control for other factors that might influence word usage in scientific writing. The estimation method relies on the selection of specific word groups, which may not be fully representative of all LLM-influenced writing.</p><p><strong>Improvements And Alternatives:</strong> 1) Perform statistical tests to assess the significance of the observed frequency gaps across different categories. 2) Explore alternative word groups or develop a more comprehensive method for identifying LLM-influenced writing.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent with the textual description of the findings, providing a clear visual representation of the variations in LLM usage. The comparison across different categories highlights the complex interplay of factors influencing LLM adoption.</p><p><strong>Sample Size And Reliability:</strong> The figure is based on a large dataset of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed for each category would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure supports the discussion on the heterogeneity in LLM usage, suggesting that LLM adoption is influenced by factors such as field of research, author demographics, and journal policies. However, it's important to note that these are lower bound estimates, and the true LLM usage is likely higher.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The figure effectively visualizes the data and highlights key findings. However, the lack of statistical significance testing and the reliance on specific word groups prevent a perfect confidence score.</p>
+                <p><strong>Analysis Of Presented Data:</strong> The figure effectively presents the estimated LLM usage across various categories, highlighting significant variations in frequency gaps. The line graph in subplot (a) shows a clear upward trend for both &#x27;common words&#x27; and &#x27;rare words&#x27;, indicating an increasing prevalence of LLM-influenced abstracts. The scatter plots in subplots (b), (c), and (d) reveal distinct patterns of LLM usage across fields, countries, and journals.</p><p><strong>Statistical Methods:</strong> The use of frequency gaps based on two word groups (&#x27;common words&#x27; and &#x27;rare words&#x27;) is a reasonable approach to estimate LLM usage. However, the figure could benefit from the inclusion of confidence intervals or error bars to indicate the precision of these estimates.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the observed frequency gaps are primarily due to the influence of LLMs. It&#x27;s limited by the lack of control for other factors that might influence word usage in scientific writing. The estimation method relies on the selection of specific word groups, which may not be fully representative of all LLM-influenced writing.</p><p><strong>Improvements And Alternatives:</strong> 1) Perform statistical tests to assess the significance of the observed frequency gaps across different categories. 2) Explore alternative word groups or develop a more comprehensive method for identifying LLM-influenced writing.</p><p><strong>Consistency And Comparisons:</strong> The presentation is consistent with the textual description of the findings, providing a clear visual representation of the variations in LLM usage. The comparison across different categories highlights the complex interplay of factors influencing LLM adoption.</p><p><strong>Sample Size And Reliability:</strong> The figure is based on a large dataset of PubMed abstracts, which likely provides reliable estimates. However, including the number of abstracts analyzed for each category would strengthen the reliability assessment.</p><p><strong>Interpretation And Context:</strong> The figure supports the discussion on the heterogeneity in LLM usage, suggesting that LLM adoption is influenced by factors such as field of research, author demographics, and journal policies. However, it&#x27;s important to note that these are lower bound estimates, and the true LLM usage is likely higher.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The figure effectively visualizes the data and highlights key findings. However, the lack of statistical significance testing and the reliance on specific word groups prevent a perfect confidence score.</p>
             </div>
         </div>
     </div>
@@ -573,12 +765,84 @@
                 
                 <h3>Strengths</h3>
                 <ul>
-                    <li>The Methods section provides a clear and comprehensive description of the data collection process, including the source of the data, the time period covered, and the criteria used for selecting abstracts.</li><li>The authors meticulously describe the pre-processing steps taken to clean the data, ensuring the removal of extraneous text strings and errata notices, which could have contaminated the analysis.</li><li>The statistical analysis is well-explained, including the formula used for calculating word frequencies, the method for linear extrapolation, and the thresholds used for defining excess words.</li><li>The authors provide a transparent account of their word annotation process, explaining how they categorized excess words as content or style words and how they addressed ambiguous cases.</li><li>The subgroup analysis is detailed, outlining the specific categories analyzed (countries, journals, fields, and inferred genders) and the criteria used for selecting subgroups.</li><li>The authors explicitly state that they did not use any LLMs for writing the manuscript or performing the data analysis, reinforcing the objectivity and unbiased nature of their study.</li><li>The authors provide clear information on the availability of their analysis code and the original PubMed data, facilitating reproducibility and further research.</li>
+                    
+            <li>
+                <p>The Methods section provides a clear and comprehensive description of the data collection process, including the source of the data, the time period covered, and the criteria used for selecting abstracts.</p>
+                <blockquote>
+                    "We downloaded all PubMed abstracts until the end of June 2024 and used all 14.4 M English-language abstracts from 2010 onwards, with only minimal filtering (see Methods)."
+                    <span class="page-number">p. 2</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The authors meticulously describe the pre-processing steps taken to clean the data, ensuring the removal of extraneous text strings and errata notices, which could have contaminated the analysis.</p>
+                <blockquote>
+                    "Many abstracts in PubMed data contain strings, usually either in the beginning or in the end, that are not technically part of the abstract text."
+                    <span class="page-number">p. 6</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The statistical analysis is well-explained, including the formula used for calculating word frequencies, the method for linear extrapolation, and the thresholds used for defining excess words.</p>
+                <blockquote>
+                    "To avoid possible divisions by zero, all frequencies were always computed as p = (a + 1)/(b + 1), where a is the number of abstracts in a given year containing a given word, and b is the total number of abstracts in that year."
+                    <span class="page-number">p. 6</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The authors provide a transparent account of their word annotation process, explaining how they categorized excess words as content or style words and how they addressed ambiguous cases.</p>
+                <blockquote>
+                    "We identified 829 unique excess words (surpassing thresholds on r or \u03b4) from 2013 to 2024."
+                    <span class="page-number">p. 6</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The subgroup analysis is detailed, outlining the specific categories analyzed (countries, journals, fields, and inferred genders) and the criteria used for selecting subgroups.</p>
+                <blockquote>
+                    "For the analysis presented in Figure 5 we separately analysed the following subgroups: 50 countries with the most papers in our dataset; 100 journals with the most papers in our dataset in 2024; all 39 domains taken from González-Márquez et al. (2024) (where domains were assigned based on the journal names, e.g., assigning all papers from The Journal of Neuroscience to the \u0027neuroscience\u0027 domain); male and female inferred genders of the first and of the last authors (inferred via the gender package, Blevins and Mullen, 2015)."
+                    <span class="page-number">p. 7</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The authors explicitly state that they did not use any LLMs for writing the manuscript or performing the data analysis, reinforcing the objectivity and unbiased nature of their study.</p>
+                <blockquote>
+                    "We did not use ChatGPT or any other LLMs for writing the manuscript or for performing the data analysis."
+                    <span class="page-number">p. 7</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The authors provide clear information on the availability of their analysis code and the original PubMed data, facilitating reproducibility and further research.</p>
+                <blockquote>
+                    "Our analysis code in Python is available at https://github.com/berenslab/chatgpt-excess-words."
+                    <span class="page-number">p. 7</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 <h3>Suggestions for Improvement</h3>
                 <ul>
-                    <li>The Methods section could benefit from a more detailed discussion of the limitations of the linear extrapolation method used for calculating counterfactual word frequencies. While the authors acknowledge that this method is conservative, they could elaborate on the potential biases introduced by assuming a linear trend, especially given the rapid evolution of language models and their impact on writing styles.</li><li>The authors could provide more information on the accuracy of the gender inference method used for subgroup analysis. They acknowledge the limitations of this method, but a quantitative assessment of its accuracy would strengthen the reliability of the findings related to gender differences in LLM usage.</li>
+                    
+            <li>
+                <p>The Methods section could benefit from a more detailed discussion of the limitations of the linear extrapolation method used for calculating counterfactual word frequencies. While the authors acknowledge that this method is conservative, they could elaborate on the potential biases introduced by assuming a linear trend, especially given the rapid evolution of language models and their impact on writing styles.</p>
+                <blockquote>
+                    "To do the linear extrapolation, we took the frequencies p−3 in year Y − 3 and p−2 in year Y − 2 and computed the counterfactual projection q = p−2 + 2 · max{p−2 − p−3 , 0}."
+                    <span class="page-number">p. 6</span>
+                </blockquote>
+            </li>
+            
+            <li>
+                <p>The authors could provide more information on the accuracy of the gender inference method used for subgroup analysis. They acknowledge the limitations of this method, but a quantitative assessment of its accuracy would strengthen the reliability of the findings related to gender differences in LLM usage.</p>
+                <blockquote>
+                    "Our gender inference aims to capture perceived gender based on first name and is only approximate."
+                    <span class="page-number">p. 7</span>
+                </blockquote>
+            </li>
+            
                 </ul>
                 
                 
@@ -597,12 +861,22 @@
                 
                 <h3>Strengths</h3>
                 <ul>
-                    <li>The References section is comprehensive and includes a wide range of sources relevant to the study's topic.</li>
+                    
+            <li>
+                <p>The References section is comprehensive and includes a wide range of sources relevant to the study&#x27;s topic.</p>
+                
+            </li>
+            
                 </ul>
                 
                 <h3>Suggestions for Improvement</h3>
                 <ul>
-                    <li>The References section is already well-structured and comprehensive, providing a solid foundation for the research presented in the paper. No specific suggestions for improvement are necessary.</li>
+                    
+            <li>
+                <p>The References section is already well-structured and comprehensive, providing a solid foundation for the research presented in the paper. No specific suggestions for improvement are necessary.</p>
+                
+            </li>
+            
                 </ul>
                 
                 
@@ -617,16 +891,26 @@
             </button>
             <div id="content-7" class="expandable-content">
                 <h3>Summary</h3>
-                <p>The Acknowledgements section expresses gratitude to various individuals and organizations for their contributions to the research. It acknowledges the support of the Dagstuhl seminar 24122, funded by the Leibniz Center for Informatics. The authors also thank the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) for funding through Germany's Excellence Strategy, the German Ministry of Science and Education (BMBF) for funding the Tübingen AI Center, and the Gemeinnützige Hertie-Stiftung. Additionally, they acknowledge the International Max Planck Research School for Intelligent Systems (IMPRS-IS) for supporting Rita González-Márquez and the NSF CAREER Grant No IIS-1943506 for supporting Emőke-Ágnes Horvát.</p>
+                <p>The Acknowledgements section expresses gratitude to various individuals and organizations for their contributions to the research. It acknowledges the support of the Dagstuhl seminar 24122, funded by the Leibniz Center for Informatics. The authors also thank the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) for funding through Germany&#x27;s Excellence Strategy, the German Ministry of Science and Education (BMBF) for funding the Tübingen AI Center, and the Gemeinnützige Hertie-Stiftung. Additionally, they acknowledge the International Max Planck Research School for Intelligent Systems (IMPRS-IS) for supporting Rita González-Márquez and the NSF CAREER Grant No IIS-1943506 for supporting Emőke-Ágnes Horvát.</p>
                 
                 <h3>Strengths</h3>
                 <ul>
-                    <li>The Acknowledgements section is concise and effectively expresses gratitude to all individuals and organizations that contributed to the research.</li>
+                    
+            <li>
+                <p>The Acknowledgements section is concise and effectively expresses gratitude to all individuals and organizations that contributed to the research.</p>
+                
+            </li>
+            
                 </ul>
                 
                 <h3>Suggestions for Improvement</h3>
                 <ul>
-                    <li>The Acknowledgements section is already well-written and comprehensive, acknowledging all relevant contributions. No specific suggestions for improvement are necessary.</li>
+                    
+            <li>
+                <p>The Acknowledgements section is already well-written and comprehensive, acknowledging all relevant contributions. No specific suggestions for improvement are necessary.</p>
+                
+            </li>
+            
                 </ul>
                 
                 
