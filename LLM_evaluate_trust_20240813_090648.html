@@ -1,0 +1,1626 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Paper Review: Think Twice Before Trusting: Mitigating Over-Trust in LLM Self-Detection</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+            :root {
+                --primary-color: #1976D2;
+                --secondary-color: #424242;
+                --background-color: #f5f5f5;
+                --card-color: #ffffff;
+                --text-color: #333333;
+                --accent-color: #FFC107;
+            }
+            body {
+                font-family: 'Roboto', Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: var(--background-color);
+                color: var(--text-color);
+                transition: all 0.3s ease;
+            }
+            .dark-mode {
+                --primary-color: #2196F3;
+                --secondary-color: #BDBDBD;
+                --background-color: #121212;
+                --card-color: #1E1E1E;
+                --text-color: #FFFFFF;
+            }
+            #top-bar {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+            }
+            #top-bar h1 {
+                margin: 0;
+                font-size: 1.5em;
+            }
+            #table-of-contents {
+                background-color: var(--card-color);
+                padding: 20px;
+                margin: 20px auto;
+                max-width: 800px;
+                border-radius: 4px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            #table-of-contents h2 {
+                margin-top: 0;
+            }
+            #table-of-contents ol {
+                padding-left: 20px;
+            }
+            #table-of-contents a {
+                color: var(--primary-color);
+                text-decoration: none;
+            }
+            #table-of-contents a:hover {
+                text-decoration: underline;
+            }
+            #content {
+                padding: 20px;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .card {
+                background-color: var(--card-color);
+                border-radius: 4px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            blockquote {
+                margin-left: 0;
+                padding: 10px 20px;
+                background-color: rgba(0,0,0,0.05);
+                border-left: 4px solid var(--accent-color);
+                font-style: italic;
+            }
+            .page-number {
+                font-size: 0.8em;
+                color: var(--secondary-color);
+                font-style: normal;
+                display: block;
+                text-align: right;
+                margin-top: 5px;
+            }
+            #fab {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: var(--accent-color);
+                color: var(--text-color);
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 56px;
+                font-size: 24px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            #fab:hover {
+                background-color: #FFD54F;
+            }
+            #dark-mode-toggle {
+                position: fixed;
+                top: 70px;
+                right: 20px;
+                background-color: var(--primary-color);
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            #dark-mode-toggle:hover {
+                background-color: #1565C0;
+            }
+            .collapsible-btn {
+                background-color: var(--secondary-color);
+                color: var(--card-color);
+                cursor: pointer;
+                padding: 10px;
+                width: 100%;
+                border: none;
+                text-align: left;
+                outline: none;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                transition: 0.4s;
+            }
+            .collapsible-btn:hover {
+                background-color: #555;
+            }
+            .collapsible-content {
+                padding: 0 18px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+                background-color: var(--card-color);
+            }
+            .material-icons {
+                transition: transform 0.3s ease;
+            }
+            /* Updated heading styles to ensure consistency */
+            h2 {
+                font-size: 1.5em;
+                margin-bottom: 0.5em;
+            }
+            h3 {
+                font-size: 1.25em;
+                margin-bottom: 0.5em;
+            }
+            h4 {
+                font-size: 1.1em;
+                margin-bottom: 0.4em;
+            }
+            h5, h6 {
+                font-size: 1.1em;
+                margin-bottom: 0.4em;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="top-bar">
+            <h1>Paper Review: Think Twice Before Trusting: Mitigating Over-Trust in LLM Self-Detection</h1>
+        </div>
+
+        <div id="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ol><li><a href="#section-1">Abstract</a></li><li><a href="#section-2">Introduction</a></li><li><a href="#section-3">Problem Formulation</a></li><li><a href="#section-4">Think Twice Before Assure Framework</a></li><li><a href="#section-5">Related Work</a></li><li><a href="#section-6">Experiments</a></li><li><a href="#section-7">Conclusion</a></li><li><a href="#section-8">Limitations</a></li><li><a href="#section-9">Ethics Statement</a></li><li><a href="#section-10">References</a></li><li><a href="#section-11">Appendix A</a></li><li><a href="#section-12">Appendix B</a></li><li><a href="#section-13">Appendix C</a></li><li><a href="#section-14">Appendix D</a></li><li><a href="#section-15">Appendix E</a></li></ol>
+        </div>
+
+        <main id="content">
+            <section id="summary" class="card">
+                <h2>Overall Summary</h2>
+                <div class="content">
+                    <h3>Overview</h3>
+                    <p>This research paper addresses the issue of hallucination in Large Language Models (LLMs) and proposes a new self-detection paradigm called &quot;Think Twice Before Trusting&quot; (T3) to mitigate over-trust in incorrect LLM-generated answers. The T3 framework considers a broader answer space, prompting the LLM to reflect on and justify multiple candidate answers before calibrating confidence in the target answer. Extensive experiments across various tasks and datasets demonstrate the effectiveness of this approach in improving self-detection and reducing over-trust.</p>
+                    
+                    <h3>Key Findings</h3>
+                    <ul>
+                        <li>The T3 framework consistently outperforms existing self-detection methods in terms of AUROC, PRAUC, and ECE across various datasets and tasks, including Sentiment Analysis, Natural Language Inference, and Commonsense Question Answering.</li><li>Ablation studies confirm the importance of each component of the T3 framework, including reflection and justification, joint confidence calibration, and order shuffling of justifications.</li><li>T3 demonstrates robustness across different target answers, LLMs (GPT-3.5, GLM-4, Gemini), and parameter settings, indicating its generalizability and flexibility.</li><li>The T3 framework shows potential for selective prediction scenarios, where abstaining from answers with low detection scores leads to improved accuracy on the remaining instances.</li><li>Case studies illustrate how T3 helps LLMs identify and reduce over-trust in incorrect answers by considering justifications from different answer perspectives and reflecting uncertainty when appropriate.</li>
+                    </ul>
+                    
+                    <h3>Strengths</h3>
+                    <ul>
+                        <li>The paper clearly identifies the over-trust issue in LLM self-detection and proposes a novel paradigm to address it, considering a broader answer space and leveraging LLM&#x27;s reflection and justification capabilities.</li><li>The proposed T3 framework is well-defined, with clear steps and justifications for its design choices. The framework is also flexible and can be integrated with existing self-detection methods.</li><li>The experimental evaluation is comprehensive, covering various tasks, datasets, and LLMs. The inclusion of ablation studies and robustness analysis further strengthens the validity of the findings.</li><li>The paper provides detailed implementation details, including prompts and hyperparameters, facilitating reproducibility and future research.</li><li>The paper acknowledges limitations and ethical considerations, promoting transparency and responsible development of LLM self-detection techniques.</li>
+                    </ul>
+                    
+                    <h3>Areas for Improvement</h3>
+                    <ul>
+                        <li>While the paper focuses on black-box API LLMs, exploring the applicability of the T3 framework to white-box LLMs could broaden its impact and address potential limitations.</li><li>Further investigation into the practical utility of self-detection for enhancing task accuracy and enabling LLM self-correction would strengthen the practical implications of the research.</li><li>A more in-depth analysis of the generated justifications, including potential biases and limitations, would provide a deeper understanding of the LLM&#x27;s reasoning process and inform future improvements.</li>
+                    </ul>
+                    
+                    <h3>Significant Elements</h3>
+                    <ul>
+                        <li><strong>Figure 4:</strong> Box plots visualizing the bias mitigation effect of T3, showing reduced detection score overlaps between correct and incorrect instances across various datasets.</li><li><strong>Table 2:</strong> Comprehensive results table comparing T3 with various self-detection methods across different datasets and tasks, showcasing its superior performance in terms of AUROC, PRAUC, and ECE.</li>
+                    </ul>
+                    
+                    <h3>Conclusion</h3>
+                    <p>This research presents a significant advancement in addressing the over-trust issue in LLM self-detection. The proposed T3 framework, based on a comprehensive answer evaluation paradigm, effectively mitigates over-trust and improves self-detection performance across various tasks and datasets. While limitations and future research directions are acknowledged, the findings contribute valuable insights and a promising approach for enhancing the reliability and trustworthiness of LLM outputs. Further exploration of this approach could lead to more robust and reliable LLM applications in various domains.</p>
+                </div>
+            </section>
+
+            
+        <section id="section-1" class="card">
+            <h2>Abstract</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The abstract introduces the issue of hallucination in Large Language Models (LLMs), where LLMs generate incorrect or nonsensical outputs. It proposes a new self-detection paradigm to address this, moving beyond simply evaluating LLM-generated answers. This paradigm, called &quot;Think Twice before Trusting&quot; (T3), involves considering a broader answer space and comparing the trustability of multiple candidate answers. The framework instructs the LLM to reflect on and justify each candidate answer, then aggregates these justifications to evaluate the target answer. The abstract claims that this approach effectively mitigates over-trust in incorrect LLM answers and shows promising results across various tasks and datasets.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The abstract clearly states the problem of LLM hallucination and the limitations of existing self-detection approaches.</p>
+                <blockquote>'However, existing self-detection approaches only retrospectively evaluate answers generated by LLM, typically leading to the over-trust in incorrectly generated answers.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The abstract concisely describes the proposed T3 framework and its two-step process of reflection and justification followed by joint confidence calibration.</p>
+                <blockquote>'Building upon this paradigm, we introduce a two-step framework, which firstly instructs LLM to reflect and provide justifications for each candidate answer, and then aggregates the justifications for comprehensive target answer evaluation.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The abstract highlights the potential benefits of the T3 framework in mitigating over-trust and improving self-detection.</p>
+                <blockquote>'It thoroughly compares the trustability of multiple candidate answers to mitigate the over-trust in LLM-generated incorrect answers.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the abstract mentions &quot;extensive experiments,&quot; it would be beneficial to briefly state the specific tasks and datasets used to demonstrate the effectiveness of the framework.</p>
+                <blockquote>'Extensive experiments on six datasets spanning three tasks demonstrate the effectiveness of the proposed framework.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The abstract could briefly mention the key findings or quantitative results to further strengthen the claim of the framework&#x27;s effectiveness.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-2" class="card">
+            <h2>Introduction</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The Introduction section emphasizes the issue of hallucination in Large Language Models (LLMs), where LLMs generate incorrect or nonsensical outputs. It highlights self-detection as a promising approach to evaluate output trustability and identify incorrect outputs. The focus is on black-box API LLMs due to their performance and the challenges posed by limited output information. The section briefly introduces two existing self-detection paradigms: confidence calibration and self-evaluation. However, it points out a significant drawback of both paradigms: a tendency to over-trust incorrect LLM-generated answers. The section argues that this over-trust stems from evaluating only LLM-generated answers, neglecting a broader answer space. It proposes a new paradigm that considers a comprehensive answer space beyond LLM generations to mitigate this over-trust issue.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The section effectively introduces the problem of LLM hallucination and its impact on trustability.</p>
+                <blockquote>'Large Language Model (LLM) typically suffers from the hallucination issue, (Zhang et al., 2023c; Li et al., 2023a; Golovneva et al., 2022; Bang et al., 2023), which significantly undermines the trustability of LLM&#x27;s outputs.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It clearly explains the concept of self-detection and its relevance for evaluating LLM output trustability.</p>
+                <blockquote>'Given a question, self-detection aims to leverage LLM&#x27;s own ability to evaluate the trustability of its generated answers, without relying on external knowledge sources or specifically trained detection models.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section explicitly states the focus on black-box API LLMs and the rationale behind this choice.</p>
+                <blockquote>'This paper investigates self-detection methods tailored for black-box API LLMs due to their excellent performance and the inherent challenge posed by limited output information (Achiam et al., 2023; OpenAI, 2024).'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It identifies a key limitation of existing self-detection paradigms: over-trust in incorrect LLM answers.</p>
+                <blockquote>'However, both self-detection paradigms have shown a significant drawback: an inclination towards over-trusting the incorrect answers generated by LLM (Si et al., 2022; Xiong et al., 2023; Jiang et al., 2023; Kadavath et al., 2022).'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section proposes a new paradigm that considers a broader answer space to address the over-trust issue.</p>
+                <blockquote>'An ideal self-detection paradigm should consider a more comprehensive answer space beyond LLM&#x27;s generations.'<span class='page-number'>p. 2</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the Introduction mentions two existing paradigms, it would be beneficial to provide a more detailed explanation of how these paradigms work, including their specific approaches and limitations.</p>
+                <blockquote>'Previous studies in self-detection can be broadly categorized into two paradigms (cf. Figure 2). The first paradigm is confidence calibration, aiming to estimate LLM&#x27;s confidence on the generated answer to align with the actual answer accuracy via multi-answer sampling and aggregation (Xiong et al., 2023; Tian et al., 2023b; Si et al., 2022; Jiang et al., 2023). The second one is self-evaluation, which directly examines the compatibility of question and answer by designing various prompt strategies (Miao et al., 2023; Kadavath et al., 2022; Weng et al., 2023).'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The Introduction could benefit from a more explicit discussion of the challenges associated with evaluating trustability in black-box API LLMs. This would strengthen the rationale for the proposed new paradigm.</p>
+                <blockquote>'This paper investigates self-detection methods tailored for black-box API LLMs due to their excellent performance and the inherent challenge posed by limited output information (Achiam et al., 2023; OpenAI, 2024).'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Visual Elements Analysis</h3>
+                
+        <div class="visual-element card">
+            <h4>Figure 1</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Flow Chart</p>
+            <p><strong>Description:</strong> Figure 1, titled &quot;An illustration of Think Twice before Trusting framework for mitigating the over-trust issue in LLM self-detection,&quot; is a flow chart that illustrates the proposed &quot;Think Twice Before Trusting&quot; framework. It visually depicts the process of mitigating over-trust in LLM self-detection. The figure starts with a user asking a question: &quot;How do you repair a torn shirt?&quot; Two potential answers are then generated, one incorrect (prepare the needle and thread...) with an accuracy of 0 and a detection score of 0.7, and one correct (Flip the shirt inside-out...). For each answer, the framework prompts the LLM to generate a justification. The justifications are then used to calibrate the confidence in the target answer, resulting in a lower confidence score for the incorrect answer (30%) and a higher score for the correct answer. The figure aims to highlight the importance of generating and considering multiple answers and justifications before trusting an LLM&#x27;s self-detection capabilities.</p>
+            <p><strong>Relevance:</strong> Figure 1 is relevant to the Introduction as it visually introduces the proposed &quot;Think Twice Before Trusting&quot; framework, which is the core contribution of the paper. It provides a clear and concise overview of the framework&#x27;s process, emphasizing the key steps of reflection, justification, and confidence calibration. This visual representation helps readers understand the proposed solution to the over-trust issue discussed in the Introduction.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-2-0">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-2-0" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a flow chart is appropriate for illustrating the step-by-step process of the proposed framework. It effectively guides the reader through the different stages, from question input to confidence calibration.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear and concise presentation of the framework&#x27;s steps</li><li>Use of illustrative elements (speech bubbles, confidence score indicators) to enhance understanding</li><li>Effective use of arrows to guide the flow of information</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the confidence score indicators (green for good, red for bad) within the figure or caption</li><li>The figure could benefit from a more distinct visual separation between the two answer paths (left and right) to improve clarity</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-2-0">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-2-0" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure presents a qualitative overview of the framework&#x27;s process, focusing on the flow of information and key steps involved. It doesn&#x27;t present quantitative data or specific results.</p><p><strong>Statistical Methods:</strong> Not applicable, as the figure doesn&#x27;t involve statistical analysis.</p><p><strong>Assumptions And Limitations:</strong> The figure assumes that the LLM can generate meaningful justifications for each answer and that these justifications can be effectively used for confidence calibration. The limitations lie in the simplified representation of a complex process, which may not capture all nuances of the framework&#x27;s implementation.</p><p><strong>Improvements And Alternatives:</strong> While the figure provides a good overview, it could be supplemented with a more detailed explanation of the underlying mechanisms of reflection, justification, and confidence calibration. Additionally, presenting quantitative results or case studies alongside the flowchart could further demonstrate the framework&#x27;s effectiveness.</p><p><strong>Consistency And Comparisons:</strong> Not applicable, as this is the only figure in the Introduction.</p><p><strong>Sample Size And Reliability:</strong> Not applicable, as the figure doesn&#x27;t involve data analysis.</p><p><strong>Interpretation And Context:</strong> The figure effectively introduces the proposed framework and its key steps in the context of mitigating over-trust in LLM self-detection.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the figure provides a clear visual representation of the framework&#x27;s process but lacks quantitative data or detailed explanations to fully support its effectiveness.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Figure 2</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Diagram</p>
+            <p><strong>Description:</strong> Figure 2, titled &quot;Two existing paradigms of self-detection and our new comprehensive answer evaluation paradigm,&quot; is a diagram that compares two existing self-detection paradigms (Confidence Calibration and Self-Evaluation) with the proposed comprehensive answer evaluation paradigm. The diagram uses arrows to represent the flow of information and boxes to represent different stages in each paradigm. The Confidence Calibration paradigm involves answer generation followed by confidence calibration, which includes sampling multiple responses and aggregating them to obtain a confidence score (c). The Self-Evaluation paradigm involves a prompt strategy, LLM processing, and confidence calibration based on the evaluation (e) of the generated answer. The proposed Comprehensive Answer Evaluation paradigm involves generating multiple candidate answers, reflecting on their trustability, and then calibrating confidence based on the evaluations (e1,..., en) of each answer.</p>
+            <p><strong>Relevance:</strong> Figure 2 is highly relevant to the Introduction as it visually contrasts the existing self-detection paradigms with the proposed comprehensive answer evaluation paradigm. It highlights the key difference: the consideration of multiple candidate answers in the proposed paradigm, which addresses the over-trust issue discussed in the text. This visual comparison helps readers understand the novelty and potential advantages of the proposed approach.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-2-1">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-2-1" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a diagram is appropriate for comparing different paradigms and their respective workflows. The clear visual separation of the three paradigms and the use of arrows to depict information flow effectively convey the differences and similarities between the approaches.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear visual distinction between existing and proposed paradigms</li><li>Effective use of arrows to represent information flow</li><li>Concise labeling of different stages within each paradigm</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider using different colors or shading to further differentiate the three paradigms</li><li>The diagram could benefit from a brief explanation of the key variables (e.g., p, q, a, c, e) within the figure or caption</li><li>Adding a visual cue to highlight the key difference (consideration of multiple candidate answers) in the proposed paradigm would enhance its impact</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-2-1">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-2-1" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure presents a qualitative comparison of different paradigms, focusing on their structural differences and information flow. It doesn&#x27;t involve quantitative data or specific results.</p><p><strong>Statistical Methods:</strong> Not applicable, as the figure doesn&#x27;t involve statistical analysis.</p><p><strong>Assumptions And Limitations:</strong> The figure assumes that the proposed paradigm can effectively evaluate the trustability of multiple candidate answers and that this evaluation leads to better confidence calibration. The limitations lie in the simplified representation of complex processes, which may not capture all nuances of each paradigm&#x27;s implementation.</p><p><strong>Improvements And Alternatives:</strong> While the figure provides a good visual comparison, it could be supplemented with a more detailed explanation of the specific mechanisms and advantages of each paradigm. Additionally, presenting quantitative results or case studies alongside the diagram could further demonstrate the effectiveness of the proposed approach.</p><p><strong>Consistency And Comparisons:</strong> The figure effectively compares the three paradigms, highlighting their key differences and similarities in a consistent visual manner.</p><p><strong>Sample Size And Reliability:</strong> Not applicable, as the figure doesn&#x27;t involve data analysis.</p><p><strong>Interpretation And Context:</strong> The figure effectively illustrates the novelty of the proposed paradigm by contrasting it with existing approaches in the context of mitigating over-trust in LLM self-detection.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the figure provides a clear visual comparison of the paradigms but lacks quantitative data or detailed explanations to fully support the effectiveness of the proposed approach.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+        
+        <section id="section-3" class="card">
+            <h2>Problem Formulation</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The Problem Formulation section formally defines the task of self-detection for Large Language Models (LLMs). It explains that given a question (q) and a prompt (p), the LLM generates an answer (a), referred to as the target answer. Self-detection then aims to evaluate the trustability of this target answer using the LLM&#x27;s own capabilities, typically producing a detection score (c). The section further elaborates on two existing paradigms for self-detection: Confidence Calibration and Self-Evaluation. Confidence Calibration focuses on estimating the LLM&#x27;s confidence in the generated answer, aligning it with the actual answer accuracy. This involves sampling multiple answers and aggregating their probabilities. Self-Evaluation, on the other hand, directly examines the compatibility between the question and the generated answer using various prompt strategies. However, the section highlights a significant limitation of both paradigms: a tendency to over-trust incorrect LLM-generated answers. This over-trust stems from evaluating only the LLM-generated answers, neglecting a broader answer space. The section concludes by proposing a new paradigm, Comprehensive Answer Evaluation, which considers multiple candidate answers within the answer space to mitigate this over-trust issue. This paradigm involves evaluating the trustability of each question-answer pair and aggregating these evaluations to enhance self-detection of the target answer.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The section provides a clear and concise definition of the LLM self-detection task, including the input (question and prompt), output (target answer), and goal (evaluating trustability).</p>
+                <blockquote>'Given the input comprising of question q combined with prompt p, which consists of an instruction and optional in-context examples, LLM can generate the answer a (Brown et al., 2020), denoted as the target answer. Thereafter, self-detection aims to evaluate the trustability of a by LLM’s own ability, generally in the form of a detection score c ∈ R 1 .'<span class='page-number'>p. 2</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It effectively explains the two existing self-detection paradigms, Confidence Calibration and Self-Evaluation, outlining their respective approaches and goals.</p>
+                <blockquote>'Confidence calibration aims to estimate LLM’s level of certainty on the answer a, e.g., estimating the LLM output probability of a, where the obtained confidence score as the detection score c aims to calibrate with the actual answer accuracy. Self-evaluation methods concatenate q and a and leverage various designed prompts to instruct LLM in self-evaluating the correctness of a from different perspectives.'<span class='page-number'>p. 3</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section clearly identifies the over-trust issue as a key limitation of existing paradigms, providing a rationale for the proposed new paradigm.</p>
+                <blockquote>'A notable limitation of the existing two paradigms is that their evaluation merely involves LLM-generated answers ai , in which LLM may exhibit over-trust. We argue that such biased over-trust could be alleviated if LLM had thoroughly compared the trustability of more candidate answers of q beyond LLM-generated answers.'<span class='page-number'>p. 3</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the section mentions the potential of counterfactual questions for mitigating over-trust, it would be beneficial to provide a more detailed explanation of how counterfactual questions are generated and how their evaluation contributes to self-detection.</p>
+                <blockquote>'We aim to utilize the label difference between q and q̄ to identify unreliable LLM-generated answer for q and adjust its detection score.'<span class='page-number'>p. 4</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section could benefit from a more explicit discussion of the challenges associated with obtaining a comprehensive answer space for different question-answering settings. While it mentions multi-choice questions as an example, it briefly suggests answer retrieval or model prediction for other settings without elaborating on their feasibility and limitations.</p>
+                <blockquote>'We consider the multi-choice question answering setting where a comprehensive answer space is provided. 2 If other answers in q’s answer space had a strong tendency to be correct, the high detection score for LLM-generated incorrect a could be diminished, reducing the over-trust issue.'<span class='page-number'>p. 3</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Visual Elements Analysis</h3>
+                
+        <div class="visual-element card">
+            <h4>Figure 3</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Box Plot</p>
+            <p><strong>Description:</strong> Figure 3, titled &quot;Comparison of self-detection methods on CAD. w/ cf denotes our strategy with counterfactual data. The AUROC values are shown in the x-axis. The boxes on the left and right represent the detection scores of incorrect and correct instances, respectively,&quot; presents two box plots side-by-side, comparing the detection scores of different methods on the CAD dataset for Sentiment Analysis (SA) and Natural Language Inference (NLI) tasks. The x-axis represents correctness (0 for incorrect, 1 for correct, and &#x27;w/ cf&#x27; for the proposed strategy with counterfactual data). The y-axis represents the detection score, ranging from 0.0 to 1.0. The boxes on the left represent the distribution of detection scores for incorrect instances, while the boxes on the right represent the distribution of detection scores for correct instances. The figure aims to demonstrate that the proposed strategy with counterfactual data (w/ cf) improves self-detection by lowering detection scores on incorrect instances and achieving better separation between correct and incorrect instances.</p>
+            <p><strong>Relevance:</strong> Figure 3 is highly relevant to the Problem Formulation section as it provides preliminary evidence supporting the claim that considering a broader answer space, specifically using counterfactual questions, can help mitigate the over-trust issue in LLM self-detection. It visually demonstrates the effectiveness of the proposed strategy in reducing detection score overlaps between correct and incorrect instances, particularly for incorrect instances.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-3-0">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-3-0" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of box plots is appropriate for comparing the distribution of detection scores for different methods and correctness categories. It effectively shows the median, interquartile range, and potential outliers, allowing for a visual assessment of the spread and overlap of scores.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear visual separation between incorrect and correct instances</li><li>Effective use of different colors to distinguish methods</li><li>Inclusion of AUROC values on the x-axis for quantitative comparison</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the &#x27;w/ cf&#x27; strategy within the figure caption for clarity</li><li>The figure could benefit from a more distinct visual separation between the two tasks (SA and NLI) to improve readability</li><li>Adding labels to the y-axis tick marks would enhance clarity</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-3-0">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-3-0" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure shows that the proposed strategy with counterfactual data (w/ cf) generally achieves lower detection scores for incorrect instances compared to the Self-consistency and Top-K verbalized methods. This suggests that considering counterfactual questions helps reduce over-trust in incorrect answers. However, the figure doesn&#x27;t provide specific numerical values for the detection scores or the AUROC, making it difficult to quantify the improvement.</p><p><strong>Statistical Methods:</strong> The figure doesn&#x27;t explicitly mention the statistical methods used to generate the box plots or calculate the AUROC. It&#x27;s assumed that standard methods for box plot construction and AUROC calculation were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the CAD dataset is representative of real-world question-answering scenarios and that the counterfactual questions are effectively generated. The limitations lie in the lack of specific numerical data and the absence of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The figure could be improved by: 1) Including specific numerical values for the detection scores and AUROC, 2) Performing statistical significance testing to assess the difference between methods, 3) Providing details on the generation of counterfactual questions.</p><p><strong>Consistency And Comparisons:</strong> The figure consistently presents the results for both SA and NLI tasks, allowing for comparison across tasks. However, it lacks comparison with other potential methods for mitigating over-trust.</p><p><strong>Sample Size And Reliability:</strong> The figure doesn&#x27;t mention the sample size used for the analysis. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The figure supports the claim that considering a broader answer space can mitigate over-trust in LLM self-detection. However, it&#x27;s important to note that this is a preliminary experiment and further validation is needed.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the figure provides visual evidence supporting the proposed strategy but lacks specific numerical data and statistical significance testing to fully support its effectiveness.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+        
+        <section id="section-4" class="card">
+            <h2>Think Twice Before Assure Framework</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>This section introduces the &quot;Think Twice Before Trusting&quot; (T3) framework, designed to address the over-trust issue in LLM self-detection. It highlights two key considerations for implementing the proposed comprehensive answer evaluation paradigm: resisting LLM&#x27;s inherent bias to accurately evaluate each question-answer pair and effectively aggregating these evaluations for the target answer&#x27;s self-detection. The framework consists of two steps: 1) Reflection and Justification: The LLM is instructed to reflect on the trustability of each candidate answer and provide justifications for its potential correctness. This step aims to mitigate LLM&#x27;s bias by forcing it to seek evidence supporting the rationality of each answer. 2) Joint Confidence Calibration: After obtaining justifications for each answer, the framework integrates them with a confidence calibration method, specifically the Top-K verbalized method. This involves generating a set of potential answers and their probabilities, considering the provided justifications. The section emphasizes that the T3 framework can be seamlessly integrated with existing approaches, such as prompt ensemble and Hybrid methods, for superior self-detection.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The section clearly identifies the two key considerations for implementing the comprehensive answer evaluation paradigm, providing a solid foundation for the proposed framework.</p>
+                <blockquote>'Implementing the proposed paradigm involves two key considerations. First, given the potential bias of LLM over-trust in the generated answer a, it is essential to develop strategies to resist this bias and thoroughly evaluate the trustability of each answer aqi . Secondly, it is crucial to derive strategies to effectively combine these evaluations for effective self-detection of a.'<span class='page-number'>p. 4</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section provides a detailed explanation of the two steps involved in the T3 framework, outlining their respective goals and mechanisms.</p>
+                <blockquote>'Step 1: Reflection and Justification. We first instruct LLM to reflect on the trustability of each answer aqi and force LLM to seek justification for aqi as the correct answer of q, as defined by Eq. 8. Step 2: Joint Confidence Calibration. After obtaining the justification ei for each aqi , we choose to integrate these ei with a confidence calibration method, the Top-K verbalized (cf. Eq. 5) to derive the confidence of answer a as the detection score.'<span class='page-number'>p. 4</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section highlights the flexibility of the T3 framework in integrating with existing self-detection approaches, suggesting its potential for broader application and improvement.</p>
+                <blockquote>'Notably, the T3 framework can be combined with existing approaches, such as prompt ensemble (Jiang et al., 2023), and Hybrid method which adjust the detection score based on the difference with other methods (Xiong et al., 2023).'<span class='page-number'>p. 5</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the section mentions the rationale for choosing the Top-K verbalized method for confidence calibration, it would be beneficial to provide a more in-depth discussion of its advantages and limitations compared to other calibration methods. This would strengthen the justification for its selection within the T3 framework.</p>
+                <blockquote>'We choose this method due to its capability to generate a set of K potential answers and their respective probabilities efficiently in a single response, where we set K as the number of answers N .'<span class='page-number'>p. 5</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section could benefit from a more explicit explanation of how the order shuffling of justifications in the prompt pv mitigates position bias and improves self-detection. While it mentions the sensitivity to order, a clearer explanation of the mechanism would enhance understanding.</p>
+                <blockquote>'Moreover, we find that the detection scores are sensitive to the order of justification in pv , thus we shuffle the order of ei in pv and compute the averaged score.'<span class='page-number'>p. 5</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Visual Elements Analysis</h3>
+                
+        <div class="visual-element card">
+            <h4>Table 1</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 1, titled &quot;Prompts used in our T3 framework,&quot; presents two prompts: pe and pv. The pe prompt instructs the LLM to reflect on a given answer choice (aqi) for a question (q) and generate an explanation to justify the answer judgment. The pv prompt instructs the LLM to provide its N best guesses and their probabilities for a question (q), given a set of answer choices (aq1,..., aqN) and possible explanations (e1,..., en) for each answer. The table aims to showcase the specific prompt structures used in the T3 framework for reflection and justification (pe) and joint confidence calibration (pv).</p>
+            <p><strong>Relevance:</strong> Table 1 is highly relevant to the &quot;Think Twice Before Assure Framework&quot; section as it provides the concrete prompts used in the two steps of the T3 framework. It directly supports the explanation of the Reflection and Justification step by presenting the pe prompt, which instructs the LLM to generate justifications. Similarly, it supports the Joint Confidence Calibration step by presenting the pv prompt, which integrates the generated justifications for confidence estimation.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-4-0">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-4-0" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the prompts in a clear and structured manner. It effectively separates the two prompts (pe and pv) and their respective components, allowing for easy comparison and understanding.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of prompts and their components</li><li>Concise labeling of variables and placeholders</li><li>Effective use of indentation to highlight prompt structure</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the variables and placeholders (e.g., q, aqi, ei) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the two prompts (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-4-0">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-4-0" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents qualitative data in the form of prompts, which are textual instructions for the LLM. It doesn&#x27;t involve quantitative data or statistical analysis.</p><p><strong>Statistical Methods:</strong> Not applicable, as the table doesn&#x27;t involve statistical analysis.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the provided prompts are effective in eliciting meaningful justifications and confidence estimations from the LLM. The limitations lie in the potential for prompt engineering biases and the dependence on the LLM&#x27;s ability to understand and follow the instructions.</p><p><strong>Improvements And Alternatives:</strong> While the table provides the basic prompt structures, it could be supplemented with a discussion of potential variations or alternative prompt designs. Additionally, presenting examples of actual LLM outputs generated using these prompts could further demonstrate their effectiveness.</p><p><strong>Consistency And Comparisons:</strong> The table is consistent with the textual description of the T3 framework, providing the concrete prompts used in each step. However, it lacks comparison with prompts used in other self-detection methods.</p><p><strong>Sample Size And Reliability:</strong> Not applicable, as the table doesn&#x27;t involve data analysis.</p><p><strong>Interpretation And Context:</strong> The table effectively presents the prompts used in the T3 framework, providing a concrete implementation of the proposed comprehensive answer evaluation paradigm.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the table provides the necessary prompts for the T3 framework but lacks examples or comparisons to fully assess their effectiveness and potential biases.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+        
+        <section id="section-5" class="card">
+            <h2>Related Work</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The Related Work section provides a concise overview of previous research in areas relevant to the paper&#x27;s focus on LLM self-detection. It covers three main areas: 1) Confidence Calibration of LLM: This part discusses prior work on calibrating LLM confidence, including methods utilizing output token probability and those suitable for black-box API LLMs. It distinguishes the paper&#x27;s focus on black-box API LLMs from research on white-box LLMs. 2) Self-Evaluation of LLM: This part summarizes research on LLM self-evaluation, particularly in specific domains like code generation and fact-checking. It highlights the limitations of existing general methods and contrasts the paper&#x27;s approach with those focusing solely on LLM-generated answers. 3) Application of LLM Self-Detection: This part briefly outlines various applications of LLM self-detection, such as knowledge retrieval, guided output decoding, and selective generation. It emphasizes the broad potential of self-detection in addressing LLM hallucination and improving output reliability.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The section effectively categorizes related work into three distinct areas, providing a structured overview of the research landscape.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>It clearly distinguishes the paper&#x27;s focus on black-box API LLMs from research on white-box LLMs, justifying the relevance of the chosen approach.</p>
+                <blockquote>'Our research is orthogonal to them, since we focus on black-box API LLM itself.'<span class='page-number'>p. 5</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section highlights the limitations of existing self-evaluation methods, particularly those focusing solely on LLM-generated answers, emphasizing the novelty of the proposed comprehensive answer evaluation paradigm.</p>
+                <blockquote>'Feng et al. (2024) also performs answer reflection and employs model collaboration, yet they still focus on answers generated by LLM.'<span class='page-number'>p. 5</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It briefly but effectively outlines various applications of LLM self-detection, demonstrating the potential impact and relevance of the research.</p>
+                <blockquote>'The outcome of self-detection can be applied in many ways to avoid hallucination and erroneous outputs, such as identifying potentially hallucinated generation for knowledge retrieval and verification (Zhao et al., 2023a), guided output decoding (Xie et al., 2023), identifying ambiguous questions (Hou et al., 2023), selective generation (Ren et al., 2023a; Zablotskaia et al., 2023), and LLM self-improve (Huang et al., 2023a).'<span class='page-number'>p. 5</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the section mentions various methods within each area, it would be beneficial to provide a more critical analysis of their strengths and weaknesses. This would help readers understand the rationale for the proposed approach and its potential advantages over existing methods.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The section could benefit from a more explicit discussion of the challenges associated with self-detection in black-box API LLMs. This would further strengthen the motivation for the proposed framework and its focus on comprehensive answer evaluation.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-6" class="card">
+            <h2>Experiments</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The Experiments section details the setup, compared methods, evaluation metrics, and results of the proposed &quot;Think Twice Before Trusting&quot; (T3) framework for LLM self-detection. It covers experiments on six datasets across three tasks (SA, NLI, CQA) using three different LLMs (GPT-3.5, GLM-4, Gemini). The section presents results in terms of AUROC, PRAUC, and ECE, demonstrating the effectiveness of T3 in improving self-detection and mitigating over-trust in incorrect answers. It also includes ablation studies to validate the framework&#x27;s design choices and analysis of T3&#x27;s robustness across different target answers, LLMs, and parameter settings. The section highlights the potential of T3 in selective prediction scenarios and discusses its limitations, particularly its focus on black-box API LLMs and the need for further exploration of its utility in enhancing task accuracy and enabling self-correction.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The section provides a clear and comprehensive description of the experimental setup, including the datasets, LLMs, compared methods, and evaluation metrics.</p>
+                <blockquote>'We conduct experiments on six datasets across three tasks. IMDB (Maas et al., 2011) and Flipkart (Vaghani and Thummar, 2023) for SA, SNLI (Bowman et al., 2015) and HANS (McCoy et al., 2019) for NLI, CommonsenseQA (Talmor et al., 2019) and PIQA (Bisk et al., 2020) for commonsense question answering (CQA). For LLMs, we utilize GPT-3.5 (gpt-3.5-turbo-1106) from OpenAI3 , GLM-4 (Du et al., 2022) from ZhipuAI4 , and Gemini (gemini-1.0-pro-001) from Google5 . Dataset statistics and LLM hyperparameters are listed in Appendices A.1 and A.2.'<span class='page-number'>p. 6</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It presents a thorough comparison with various existing self-detection methods, demonstrating the superior performance of the proposed T3 framework.</p>
+                <blockquote>'Table 2 shows the performance of the compared methods on GPT-3.5. We can observe the followings. 1) T 3 outperforms all compared methods in AUROC and PRAUC on all datasets except HANS and PIQA, and in ECE on all datasets except SNLI, demonstrating its effectiveness.'<span class='page-number'>p. 6</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section includes ablation studies to validate the design choices of the T3 framework, providing evidence for the effectiveness of reflection and justification, joint confidence calibration, and order shuffling.</p>
+                <blockquote>'From Table 3, we can observe that: 1) w/ CoT expl largely underperforms T 3 on all three tasks, demonstrating the rationality of pushing LLM to reflect and justify from each answer\&#x27;s perspective.'<span class='page-number'>p. 7</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It analyzes the robustness of T3 across different target answers, LLMs, and parameter settings, demonstrating its generalizability and flexibility.</p>
+                <blockquote>'Analysis on the Robustness of T 3 . We evaluate the robustness of T 3 from three aspects: different target answers, different LLMs, and parameter sensitivity. In addition, we examine prompt sensitivity of pe and pv in Appendix C.'<span class='page-number'>p. 8</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The use of a line graph in Figure 5 is appropriate for showing the trend of accuracy improvement as the percentage of abstained instances increases. It effectively visualizes the continuous nature of the relationship and allows for easy identification of the point at which accuracy plateaus or starts to decline. The connected data points clearly indicate the progression of accuracy values along the x-axis.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>While the section mentions the potential of T3 in selective prediction, it would be beneficial to provide more concrete examples or use cases where this capability could be particularly valuable. This would further demonstrate the practical implications of the research.</p>
+                <blockquote>'To show the utility of the detection score, we conduct experiments in selective prediction. The idea of selective prediction is to abstain the LLM-generated answers with low detection score to maintain better accuracy of the remaining instances.'<span class='page-number'>p. 7</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section could benefit from a more in-depth discussion of the limitations of T3, particularly its dependence on the LLM&#x27;s ability to generate meaningful justifications and the potential for prompt engineering biases. Addressing these limitations would strengthen the overall impact of the research.</p>
+                <blockquote>'Our work has several limitations. Firstly, our research scope is limited to the self-detection for black-box API LLM. While our framework is suitable for many state-of-the-art LLMs in this form, it might not be optimal for white-box LLMs, which offer access to token probabilities, thus limiting its broader applicability.'<span class='page-number'>p. 9</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Visual Elements Analysis</h3>
+                
+        <div class="visual-element card">
+            <h4>Table 2</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 2, titled &quot;Results of the compared methods on GPT-3.5,&quot; presents a comprehensive comparison of different self-detection methods across six datasets and three tasks: Sentiment Analysis (SA), Natural Language Inference (NLI), and Commonsense Question Answering (CQA). The table is divided into three sub-tables, one for each task. Each sub-table lists the methods (Self-cons, CoT-cons, Top-K Verb, P(True), Hybrid, Self-detect, CAPE, T3, T3 + Top-K Verb, T3 + PE) and their corresponding performance scores in terms of AUROC, PRAUC, and ECE. The table highlights the best and second-best performing methods for each dataset and metric using bold font and underline, respectively. The results show that T3 and its combinations with other methods generally outperform the compared methods across most datasets and metrics.</p>
+            <p><strong>Relevance:</strong> Table 2 is highly relevant to the Experiments section as it presents the core findings of the experiments, demonstrating the effectiveness of the proposed T3 framework and its combinations with existing methods. It provides a direct comparison with various baseline methods, allowing readers to assess the relative performance of T3 across different tasks and datasets.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-6-0">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-6-0" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the numerical results of the experiments in a clear and structured manner. It effectively organizes the data by task, method, and metric, allowing for easy comparison and analysis.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of tasks and methods</li><li>Concise labeling of metrics</li><li>Effective use of bold font and underline to highlight best and second-best performers</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (SA, NLI, CQA, AUROC, PRAUC, ECE) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the three sub-tables (e.g., a double horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-6-0">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-6-0" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents quantitative data in the form of performance scores for different self-detection methods. It shows that T3 and its combinations generally achieve higher AUROC and PRAUC scores compared to baseline methods, indicating better discrimination between correct and incorrect answers. T3 also exhibits lower ECE values, suggesting better calibration of confidence scores. However, the table doesn&#x27;t provide specific numerical values for the scores, making it difficult to quantify the improvement.</p><p><strong>Statistical Methods:</strong> The table doesn&#x27;t explicitly mention the statistical methods used to calculate the AUROC, PRAUC, and ECE. It&#x27;s assumed that standard methods for these metrics were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the chosen datasets are representative of real-world question-answering scenarios and that the LLM hyperparameters are appropriately set. The limitations lie in the lack of specific numerical data and the absence of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The table could be improved by: 1) Including specific numerical values for the performance scores, 2) Performing statistical significance testing to assess the difference between methods, 3) Providing details on the LLM hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The table consistently presents the results for all three tasks, allowing for comparison across tasks. It also effectively compares T3 with various baseline methods, highlighting its superior performance.</p><p><strong>Sample Size And Reliability:</strong> The table doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The table effectively demonstrates the effectiveness of the proposed T3 framework in improving self-detection and mitigating over-trust. However, it&#x27;s important to note that these results are based on specific datasets and LLMs, and further validation is needed to assess its generalizability.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the table provides a clear comparison of different methods but lacks specific numerical data and statistical significance testing to fully support the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Table 3</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 3, titled &quot;Ablation studies,&quot; presents the results of ablation experiments conducted to evaluate the impact of different components of the T3 framework on its performance. The table lists four variations of T3: the original T3, &quot;w/ CoT expl&quot; (substituting justifications with CoT reasoning), &quot;sep expl&quot; (placing each justification in a separate prompt), and &quot;w/o shuffle&quot; (removing order shuffling of justifications). The table shows the AUROC and PRAUC scores for each variation across six datasets (IMDB, Flipkart, SNLI, HANS, CommonsenseQA, PIQA). The results demonstrate that removing or altering key components of T3 generally leads to a decrease in performance, supporting the design choices of the framework.</p>
+            <p><strong>Relevance:</strong> Table 3 is highly relevant to the Experiments section as it provides evidence for the effectiveness of the specific design choices made in the T3 framework. It directly supports the claims made about the importance of reflection and justification, joint confidence calibration, and order shuffling by showing that removing or altering these components negatively impacts performance.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-6-1">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-6-1" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the numerical results of the ablation studies in a clear and structured manner. It effectively organizes the data by method variation, dataset, and metric, allowing for easy comparison and analysis.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of method variations and datasets</li><li>Concise labeling of metrics</li><li>Effective use of bold font to highlight the best performing method</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (AUROC, PRAUC) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different method variations (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-6-1">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-6-1" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents quantitative data in the form of AUROC and PRAUC scores for different variations of the T3 framework. It shows that the original T3 consistently outperforms the ablated versions across most datasets and metrics, indicating the importance of each component for optimal performance. The &quot;w/ CoT expl&quot; variation shows the largest performance drop, highlighting the effectiveness of reflection and justification over simply using CoT reasoning. The &quot;sep expl&quot; and &quot;w/o shuffle&quot; variations also exhibit lower scores, demonstrating the benefits of joint confidence calibration and order shuffling.</p><p><strong>Statistical Methods:</strong> The table doesn&#x27;t explicitly mention the statistical methods used to calculate the AUROC and PRAUC. It&#x27;s assumed that standard methods for these metrics were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the chosen datasets are representative of real-world question-answering scenarios and that the LLM hyperparameters are appropriately set. The limitations lie in the lack of specific numerical values for the scores and the absence of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The table could be improved by: 1) Including specific numerical values for the performance scores, 2) Performing statistical significance testing to assess the difference between method variations, 3) Providing details on the LLM hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The table consistently presents the results for all six datasets, allowing for comparison across datasets. It also effectively compares the different variations of T3, highlighting the importance of each component.</p><p><strong>Sample Size And Reliability:</strong> The table doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The table effectively supports the design choices of the T3 framework by demonstrating that removing or altering key components negatively impacts performance. This strengthens the claim that reflection and justification, joint confidence calibration, and order shuffling are crucial for effective self-detection.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the table provides clear evidence for the importance of each component but lacks specific numerical data and statistical significance testing to fully support the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Figure 4</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Box Plot</p>
+            <p><strong>Description:</strong> Figure 4, titled &quot;Visualization of bias mitigation effect of T 3 which largely reduces the detection score overlaps between correct (right) and incorrect (left) instances,&quot; presents six box plots, each representing the distribution of detection scores for correct and incorrect question-answer instances on a specific dataset (IMDB, Flipkart, SNLI, HANS, CommonsenseQA, PIQA). Each plot compares three methods: Self-cons, Top-K Verb, and T3. The x-axis represents correctness (0 for incorrect, 1 for correct), and the y-axis represents the detection score. The boxes on the left represent the distribution of scores for incorrect instances, while the boxes on the right represent the distribution for correct instances. The figure aims to demonstrate that T3 effectively reduces the overlap between detection scores for correct and incorrect instances, particularly for incorrect instances, indicating better self-detection and mitigation of over-trust.</p>
+            <p><strong>Relevance:</strong> Figure 4 is highly relevant to the Experiments section as it visually demonstrates the effectiveness of T3 in mitigating the over-trust issue, which is a key focus of the paper. It directly supports the claim that T3 reduces detection score overlaps between correct and incorrect instances, particularly for incorrect instances, leading to better self-detection.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-6-2">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-6-2" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of box plots is appropriate for comparing the distribution of detection scores for different methods and correctness categories. It effectively shows the median, interquartile range, and potential outliers, allowing for a visual assessment of the spread and overlap of scores.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear visual separation between incorrect and correct instances</li><li>Effective use of different colors to distinguish methods</li><li>Consistent layout across different datasets</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the methods (Self-cons, Top-K Verb, T3) within the figure caption for clarity</li><li>The figure could benefit from a more distinct visual separation between the six datasets (e.g., using a grid layout) to improve readability</li><li>Adding labels to the y-axis tick marks would enhance clarity</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-6-2">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-6-2" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure shows that T3 generally achieves lower detection scores for incorrect instances compared to Self-cons and Top-K Verb across all datasets. This suggests that T3 effectively reduces over-trust in incorrect answers. Additionally, the overlap between the boxes for correct and incorrect instances is smaller for T3, indicating better separation and improved self-detection. However, the figure doesn&#x27;t provide specific numerical values for the detection scores, making it difficult to quantify the improvement.</p><p><strong>Statistical Methods:</strong> The figure doesn&#x27;t explicitly mention the statistical methods used to generate the box plots. It&#x27;s assumed that standard methods for box plot construction were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the chosen datasets are representative of real-world question-answering scenarios and that the LLM hyperparameters are appropriately set. The limitations lie in the lack of specific numerical data and the absence of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The figure could be improved by: 1) Including specific numerical values for the detection scores, 2) Performing statistical significance testing to assess the difference between methods, 3) Providing details on the LLM hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The figure consistently presents the results for all six datasets, allowing for comparison across datasets. It also effectively compares T3 with two baseline methods, highlighting its superior performance in mitigating over-trust.</p><p><strong>Sample Size And Reliability:</strong> The figure doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The figure effectively supports the claim that T3 mitigates over-trust in LLM self-detection by visually demonstrating the reduction in detection score overlaps between correct and incorrect instances. However, it&#x27;s important to note that these results are based on specific datasets and LLMs, and further validation is needed to assess its generalizability.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the figure provides visual evidence supporting the effectiveness of T3 in mitigating over-trust but lacks specific numerical data and statistical significance testing to fully support the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Figure 5</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Line Graph</p>
+            <p><strong>Description:</strong> Figure 5, titled &quot;Accuracy improvement of selective prediction on T 3 detection scores,&quot; presents three line graphs, each representing the accuracy improvement achieved by selective prediction using T3 detection scores on a specific dataset (Flipkart, HANS, CommonsenseQA). The x-axis represents the percentage of instances abstained (from 0% to 50%), and the y-axis represents the accuracy of the remaining instances. Each line shows the trend of accuracy improvement as the percentage of abstained instances increases. The figure aims to demonstrate the potential of T3 in selective prediction scenarios, where abstaining from answers with low detection scores can lead to higher accuracy on the remaining instances.</p>
+            <p><strong>Relevance:</strong> Figure 5 is relevant to the Experiments section as it showcases a potential application of the T3 framework in selective prediction. It demonstrates the utility of the detection scores generated by T3 in identifying and abstaining from potentially incorrect answers, leading to improved accuracy on the remaining instances.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-6-3">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-6-3" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a line graph is appropriate for showing the trend of accuracy improvement as the percentage of abstained instances increases. It effectively visualizes the continuous nature of the relationship and allows for easy identification of the point at which accuracy plateaus or starts to decline. The connected data points clearly indicate the progression of accuracy values along the x-axis.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear labeling of axes</li><li>Effective use of different colors to distinguish datasets</li><li>Inclusion of specific accuracy values on the lines</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a legend to identify the datasets</li><li>The figure could benefit from a more distinct visual separation between the three graphs (e.g., using a grid layout) to improve readability</li><li>Adding a horizontal line representing the baseline accuracy (without abstention) would provide a reference point for comparison</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-6-3">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-6-3" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure presents the accuracy improvement achieved by selective prediction using T3 detection scores on three datasets. It shows that as the percentage of abstained instances increases, the accuracy on the remaining instances generally improves. The improvement is more pronounced for datasets with lower initial accuracy (e.g., HANS) compared to those with higher initial accuracy (e.g., Flipkart). However, the figure doesn&#x27;t provide specific numerical values for the accuracy improvement at each abstention level, making it difficult to quantify the gains.</p><p><strong>Statistical Methods:</strong> The figure doesn&#x27;t explicitly mention the statistical methods used to calculate the accuracy improvement. It&#x27;s assumed that standard accuracy calculation methods were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the chosen datasets are representative of real-world selective prediction scenarios and that the LLM hyperparameters are appropriately set. The limitations lie in the lack of specific numerical data for the accuracy improvement and the absence of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The figure could be improved by: 1) Including specific numerical values for the accuracy improvement at each abstention level, 2) Performing statistical significance testing to assess the difference in accuracy between different abstention levels, 3) Providing details on the LLM hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The figure consistently presents the results for all three datasets, allowing for comparison across datasets. It also effectively demonstrates the potential of T3 in selective prediction by showing the trend of accuracy improvement.</p><p><strong>Sample Size And Reliability:</strong> The figure doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The figure supports the claim that T3 detection scores can be effectively used for selective prediction, leading to improved accuracy on the remaining instances. However, it&#x27;s important to note that these results are based on specific datasets and LLMs, and further validation is needed to assess its generalizability.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the figure provides visual evidence supporting the potential of T3 in selective prediction but lacks specific numerical data and statistical significance testing to fully support the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Table 4</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 4, titled &quot;AUROC on two different target answers,&quot; presents the AUROC scores of different self-detection methods (Self-cons, CoT-cons, Top-K Verb, T3) on three datasets (Flipkart, HANS, CommonsenseQA) using two different target answers: the majority answer of Self-cons (asc) and the majority answer of CoT-cons (acc). The table aims to demonstrate the robustness of T3 across different target answers, showing that its performance remains consistent even when the target answer varies.</p>
+            <p><strong>Relevance:</strong> Table 4 is relevant to the Experiments section as it provides evidence for the robustness of the T3 framework. It specifically addresses the potential variability in target answer generation and shows that T3&#x27;s performance is not significantly affected by this variation, supporting its reliability.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-6-4">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-6-4" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the numerical results of the robustness analysis in a clear and structured manner. It effectively organizes the data by dataset, method, and target answer, allowing for easy comparison and analysis.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of datasets and methods</li><li>Concise labeling of target answers</li><li>Effective use of bold font to highlight the best performing method</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (AUROC, asc, acc) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different target answers (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-6-4">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-6-4" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents quantitative data in the form of AUROC scores for different self-detection methods using two different target answers. It shows that T3 generally achieves higher AUROC scores compared to baseline methods across both target answer settings, indicating its consistent performance despite variations in the target answer. However, there is a noticeable drop in AUROC for T3 and CoT-cons on the CommonsenseQA dataset when using the acc target answer, suggesting potential sensitivity to the specific target answer generation method.</p><p><strong>Statistical Methods:</strong> The table doesn&#x27;t explicitly mention the statistical methods used to calculate the AUROC. It&#x27;s assumed that standard methods for this metric were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the chosen datasets are representative of real-world question-answering scenarios and that the LLM hyperparameters are appropriately set. The limitations lie in the lack of specific numerical values for the AUROC scores and the absence of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The table could be improved by: 1) Including specific numerical values for the AUROC scores, 2) Performing statistical significance testing to assess the difference between methods and target answer settings, 3) Providing details on the LLM hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The table consistently presents the results for all three datasets, allowing for comparison across datasets. It also effectively compares T3 with three baseline methods, highlighting its superior performance in both target answer settings.</p><p><strong>Sample Size And Reliability:</strong> The table doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The table supports the claim that T3 is robust to variations in target answer generation, demonstrating its consistent performance across different target answer settings. However, the observed sensitivity on the CommonsenseQA dataset suggests that further investigation is needed to fully understand the impact of target answer generation on T3&#x27;s performance.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the table provides evidence for the robustness of T3 but lacks specific numerical data and statistical significance testing to fully support the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Table 5</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 5, titled &quot;Performance comparison of Flipkart, HANS and CommonsenseQA on GLM-4,&quot; presents the performance of different self-detection methods on three datasets (Flipkart, HANS, CommonsenseQA) using the GLM-4 language model. The table compares the methods (CoT Cons, Top-K Verb, Hybrid, CAPE, T3, T3 + PE) in terms of AUROC, PRAUC, and an undefined metric denoted by an upward arrow. The table aims to demonstrate the effectiveness of T3 and its combinations with other methods across different LLMs.</p>
+            <p><strong>Relevance:</strong> Table 5 is relevant to the Experiments section as it expands the evaluation of the T3 framework to a different LLM (GLM-4). It provides evidence for the generalizability of T3&#x27;s effectiveness beyond GPT-3.5, supporting its broader applicability.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-6-5">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-6-5" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the numerical results of the performance comparison in a clear and structured manner. It effectively organizes the data by dataset, method, and metric, allowing for easy comparison and analysis.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of datasets and methods</li><li>Concise labeling of metrics</li><li>Effective use of bold font to highlight the best performing method</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (AUROC, PRAUC) and the undefined metric within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different datasets (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-6-5">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-6-5" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents quantitative data in the form of performance scores for different self-detection methods using the GLM-4 LLM. It shows that T3 and its combination with PE generally achieve higher AUROC and PRAUC scores compared to baseline methods across all three datasets, indicating its consistent performance across different LLMs. However, the table doesn&#x27;t provide specific numerical values for the scores or a clear explanation of the undefined metric, making it difficult to fully interpret the results.</p><p><strong>Statistical Methods:</strong> The table doesn&#x27;t explicitly mention the statistical methods used to calculate the AUROC, PRAUC, and the undefined metric. It&#x27;s assumed that standard methods for these metrics were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the chosen datasets are representative of real-world question-answering scenarios and that the LLM hyperparameters are appropriately set. The limitations lie in the lack of specific numerical data, the unclear definition of the undefined metric, and the absence of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The table could be improved by: 1) Including specific numerical values for the performance scores, 2) Providing a clear definition and explanation of the undefined metric, 3) Performing statistical significance testing to assess the difference between methods, 4) Providing details on the LLM hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The table consistently presents the results for all three datasets, allowing for comparison across datasets. It also effectively compares T3 with various baseline methods, highlighting its superior performance on GLM-4.</p><p><strong>Sample Size And Reliability:</strong> The table doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The table supports the claim that T3 is effective across different LLMs, demonstrating its consistent performance on GLM-4. However, the lack of specific numerical data and the unclear definition of the undefined metric limit the interpretability of the results.</p><p><strong>Confidence Rating:</strong> 2</p><p><strong>Confidence Explanation:</strong> The confidence rating is low as the table lacks specific numerical data and a clear explanation of the undefined metric, making it difficult to fully assess the performance of T3 on GLM-4.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Figure 6</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Line Graph</p>
+            <p><strong>Description:</strong> Figure 6, titled &quot;Parameter sensitivity, i.e., changing the number of justifications and number of guesses in pv,&quot; presents two line graphs, each representing the impact of varying the number of justifications and guesses in the pv prompt on the performance of T3. The left graph shows the AUROC scores on the SNLI dataset, while the right graph shows the accuracy on the CommonsenseQA dataset. The x-axis of both graphs represents the number of justifications or guesses, and the y-axis represents the performance metric (AUROC or accuracy). The figure aims to demonstrate the sensitivity of T3&#x27;s performance to these parameters.</p>
+            <p><strong>Relevance:</strong> Figure 6 is relevant to the Experiments section as it explores the parameter sensitivity of the T3 framework. It provides insights into the impact of varying the number of justifications and guesses on T3&#x27;s performance, helping to understand the optimal parameter settings for different tasks.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-6-6">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-6-6" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of line graphs is appropriate for showing the trend of performance as the number of justifications or guesses increases. It effectively visualizes the continuous nature of the relationship and allows for easy identification of the point at which performance plateaus or starts to decline. The connected data points clearly indicate the progression of performance values along the x-axis.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear labeling of axes</li><li>Effective use of different colors to distinguish between justifications and guesses</li><li>Separate graphs for different datasets and metrics</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a legend to identify the lines representing justifications and guesses</li><li>The figure could benefit from a more distinct visual separation between the two graphs (e.g., using a grid layout) to improve readability</li><li>Adding a horizontal line representing the baseline performance (with default parameter settings) would provide a reference point for comparison</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-6-6">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-6-6" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure presents the impact of varying the number of justifications and guesses on T3&#x27;s performance on two datasets. It shows that increasing the number of justifications generally leads to improved performance on both datasets, suggesting that a sufficient number of justifications is crucial for effective self-detection. Increasing the number of guesses has a more pronounced effect on the SNLI dataset, indicating that the NLI task benefits from a larger number of guesses. However, the figure doesn&#x27;t provide specific numerical values for the performance metrics at each parameter setting, making it difficult to quantify the impact.</p><p><strong>Statistical Methods:</strong> The figure doesn&#x27;t explicitly mention the statistical methods used to calculate the AUROC and accuracy. It&#x27;s assumed that standard methods for these metrics were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the chosen datasets are representative of real-world question-answering scenarios and that the LLM hyperparameters are appropriately set. The limitations lie in the lack of specific numerical data for the performance metrics and the absence of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The figure could be improved by: 1) Including specific numerical values for the performance metrics at each parameter setting, 2) Performing statistical significance testing to assess the difference in performance between different parameter settings, 3) Providing details on the LLM hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The figure consistently presents the results for both datasets, allowing for comparison across datasets. It also effectively demonstrates the parameter sensitivity of T3 by showing the trend of performance as the number of justifications and guesses varies.</p><p><strong>Sample Size And Reliability:</strong> The figure doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The figure provides insights into the parameter sensitivity of T3, suggesting that a sufficient number of justifications is crucial for effective self-detection and that the optimal number of guesses may vary depending on the task. However, the lack of specific numerical data and statistical significance testing limits the interpretability of the results.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the figure provides visual evidence for the parameter sensitivity of T3 but lacks specific numerical data and statistical significance testing to fully support the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+        
+        <section id="section-7" class="card">
+            <h2>Conclusion</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The Conclusion section summarizes the paper&#x27;s key contributions in addressing the over-trust issue in self-detection for black-box API LLMs. It reiterates the limitations of existing self-detection paradigms that focus solely on LLM-generated answers, leading to over-trust in incorrect outputs. The section highlights the proposed comprehensive answer evaluation paradigm, which considers a broader answer space and compares the trustability of multiple candidate answers. It emphasizes the effectiveness of the &quot;Think Twice Before Trusting&quot; (T3) framework in implementing this paradigm by instructing the LLM to reflect on and justify each candidate answer before calibrating confidence. The section concludes by acknowledging the limitations of the current work, particularly its focus on black-box API LLMs and the need for further exploration of self-detection&#x27;s utility in enhancing task accuracy and enabling self-correction. It also suggests future research directions, including combining T3 with more methods and exploring its applicability to white-box LLMs.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The Conclusion effectively summarizes the key contributions of the paper, highlighting the proposed paradigm and framework for mitigating over-trust in LLM self-detection.</p>
+                <blockquote>'In this paper, we tackled the over-trust issue of self-detection on black-box API LLMs. We categorized existing methods into two paradigms and pointed out their limitation of merely evaluating on LLM-generated answer with potential LLM over-trust. We proposed a novel paradigm to address this limitation by comprehensively evaluating the trustability of multiple candidate answers in the answer space.'<span class='page-number'>p. 8</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It clearly reiterates the limitations of existing self-detection approaches and the rationale for considering a broader answer space.</p>
+                <blockquote>'We categorized existing methods into two paradigms and pointed out their limitation of merely evaluating on LLM-generated answer with potential LLM over-trust.'<span class='page-number'>p. 8</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The Conclusion acknowledges the limitations of the current work, particularly its focus on black-box API LLMs and the need for further exploration of self-detection&#x27;s utility in improving task accuracy and enabling self-correction.</p>
+                <blockquote>'Our work has several limitations. Firstly, our research scope is limited to the self-detection for black-box API LLM. While our framework is suitable for many state-of-the-art LLMs in this form, it might not be optimal for white-box LLMs, which offer access to token probabilities, thus limiting its broader applicability. Secondly, the utility of self-detection is not primarily studies in this work. Although we demonstrate the utility of detection scores in selective prediction scenarios, the challenge still lies in leveraging them to enhance task accuracy or enable LLM self-correction, calling for further exploration.'<span class='page-number'>p. 9</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the Conclusion mentions exploring T3&#x27;s applicability to white-box LLMs, it would be beneficial to briefly discuss the potential challenges and opportunities associated with this extension. This would provide a more nuanced perspective on future research directions.</p>
+                <blockquote>'In future work, we will explore the combination of T3 with more methods, and its utility in white-box LLMs.'<span class='page-number'>p. 8</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The Conclusion could benefit from a more explicit discussion of the potential impact of the research on the broader field of LLM development and deployment. This would highlight the significance of addressing the over-trust issue and the potential benefits of the proposed approach for improving the reliability and trustworthiness of LLMs.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-8" class="card">
+            <h2>Limitations</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The Limitations section acknowledges the restricted scope of the research, focusing solely on self-detection for black-box API LLMs. It recognizes that the framework might not be ideal for white-box LLMs, which provide access to token probabilities, limiting its broader applicability. The section also highlights the need for further investigation into the practical utility of self-detection in enhancing task accuracy or enabling LLM self-correction. It admits that the current work lacks consideration for prompt optimization in self-detection, suggesting it as an area for future research.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The section clearly states the limitation of focusing solely on black-box API LLMs and acknowledges the potential for better suitability with white-box LLMs.</p>
+                <blockquote>'Firstly, our research scope is limited to the self-detection for black-box API LLM. While our framework is suitable for many state-of-the-art LLMs in this form, it might not be optimal for white-box LLMs, which offer access to token probabilities, thus limiting its broader applicability.'<span class='page-number'>p. 9</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section identifies the need for further research on leveraging self-detection to improve task accuracy or enable LLM self-correction, recognizing the gap between current capabilities and potential applications.</p>
+                <blockquote>'Secondly, the utility of self-detection is not primarily studies in this work. Although we demonstrate the utility of detection scores in selective prediction scenarios, the challenge still lies in leveraging them to enhance task accuracy or enable LLM self-correction, calling for further exploration.'<span class='page-number'>p. 9</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section acknowledges the lack of consideration for prompt optimization in the current framework, suggesting it as a potential area for improvement in future research.</p>
+                <blockquote>'Lastly, our framework lacks consideration in prompt optimization for self-detection, an area where future self-detection methods are expected to consider.'<span class='page-number'>p. 9</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the section mentions the limitations, it would be beneficial to elaborate on potential strategies or directions for addressing them. For example, it could briefly discuss how the framework could be adapted for white-box LLMs or how prompt optimization could be incorporated.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-9" class="card">
+            <h2>Ethics Statement</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The Ethics Statement section raises three ethical concerns related to the research. Firstly, it acknowledges the limited evaluation of the framework&#x27;s applicability to languages other than English, as the experiments primarily used English datasets. Secondly, it recognizes the ethical implications of focusing on black-box API LLMs, advocating for the use of open-sourced LLMs to enhance reproducibility. Lastly, it cautions against the potential for self-detection mechanisms to mislead users into blindly trusting LLMs, potentially leading to the acceptance of untrustable answers and causing harm.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The section explicitly acknowledges the limitation of evaluating the framework primarily on English datasets and the need for broader language applicability.</p>
+                <blockquote>'First, our experimental results are mainly obtained in English datasets, where the applicability on other languages are not comprehensively evaluated.'<span class='page-number'>p. 9</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section raises the ethical concern of focusing on black-box API LLMs and advocates for the use of open-sourced LLMs to promote reproducibility.</p>
+                <blockquote>'Secondly, our research scope is black-box API LLMs, where open-sourced LLMs are more advocated for its reproducibility.'<span class='page-number'>p. 9</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section highlights the potential risk of users blindly trusting LLMs due to self-detection mechanisms, leading to the acceptance of untrustable answers and potential harm.</p>
+                <blockquote>'Finally, the self-detection of LLM may mislead people to blindly trust LLM and easily accept untrustable answers, causing potential harms.'<span class='page-number'>p. 9</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the section identifies the ethical concerns, it would be beneficial to propose potential mitigation strategies or guidelines for addressing these concerns. For example, it could suggest specific steps for evaluating the framework on other languages, promoting the use of open-sourced LLMs, or educating users about the limitations of self-detection.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-10" class="card">
+            <h2>References</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The References section lists the bibliographic details of all the sources cited throughout the paper. It includes a variety of research papers, conference proceedings, and online resources related to Large Language Models (LLMs), self-detection, confidence calibration, self-evaluation, and various applications of these techniques in natural language processing tasks.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The References section provides a comprehensive list of sources, covering a wide range of relevant topics related to the paper&#x27;s focus.</p>
+                
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The references are correctly formatted and consistently presented, following standard academic conventions. There are no significant suggestions for improvement in terms of content or organization.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-11" class="card">
+            <h2>Appendix A</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>Appendix A provides supplementary information related to the experiments conducted in the paper. It includes details about the datasets used, the hyperparameters for the LLMs, and additional implementation details for the compared methods. Specifically, it presents: 1) Dataset Detail: This part describes the datasets used in the experiments, including the number of training data samples, the number and examples of candidate answers for each dataset, and the rationale for dataset selection. 2) LLM Hyperparameters: This part lists the hyperparameters used for the different LLMs (GPT-3.5, GLM-4, Gemini) in the experiments, including the maximum token limit, temperature settings, and sampling strategies. 3) Details for compared methods: This part provides the specific prompts used for the compared self-detection methods, outlining the instructions and input formats for each method and dataset. 4) Additional Implementation Detail: This part elaborates on the implementation details of the T3 framework and the compared methods, including the setting for the number of candidate answers, the shuffling strategy for justification order, and the prompt ensemble approach used in CAPE. It also compares the number of API calls for different methods, highlighting the reasonable cost of T3.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The appendix provides comprehensive details about the datasets used in the experiments, including the number of training data samples and examples of candidate answers.</p>
+                <blockquote>'Due to the cost limitation, we randomly sample 300 training data for each dataset in our experiments. For IMDB and SNLI datasets, we use the same randomly sampled 300 data sets as the CAD SA and NLI in the preliminary experiments. We will release the dataset splits. Table 6 shows the number and examples of candidate answers for each dataset.'<span class='page-number'>p. 12</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It clearly lists the hyperparameters used for the different LLMs, ensuring reproducibility of the experiments.</p>
+                <blockquote>'For all LLMs, we set the maximum token as 200. For GPT-3.5 and Gemini, if sampling a single response (N = 1), we set the temperature as 0, and other hyperparameters as default. If sampling multiple responses, we sample N = 30 (N = 5 for Gemini due to API call limitation) responses with temperature as 1, which is only for Self-cons, CoT-cons, and P(True).'<span class='page-number'>p. 12</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The appendix provides the specific prompts used for the compared self-detection methods, allowing for a clear understanding of their implementation.</p>
+                <blockquote>'The prompts for compared methods are shown below, where [instruction] denotes the task instruction with the task input, and [instruction_only] denotes the instruction without task input.'<span class='page-number'>p. 13</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It includes a comparison of the number of API calls for different methods, demonstrating the reasonable cost of the proposed T3 framework.</p>
+                <blockquote>'The number of API calls for different methods are shown in Table 7. We can observe that compared with other methods T3 does not incur large increase in number of calls. In our experiments, the maximum value of N is 5. Considering its effectiveness, the cost of T3 is reasonable.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the appendix mentions the rationale for choosing specific datasets, it would be beneficial to provide a more detailed discussion of their characteristics and potential limitations. This would help readers understand the generalizability of the findings.</p>
+                <blockquote>'Due to the cost limitation, we randomly sample 300 training data for each dataset in our experiments.'<span class='page-number'>p. 12</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The appendix could benefit from a more explicit justification for the chosen LLM hyperparameters. While it mentions that they were not carefully tuned, explaining the rationale behind the initial settings would enhance transparency.</p>
+                <blockquote>'Note that these LLM hyperparameters are not carefully tuned.'<span class='page-number'>p. 12</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>While the appendix provides the prompts for the compared methods, it would be helpful to include examples of actual LLM outputs generated using these prompts. This would further clarify their implementation and potential biases.</p>
+                
+            </li>
+            
+                </ul>
+                
+                <h3>Visual Elements Analysis</h3>
+                
+        <div class="visual-element card">
+            <h4>Table 6</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 6, titled &quot;The number (N) and examples of candidate answers for each dataset,&quot; presents the number of candidate answers (N) and examples of these answers for each dataset used in the experiments. The table lists six datasets: IMDB, Flipkart, SNLI, HANS, CommonsenseQA, and PIQA. For each dataset, it provides the value of N and a few example answers. For instance, IMDB and Flipkart have N=2 with examples of &quot;positive&quot; and &quot;negative&quot; answers. SNLI has N=3 with examples of &quot;entailment,&quot; &quot;neutral,&quot; and &quot;contradiction.&quot; HANS has N=2 with examples of &quot;entailment&quot; and &quot;non-entailment.&quot; CommonsenseQA has N=5 with examples of different locations like &quot;yard,&quot; &quot;basement,&quot; &quot;kitchen,&quot; etc. PIQA has N=2 with examples of actions like &quot;pour it onto a plate&quot; and &quot;pour it into a jar.&quot;</p>
+            <p><strong>Relevance:</strong> Table 6 is relevant to Appendix A as it provides essential details about the datasets used in the experiments. It clarifies the number of candidate answers for each dataset, which is crucial for understanding the setup of the comprehensive answer evaluation paradigm. The examples of candidate answers further illustrate the nature of the tasks and the types of questions and answers involved.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-11-0">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-11-0" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the number of candidate answers and their examples in a clear and structured manner. It effectively organizes the data by dataset and provides concise examples for each.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of datasets and examples</li><li>Concise labeling of columns</li><li>Effective use of indentation to highlight examples</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (e.g., SA, NLI, CQA) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different datasets (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-11-0">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-11-0" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents qualitative data in the form of examples of candidate answers for each dataset. It shows the variety of answer choices available for different tasks, ranging from binary choices (positive/negative, entailment/non-entailment) to multiple-choice options with varying numbers of choices.</p><p><strong>Statistical Methods:</strong> Not applicable, as the table doesn&#x27;t involve statistical analysis.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the provided examples are representative of the overall answer space for each dataset. The limitations lie in the potential for bias in the selection of examples and the lack of information about the distribution of answer choices within each dataset.</p><p><strong>Improvements And Alternatives:</strong> While the table provides a few examples, it could be supplemented with a more detailed description of the answer space for each dataset, including the frequency of different answer choices and potential biases in their distribution.</p><p><strong>Consistency And Comparisons:</strong> The table is consistent with the textual description of the datasets in the Experiments section, providing additional details about the answer choices. However, it lacks comparison with answer spaces used in other related studies.</p><p><strong>Sample Size And Reliability:</strong> Not applicable, as the table doesn&#x27;t involve data analysis.</p><p><strong>Interpretation And Context:</strong> The table effectively illustrates the variety of answer spaces used in the experiments, providing context for the comprehensive answer evaluation paradigm.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the table provides useful information about the answer spaces but lacks a comprehensive analysis of their characteristics and potential biases.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Table 7</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 7, titled &quot;Comparison on the number of API calls of compared methods, where N denotes the number of choices for different datasets,&quot; compares the number of API calls required by different self-detection methods. The table lists the methods (Self-cons, CoT-cons, Top-K Verb, P(True), Hybrid, Self-detect, CAPE, T3, T3 + Top-K Verb, T3 + PE) and their corresponding number of API calls. For methods like Self-cons, CoT-cons, P(True), and Self-detect, the number of calls is fixed at 30. Top-K Verb requires only 1 call. Hybrid requires 31 calls. CAPE requires 5 calls. T3, T3 + Top-K Verb, and T3 + PE require N+2, N+3, and N+4 calls, respectively, where N represents the number of answer choices for the specific dataset.</p>
+            <p><strong>Relevance:</strong> Table 7 is relevant to Appendix A as it addresses the practical aspect of computational cost associated with different self-detection methods. It provides a direct comparison of the number of API calls required, allowing readers to assess the efficiency of the proposed T3 framework relative to other methods.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-11-1">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-11-1" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the number of API calls for different methods in a clear and structured manner. It effectively organizes the data by method and provides a concise comparison.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of methods and API calls</li><li>Concise labeling of columns</li><li>Effective use of a variable (N) to represent the number of choices</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (e.g., SA, NLI, CQA) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different categories of methods (e.g., those with fixed calls vs. those with variable calls) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-11-1">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-11-1" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents quantitative data in the form of the number of API calls required by different self-detection methods. It shows that methods relying on multiple answer sampling (Self-cons, CoT-cons, P(True), Self-detect) require a significantly higher number of calls compared to methods like Top-K Verb and CAPE. The proposed T3 framework and its combinations have a variable number of calls depending on the number of answer choices (N), but generally fall within a reasonable range.</p><p><strong>Statistical Methods:</strong> Not applicable, as the table doesn&#x27;t involve statistical analysis.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the number of API calls is a reliable indicator of computational cost and that the reported values are accurate for the specific LLM and dataset settings used. The limitations lie in the potential variability of API call costs across different LLMs and the lack of consideration for other computational factors.</p><p><strong>Improvements And Alternatives:</strong> While the table provides a useful comparison of API calls, it could be supplemented with a more detailed analysis of computational cost, including factors like LLM response time and memory usage. Additionally, providing a cost breakdown for different components of the T3 framework would enhance transparency.</p><p><strong>Consistency And Comparisons:</strong> The table is consistent with the textual description of the methods in the Experiments section, providing additional details about their computational cost. However, it lacks comparison with API call costs reported in other related studies.</p><p><strong>Sample Size And Reliability:</strong> Not applicable, as the table doesn&#x27;t involve data analysis.</p><p><strong>Interpretation And Context:</strong> The table effectively demonstrates the reasonable cost of the proposed T3 framework relative to other methods, supporting its practical feasibility.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the table provides a useful comparison of API calls but lacks a comprehensive analysis of computational cost and potential variability across different settings.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Table 8</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 8, titled &quot;The average and standard deviation of AUROC for T3 with different rephrasing of prompts on GPT-3.5,&quot; presents the average and standard deviation of AUROC scores for the T3 framework using different prompt rephrasing techniques. The table shows results for three datasets: Flipkart, HANS, and PIQA. For each dataset, it provides the average AUROC score and its standard deviation across three different rephrased versions of the pe and pv prompts. For example, on Flipkart, the average AUROC is 84.2 with a standard deviation of 2.0, while on HANS, the average AUROC is 62.7 with a standard deviation of 4.3.</p>
+            <p><strong>Relevance:</strong> Table 8 is relevant to Appendix A as it explores the sensitivity of the T3 framework to variations in prompt wording. It provides insights into the robustness of T3&#x27;s performance when the pe and pv prompts are rephrased, addressing potential concerns about the impact of specific prompt choices.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-11-2">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-11-2" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the average and standard deviation of AUROC scores in a clear and structured manner. It effectively organizes the data by dataset and provides a concise summary of the results.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of datasets and metrics</li><li>Concise labeling of columns</li><li>Inclusion of both average and standard deviation values</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (AUROC) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different datasets (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-11-2">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-11-2" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents quantitative data in the form of average AUROC scores and their standard deviations for different prompt rephrasing techniques. It shows that the variation in AUROC scores across different rephrased prompts is relatively small, suggesting that T3&#x27;s performance is not highly sensitive to specific prompt wording. However, the standard deviation is larger for the HANS dataset compared to Flipkart and PIQA, indicating higher variability in performance for this dataset.</p><p><strong>Statistical Methods:</strong> The table doesn&#x27;t explicitly mention the statistical methods used to calculate the average and standard deviation. It&#x27;s assumed that standard methods for these descriptive statistics were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the three rephrased prompts are representative of potential variations in prompt wording and that the GPT-3.5 hyperparameters are appropriately set. The limitations lie in the limited number of prompt variations and the lack of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The analysis could be improved by: 1) Increasing the number of prompt variations to assess a wider range of wording choices, 2) Performing statistical significance testing to determine if the observed differences in AUROC scores are statistically significant, 3) Providing details on the GPT-3.5 hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The table consistently presents the results for all three datasets, allowing for comparison across datasets. It also effectively demonstrates the relatively low sensitivity of T3 to prompt rephrasing.</p><p><strong>Sample Size And Reliability:</strong> The table doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The table suggests that T3&#x27;s performance is relatively robust to variations in prompt wording, supporting its generalizability. However, the higher variability observed for the HANS dataset warrants further investigation.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the table provides evidence for the robustness of T3 to prompt rephrasing but lacks a comprehensive analysis of prompt variations and statistical significance testing.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+        
+        <section id="section-12" class="card">
+            <h2>Appendix B</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>Appendix B provides implementation details for the preliminary experiments conducted to validate the concept of using counterfactual questions for mitigating over-trust in LLM self-detection. It describes the dataset used (CAD), the specific prompts employed, the LLM used (GPT-3.5), and the rationale for choosing the Top-K verbalized method as the basis for the counterfactual strategy. The appendix also mentions the random sampling of 300 instances from the training set and the random selection of one counterfactual question for each original question with multiple counterfactuals.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The appendix provides specific details about the dataset (CAD) used for the preliminary experiments, including the tasks (SA and NLI) and the source datasets (IMDB and SNLI).</p>
+                <blockquote>'We experiment with the CAD dataset (Kaushik et al., 2019), which contains human-annotated original and counterfactual data pairs for sentiment analysis (SA) and natural language inference (NLI) tasks.'<span class='page-number'>p. 4</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It clearly states the LLM used (GPT-3.5) and refers to Appendix A.1 for the LLM hyperparameters, ensuring reproducibility.</p>
+                <blockquote>'The LLM is GPT-3.5 (gpt-3.5-1106). See Section A.1 for LLM hyperparameters.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The appendix explains the rationale for choosing the Top-K verbalized method as the basis for the counterfactual strategy, highlighting its better calibration compared to Self-cons.</p>
+                <blockquote>'The w/ cf is based on Top-K Verb, which is better calibrated than Self-cons.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the appendix mentions random sampling of 300 instances, it would be beneficial to provide a justification for this sample size and discuss its potential impact on the reliability of the results.</p>
+                <blockquote>'For the preliminary experiments, we randomly sample 300 instances from the training set of CAD SA and NLI, respectively.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The appendix could benefit from a more detailed explanation of how the counterfactual questions were generated or selected. While it mentions random selection for questions with multiple counterfactuals, it doesn&#x27;t elaborate on the criteria or process used.</p>
+                <blockquote>'For those original questions with more than one counterfactual questions, we randomly select one counterfactual question for experiment.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The appendix briefly mentions that the prompts can be viewed in Section A.3. It would be helpful to provide the actual prompts used for the counterfactual strategy within Appendix B for easier reference and comparison.</p>
+                <blockquote>'The prompts can be viewed in Section A.3.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-13" class="card">
+            <h2>Appendix C</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>Appendix C focuses on evaluating the prompt sensitivity of the pe and pv prompts used in the T3 framework. It examines the impact of rephrasing these prompts on the framework&#x27;s performance, specifically in terms of AUROC scores. The analysis involves rephrasing each prompt three times using ChatGPT and calculating the average and standard deviation of AUROC scores across these variations. The results suggest that while prompt rephrasing has a mild effect on T3&#x27;s performance, the HANS dataset exhibits higher sensitivity compared to Flipkart and PIQA. Additionally, the analysis indicates that changes in the pe prompt have a larger impact on detection performance than changes in the pv prompt, potentially due to the wider range of variations in justifications generated by pe compared to the outputs of pv.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The appendix directly addresses the potential concern of prompt sensitivity by systematically evaluating the impact of prompt rephrasing on T3&#x27;s performance.</p>
+                <blockquote>'We examine the prompt sensitivity of pe and pv by rephrasing each of them three times with ChatGPT6 and compute the average and standard deviation of AUROC, as shown in Table 8.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It provides a clear methodology for assessing prompt sensitivity, involving rephrasing each prompt three times and calculating the average and standard deviation of AUROC scores.</p>
+                <blockquote>'We examine the prompt sensitivity of pe and pv by rephrasing each of them three times with ChatGPT6 and compute the average and standard deviation of AUROC, as shown in Table 8.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The appendix identifies the HANS dataset as being more sensitive to prompt rephrasing compared to Flipkart and PIQA, providing insights into dataset-specific variations in prompt sensitivity.</p>
+                <blockquote>'Across the three datasets, HANS is the most sensitive to prompt rephrasing, potentially related to its lower AUROC performance.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It highlights the observation that changes in the pe prompt have a larger impact on detection performance than changes in the pv prompt, offering a potential explanation for this difference based on the nature of the outputs generated by each prompt.</p>
+                <blockquote>'The change of pe has larger impact on the detection performance than pv . This is probably because the justifications generated by pe have a larger space of variation than the outputs of pv , i.e., guesses and probabilities.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the appendix rephrases each prompt three times, it would be beneficial to increase the number of prompt variations to assess a wider range of wording choices and potential biases.</p>
+                <blockquote>'We examine the prompt sensitivity of pe and pv by rephrasing each of them three times with ChatGPT6 and compute the average and standard deviation of AUROC, as shown in Table 8.'<span class='page-number'>p. 14</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The analysis could be strengthened by performing statistical significance testing to determine if the observed differences in AUROC scores across different prompt variations are statistically significant.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The appendix could benefit from a more detailed discussion of the specific rephrasing techniques used and the rationale behind choosing them. This would enhance transparency and allow for better understanding of the variations introduced.</p>
+                
+            </li>
+            
+                </ul>
+                
+                <h3>Visual Elements Analysis</h3>
+                
+        <div class="visual-element card">
+            <h4>Table 8</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 8, titled &quot;The average and standard deviation of AUROC for T3 with different rephrasing of prompts on GPT-3.5,&quot; presents the average and standard deviation of AUROC scores for the T3 framework using different prompt rephrasing techniques. The table shows results for three datasets: Flipkart, HANS, and PIQA. For each dataset, it provides the average AUROC score and its standard deviation across three different rephrased versions of the pe and pv prompts. For example, on Flipkart, the average AUROC is 84.2 with a standard deviation of 2.0, while on HANS, the average AUROC is 62.7 with a standard deviation of 4.3.</p>
+            <p><strong>Relevance:</strong> Table 8 is highly relevant to Appendix C as it directly presents the results of the prompt sensitivity analysis. It provides quantitative evidence for the impact of prompt rephrasing on T3&#x27;s performance, supporting the claims made in the text about the relative sensitivity of different datasets and prompts.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-13-0">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-13-0" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the average and standard deviation of AUROC scores in a clear and structured manner. It effectively organizes the data by dataset and provides a concise summary of the results.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of datasets and metrics</li><li>Concise labeling of columns</li><li>Inclusion of both average and standard deviation values</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (AUROC) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different datasets (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-13-0">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-13-0" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents quantitative data in the form of average AUROC scores and their standard deviations for different prompt rephrasing techniques. It shows that the variation in AUROC scores across different rephrased prompts is relatively small, suggesting that T3&#x27;s performance is not highly sensitive to specific prompt wording. However, the standard deviation is larger for the HANS dataset compared to Flipkart and PIQA, indicating higher variability in performance for this dataset.</p><p><strong>Statistical Methods:</strong> The table doesn&#x27;t explicitly mention the statistical methods used to calculate the average and standard deviation. It&#x27;s assumed that standard methods for these descriptive statistics were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the three rephrased prompts are representative of potential variations in prompt wording and that the GPT-3.5 hyperparameters are appropriately set. The limitations lie in the limited number of prompt variations and the lack of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The analysis could be improved by: 1) Increasing the number of prompt variations to assess a wider range of wording choices, 2) Performing statistical significance testing to determine if the observed differences in AUROC scores are statistically significant, 3) Providing details on the GPT-3.5 hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The table consistently presents the results for all three datasets, allowing for comparison across datasets. It also effectively demonstrates the relatively low sensitivity of T3 to prompt rephrasing.</p><p><strong>Sample Size And Reliability:</strong> The table doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The table suggests that T3&#x27;s performance is relatively robust to variations in prompt wording, supporting its generalizability. However, the higher variability observed for the HANS dataset warrants further investigation.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the table provides evidence for the robustness of T3 to prompt rephrasing but lacks a comprehensive analysis of prompt variations and statistical significance testing.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+        
+        <section id="section-14" class="card">
+            <h2>Appendix D</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>Appendix D presents a performance comparison of the T3 framework on the Gemini language model using three datasets: Flipkart, PIQA, and CommonsenseQA. The results, presented in Table 9, show that while T3 performs well on PIQA and CommonsenseQA, it doesn&#x27;t outperform all compared methods on Flipkart. The appendix attributes this discrepancy to Gemini&#x27;s tendency to prioritize answer prediction over following the instructions for reflection and justification. It concludes that the effectiveness of T3 depends on the LLM&#x27;s ability to adhere to the instructions for generating justifications from different answer perspectives.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The appendix provides a performance comparison of T3 on a different LLM (Gemini), expanding the evaluation beyond GPT-3.5 and GLM-4.</p>
+                <blockquote>'In addition to GPT-3.5 and GLM-4, we show the results of Gemini on three datasets.'<span class='page-number'>p. 15</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>It identifies a potential limitation of T3&#x27;s effectiveness, highlighting its dependence on the LLM&#x27;s ability to follow instructions for reflection and justification.</p>
+                <blockquote>'Therefore, the effectiveness of T3 depends on the ability of the specific LLM in following the instructions in Table 1.'<span class='page-number'>p. 15</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the appendix mentions Gemini&#x27;s tendency to prioritize prediction over reflection, it would be beneficial to provide examples of Gemini&#x27;s outputs to illustrate this behavior. This would provide more concrete evidence for the observed discrepancy in performance.</p>
+                <blockquote>'Instead, it tends to perform answer prediction and followed by an explanation on its predicted answer.'<span class='page-number'>p. 15</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Visual Elements Analysis</h3>
+                
+        <div class="visual-element card">
+            <h4>Table 9</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 9, titled &quot;Performance comparison of Gemini on Flipkart, PIQA and CommonsenseQA,\&quot; presents the performance of different self-detection methods on three datasets (Flipkart, PIQA, CommonsenseQA) using the Gemini language model. The table compares the methods (CoT Cons, Top-K Verb, Hybrid, CAPE, T3, T3 + Top-K Verb, T3 + CAPE) in terms of AUROC and PRAUC. The table aims to demonstrate the effectiveness of T3 and its combinations with other methods across different LLMs, specifically Gemini.</p>
+            <p><strong>Relevance:</strong> Table 9 is relevant to Appendix D as it presents the performance evaluation of the T3 framework on the Gemini language model. It provides a direct comparison with various baseline methods, allowing readers to assess the relative performance of T3 on Gemini across different tasks and datasets.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-14-0">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-14-0" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the numerical results of the performance comparison in a clear and structured manner. It effectively organizes the data by dataset, method, and metric, allowing for easy comparison and analysis.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of datasets and methods</li><li>Concise labeling of metrics</li><li>Effective use of bold font to highlight the best performing method</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (AUROC, PRAUC) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different datasets (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-14-0">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-14-0" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents quantitative data in the form of AUROC and PRAUC scores for different self-detection methods using the Gemini LLM. It shows that T3 generally achieves comparable or better performance compared to baseline methods on PIQA and CommonsenseQA. However, on Flipkart, T3 doesn&#x27;t outperform all baselines, particularly CAPE and Hybrid. This suggests that T3&#x27;s effectiveness on Gemini may vary depending on the dataset and task.</p><p><strong>Statistical Methods:</strong> The table doesn&#x27;t explicitly mention the statistical methods used to calculate the AUROC and PRAUC. It&#x27;s assumed that standard methods for these metrics were employed.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the chosen datasets are representative of real-world question-answering scenarios and that the LLM hyperparameters are appropriately set. The limitations lie in the lack of specific numerical values for the scores and the absence of statistical significance testing.</p><p><strong>Improvements And Alternatives:</strong> The table could be improved by: 1) Including specific numerical values for the performance scores, 2) Performing statistical significance testing to assess the difference between methods, 3) Providing details on the LLM hyperparameter settings.</p><p><strong>Consistency And Comparisons:</strong> The table consistently presents the results for all three datasets, allowing for comparison across datasets. It also effectively compares T3 with various baseline methods, highlighting its relative performance on Gemini.</p><p><strong>Sample Size And Reliability:</strong> The table doesn&#x27;t mention the sample size used for each dataset. Knowing the sample size would help assess the reliability of the results.</p><p><strong>Interpretation And Context:</strong> The table provides insights into the performance of T3 on the Gemini LLM, suggesting that its effectiveness may vary depending on the dataset and task. The observed discrepancy on Flipkart highlights the importance of the LLM&#x27;s ability to follow instructions for reflection and justification.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the table provides a comparison of different methods on Gemini but lacks specific numerical data and statistical significance testing to fully support the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+        
+        <section id="section-15" class="card">
+            <h2>Appendix E</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>Appendix E presents two case studies from the PIQA dataset to illustrate the effectiveness of the T3 framework in mitigating over-trust in LLM self-detection. The first case study involves a question about repairing a torn shirt, where the LLM initially assigns a high confidence score (0.7) to an incorrect answer. However, after applying T3 and generating justifications for both answer choices, the detection score for the incorrect answer is lowered to 0.45. The second case study focuses on a question about keeping a couch fur-free, where the LLM initially exhibits high confidence (0.7) in an incorrect answer. After applying T3, the detection score is adjusted to 0.5, reflecting the LLM&#x27;s uncertainty about the correct answer. These case studies demonstrate how T3 can help LLMs identify and reduce over-trust in incorrect answers by considering justifications from different answer perspectives.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The appendix provides concrete examples of how T3 works in practice, using actual questions and answers from the PIQA dataset.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>It clearly shows how the generation of justifications for each answer choice can lead to adjustments in the detection score, reflecting the LLM&#x27;s revised confidence.</p>
+                
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the appendix presents two case studies, it would be beneficial to include more examples to demonstrate the generalizability of T3&#x27;s effectiveness across different question types and answer choices.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The appendix could benefit from a more detailed analysis of the generated justifications, exploring the specific reasoning patterns or evidence used by the LLM to support its confidence adjustments.</p>
+                
+            </li>
+            
+                </ul>
+                
+                <h3>Visual Elements Analysis</h3>
+                
+        <div class="visual-element card">
+            <h4>Table 10</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 10, titled &quot;Case study for PIQA. pv output 1 refers to pv with explanation (a) before explanation (b), and pv output 2 refers to the reversed order,&quot; presents a case study demonstrating the T3 framework&#x27;s ability to mitigate over-trust in an incorrect answer. The case study involves a question about repairing a torn shirt with two answer choices: (a) a simple explanation and (b) a more detailed explanation including flipping the shirt inside-out. The LLM initially predicts answer (a) with a confidence score of 0.7 using the Top-K Verb method. However, after generating justifications for both answers and applying T3, the detection score for (a) is lowered to 0.45. The table shows the justifications for each answer, the pv outputs with different justification orders, and the final T3 detection score. The justification for (b) highlights the importance of flipping the shirt inside-out, which contributes to the decrease in (a)&#x27;s confidence.</p>
+            <p><strong>Relevance:</strong> Table 10 is highly relevant to Appendix E as it provides a concrete example of how T3 can effectively mitigate over-trust in an incorrect answer. It directly supports the claims made in the text by showing how the generation of justifications and their integration into the confidence calibration process can lead to a more accurate assessment of answer trustability.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-15-0">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-15-0" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the case study in a clear and structured manner. It effectively separates the different components of the analysis, including the question, answer choices, justifications, pv outputs, and final detection score.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of information</li><li>Concise labeling of elements</li><li>Effective use of indentation to highlight justifications</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (pv, G1, P1) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different stages of the analysis (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-15-0">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-15-0" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents qualitative data in the form of justifications and quantitative data in the form of confidence scores and detection scores. It shows that the initial confidence score of 0.7 for the incorrect answer (a) is reduced to 0.45 after applying T3. This reduction is attributed to the justification for answer (b), which highlights the importance of a step missing in answer (a).</p><p><strong>Statistical Methods:</strong> Not applicable, as the case study doesn&#x27;t involve statistical analysis beyond the calculation of confidence and detection scores.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the generated justifications are meaningful and reflect the LLM&#x27;s reasoning process. The limitations lie in the reliance on a single case study and the potential for bias in the selection of the example.</p><p><strong>Improvements And Alternatives:</strong> While the case study provides a compelling example, it could be strengthened by including more case studies with different question types and answer choices. Additionally, a more detailed analysis of the generated justifications could provide further insights into the LLM&#x27;s reasoning process.</p><p><strong>Consistency And Comparisons:</strong> The case study is consistent with the overall claims of the paper regarding the effectiveness of T3 in mitigating over-trust. However, it lacks comparison with other self-detection methods.</p><p><strong>Sample Size And Reliability:</strong> Not applicable, as the case study involves a single example.</p><p><strong>Interpretation And Context:</strong> The case study effectively illustrates how T3 can help LLMs identify and reduce over-trust in incorrect answers by considering justifications from different answer perspectives.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the case study provides a clear example of T3&#x27;s effectiveness but is limited by the reliance on a single example and the lack of comparison with other methods.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Table 11</h4>
+            <p><strong>Type:</strong> Table</p>
+            <p><strong>Visual Type:</strong> Table</p>
+            <p><strong>Description:</strong> Table 11, titled &quot;Case study for PIQA. pv output 1 refers to pv with justification (a) before justification (b), and pv output 2 refers to the reversed order,&quot; presents another case study from the PIQA dataset, focusing on a question about keeping a couch fur-free. The LLM initially predicts answer (b), which involves dampening a sponge, with a confidence score of 0.7 using the Top-K Verb method. However, the ground truth answer is (a), using a dry sponge. After generating justifications for both answers and applying T3, the detection score for (b) is adjusted to 0.5. The table shows the justifications for each answer, the pv outputs with different justification orders, and the final T3 detection score. The justifications highlight the potential benefits and drawbacks of both dampening and not dampening the sponge, reflecting the LLM&#x27;s uncertainty about the definitive best approach.</p>
+            <p><strong>Relevance:</strong> Table 11 is relevant to Appendix E as it provides an additional case study demonstrating T3&#x27;s ability to handle situations where the LLM is uncertain about the correct answer. It shows how T3 can lead to a more balanced confidence score, reflecting the ambiguity present in the justifications for both answer choices.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-15-1">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-15-1" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a table is appropriate for presenting the case study in a clear and structured manner. It effectively separates the different components of the analysis, including the question, answer choices, justifications, pv outputs, and final detection score.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>Clear separation of information</li><li>Concise labeling of elements</li><li>Effective use of indentation to highlight justifications</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Consider adding a brief explanation of the abbreviations (pv, G1, P1) within the table or caption</li><li>The table could benefit from a more distinct visual separation between the different stages of the analysis (e.g., a horizontal line) to improve readability</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-15-1">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-15-1" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The table presents qualitative data in the form of justifications and quantitative data in the form of confidence scores and detection scores. It shows that the initial confidence score of 0.7 for the incorrect answer (b) is adjusted to 0.5 after applying T3. This adjustment reflects the LLM&#x27;s uncertainty, as both justifications present valid points for and against dampening the sponge.</p><p><strong>Statistical Methods:</strong> Not applicable, as the case study doesn&#x27;t involve statistical analysis beyond the calculation of confidence and detection scores.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the generated justifications are meaningful and reflect the LLM&#x27;s reasoning process. The limitations lie in the reliance on a single case study and the potential for bias in the selection of the example.</p><p><strong>Improvements And Alternatives:</strong> While the case study provides a compelling example, it could be strengthened by including more case studies with different question types and answer choices. Additionally, a more detailed analysis of the generated justifications could provide further insights into the LLM&#x27;s reasoning process.</p><p><strong>Consistency And Comparisons:</strong> The case study is consistent with the overall claims of the paper regarding the effectiveness of T3 in handling LLM uncertainty. However, it lacks comparison with other self-detection methods.</p><p><strong>Sample Size And Reliability:</strong> Not applicable, as the case study involves a single example.</p><p><strong>Interpretation And Context:</strong> The case study effectively illustrates how T3 can help LLMs reflect their uncertainty by adjusting confidence scores based on the ambiguity present in the justifications for different answer choices.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The confidence rating is moderate as the case study provides a clear example of T3&#x27;s ability to handle uncertainty but is limited by the reliance on a single example and the lack of comparison with other methods.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+        
+        </main>
+
+        <button id="fab" aria-label="Scroll to top">
+            <span class="material-icons">arrow_upward</span>
+        </button>
+
+        <button id="dark-mode-toggle" aria-label="Toggle dark mode">
+            <span class="material-icons">brightness_4</span>
+        </button>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const fab = document.getElementById('fab');
+                const darkModeToggle = document.getElementById('dark-mode-toggle');
+                const collapsibleButtons = document.querySelectorAll('.collapsible-btn');
+
+                // Floating Action Button (FAB) to scroll to top
+                fab.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+
+                // Show/hide FAB based on scroll position
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 100) {
+                        fab.style.display = 'block';
+                    } else {
+                        fab.style.display = 'none';
+                    }
+                });
+
+                // Dark mode toggle
+                darkModeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('dark-mode');
+                });
+
+                // Collapsible sections
+                collapsibleButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        const content = this.nextElementSibling;
+                        const icon = this.querySelector('.material-icons');
+                        
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                            icon.style.transform = 'rotate(0deg)';
+                            this.setAttribute('aria-expanded', 'false');
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            icon.style.transform = 'rotate(180deg)';
+                            this.setAttribute('aria-expanded', 'true');
+                        }
+                    });
+                });
+
+                // Initialize collapsible sections as closed
+                collapsibleButtons.forEach(button => {
+                    const content = button.nextElementSibling;
+                    content.style.maxHeight = null;
+                    button.setAttribute('aria-expanded', 'false');
+                });
+            });
+        </script>
+    </body>
+    </html>
+    
