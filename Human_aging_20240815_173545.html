@@ -1,0 +1,728 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Paper Review: Nonlinear Dynamics of Multi-Omics Profiles During Human Aging</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+            :root {
+                --primary-color: #1976D2;
+                --secondary-color: #424242;
+                --background-color: #f5f5f5;
+                --card-color: #ffffff;
+                --text-color: #333333;
+                --accent-color: #FFC107;
+            }
+            body {
+                font-family: 'Roboto', Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: var(--background-color);
+                color: var(--text-color);
+                transition: all 0.3s ease;
+            }
+            .dark-mode {
+                --primary-color: #2196F3;
+                --secondary-color: #BDBDBD;
+                --background-color: #121212;
+                --card-color: #1E1E1E;
+                --text-color: #FFFFFF;
+            }
+            #top-bar {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+            }
+            #top-bar h1 {
+                margin: 0;
+                font-size: 1.5em;
+            }
+            #table-of-contents {
+                background-color: var(--card-color);
+                padding: 20px;
+                margin: 20px auto;
+                max-width: 800px;
+                border-radius: 4px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            #table-of-contents h2 {
+                margin-top: 0;
+            }
+            #table-of-contents ol {
+                padding-left: 20px;
+            }
+            #table-of-contents a {
+                color: var(--primary-color);
+                text-decoration: none;
+            }
+            #table-of-contents a:hover {
+                text-decoration: underline;
+            }
+            #content {
+                padding: 20px;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .card {
+                background-color: var(--card-color);
+                border-radius: 4px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            blockquote {
+                margin-left: 0;
+                padding: 10px 20px;
+                background-color: rgba(0,0,0,0.05);
+                border-left: 4px solid var(--accent-color);
+                font-style: italic;
+            }
+            .page-number {
+                font-size: 0.8em;
+                color: var(--secondary-color);
+                font-style: normal;
+                display: block;
+                text-align: right;
+                margin-top: 5px;
+            }
+            #fab {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: var(--accent-color);
+                color: var(--text-color);
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 56px;
+                font-size: 24px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            #fab:hover {
+                background-color: #FFD54F;
+            }
+            #dark-mode-toggle {
+                position: fixed;
+                top: 70px;
+                right: 20px;
+                background-color: var(--primary-color);
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            #dark-mode-toggle:hover {
+                background-color: #1565C0;
+            }
+            .collapsible-btn {
+                background-color: var(--secondary-color);
+                color: var(--card-color);
+                cursor: pointer;
+                padding: 10px;
+                width: 100%;
+                border: none;
+                text-align: left;
+                outline: none;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                transition: 0.4s;
+            }
+            .collapsible-btn:hover {
+                background-color: #555;
+            }
+            .collapsible-content {
+                padding: 0 18px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+                background-color: var(--card-color);
+            }
+            .material-icons {
+                transition: transform 0.3s ease;
+            }
+            /* Updated heading styles to ensure consistency */
+            h2 {
+                font-size: 1.5em;
+                margin-bottom: 0.5em;
+            }
+            h3 {
+                font-size: 1.25em;
+                margin-bottom: 0.5em;
+            }
+            h4 {
+                font-size: 1.1em;
+                margin-bottom: 0.4em;
+            }
+            h5, h6 {
+                font-size: 1.1em;
+                margin-bottom: 0.4em;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="top-bar">
+            <h1>Paper Review: Nonlinear Dynamics of Multi-Omics Profiles During Human Aging</h1>
+        </div>
+
+        <div id="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ol><li><a href="#section-1">Abstract</a></li><li><a href="#section-2">Introduction</a></li><li><a href="#section-3">Results</a></li><li><a href="#section-4">Discussion</a></li><li><a href="#section-5">Methods</a></li></ol>
+        </div>
+
+        <main id="content">
+            <section id="summary" class="card">
+                <h2>Overall Summary</h2>
+                <div class="content">
+                    <h3>Overview</h3>
+                    <p>This longitudinal study investigates the nonlinear changes in molecular markers of aging using multi-omics profiling on a cohort of 108 participants aged 25-75 years.  The research challenges the traditional linear models of aging and identifies distinct periods of significant molecular dysregulation, providing insights into the complex biological processes underlying age-related changes.  The study employed both trajectory clustering and a modified DE-SWAN algorithm to analyze the data.</p>
+                    
+                    <h3>Key Findings</h3>
+                    <ul>
+                        <li>Only a small portion of molecules exhibit linear changes with age, highlighting the importance of studying nonlinear dynamics in aging.</li><li>Trajectory clustering revealed three distinct clusters of molecules with unique nonlinear patterns, suggesting specific age ranges with substantial molecular alterations, particularly around 60 years old.</li><li>Two major periods of dysregulation were identified, occurring at approximately 44 years and 60 years of age, characterized by changes in immune regulation, carbohydrate metabolism, cardiovascular disease, and lipid and alcohol metabolism.</li><li>Functional analysis linked these periods of dysregulation to specific pathways and modules, including GTPase activity, histone modification, oxidative stress, mRNA stability, autophagy, and disease risks such as cardiovascular disease, kidney issues, and type 2 diabetes.</li><li>The modified DE-SWAN algorithm identified two prominent crests of dysregulation around the ages of 44 and 60, consistent across various omics data types, suggesting their universal nature in the aging process.</li>
+                    </ul>
+                    
+                    <h3>Strengths</h3>
+                    <ul>
+                        <li>The study&#x27;s longitudinal design allows for the tracking of individual changes over time, providing a more nuanced understanding of aging dynamics than cross-sectional studies.</li><li>The comprehensive multi-omics approach captures a wide range of molecular changes, providing a holistic view of the aging process.</li><li>The use of both trajectory clustering and the modified DE-SWAN algorithm provides a robust and complementary analysis of the data, strengthening the validity of the findings.</li><li>The thorough functional analysis of the identified clusters and crests provides valuable insights into the biological processes and disease risks associated with nonlinear aging-related changes.</li><li>The study highlights the limitations of linear models in understanding aging and emphasizes the importance of considering nonlinear dynamics.</li>
+                    </ul>
+                    
+                    <h3>Areas for Improvement</h3>
+                    <ul>
+                        <li>Expanding the cohort size and diversity would enhance the generalizability of the findings and allow for more robust subgroup analyses.</li><li>Incorporating data on lifestyle factors, such as diet and exercise, could provide insights into the interplay between intrinsic aging processes and extrinsic factors.</li><li>Investigating the relationship between the identified molecular patterns and functional capacities, disease occurrences, and mortality hazards would further strengthen the clinical relevance of the findings.</li>
+                    </ul>
+                    
+                    <h3>Significant Elements</h3>
+                    <ul>
+                        <li><strong>Figure 1:</strong> Illustrates the nonlinear changes in molecules and microbes during human aging, showcasing the study cohort, data acquisition process, and key findings related to the nonlinearity of molecular changes.</li><li><strong>Figure 4:</strong> Depicts the &quot;waves&quot; of aging-related molecular changes, identified using a modified DE-SWAN algorithm, highlighting two prominent crests of dysregulation around the ages of 44 and 60.</li>
+                    </ul>
+                    
+                    <h3>Conclusion</h3>
+                    <p>This study provides compelling evidence for the nonlinear nature of molecular changes during human aging. The identification of distinct periods of dysregulation and their associated biological pathways offers valuable insights into the complex mechanisms underlying age-related changes and disease risks.  Further research building upon these findings could pave the way for targeted interventions to promote healthy aging and mitigate age-related diseases.</p>
+                </div>
+            </section>
+
+            
+        <section id="section-1" class="card">
+            <h2>Abstract</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>This research paper investigates the nonlinear dynamics of multi-omics profiles during human aging. The study involved a longitudinal cohort of 108 participants aged between 25 and 75 years, residing in California, USA. Participants were tracked for a median period of 1.7 years, with a maximum follow-up duration of 6.8 years. Comprehensive multi-omics profiling was performed, revealing consistent nonlinear patterns in molecular markers of aging. Two major periods of substantial dysregulation were identified, occurring at approximately 44 years and 60 years of age. Distinct molecules and functional pathways associated with these periods were identified, including immune regulation and carbohydrate metabolism changes at the 60-year transition and cardiovascular disease, lipid and alcohol metabolism changes at the 40-year transition. The research concludes that functions and risks of aging-related diseases change nonlinearly across the human lifespan and provides insights into the molecular and biological pathways involved in these changes.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The abstract effectively summarizes the key aspects of the research, including the study design, methodology, key findings, and implications.</p>
+                <blockquote>'In this study, we performed comprehensive multi-omics profiling on a longitudinal human cohort of 108 participants, aged between 25 years and 75 years.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The abstract highlights the novelty of the study by emphasizing the focus on nonlinear changes in molecular markers of aging, which contrasts with previous research that primarily explored linear changes.</p>
+                <blockquote>'Although many studies have explored linear changes during aging, the prevalence of aging-related diseases and mortality risk accelerates after specific time points, indicating the importance of studying nonlinear molecular changes.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The abstract clearly states the main conclusion of the study, which is that functions and risks of aging-related diseases change nonlinearly across the human lifespan.</p>
+                <blockquote>'Overall, this research demonstrates that functions and risks of aging-related diseases change nonlinearly across the human lifespan and provides insights into the molecular and biological pathways involved in these changes.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the abstract mentions two major periods of dysregulation, it could briefly elaborate on the specific types of molecules and pathways identified for each period. This would provide a more comprehensive overview of the study&#x27;s findings.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The abstract could briefly mention the potential implications of the findings for disease diagnosis, prevention, and treatment. This would enhance the translational relevance of the research.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-2" class="card">
+            <h2>Introduction</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>This introductory section establishes the context for the research by highlighting the limitations of previous studies that primarily focused on linear changes in molecular markers during aging. The authors emphasize the importance of studying nonlinear changes, as the prevalence of aging-related diseases and mortality risk accelerates after specific time points, suggesting a more complex dynamic. The introduction then outlines the study&#x27;s objectives, which are to perform comprehensive multi-omics profiling on a longitudinal human cohort to investigate the nonlinear dynamics of molecular markers of aging and identify distinct periods of substantial dysregulation and associated biological pathways. The authors aim to provide insights into the molecular and biological mechanisms underlying these nonlinear changes, ultimately contributing to a more comprehensive understanding of the aging process and its implications for age-related diseases.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The introduction effectively highlights the gap in current knowledge by emphasizing the limitations of previous research that primarily focused on linear changes in molecular markers during aging.</p>
+                <blockquote>'Although many studies have explored linear changes during aging, the prevalence of aging-related diseases and mortality risk accelerates after specific time points, indicating the importance of studying nonlinear molecular changes.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The introduction clearly articulates the rationale for the study by emphasizing the importance of understanding nonlinear changes in molecular markers of aging to gain insights into the accelerated risk of age-related diseases at specific time points.</p>
+                <blockquote>'It is widely recognized that the occurrence of aging-related diseases does not follow a proportional increase with age. Instead, the risk of these diseases accelerates at specific points throughout the human lifespan6.'<span class='page-number'>p. 2</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The introduction provides a concise overview of the study design and methodology, outlining the use of comprehensive multi-omics profiling on a longitudinal human cohort to investigate nonlinear changes in molecular markers of aging.</p>
+                <blockquote>'In this study, we performed comprehensive multi-omics profiling on a longitudinal human cohort of 108 participants, aged between 25 years and 75 years.'<span class='page-number'>p. 1</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The introduction could benefit from a more detailed discussion of the specific types of nonlinear changes that have been observed in previous studies, providing concrete examples of how these changes manifest in different molecular markers.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The introduction could briefly mention the potential implications of the study&#x27;s findings for disease diagnosis, prevention, and treatment. This would enhance the translational relevance of the research and highlight its potential impact on healthcare.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The introduction could elaborate on the specific challenges and opportunities associated with studying nonlinear changes in molecular markers of aging. This would provide a more nuanced perspective on the complexities of the research and the potential for future advancements in the field.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-3" class="card">
+            <h2>Results</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>This section presents the results of the study, starting with a description of the cohort and the multi-omics data collected. The authors highlight the nonlinear nature of molecular changes during aging, revealing that only a small portion of molecules exhibit linear changes. They employ clustering analysis to group molecules with similar trajectories, identifying three distinct clusters with clear nonlinear patterns. The authors then perform functional analysis on these clusters, uncovering pathways and modules associated with GTPase activity, histone modification, oxidative stress, mRNA stability, autophagy, and disease risks such as cardiovascular disease, kidney issues, and type 2 diabetes. They further investigate the dynamics of aging-related molecular changes using a modified DE-SWAN algorithm, identifying two prominent crests of dysregulation around the ages of 45 and 65. Functional analysis of these crests reveals modules related to CVD, skin and muscle stability, lipid and alcohol metabolism, immune dysfunction, kidney function, and carbohydrate metabolism. The authors emphasize the complementary nature of the two approaches (trajectory clustering and DE-SWAN) in capturing the nonlinear changes in molecules and functions during human aging.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The results section effectively presents the extensive multi-omics dataset collected, providing a detailed overview of the cohort characteristics, sample collection, and data acquisition process.</p>
+                <blockquote>'We collected longitudinal biological samples from 108 participants over several years, with a median tracking period of 1.7 years and a maximum period of 6.8 years, and conducted multi-omics profiling on the samples.'<span class='page-number'>p. 3</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The authors convincingly demonstrate the nonlinear nature of molecular changes during aging, using both Spearman correlation and Wilcoxon tests to compare different age stages to the baseline.</p>
+                <blockquote>'Interestingly, using this approach, 81.03% of molecules (9,106 out of 11,305) exhibited changes in at least one age stage compared to the baseline (Fig. 1e and Extended Data Fig. 2a).'<span class='page-number'>p. 3</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The clustering analysis effectively groups molecules with similar trajectories, revealing three distinct clusters with clear and compelling nonlinear patterns across the human lifespan.</p>
+                <blockquote>'Among the 11 identified clusters, three distinct clusters (2, 4 and 5) displayed compelling, straightforward and easily understandable patterns that spanned the entire lifespan (Fig. 2c).'<span class='page-number'>p. 3</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The functional analysis of the identified clusters and crests provides valuable insights into the biological processes and disease risks associated with nonlinear aging-related changes.</p>
+                <blockquote>'Altogether, the comprehensive functional analysis offers valuable insights into the nonlinear changes observed in molecular profiles and their correlations with biological functions and disease risks across the human lifespan.'<span class='page-number'>p. 6</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the authors acknowledge the potential influence of menopause on the transition point observed at approximately 55 years of age, they could further explore this by analyzing the data separately for pre-menopausal and post-menopausal women.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The authors could investigate the potential impact of lifestyle factors, such as physical activity, diet, and environmental exposures, on the observed nonlinear molecular changes. This would provide a more comprehensive understanding of the interplay between intrinsic aging processes and extrinsic factors.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The authors could explore the potential of using machine learning algorithms to predict individual aging trajectories based on the multi-omics data. This could have implications for personalized medicine and the development of targeted interventions to promote healthy aging.</p>
+                
+            </li>
+            
+                </ul>
+                
+                <h3>Visual Elements Analysis</h3>
+                
+        <div class="visual-element card">
+            <h4>Figure 1</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Combination Chart</p>
+            <p><strong>Description:</strong> Figure 1 presents a multi-panel figure illustrating the nonlinear changes in molecules and microbes during human aging. Panel (a) is a circular heatmap showing the demographics and multi-omics data of the 108 participants. Panel (b) is a flow diagram depicting the sample collection and multi-omics data acquisition process. Panel (c) is a line plot showing the collection time range and sample numbers for each participant. Panel (d) is a scatter plot illustrating the significantly changed molecules and microbes during aging, detected using the Spearman correlation approach. Panel (e) is a heatmap showing the differential expressional molecules/microbes in different age ranges compared to the baseline. Panel (f) is a set of pie charts illustrating the proportion of linear and nonlinear changing molecules/microbes within each omics data type. Panel (g) is a heatmap depicting the nonlinear changing molecules and microbes during human aging.</p>
+            <p><strong>Relevance:</strong> Figure 1 is highly relevant to the Results section as it provides a comprehensive overview of the study cohort, data acquisition process, and key findings related to the nonlinear nature of molecular changes during aging. It supports the authors&#x27; central argument that aging is a complex process characterized by nonlinear molecular alterations, setting the stage for further investigation into the specific patterns and functional implications of these changes.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-3-0">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-3-0" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a combination chart is appropriate for Figure 1 as it effectively presents a diverse range of data, including demographics, sample collection information, and statistical analysis results. The different chart types are well-suited for their respective data and allow for clear visualization of the key findings.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>The figure is well-organized, with each panel clearly labeled and captioned.</li><li>The use of different chart types effectively conveys the diversity of data collected and analyzed.</li><li>The color-coding and visual elements are generally clear and informative.</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>Panel (a) could benefit from clearer labeling of data types and measurement units within each segment of the circular heatmap.</li><li>Panel (c) could benefit from clearer axis labels and a legend explaining the color scheme for the line plot.</li><li>Panel (e) could benefit from clearer labeling of the color scheme and a more informative legend for the heatmap.</li><li>Panel (f) could benefit from labels indicating the percentage represented by each slice of the pie charts.</li><li>Panel (g) could benefit from a clearer color scale legend and potentially grouping molecules/microbes by function or pathway for easier interpretation.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-3-0">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-3-0" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure presents a wealth of data, highlighting the longitudinal nature of the study, the diversity of omics data collected, and the prevalence of nonlinear changes in molecules and microbes during aging. The scatter plot in panel (d) effectively shows the significant correlations between age and changes in different omics data types. The heatmaps in panels (e) and (g) visually illustrate the complex and dynamic patterns of age-related changes across different omics data types.</p><p><strong>Statistical Methods:</strong> The authors use Spearman correlation and Wilcoxon tests to assess the relationship between age and molecular changes. These methods are appropriate for identifying linear and nonlinear trends, respectively. However, the authors do not report effect sizes or confidence intervals, which would provide a more comprehensive understanding of the magnitude and uncertainty of the observed effects.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the collected omics data accurately reflect the underlying biological processes associated with aging. However, there may be limitations in the sensitivity and specificity of the omics platforms used. Additionally, the study cohort may not be fully representative of the broader population, limiting the generalizability of the findings.</p><p><strong>Improvements And Alternatives:</strong> The authors could include effect sizes and confidence intervals for the reported statistical tests. They could also explore the use of more sophisticated statistical models, such as nonlinear regression or machine learning algorithms, to capture the complex dynamics of aging-related changes. Additionally, expanding the cohort size and diversity would enhance the generalizability of the findings.</p><p><strong>Consistency And Comparisons:</strong> The findings presented in Figure 1 are consistent with the text in the Results section, supporting the authors&#x27; central argument that aging is characterized by nonlinear molecular alterations. The figure effectively integrates data from different omics platforms, providing a comprehensive view of the aging process.</p><p><strong>Sample Size And Reliability:</strong> The study includes 108 participants, which is a reasonable sample size for a longitudinal multi-omics study. However, the sample size is relatively small for some of the subgroup analyses, such as the comparison of pre-menopausal and post-menopausal women. This may limit the statistical power and reliability of these analyses.</p><p><strong>Interpretation And Context:</strong> The figure effectively communicates the key findings related to nonlinear changes in molecules and microbes during human aging. The results are consistent with previous research highlighting the complexity of the aging process and the limitations of relying solely on linear models. The figure provides a valuable contribution to the field by showcasing the dynamic and multifaceted nature of aging-related molecular alterations.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The statistical analysis is generally sound, using appropriate methods to identify linear and nonlinear trends. However, the lack of effect sizes and confidence intervals limits the interpretability of the findings. The sample size is reasonable for the overall study, but some subgroup analyses may be underpowered. Overall, the figure provides a valuable contribution to the field, but further statistical rigor would enhance the robustness of the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Figure 2</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Combination Chart</p>
+            <p><strong>Description:</strong> Figure 2 presents a multi-panel figure illustrating the nonlinear changes in multi-omics profiling during human aging. Panel (a) consists of nine scatter plots with regression lines, each representing a different omics data type or clinical lab test, showing the correlation between age and the first principal component (PC1). Panel (b) is a heatmap with a hierarchical clustering dendrogram, showing the z-scores of Spearman correlations between individual molecules and age, grouped by molecule class. Panel (c) consists of three line plots with shaded areas, each representing a different cluster of molecules identified in the heatmap, showing the median trend and variability of age-related changes within each cluster.</p>
+            <p><strong>Relevance:</strong> Figure 2 is highly relevant to the Results section as it further explores the nonlinear changes in multi-omics profiling during aging. It demonstrates the correlation between age and the first principal component of variation for different biological data types, identifies groups of molecules with similar age-related changes, and provides a closer look at the age-related trends within three notable molecule clusters.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-3-1">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-3-1" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a combination chart is appropriate for Figure 2 as it effectively presents different aspects of the data analysis, including correlation analysis, clustering, and visualization of age-related trends. The scatter plots, heatmap, and line plots are well-suited for their respective purposes and allow for clear visualization of the key findings.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>The figure is well-organized, with each panel clearly labeled and captioned.</li><li>The scatter plots in panel (a) provide clear statistical information, including Spearman correlation coefficients and p-values.</li><li>The heatmap in panel (b) effectively visualizes the correlation patterns and clusters of molecules with similar age-related trends.</li><li>The line plots in panel (c) clearly show the median trend and variability within each cluster, highlighting the nonlinear nature of age-related changes.</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>The heatmap in panel (b) could benefit from explicit labels for molecule classes on the Y-axis and a separate legend mapping colors to molecule classes.</li><li>The annotations in the top right plot of panel (c) could be made more prominent to highlight the specific types of molecules driving the trend in that cluster.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-3-1">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-3-1" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure effectively presents the results of correlation analysis, clustering, and visualization of age-related trends. The scatter plots in panel (a) show that some omics data types, such as cytokine and oral microbiome data, have stronger correlations with age than others. The heatmap in panel (b) reveals distinct clusters of molecules with similar age-related changes, suggesting the presence of coordinated molecular events during aging. The line plots in panel (c) highlight the nonlinear nature of age-related changes within three notable clusters, showing fluctuations before 60 years of age followed by a sharp increase and an upper inflection point at approximately 55-60 years of age.</p><p><strong>Statistical Methods:</strong> The authors use Spearman correlation and principal component analysis (PCA) to assess the relationship between age and multi-omics data. These methods are appropriate for identifying linear trends and reducing data dimensionality, respectively. The use of fuzzy c-means clustering is also appropriate for grouping molecules with similar trajectories. However, the authors do not report effect sizes or confidence intervals for the clustering analysis, which would provide a more comprehensive understanding of the cluster stability and separation.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the first principal component adequately captures the age-related variation in the multi-omics data. However, other principal components may also contain relevant information. Additionally, the clustering analysis assumes that the chosen number of clusters is optimal, which may not be the case. The authors acknowledge the potential influence of menopause on the transition point observed at approximately 55 years of age, but they do not fully explore this potential confounder.</p><p><strong>Improvements And Alternatives:</strong> The authors could include effect sizes and confidence intervals for the clustering analysis. They could also explore the use of alternative clustering methods, such as hierarchical clustering or k-means clustering, to compare the results and assess the robustness of the identified clusters. Additionally, they could further investigate the potential influence of menopause by analyzing the data separately for pre-menopausal and post-menopausal women.</p><p><strong>Consistency And Comparisons:</strong> The findings presented in Figure 2 are consistent with the text in the Results section, further supporting the authors&#x27; central argument that aging is characterized by nonlinear molecular alterations. The figure effectively integrates different statistical analysis methods, providing a comprehensive view of the age-related changes in multi-omics profiling.</p><p><strong>Sample Size And Reliability:</strong> The study includes 108 participants, which is a reasonable sample size for a longitudinal multi-omics study. However, the sample size is relatively small for some of the subgroup analyses, such as the comparison of pre-menopausal and post-menopausal women. This may limit the statistical power and reliability of these analyses.</p><p><strong>Interpretation And Context:</strong> The figure effectively communicates the key findings related to nonlinear changes in multi-omics profiling during human aging. The results are consistent with previous research highlighting the complexity of the aging process and the limitations of relying solely on linear models. The figure provides a valuable contribution to the field by showcasing the dynamic and multifaceted nature of aging-related molecular alterations.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The statistical analysis is generally sound, using appropriate methods for correlation analysis, clustering, and visualization of age-related trends. However, the lack of effect sizes and confidence intervals for the clustering analysis limits the interpretability of the findings. The sample size is reasonable for the overall study, but some subgroup analyses may be underpowered. Overall, the figure provides a valuable contribution to the field, but further statistical rigor would enhance the robustness of the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Figure 3</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Combination Chart</p>
+            <p><strong>Description:</strong> Figure 3 presents a multi-panel figure illustrating the functional analysis of nonlinear changing molecules in each cluster. Panel (a) consists of a heatmap (left) and a network diagram (right), showing the pathway enrichment and module analysis for each transcriptome cluster. Panel (b) is a circular network diagram, showing the pathway enrichment for metabolomics in each cluster. Panel (c) consists of four separate box plots, each representing a different clinical lab test, showing how specific clinical blood parameters change across different age groups.</p>
+            <p><strong>Relevance:</strong> Figure 3 is highly relevant to the Results section as it delves into the functional implications of the nonlinear changing molecules identified in the clustering analysis. It highlights the biological pathways and functions significantly enriched in each aging cluster, providing insights into the molecular mechanisms underlying the observed age-related changes.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-3-2">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-3-2" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a combination chart is appropriate for Figure 3 as it effectively presents the results of functional analysis for different data types. The heatmap, network diagrams, and box plots are well-suited for their respective purposes and allow for clear visualization of the key findings.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>The figure is well-organized, with each panel clearly labeled and captioned.</li><li>The heatmap in panel (a) effectively shows the age-related trends in pathway activity.</li><li>The network diagrams in panels (a) and (b) help visualize the relationships between pathways and metabolites.</li><li>The box plots in panel (c) clearly show the distribution of the data and any age-related trends in clinical parameters.</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>The network diagrams in panels (a) and (b) could benefit from clearer legends explaining the color schemes and node sizes.</li><li>The box plots in panel (c) could benefit from labels indicating the specific age ranges represented by each box.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-3-2">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-3-2" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure presents the results of functional analysis for transcriptomics, metabolomics, and clinical lab test data, highlighting the pathways and modules associated with each aging cluster. The heatmap in panel (a) shows that certain pathways, such as those related to GTPase activity, histone modification, and oxidative stress, exhibit distinct age-related trends. The network diagrams in panels (a) and (b) reveal the interconnectedness of pathways and metabolites, suggesting coordinated molecular events during aging. The box plots in panel (c) demonstrate age-related changes in clinical blood parameters, such as blood urea nitrogen, serum/plasma glucose, mean corpuscular hemoglobin, and red cell distribution width.</p><p><strong>Statistical Methods:</strong> The authors use pathway enrichment analysis to identify the biological functions significantly enriched in each aging cluster. This method is appropriate for identifying the functional relevance of the observed molecular changes. However, the authors do not report the specific statistical test used for pathway enrichment analysis or the criteria for selecting significant pathways.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the databases used for pathway enrichment analysis are comprehensive and accurate. However, there may be limitations in the coverage and annotation of these databases. Additionally, the analysis assumes that the observed changes in gene expression, protein levels, and metabolite concentrations accurately reflect the underlying biological processes. However, there may be post-transcriptional and post-translational modifications that are not captured by the omics platforms used.</p><p><strong>Improvements And Alternatives:</strong> The authors could provide more details about the statistical methods used for pathway enrichment analysis, including the specific test used and the criteria for selecting significant pathways. They could also explore the use of alternative databases or functional annotation tools to compare the results and assess the robustness of the findings.</p><p><strong>Consistency And Comparisons:</strong> The findings presented in Figure 3 are consistent with the text in the Results section, further supporting the authors&#x27; central argument that aging is characterized by nonlinear molecular alterations with functional implications. The figure effectively integrates data from different omics platforms, providing a comprehensive view of the aging process.</p><p><strong>Sample Size And Reliability:</strong> The study includes 108 participants, which is a reasonable sample size for a longitudinal multi-omics study. However, the sample size is relatively small for some of the subgroup analyses, such as the comparison of pre-menopausal and post-menopausal women. This may limit the statistical power and reliability of these analyses.</p><p><strong>Interpretation And Context:</strong> The figure effectively communicates the key findings related to the functional implications of nonlinear changing molecules during human aging. The results are consistent with previous research highlighting the role of specific pathways and modules in the aging process, such as GTPase activity, histone modification, oxidative stress, mRNA stability, and autophagy. The figure provides a valuable contribution to the field by showcasing the functional relevance of the observed molecular alterations.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The functional analysis provides valuable insights into the biological processes associated with aging, but the lack of details about the statistical methods used for pathway enrichment analysis limits the interpretability of the findings. The sample size is reasonable for the overall study, but some subgroup analyses may be underpowered. Overall, the figure provides a valuable contribution to the field, but further statistical rigor would enhance the robustness of the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Figure 4</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Combination Chart</p>
+            <p><strong>Description:</strong> Figure 4 is a multi-panel figure illustrating the waves of molecules and microbes during aging. Panel (a) is a line graph showing the number of molecules and microbes differentially expressed during aging, with two prominent crests at the ages of 44 years and 60 years. Panel (b) and (c) are multiple line graphs demonstrating the robustness of the observed wave pattern using different q-value cutoffs and window sizes for data smoothing. Panel (d) is a panel of eight line graphs, each representing a different data type, showing the number of molecules/microbes that are significantly different across age groups, with vertical lines highlighting the crests identified in previous sub-figures.</p>
+            <p><strong>Relevance:</strong> Figure 4 is highly relevant to the Results section as it introduces the concept of &quot;waves&quot; of aging-related molecular changes, identified using a modified DE-SWAN algorithm. It demonstrates the presence of two prominent crests of dysregulation around the ages of 44 and 60, consistent across various omics data types, suggesting their universal nature in the aging process.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-3-3">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-3-3" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a combination chart is appropriate for Figure 4 as it effectively presents the results of the DE-SWAN analysis, showing the wave patterns, robustness checks, and distribution across different data types. The line graphs are well-suited for visualizing trends over age and allow for clear identification of the crests.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>The figure is well-organized, with each panel clearly labeled and captioned.</li><li>The line graphs in panels (a), (b), and (c) clearly show the wave patterns and the robustness of the identified crests.</li><li>The panel of line graphs in panel (d) effectively compares the wave patterns across different data types, highlighting the consistency of the crests.</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>The y-axis labels in panel (d) could be standardized to represent the same metric (e.g., number of differentially expressed molecules/microbes) for easier comparison across data types.</li><li>The vertical lines highlighting the crests in panel (d) could be made more prominent or labeled with the corresponding age values for easier identification.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-3-3">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-3-3" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure effectively presents the results of the DE-SWAN analysis, showing the presence of two prominent crests of dysregulation around the ages of 44 and 60. The robustness checks in panels (b) and (c) demonstrate that the wave pattern is consistent across different q-value cutoffs and window sizes for data smoothing. The panel of line graphs in panel (d) shows that the crests are consistently found in several omics datasets, particularly in proteomics, metabolomics, and some microbiome data.</p><p><strong>Statistical Methods:</strong> The authors use a modified DE-SWAN algorithm to identify waves of dysregulated molecules and microbes across the human lifespan. This method is appropriate for detecting age-related changes that occur at specific time points without exhibiting a consistent pattern in other stages. The authors perform robustness checks using different q-value cutoffs and window sizes, which strengthens the reliability of the findings. However, the authors do not provide details about the statistical test used within the DE-SWAN algorithm or the criteria for selecting significant molecules/microbes.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the 20-year window and 10-year parcel sizes used in the DE-SWAN algorithm are optimal for capturing the age-related changes. However, other window and parcel sizes may be more appropriate for different data types or biological processes. Additionally, the analysis assumes that the observed changes in molecule/microbe levels are primarily driven by age and not by other confounding factors. The authors acknowledge this limitation and perform additional analyses to explore the potential impact of confounders, but residual confounding may still be present.</p><p><strong>Improvements And Alternatives:</strong> The authors could provide more details about the statistical test used within the DE-SWAN algorithm and the criteria for selecting significant molecules/microbes. They could also explore the use of alternative window and parcel sizes to assess the sensitivity of the results to these parameters. Additionally, they could consider using statistical methods that explicitly account for potential confounders, such as multivariable regression or propensity score matching.</p><p><strong>Consistency And Comparisons:</strong> The findings presented in Figure 4 are consistent with the text in the Results section, further supporting the authors&#x27; central argument that aging is characterized by nonlinear molecular alterations. The figure effectively integrates data from different omics platforms, providing a comprehensive view of the aging process.</p><p><strong>Sample Size And Reliability:</strong> The study includes 108 participants, which is a reasonable sample size for a longitudinal multi-omics study. However, the sample size is relatively small for some of the subgroup analyses, such as the comparison of pre-menopausal and post-menopausal women. This may limit the statistical power and reliability of these analyses.</p><p><strong>Interpretation And Context:</strong> The figure effectively communicates the key findings related to the waves of molecules and microbes during aging. The results are consistent with previous research highlighting the presence of specific age ranges with significant biological alterations. The figure provides a valuable contribution to the field by showcasing the dynamic and multifaceted nature of aging-related molecular alterations.</p><p><strong>Confidence Rating:</strong> 4</p><p><strong>Confidence Explanation:</strong> The statistical analysis is generally sound, using a modified DE-SWAN algorithm to identify waves of dysregulated molecules and microbes. The robustness checks using different q-value cutoffs and window sizes strengthen the reliability of the findings. However, the lack of details about the statistical test used within the DE-SWAN algorithm and the criteria for selecting significant molecules/microbes limits the interpretability of the findings. The sample size is reasonable for the overall study, but some subgroup analyses may be underpowered. Overall, the figure provides a valuable contribution to the field, but further statistical rigor would enhance the robustness of the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visual-element card">
+            <h4>Figure 5</h4>
+            <p><strong>Type:</strong> Figure</p>
+            <p><strong>Visual Type:</strong> Combination Chart</p>
+            <p><strong>Description:</strong> Figure 5 is a multi-panel figure illustrating the functional analysis of aging-related waves of molecules across the human lifespan. Panel (a) consists of a network diagram showing the pathway enrichment and biological functional module analysis for crests 1 and 2. Panel (b) consists of five bar charts (left) and three Venn diagrams (right), showing the overlap of molecules between the two crests and three clusters.</p>
+            <p><strong>Relevance:</strong> Figure 5 is highly relevant to the Results section as it provides a functional interpretation of the two prominent crests identified in the DE-SWAN analysis. It highlights the pathways and modules associated with each crest, revealing potential links to disease risks and functional alterations during aging.</p>
+            
+            <h4>Visual Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="visual-critique-3-4">
+                    <span class="material-icons">expand_more</span> Expand Visual Critique
+                </button>
+                <div id="visual-critique-3-4" class="collapsible-content">
+                    <p><strong>Appropriateness:</strong> The use of a combination chart is appropriate for Figure 5 as it effectively presents the results of functional analysis and the overlap between different molecule sets. The network diagram and bar charts with Venn diagrams are well-suited for their respective purposes and allow for clear visualization of the key findings.</p>
+                    <h5>Strengths</h5>
+                    <ul>
+                        <li>The figure is well-organized, with each panel clearly labeled and captioned.</li><li>The network diagram in panel (a) visually represents the complex interplay between different biological processes, genes/proteins, and metabolites involved in aging.</li><li>The bar charts and Venn diagrams in panel (b) provide quantitative data and a visual representation of overlaps between molecule sets.</li>
+                    </ul>
+                    <h5>Suggestions for Improvement</h5>
+                    <ul>
+                        <li>The network diagram in panel (a) could benefit from a legend explaining the node shapes and edge meanings.</li><li>The labels on the x-axis of the bar charts in panel (b) could be more descriptive.</li><li>A legend explaining the meaning of &quot;Crest&quot; and &quot;Cluster&quot; in panel (b) would enhance understanding.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Detailed Critique</h4>
+            <div class="collapsible">
+                <button class="collapsible-btn" aria-expanded="false" aria-controls="detailed-critique-3-4">
+                    <span class="material-icons">expand_more</span> Expand Detailed Critique
+                </button>
+                <div id="detailed-critique-3-4" class="collapsible-content">
+                    <p><strong>Analysis Of Presented Data:</strong> The figure presents the results of functional analysis for the two prominent crests identified in the DE-SWAN analysis, highlighting the pathways and modules associated with each crest. The network diagram in panel (a) shows that several modules associated with CVD, skin and muscle stability, lipid and alcohol metabolism, immune dysfunction, kidney function, and carbohydrate metabolism are dysregulated in both crests. The bar charts and Venn diagrams in panel (b) demonstrate the overlap of molecules between the two crests and three clusters, indicating shared molecular components and distinct patterns of age-related changes.</p><p><strong>Statistical Methods:</strong> The authors use pathway enrichment analysis to identify the biological functions significantly enriched in each crest. This method is appropriate for identifying the functional relevance of the observed molecular changes. However, the authors do not report the specific statistical test used for pathway enrichment analysis or the criteria for selecting significant pathways.</p><p><strong>Assumptions And Limitations:</strong> The analysis assumes that the databases used for pathway enrichment analysis are comprehensive and accurate. However, there may be limitations in the coverage and annotation of these databases. Additionally, the analysis assumes that the observed changes in gene expression, protein levels, and metabolite concentrations accurately reflect the underlying biological processes. However, there may be post-transcriptional and post-translational modifications that are not captured by the omics platforms used.</p><p><strong>Improvements And Alternatives:</strong> The authors could provide more details about the statistical methods used for pathway enrichment analysis, including the specific test used and the criteria for selecting significant pathways. They could also explore the use of alternative databases or functional annotation tools to compare the results and assess the robustness of the findings.</p><p><strong>Consistency And Comparisons:</strong> The findings presented in Figure 5 are consistent with the text in the Results section, further supporting the authors&#x27; central argument that aging is characterized by nonlinear molecular alterations with functional implications. The figure effectively integrates data from different omics platforms, providing a comprehensive view of the aging process.</p><p><strong>Sample Size And Reliability:</strong> The study includes 108 participants, which is a reasonable sample size for a longitudinal multi-omics study. However, the sample size is relatively small for some of the subgroup analyses, such as the comparison of pre-menopausal and post-menopausal women. This may limit the statistical power and reliability of these analyses.</p><p><strong>Interpretation And Context:</strong> The figure effectively communicates the key findings related to the functional implications of the two prominent crests identified in the DE-SWAN analysis. The results are consistent with previous research highlighting the role of specific pathways and modules in the aging process, such as those related to CVD, skin and muscle stability, lipid and alcohol metabolism, immune dysfunction, kidney function, and carbohydrate metabolism. The figure provides a valuable contribution to the field by showcasing the functional relevance of the observed molecular alterations and the potential links to disease risks.</p><p><strong>Confidence Rating:</strong> 3</p><p><strong>Confidence Explanation:</strong> The functional analysis provides valuable insights into the biological processes associated with aging, but the lack of details about the statistical methods used for pathway enrichment analysis limits the interpretability of the findings. The sample size is reasonable for the overall study, but some subgroup analyses may be underpowered. Overall, the figure provides a valuable contribution to the field, but further statistical rigor would enhance the robustness of the conclusions.</p>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+        
+        <section id="section-4" class="card">
+            <h2>Discussion</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The discussion section delves into the implications of the study&#x27;s findings, emphasizing the nonlinear nature of molecular changes during aging. The authors highlight that only a small portion of molecules exhibit linear changes, reinforcing the limitations of relying solely on linear models to understand aging. They discuss the three distinct clusters identified through trajectory clustering, pointing out specific age ranges where substantial molecular alterations occur, particularly around 60 years old. The functional analysis of these clusters is discussed, linking them to biological processes like oxidative stress, mRNA stability, autophagy, and disease risks such as cardiovascular disease, kidney issues, and type 2 diabetes. The authors further discuss the two prominent crests of dysregulation identified using the DE-SWAN algorithm, occurring around the ages of 40 and 60. They emphasize the consistency of these crests across various omics data types, suggesting their universal nature in the aging process. The functional analysis of these crests is also discussed, revealing modules associated with cardiovascular disease, skin and muscle stability, lipid and alcohol metabolism, immune dysfunction, kidney function, and carbohydrate metabolism. The authors acknowledge the study&#x27;s limitations, including the modest cohort size, potential confounders related to lifestyle factors, and the focus on blood-based molecular data. They suggest future research directions, including expanding the cohort size, incorporating more diverse populations, collecting longitudinal data over longer periods, and investigating the relationship between nonlinear molecular patterns and functional capacities, disease occurrences, and mortality hazards.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The discussion effectively summarizes the key findings of the study, emphasizing the nonlinear nature of molecular changes during aging and the identification of specific age ranges with substantial alterations.</p>
+                <blockquote>'Analyzing a longitudinal multi-omics dataset involving 108 participants, we successfully captured the dynamic and nonlinear molecular changes that occur during human aging.'<span class='page-number'>p. 8</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The authors thoroughly discuss the implications of the three distinct clusters identified through trajectory clustering, linking them to biological processes and disease risks, providing a comprehensive understanding of the aging process.</p>
+                <blockquote>'These clusters suggest that there are specific age ranges, such as around 60 years old, where distinct and extensive molecular changes occur (Fig. 2c).'<span class='page-number'>p. 9</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The authors acknowledge the limitations of their study, including the modest cohort size, potential confounders related to lifestyle factors, and the focus on blood-based molecular data, demonstrating scientific rigor and transparency.</p>
+                <blockquote>'The present research is subject to certain constraints. We accounted for many basic characteristics (confounders) of participants in the cohort; but because this study primarily reflects between-individual differences, there may be additional confounders due to the different age distributions of the participants.'<span class='page-number'>p. 10</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The discussion provides insightful suggestions for future research directions, including expanding the cohort size, incorporating more diverse populations, collecting longitudinal data over longer periods, and investigating the relationship between nonlinear molecular patterns and functional capacities, disease occurrences, and mortality hazards, paving the way for further advancements in the field.</p>
+                <blockquote>'In our future endeavors, the definitive confirmation of our findings hinges on determining if nonlinear molecular patterns align with nonlinear changes in functional capacities, disease occurrences and mortality hazards.'<span class='page-number'>p. 10</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the discussion acknowledges the potential influence of lifestyle factors, it could delve deeper into specific lifestyle interventions, such as diet, exercise, and stress management, and their potential to modulate the observed nonlinear molecular changes.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The discussion could explore the ethical implications of using multi-omics data for predicting individual aging trajectories and disease risks, considering potential issues related to privacy, discrimination, and access to healthcare.</p>
+                
+            </li>
+            
+            <li class="card">
+                <p>The discussion could expand on the potential translational applications of the findings, discussing how the identified molecular markers and pathways could be targeted for developing interventions to promote healthy aging and prevent age-related diseases.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        <section id="section-5" class="card">
+            <h2>Methods</h2>
+            <div class="content">
+                <h3>Summary</h3>
+                <p>The Methods section provides a detailed account of the procedures employed in the study, encompassing participant recruitment, sample collection, data acquisition, and data processing techniques. The authors meticulously outline the inclusion and exclusion criteria for participant selection, emphasizing the importance of a healthy cohort to isolate age-related changes from disease-related effects. They describe the comprehensive sample collection process, involving blood, stool, skin swab, oral swab, and nasal swab samples, highlighting the longitudinal nature of the study with multiple time points for each participant. The section then delves into the specific protocols for each omics data type, including transcriptomics, proteomics, metabolomics, cytokines, clinical laboratory tests, lipidomics, and microbiome analysis. The authors provide a detailed description of the RNA isolation, library preparation, sequencing, and data analysis steps for transcriptomics, emphasizing the use of established pipelines and quality control measures. They outline the protein extraction, fractionation, mass spectrometry analysis, and data processing steps for proteomics, highlighting the use of SWATH acquisition and statistical scoring for robust protein quantification. The section further describes the metabolite extraction, liquid chromatography separation, mass spectrometry analysis, and metabolite annotation procedures for untargeted metabolomics, emphasizing the use of both HILIC and RPLC methods for comprehensive metabolite profiling. The authors also detail the procedures for cytokine analysis, clinical laboratory tests, lipidomics, and microbiome analysis, emphasizing the use of standardized protocols and quality control measures to ensure data integrity and reliability. Finally, the section outlines the statistical methods used for data analysis, including Spearman correlation, principal component analysis, fuzzy c-means clustering, pathway enrichment analysis, and the modified DE-SWAN algorithm. The authors emphasize the use of appropriate statistical tests, multiple comparison corrections, and data normalization techniques to ensure robust and reliable results.</p>
+                
+                <h3>Strengths</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>The Methods section provides a comprehensive and detailed description of the participant recruitment process, including clear inclusion and exclusion criteria, ensuring the selection of a healthy cohort for studying age-related changes.</p>
+                <blockquote>'Exclusion criteria encompassed conditions such as anemia, kidney disease, a history of CVD, cancer, chronic inflammation or psychiatric illnesses as well as any prior bariatric surgery or liposuction.'<span class='page-number'>p. 11</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The authors meticulously outline the sample collection procedures for each biological sample type, including blood, stool, skin swab, oral swab, and nasal swab samples, highlighting the longitudinal nature of the study with multiple time points for each participant.</p>
+                <blockquote>'For each visit, we collected blood, stool, skin swab, oral swab and nasal swab samples.'<span class='page-number'>p. 11</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The section provides a thorough description of the data acquisition and processing steps for each omics data type, including transcriptomics, proteomics, metabolomics, cytokines, clinical laboratory tests, lipidomics, and microbiome analysis, ensuring transparency and reproducibility.</p>
+                <blockquote>'The biological samples were used for multi-omics data acquisition (including transcriptomics from peripheral blood mononuclear cells (PBMCs), proteomics from plasma, metabolomics from plasma, cytokines from plasma, clinical laboratory tests from plasma, lipidomics from plasma, stool microbiome, skin microbiome, oral microbiome and nasal microbiome; Methods).'<span class='page-number'>p. 3</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The authors clearly state the statistical methods used for data analysis, including Spearman correlation, principal component analysis, fuzzy c-means clustering, pathway enrichment analysis, and the modified DE-SWAN algorithm, demonstrating a robust analytical approach.</p>
+                <blockquote>'For all data processing, statistical analysis and data visualization tasks, RStudio, along with R language (v.4.2.1), was employed.'<span class='page-number'>p. 12</span></blockquote>
+            </li>
+            
+                </ul>
+                
+                <h3>Suggestions for Improvement</h3>
+                <ul>
+                    
+            <li class="card">
+                <p>While the authors mention adjusting for confounders such as BMI, sex, IRIS, and ethnicity, they could provide more details about the specific methods used for confounder adjustment and how these methods were chosen.</p>
+                <blockquote>'Before all the analyses, the confounders, such as BMI, sex, IRIS and ethnicity, were adjusted using the previously published method19.'<span class='page-number'>p. 12</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The authors could elaborate on the rationale for choosing a 20-year window and 10-year parcel size in the modified DE-SWAN algorithm and discuss the potential impact of using different window and parcel sizes on the results.</p>
+                <blockquote>'This algorithm identifies dysregulated molecules and microbes throughout the human lifespan by analyzing molecule levels within 20-year windows and comparing two groups in 10-year parcels while sliding the window incrementally from young to old ages14.'<span class='page-number'>p. 13</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The authors could discuss the limitations of using blood-based molecular data as a proxy for tissue-specific changes and suggest potential strategies for validating the findings in specific tissues, such as skin or muscle.</p>
+                <blockquote>'Lastly, our study&#x27;s molecular data are derived exclusively from blood samples, casting doubt on its direct relevance to specific tissues, such as the skin or muscles.'<span class='page-number'>p. 10</span></blockquote>
+            </li>
+            
+            <li class="card">
+                <p>The authors could discuss the potential impact of batch effects on the omics data and describe the specific methods used to mitigate batch effects, if any.</p>
+                
+            </li>
+            
+                </ul>
+                
+                
+                
+            </div>
+        </section>
+        
+        </main>
+
+        <button id="fab" aria-label="Scroll to top">
+            <span class="material-icons">arrow_upward</span>
+        </button>
+
+        <button id="dark-mode-toggle" aria-label="Toggle dark mode">
+            <span class="material-icons">brightness_4</span>
+        </button>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const fab = document.getElementById('fab');
+                const darkModeToggle = document.getElementById('dark-mode-toggle');
+                const collapsibleButtons = document.querySelectorAll('.collapsible-btn');
+
+                // Floating Action Button (FAB) to scroll to top
+                fab.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+
+                // Show/hide FAB based on scroll position
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 100) {
+                        fab.style.display = 'block';
+                    } else {
+                        fab.style.display = 'none';
+                    }
+                });
+
+                // Dark mode toggle
+                darkModeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('dark-mode');
+                });
+
+                // Collapsible sections
+                collapsibleButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        const content = this.nextElementSibling;
+                        const icon = this.querySelector('.material-icons');
+                        
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                            icon.style.transform = 'rotate(0deg)';
+                            this.setAttribute('aria-expanded', 'false');
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            icon.style.transform = 'rotate(180deg)';
+                            this.setAttribute('aria-expanded', 'true');
+                        }
+                    });
+                });
+
+                // Initialize collapsible sections as closed
+                collapsibleButtons.forEach(button => {
+                    const content = button.nextElementSibling;
+                    content.style.maxHeight = null;
+                    button.setAttribute('aria-expanded', 'false');
+                });
+            });
+        </script>
+    </body>
+    </html>
+    
