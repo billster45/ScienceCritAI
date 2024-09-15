@@ -1,0 +1,1284 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluating Large Language Models for Scientific Feedback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Evaluating Large Language Models for Scientific Feedback</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">Introduction</a></li><li><a href="#section-2">Results</a></li><li><a href="#section-3">Discussion</a></li><li><a href="#section-4">Methods</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>This research investigates the potential of large language models (LLMs), specifically GPT-4, to provide useful feedback on research papers. Through a retrospective analysis comparing GPT-4&#x27;s feedback with human peer reviews and a prospective user study, the study examines the reliability and credibility of LLM-generated scientific feedback.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li>The overlap in points raised by GPT-4 and human reviewers was comparable to the overlap between two human reviewers, averaging 30.85% for Nature journal papers and 39.23% for ICLR conference papers.</li><li>Researchers perceived GPT-4&#x27;s feedback as helpful, with 57.4% finding it helpful/very helpful and 82.4% finding it more beneficial than feedback from at least some human reviewers.</li><li>GPT-4&#x27;s feedback tended to align more with comments raised by multiple human reviewers or those appearing earlier in the review sequence, suggesting it can identify major issues.</li><li>GPT-4 emphasized certain feedback aspects more than humans, such as the implications of the research, while being less likely to comment on novelty.</li><li>Participants in the user study noted limitations in the specificity and actionability of GPT-4&#x27;s feedback, particularly regarding in-depth critique of model architecture and design.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li>The study employed a robust methodology, including both a retrospective analysis comparing LLM and human feedback on established datasets and a prospective user study assessing researcher perceptions.</li><li>The analysis was comprehensive, considering various factors such as journal type, decision outcome, the number of reviewers raising a comment, and comment position in the sequence.</li><li>The inclusion of a user study provided valuable qualitative data on the helpfulness, specificity, and perceived benefits of LLM feedback, complementing the quantitative analysis.</li><li>The study used a rigorous comment matching pipeline with human verification for both comment extraction and matching, ensuring accuracy in comparing LLM and human feedback.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li>Further investigation into the causes and potential solutions for the limitations in specificity and actionability of LLM feedback is warranted.</li><li>A more in-depth discussion of the ethical implications of using LLMs for scientific feedback, including potential biases and the risk of misuse, would strengthen the analysis.</li><li>Quantifying the novelty of LLM-generated feedback, beyond anecdotal evidence from user comments, would provide a more objective assessment of this aspect of LLM capability.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>Figure 1</h4>
+        <p><strong>Description:</strong> A flow diagram illustrating the study&#x27;s methodology, including LLM feedback generation, comparison with human feedback, and the user study process.</p>
+        <p><strong>Relevance:</strong> Provides a clear visual overview of the research process and the different stages involved in evaluating LLM-generated feedback.</p>
+    </div>
+    
+    <div>
+        <h4>Figure 3</h4>
+        <p><strong>Description:</strong> A scatter plot comparing the frequency of different feedback aspects provided by GPT-4 and human reviewers, highlighting discrepancies in emphasis.</p>
+        <p><strong>Relevance:</strong> Visually demonstrates the LLM&#x27;s tendency to focus on certain aspects of feedback more than humans, revealing potential strengths and weaknesses in its evaluation capabilities.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>This research demonstrates the potential of LLMs, particularly GPT-4, as a valuable tool for providing scientific feedback. While LLM feedback can be helpful and align with human feedback in many aspects, it is crucial to acknowledge its current limitations, particularly in providing specific and in-depth critique. Human expert review remains essential for rigorous scientific evaluation, and future research should focus on addressing the identified limitations and exploring the ethical implications of using LLMs in this context. The findings suggest that LLMs and human feedback can complement each other, potentially transforming research practices and enhancing the efficiency and accessibility of scientific feedback mechanisms.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>This abstract presents a large-scale study investigating the potential of large language models (LLMs), specifically GPT-4, to provide useful feedback on research papers. The study involved two parts: a retrospective analysis comparing GPT-4&#x27;s feedback with human peer reviews and a prospective user study assessing researcher perceptions of GPT-4 generated feedback. The results indicate a significant overlap between GPT-4 and human feedback, comparable to the overlap between two human reviewers, suggesting the potential utility of LLMs in augmenting scientific feedback mechanisms.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>LLM-generated feedback:</strong>The study used GPT-4 to generate feedback on full PDFs of scientific papers, focusing on aspects like significance, novelty, acceptance/rejection reasons, and improvement suggestions.</li><li><strong>Retrospective analysis:</strong>GPT-4&#x27;s feedback was compared to human peer reviews from 15 Nature journals (3,096 papers) and the ICLR machine learning conference (1,709 papers).</li><li><strong>Overlap with human feedback:</strong>The overlap in points raised by GPT-4 and human reviewers was comparable to the overlap between two human reviewers, averaging 30.85% for Nature and 39.23% for ICLR.</li><li><strong>User study:</strong>308 researchers from 110 US institutions in AI and computational biology evaluated GPT-4 feedback on their own papers.</li><li><strong>Positive reception:</strong>Over half (57.4%) of users found GPT-4 feedback helpful/very helpful, and 82.4% found it more beneficial than feedback from at least some human reviewers.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear research question</strong>
+        <p>The abstract clearly states the research question: can LLMs provide useful feedback on research papers? This focus allows for a targeted and well-defined study.</p>
+        <div class="quote">"With the breakthrough of large language models (LLM) such as GPT-4, there is growing interest in using LLMs to generate scientific feedback on research manuscripts. However, the utility of LLM-generated feedback has not been systematically studied. To address this gap, we created an automated pipeline using GPT-4 to provide comments on the full PDFs of scientific papers." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Strong methodology</strong>
+        <p>The abstract outlines a robust methodology involving both retrospective analysis and a prospective user study. This two-pronged approach provides both quantitative and qualitative data to assess the effectiveness of LLM feedback.</p>
+        <div class="quote">"We evaluated the quality of GPT-4’s feedback through two large-scale studies. We first quantitatively compared GPT-4’s generated feedback with human peer reviewer feedback in 15 Nature family journals (3,096 papers in total) and the ICLR machine learning conference (1,709 papers). We then conducted a prospective user study with 308 researchers from 110 US institutions in the field of AI and computational biology to understand how researchers perceive feedback generated by our GPT-4 system on their own papers." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Compelling results</strong>
+        <p>The abstract highlights key findings, including the significant overlap between LLM and human feedback and the positive user perceptions. These results effectively demonstrate the potential of LLMs in this domain.</p>
+        <div class="quote">"The overlap in the points raised by GPT-4 and by human reviewers (average overlap 30.85% for Nature journals, 39.23% for ICLR) is comparable to the overlap between two human reviewers (average overlap 28.58% for Nature journals, 35.25% for ICLR). Overall, more than half (57.4%) of the users found GPT-4 generated feedback helpful/very helpful and 82.4% found it more beneficial than feedback from at least some human reviewers." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on limitations</strong>
+        <p>While the abstract mentions limitations, it could benefit from a more detailed discussion of the specific challenges encountered with GPT-4, such as its tendency to focus on certain aspects of feedback and struggles with in-depth critique.</p>
+        <div class="quote">"While our findings show that LLM-generated feedback can help researchers, we also identify several limitations. For example, GPT-4 tends to focus on certain aspects of scientific feedback (e.g., ‘add experiments on more datasets’), and often struggles to provide in-depth critique of method design." (Page 1)</div>
+        <p><strong>Rationale:</strong> A more thorough discussion of limitations would strengthen the abstract&#x27;s objectivity and provide a more balanced perspective on the findings.</p>
+        <p><strong>Implementation:</strong> Include specific examples of limitations observed in the study, such as instances where GPT-4 provided generic or superficial feedback. This would provide readers with a clearer understanding of the current capabilities and limitations of LLMs in this context.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss ethical implications</strong>
+        <p>The abstract could benefit from a brief mention of the ethical considerations surrounding the use of LLMs for scientific feedback, such as potential biases in the model or the risk of over-reliance on automated feedback.</p>
+        
+        <p><strong>Rationale:</strong> Addressing ethical implications is crucial for responsible AI development and deployment, especially in a sensitive domain like scientific evaluation.</p>
+        <p><strong>Implementation:</strong> Add a sentence acknowledging the importance of ethical considerations and outlining the need for further research on potential biases and responsible use guidelines for LLM-based feedback systems.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on future directions</strong>
+        <p>The abstract briefly mentions future directions but could expand on specific research avenues, such as exploring other LLMs, fine-tuning models on scientific feedback datasets, or integrating visual LLMs for a more comprehensive analysis.</p>
+        <div class="quote">"Together our results suggest that LLM and human feedback can complement each other. While human expert review is and should continue to be the foundation of rigorous scientific process, LLM feedback could benefit researchers, especially when timely expert feedback is not available and in earlier stages of manuscript preparation before peer-review." (Page 1)</div>
+        <p><strong>Rationale:</strong> A more detailed discussion of future directions would highlight the study&#x27;s contribution to ongoing research and inspire further exploration in this promising area.</p>
+        <p><strong>Implementation:</strong> Include specific examples of future research avenues, such as investigating the effectiveness of different LLM architectures, developing methods for mitigating potential biases, or exploring the use of LLMs for other aspects of the scientific process, like grant proposal evaluation or literature review.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Overview</h4>
+            <p>The introduction section of this research paper establishes the importance of feedback in scientific research, highlighting the challenges posed by the increasing volume of publications and specialization of knowledge. It then introduces large language models (LLMs) as a potential solution to these challenges, specifically focusing on GPT-4, and outlines the study&#x27;s objective to systematically analyze the reliability and credibility of LLM-generated scientific feedback.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Importance of feedback:</strong>The section emphasizes the crucial role of feedback in scientific progress, driving discovery, interpretation, communication, and paradigm shifts.</li><li><strong>Challenges in feedback:</strong>It acknowledges the difficulties in providing timely, comprehensive, and insightful feedback due to the rapid growth of publications and knowledge specialization.</li><li><strong>LLMs as a potential solution:</strong>The section introduces LLMs, particularly GPT-4, as a promising avenue for addressing the challenges in scientific feedback.</li><li><strong>Study objective:</strong>The authors clearly state their aim to conduct the first large-scale systematic analysis of the reliability and credibility of LLM-generated scientific feedback.</li><li><strong>Datasets and methods:</strong>The section briefly describes the two datasets used (Nature family journals and ICLR conference papers) and the methodology employed, including a retrospective analysis and a prospective user study.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Strong motivation</strong>
+        <p>The introduction effectively establishes the need for new feedback mechanisms by highlighting the limitations of traditional approaches and the growing challenges in scientific evaluation.</p>
+        <div class="quote">"However, the process of providing timely, comprehensive, and insightful feedback on scientific research is often laborious, resource-intensive, and complex4. This complexity is exacerbated by the exponential growth in scholarly publications and the deepening specialization of scientific knowledge5, 6. Traditional avenues, such as peer review and conference discussions, exhibit constraints in scalability, expertise accessibility, and promptness." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Clear research gap</strong>
+        <p>The authors clearly identify a gap in the existing literature regarding the systematic evaluation of LLMs for scientific feedback, justifying the need for their study.</p>
+        <div class="quote">"While LLMs have made remarkable strides in various domains, the promises and perils of leveraging LLMs for scientific feedback remain largely unknown. Despite recent attempts that explore the potential uses of such tools in areas such as automating paper screening24, error identification25, and checklist verification26 1, we lack large-scale empirical evidence on whether and how LLMs may be used to facilitate scientific feedback and augment current academic practices." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Well-defined scope</strong>
+        <p>The introduction clearly outlines the scope of the study, focusing on the reliability and credibility of LLM-generated feedback and specifying the datasets and methods used.</p>
+        <div class="quote">"In this work, we present the first large-scale systematic analysis characterizing the potential reliability and credibility of leveraging LLM for generating scientific feedback. Specifically, we developed a GPT-4 based scientific feedback generation pipeline that takes the raw PDF of a paper and produces structured feedback (Fig. 1a). The system is designed to generate constructive feedback across various key aspects, mirroring the review structure of leading interdisciplinary journals27, 28 and conferences29–33, including: 1) Significance and novelty, 2) Potential reasons for acceptance, 3) Potential reasons for rejection, and 4) Suggestions for improvement." (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on ethical considerations</strong>
+        <p>While the introduction acknowledges the potential of LLMs, it could benefit from a more explicit discussion of the ethical implications of using LLMs for scientific feedback.</p>
+        
+        <p><strong>Rationale:</strong> Addressing ethical considerations is crucial for responsible AI development and deployment, especially in a domain as sensitive as scientific evaluation. It would demonstrate the authors&#x27; awareness of potential biases, misuse, and the impact on the scientific community.</p>
+        <p><strong>Implementation:</strong> Include a paragraph discussing potential ethical concerns, such as biases in LLM training data, the risk of plagiarism or manipulation, and the importance of transparency and accountability in using LLM-generated feedback. This could also highlight the need for guidelines and best practices for responsible use.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on the limitations of LLMs</strong>
+        <p>The introduction briefly mentions the unknown &quot;perils&quot; of LLMs but could benefit from a more detailed discussion of their limitations, particularly in the context of scientific feedback.</p>
+        <div class="quote">"While LLMs have made remarkable strides in various domains, the promises and perils of leveraging LLMs for scientific feedback remain largely unknown." (Page 2)</div>
+        <p><strong>Rationale:</strong> Acknowledging the limitations of LLMs would provide a more balanced perspective and set realistic expectations for the study&#x27;s findings. It would also highlight the need for further research and development to address these limitations.</p>
+        <p><strong>Implementation:</strong> Include a paragraph discussing specific limitations of LLMs, such as their potential for generating generic or superficial feedback, their inability to understand complex scientific concepts, and their reliance on the quality and representativeness of training data. This could also mention the need for human oversight and the importance of combining LLM feedback with expert human judgment.</p>
+    </li>
+    
+    <li>
+        <strong>Connect to scientific inequalities</strong>
+        <p>The introduction mentions the challenges faced by marginalized researchers in accessing feedback but could strengthen the connection between this issue and the potential of LLMs to address it.</p>
+        <div class="quote">"While shortage of high-quality feedback presents a fundamental constraint on the sustainable growth of science overall, it also becomes a source of deepening scientific inequalities. Marginalized researchers, especially those from non-elite institutions or resource-limited regions, often face disproportionate challenges in accessing valuable feedback, perpetuating a cycle of systemic scientific inequality13, 14." (Page 2)</div>
+        <p><strong>Rationale:</strong> Explicitly linking LLMs to the issue of scientific inequalities would highlight the potential societal impact of this research and emphasize the importance of developing inclusive and equitable feedback mechanisms.</p>
+        <p><strong>Implementation:</strong> Expand on the discussion of scientific inequalities, emphasizing how LLMs could provide more accessible and equitable feedback opportunities for researchers from underrepresented groups. This could include examples of how LLMs could overcome geographical barriers, language barriers, or biases in traditional feedback systems.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>Results</h3>
+            
+            <h4>Overview</h4>
+            <p>The Results section details the methodology and findings of two evaluations: a retrospective analysis comparing GPT-4 generated feedback with human peer reviews and a prospective user study assessing researcher perceptions of the LLM feedback. The retrospective analysis found significant overlap between GPT-4 and human feedback, comparable to inter-reviewer overlap. The user study revealed that researchers found the LLM feedback helpful, aligning with human feedback, and offering novel perspectives.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>LLM Feedback Generation Pipeline:</strong>The authors developed a pipeline using GPT-4 to generate structured feedback on scientific papers, parsing PDFs and prompting the LLM with title, abstract, captions, and main text.</li><li><strong>Retrospective Evaluation:</strong>Using datasets from Nature family journals (3,096 papers) and ICLR (1,709 papers), the authors compared GPT-4 feedback with human peer reviews, finding a 30.85% and 39.23% average overlap respectively, comparable to inter-reviewer overlap.</li><li><strong>Specificity of LLM Feedback:</strong>Shuffling experiments demonstrated that LLM feedback is paper-specific and not generic, as overlap with human feedback significantly decreased after shuffling.</li><li><strong>Alignment with Major Comments:</strong>LLM feedback was more likely to align with comments raised by multiple human reviewers or those appearing earlier in the review sequence, suggesting it identifies major issues.</li><li><strong>Emphasis on Specific Aspects:</strong>Analysis of ICLR feedback revealed that LLM emphasized certain aspects more than humans, such as implications of research, while being less likely to comment on novelty.</li><li><strong>Prospective User Study:</strong>A survey of 308 researchers found that 57.4% found LLM feedback helpful/very helpful, 82.4% found it more beneficial than some human reviews, and 65.3% felt it offered overlooked perspectives.</li><li><strong>Limitations:</strong>Participants noted limitations in the specificity and actionability of LLM feedback, particularly regarding in-depth critique of model architecture and design.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Robust Methodology</strong>
+        <p>The section employs a rigorous methodology, including a two-stage comment matching pipeline with human verification for both extraction and matching, ensuring accuracy in comparing LLM and human feedback.</p>
+        <div class="quote">"We developed a retrospective comment matching pipeline to evaluate the overlap between feedback from LLM and human reviewers (Fig. 1b, Methods). The pipeline first performs extractive text summarization34–37 to extract the comments from both LLM and human-written feedback. It then applies semantic text matching38–40 to identify shared comments between the two feedback sources. We validated the pipeline’s accuracy through human verification, yielding an F1 score of 96.8% for extraction (Supp. Table 3a, Methods) and 82.4% for matching (Supp. Table 3b, Methods)." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Comprehensive Analysis</strong>
+        <p>The section provides a thorough analysis of the overlap between LLM and human feedback, considering various factors like journal type, decision outcome, number of reviewers raising a comment, and comment position in the sequence.</p>
+        <div class="quote">"We further stratified these overlap results by academic journals (Fig. 2c). While the degree of overlap between LLM feedback and human comments varied across different academic journals within the Nature family — from 15.58% in Nature Communications Materials to 39.16% in Nature — the overlap between LLM feedback and human feedback comments largely mirrored the overlap found between two human reviewers." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>User-Centered Evaluation</strong>
+        <p>The inclusion of a prospective user study provides valuable insights into researcher perceptions of LLM feedback, complementing the quantitative analysis with qualitative data on helpfulness, specificity, and perceived benefits.</p>
+        <div class="quote">"For the prospective user study, we developed a survey in which researchers were invited to evaluate the quality of the feedback produced by our GPT-4 system on their authored papers. By analyzing researchers’ perspectives on the helpfulness, reliability, and potential limitations of LLM feedback, we can gauge the acceptability and utility of the proposed approach in the manuscript improvement process, and understand stakeholder’s subjective perceptions of the framework." (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify Novel Feedback</strong>
+        <p>While the section mentions LLM generating novel feedback not mentioned by humans, it relies on anecdotal evidence from user comments. Quantifying this novelty would strengthen the claim.</p>
+        <div class="quote">"Beyond generating feedback that aligns with humans, our results also suggest that LLM could potentially generate useful feedback that has not been mentioned by humans, e.g., 65.3% of participants think at least to some extent LLM feedback offers perspectives that have been overlooked or underemphasized by humans." (Page 6)</div>
+        <p><strong>Rationale:</strong> Providing a quantitative measure of novel feedback would provide a more objective assessment of this aspect of LLM capability and its potential value.</p>
+        <p><strong>Implementation:</strong> Develop a method to identify and quantify comments from LLM feedback that are not present in human reviews. This could involve comparing the semantic content of comments or using a clustering approach to identify unique themes in LLM feedback.</p>
+    </li>
+    
+    <li>
+        <strong>Address Specificity Limitations</strong>
+        <p>The section acknowledges limitations in the specificity and actionability of LLM feedback. Further investigation into the causes and potential solutions for this limitation is warranted.</p>
+        <div class="quote">"Study participants also discussed limitations of the current system. The most important limitation is its ability to generate specific and actionable feedback, e.g. “Potential Reasons are too vague and not domain specific.”" (Page 6)</div>
+        <p><strong>Rationale:</strong> Understanding why LLM feedback sometimes lacks specificity is crucial for improving the system and making it more useful for researchers.</p>
+        <p><strong>Implementation:</strong> Analyze the characteristics of LLM feedback that is perceived as generic or vague. Explore techniques like prompt engineering, fine-tuning on specific scientific domains, or incorporating external knowledge sources to enhance the specificity and actionability of LLM feedback.</p>
+    </li>
+    
+    <li>
+        <strong>Explore Impact on Scientific Inequalities</strong>
+        <p>The section mentions the potential of LLM feedback to benefit researchers lacking access to timely feedback, but doesn&#x27;t explore this impact in detail. Further investigation is needed to assess its effectiveness in mitigating scientific inequalities.</p>
+        <div class="quote">"This could be especially helpful for researchers who lack access to timely quality feedback mechanisms, e.g., researchers from traditionally underprivileged regions who may not have resources to access conferences, or even peer review (their works are much more likely than those of “mainstream” researchers to get desk rejected by journals and thus seldom go through the peer review process14)." (Page 7)</div>
+        <p><strong>Rationale:</strong> Understanding the potential of LLM feedback to address scientific inequalities is crucial for ensuring equitable access to feedback and promoting inclusivity in scientific research.</p>
+        <p><strong>Implementation:</strong> Conduct targeted studies to evaluate the effectiveness of LLM feedback for researchers from underrepresented groups. This could involve comparing the quality and impact of LLM feedback with traditional feedback mechanisms for these researchers and assessing its role in promoting participation and success in scientific endeavors.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>Figure 1</summary>
+        <p>Figure 1 provides a visual overview of the study&#x27;s methodology for evaluating the ability of Large Language Models (LLMs) to generate helpful feedback on scientific papers. The figure is a three-part flow diagram, illustrating the processes of: (a) generating LLM feedback from a raw PDF, (b) comparing this LLM feedback with human feedback, and (c) conducting a user study to evaluate the feedback. Each part of the diagram is further broken down into steps, visually represented by boxes and arrows, with key terms and concepts highlighted within each step. For instance, section (a) showcases a four-step pipeline that begins with processing a &#x27;Raw PDF&#x27; and ends with the generation of structured &#x27;Feedback,&#x27; including steps like &#x27;Parsed PDF&#x27; and using a &#x27;Prompt.&#x27; Section (b) emphasizes the comparison between &#x27;Language Model Feedback&#x27; and &#x27;Human Feedback&#x27; through summarized text and a dedicated &#x27;Matched Feedback&#x27; area highlighting commonalities. Lastly, section (c) illustrates the process of &#x27;User Recruiting&#x27; for a user study aimed at assessing the generated feedback.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Specifically, we developed a GPT-4 based scientific feedback generation pipeline that takes the raw PDF of a paper and produces structured feedback (Fig. 1a)."</p>
+            <p><strong>Context:</strong> This sentence appears in the second paragraph of the Introduction section, where the authors are outlining their approach to analyzing the reliability and credibility of LLM-generated scientific feedback.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 1 is crucial for understanding the study&#x27;s methodology. It visually outlines the steps involved in generating LLM feedback, comparing it to human feedback, and conducting a user study, providing a clear roadmap for the research process.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure effectively uses a flow diagram format to break down a complex process into understandable steps.</li><li>The use of color coding, arrows, and concise labels enhances clarity.</li><li>However, the lack of a legend for some visual elements, like the hexagon with a spiral inside, could benefit from further explanation.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure clearly outlines the key steps involved in the research process, providing a visual representation of the methodology.</li><li>The figure highlights the importance of comparing LLM feedback to human feedback, which is a crucial aspect of evaluating the LLM&#x27;s performance.</li><li>The figure also emphasizes the role of a user study in assessing the perceived helpfulness and utility of LLM feedback from the perspective of researchers.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Figure 3</summary>
+        <p>Figure 3 is a scatter plot comparing the frequency of different feedback aspects provided by GPT-4 to those provided by human reviewers. The x-axis represents the log frequency ratio between GPT-4 and human feedback, with positive values indicating that GPT-4 comments on that aspect more frequently than humans. The figure highlights that GPT-4 emphasizes certain aspects, such as &#x27;Implications of the Research&#x27; 7.27 times more frequently and is 10.69 times less likely to comment on &#x27;Add experiments on more datasets&#x27; compared to human reviewers. The size of each circle represents the prevalence of that aspect in human feedback.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Fig. 3 presents the relative frequency of each of the 11 aspects of comments raised by humans and LLM."</p>
+            <p><strong>Context:</strong> This sentence, found in the fifth paragraph of the Results section, introduces Figure 3 as a visual representation of the differences in emphasis between LLM and human feedback on specific aspects of scientific papers.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 3 directly supports the section&#x27;s discussion on the varying emphasis placed on different aspects of feedback by LLMs and human reviewers. It visually demonstrates the discrepancies in frequency ratios for specific aspects, highlighting the potential for complementary roles between human and AI feedback.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is well-labeled and easy to understand.</li><li>The use of color and circle size effectively conveys the relative frequencies and prevalence of different feedback aspects.</li><li>The caption could be improved by explicitly mentioning that circle size corresponds to the prevalence in human feedback, not LLM feedback.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure effectively visualizes the differences in emphasis between LLM and human feedback, providing a clear picture of the LLM&#x27;s tendencies.</li><li>The specific frequency ratios mentioned in the caption (7.27 times more frequent for &#x27;Implications of the Research&#x27;, 10.69 times less likely for &#x27;Add experiments on more datasets&#x27;) provide quantifiable insights into these differences.</li><li>The figure suggests that LLMs may have specific strengths and weaknesses in evaluating different aspects of scientific papers, highlighting the need for further research on how to best leverage their capabilities.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Frequency ratio of &#x27;Implications of the Research&#x27; comments (GPT-4/Human):</strong> 7.27</li><li><strong>Frequency ratio of &#x27;Add experiments on more datasets&#x27; comments (GPT-4/Human):</strong> 0.0935</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Figure 4</summary>
+        <p>Figure 4 presents the results of a human study on LLM and human review feedback (n = 308). The figure consists of eight horizontal bar charts (a-h) representing survey responses related to the helpfulness, specificity, perceived impact, and likelihood of future use of LLM-generated feedback compared to human feedback. Each chart presents a different question or statement, and the bars within each chart represent the percentage of respondents who chose each response option. The charts consistently use a blue color scheme, with darker shades of blue indicating a higher percentage of responses. The caption provides detailed information on each subfigure (a-h) and the overall findings of the study.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The results from the user study are illustrated in Fig. 4."</p>
+            <p><strong>Context:</strong> This sentence, located in the sixth paragraph of the Results section, introduces Figure 4 as a visual representation of the findings from the user study conducted to assess researcher perceptions of LLM-generated feedback.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 4 is central to the section&#x27;s discussion on the prospective user study. It visually presents the survey responses, providing insights into researcher perceptions of the helpfulness, specificity, and potential impact of LLM feedback compared to human feedback. The figure directly supports the claim that researchers generally find LLM feedback helpful and see its potential for improving the scientific review process.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>While the figure effectively communicates the distribution of responses for each question, the lack of explicit axis labels might hinder quick interpretation.</li><li>The choice of blue shades for percentages is generally clear, but a legend mapping shade intensity to specific percentage ranges would enhance readability.</li><li>The separation of the figure caption from the main visual content by a significant amount of text might disrupt the reading flow. Providing a brief title within the figure summarizing the study&#x27;s focus could also improve clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure provides a comprehensive overview of researcher perceptions of LLM feedback, covering various aspects like helpfulness, specificity, and potential impact.</li><li>The high percentages of positive responses regarding helpfulness and perceived benefits support the study&#x27;s claim that LLM feedback can be a valuable tool for researchers.</li><li>The figure also highlights areas where LLM feedback is perceived as less effective than human feedback, such as specificity, providing valuable insights for future improvements.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Percentage of users who found LLM feedback helpful or very helpful:</strong> 57.4 %</li><li><strong>Percentage of users who found LLM feedback more beneficial than feedback from at least some human reviewers:</strong> 82.4 %</li><li><strong>Percentage of users who believe the LLM feedback system can improve the accuracy of reviews:</strong> 70.8 %</li><li><strong>Percentage of users who believe the LLM feedback system can improve the thoroughness of reviews:</strong> 77.9 %</li><li><strong>Percentage of users who intend to use or potentially use the LLM feedback system again:</strong> 50.5 %</li><li><strong>Percentage of users who believe the LLM feedback system mostly helps authors:</strong> 80.5 %</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 1</summary>
+        <p>Supplementary Figure 1 presents two bar graphs (a and b) comparing the overlap between comments generated by GPT-4 and those made by human reviewers. The caption provides context for the graphs, stating that they depict the fraction of GPT-4&#x27;s comments that align with at least one human reviewer&#x27;s feedback. The graphs are divided into two categories: &#x27;Nature Journals&#x27; (a) and &#x27;ICLR&#x27; (b), presumably representing different publication sources. Both graphs feature the same x-axis categories: &#x27;GPT-4 vs. All Human&#x27; and &#x27;GPT-4 (shuffle) vs. All Human&#x27;. The &#x27;GPT-4 (shuffle)&#x27; category likely refers to a baseline condition where GPT-4&#x27;s comments have been randomly reassigned to different papers. The y-axis, labeled &#x27;Global Hit Rate (%)&#x27;, measures the percentage of overlapping comments. Notably, the error bars, representing 95% confidence intervals, are remarkably small, indicating a high level of precision in the measurements.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "More than half (57.55%) of the comments raised by GPT-4 were raised by at least one human reviewer (Supp. Fig. 1a)."</p>
+            <p><strong>Context:</strong> This sentence, found in the third paragraph of the Results section, introduces Supplementary Figure 1a as evidence of the significant overlap between LLM feedback and human feedback in the Nature family journal data.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 1 directly supports the section&#x27;s claim that LLM feedback significantly overlaps with human-generated feedback. It visually demonstrates the high percentage of GPT-4 comments that align with at least one human reviewer&#x27;s feedback, both in the Nature family journal data and the ICLR data. The figure also highlights the significant drop in overlap when GPT-4 feedback is shuffled, indicating that the LLM is not simply generating generic comments.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is well-organized and easy to understand.</li><li>The labeling is clear, and the use of bar graphs effectively illustrates the comparison between GPT-4 and human reviewers.</li><li>The color scheme is appropriate, and the error bars provide valuable information about the reliability of the data.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure effectively demonstrates the significant overlap between GPT-4 and human feedback, supporting the study&#x27;s claim.</li><li>The shuffling experiment provides a strong control condition, demonstrating that the LLM is generating paper-specific feedback, not just generic comments.</li><li>The small error bars indicate a high level of precision in the measurements, strengthening the reliability of the findings.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Percentage of GPT-4 comments overlapping with at least one human reviewer in Nature family journal data:</strong> 57.55 %</li><li><strong>Percentage of GPT-4 comments overlapping with at least one human reviewer in ICLR data:</strong> 77.18 %</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 2</summary>
+        <p>Figure 2 presents a retrospective evaluation of GPT-4&#x27;s performance using alternative set overlap metrics for a more robust check. The figure is organized into eight bar graphs: (a) and (b) illustrate the hit rate, (c) and (d) depict the Szymkiewicz–Simpson overlap coefficient, (e) and (f) showcase the Jaccard index, and finally, (g) and (h) display the Sørensen–Dice coefficient. Each graph compares four scenarios: GPT-4 versus human, human versus human, human without control versus human, and shuffled GPT-4 output versus human. The graphs consistently use the same x-axis labels, and the error bars consistently represent 95% confidence intervals.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Results were consistent across other overlapping metrics including Szymkiewicz–Simpson overlap coefficient, Jaccard index, Sørensen–Dice coefficient (Supp. Fig. 2)."</p>
+            <p><strong>Context:</strong> This sentence, appearing in the third paragraph of the Results section, refers to Supplementary Figure 2 as evidence that the observed overlap between LLM and human feedback is consistent across various set overlap metrics, not just the hit rate.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 2 strengthens the study&#x27;s findings by demonstrating the robustness of the overlap results across different set overlap metrics. It shows that the comparable overlap between GPT-4 and human feedback, as well as the significant drop in overlap with shuffled GPT-4 feedback, is not limited to the hit rate but holds true for other established metrics like the Szymkiewicz–Simpson overlap coefficient, Jaccard index, and Sørensen–Dice coefficient.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is well-organized, and the labeling is clear.</li><li>The use of different colors for each bar and the inclusion of error bars enhance the readability and interpretability of the data.</li><li>The significance markers are appropriately placed and clearly visible.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure effectively demonstrates the robustness of the findings across different set overlap metrics, strengthening the study&#x27;s conclusions.</li><li>The consistent use of the same x-axis labels and error bar representation across all graphs facilitates easy comparison and interpretation.</li><li>The inclusion of a shuffled GPT-4 control condition in each graph further emphasizes the paper-specificity of the LLM feedback.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>Discussion</h3>
+            
+            <h4>Overview</h4>
+            <p>The Discussion section summarizes the study&#x27;s findings, emphasizing the potential of LLMs, specifically GPT-4, for providing helpful scientific feedback. It highlights the significant overlap between LLM-generated feedback and human peer reviews, as well as the positive user perceptions from the prospective study. However, the authors acknowledge the limitations of LLMs, particularly in providing specific and in-depth critique, and emphasize that human expert review remains essential for rigorous scientific evaluation. The section also discusses potential misuse of LLMs in scientific feedback and broader implications for research practices, concluding with limitations of the study and future research directions.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Summary of Findings:</strong>The section reiterates the main findings from the retrospective and prospective evaluations, highlighting the substantial overlap between LLM and human feedback and the positive user perceptions of LLM feedback&#x27;s helpfulness.</li><li><strong>Potential Benefits of LLM Feedback:</strong>The authors discuss the potential benefits of LLMs in providing timely and accessible feedback, particularly for researchers who lack access to traditional feedback mechanisms, such as those from underprivileged regions.</li><li><strong>Limitations of LLM Feedback:</strong>The section acknowledges the limitations of current LLM technology, emphasizing its tendency to focus on certain aspects of feedback, lack of specificity and in-depth critique, and potential for generic comments.</li><li><strong>Importance of Human Review:</strong>The authors stress that despite the potential of LLMs, human expert review remains crucial for rigorous scientific evaluation. They caution against over-reliance on LLM feedback and emphasize the need for independent assessment by human reviewers.</li><li><strong>Ethical Considerations:</strong>The section briefly addresses the potential misuse of LLMs in scientific feedback, advocating for their use primarily as a tool for manuscript improvement before submission and cautioning against automated review generation without thorough human engagement.</li><li><strong>Broader Implications and Future Directions:</strong>The authors discuss the broader implications of LLMs for research practices, envisioning a paradigm shift in how research is conducted, collaborated on, and evaluated. They also outline limitations of the study and suggest future research directions, including exploring other LLMs, fine-tuning models, integrating visual LLMs, and addressing error detection and correction.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Balanced Perspective</strong>
+        <p>The section provides a balanced perspective on the potential and limitations of LLMs for scientific feedback. It acknowledges the promising findings while also highlighting the current limitations and emphasizing the continued importance of human expertise.</p>
+        <div class="quote">"Despite the potential of LLMs in providing timely and helpful scientific feedback, it is important to note that expert human feedback will still be the cornerstone of rigorous scientific evaluation. As demonstrated in our findings, our analysis reveals limitations of the framework, e.g., LLM is biased towards certain aspects of scientific feedback (e.g., “add experiments on more datasets”), and sometimes feels “generic” to the authors (while participants also indicate that quite often human reviewers are “generic”)." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Recommendations</strong>
+        <p>The section offers clear recommendations for the responsible use of LLMs in scientific feedback, advocating for their use as a tool for manuscript improvement before submission and cautioning against replacing human review with automated feedback generation.</p>
+        <div class="quote">"We argue that LLM feedback should be primarily used by researchers identify areas of improvements in their manuscripts prior to official submission. It is important that expert human reviewers should deeply engage with the manuscripts and provide independent assessment without relying on LLM feedback. Automatically generating reviews without thoroughly reading the manuscript would undermine the rigorous evaluation process that forms the bedrock of scientific progress." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Thoughtful Discussion of Implications</strong>
+        <p>The section goes beyond summarizing the study&#x27;s findings and engages in a thoughtful discussion of the broader implications of LLMs for research practices, envisioning potential paradigm shifts in how research is conducted, collaborated on, and evaluated.</p>
+        <div class="quote">"More broadly, our study contributes to the recent discussions on the impacts of LLM and generative AI on existing work practices. Researchers have discussed the potential of LLM to improve productivity47, 48, creativity49, and facilitate scientific discovery50. We envision that LLM and generative AI, if deployed responsibly, could also potentially bring a paradigm change to how researchers conduct research, collaborate, and provide evaluations, influencing the way science and technology advance." (Page 7)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on Ethical Considerations</strong>
+        <p>While the section briefly mentions potential misuse, a more in-depth discussion of ethical considerations is warranted. This could include exploring potential biases in LLM training data, the risk of plagiarism or manipulation of feedback, and the impact on reviewer workload and recognition.</p>
+        <div class="quote">"It is also important to note the potential misuse of LLM for scientific feedback." (Page 7)</div>
+        <p><strong>Rationale:</strong> A more comprehensive discussion of ethical implications would demonstrate the authors&#x27; awareness of the potential societal impact of this technology and contribute to responsible AI development and deployment in the scientific community.</p>
+        <p><strong>Implementation:</strong> Dedicate a paragraph to exploring ethical considerations, drawing on existing literature on AI ethics and responsible AI principles. This could include discussing the need for transparency in using LLM feedback, guidelines for mitigating potential biases, and strategies for ensuring fair recognition of both human and AI contributions in the review process.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on Future Research Directions</strong>
+        <p>The section outlines several future research directions but could benefit from more specific and actionable suggestions. For example, it could discuss specific strategies for fine-tuning LLMs on scientific feedback datasets, methods for integrating visual LLMs, or approaches for addressing error detection and correction.</p>
+        <div class="quote">"Future iterations could explore integrating visual LLMs or specialized modules that can comprehend and critique visual elements, thereby offering a more comprehensive form of scientific feedback." (Page 8)</div>
+        <p><strong>Rationale:</strong> Providing more concrete suggestions for future research would guide further exploration in this area and facilitate the development of more advanced and reliable LLM-based feedback systems.</p>
+        <p><strong>Implementation:</strong> Expand on each future research direction with specific examples of potential research questions, methodologies, and datasets. This could include discussing the use of reinforcement learning to train LLMs for specific feedback tasks, exploring the development of multimodal LLMs that can analyze both text and visual elements, or investigating the use of LLMs for identifying and correcting specific types of errors in scientific papers.</p>
+    </li>
+    
+    <li>
+        <strong>Address Potential Impact on Scientific Inequalities</strong>
+        <p>While the section mentions the potential of LLMs to benefit researchers lacking access to timely feedback, it doesn&#x27;t delve into the potential impact on scientific inequalities. Further discussion is needed on how to ensure equitable access to LLM feedback and mitigate potential biases that could exacerbate existing inequalities.</p>
+        <div class="quote">"This could be especially helpful for researchers who lack access to timely quality feedback mechanisms, e.g., researchers from traditionally underprivileged regions who may not have resources to access conferences, or even peer review (their works are much more likely than those of “mainstream” researchers to get desk rejected by journals and thus seldom go through the peer review process14)." (Page 7)</div>
+        <p><strong>Rationale:</strong> Addressing the potential impact on scientific inequalities is crucial for ensuring that LLM feedback promotes inclusivity and doesn&#x27;t inadvertently reinforce existing power imbalances in the scientific community.</p>
+        <p><strong>Implementation:</strong> Discuss potential strategies for ensuring equitable access to LLM feedback, such as developing open-source tools, providing subsidized access for researchers from underresourced institutions, and translating LLM feedback into multiple languages. Additionally, address the need for ongoing research to monitor and mitigate potential biases in LLM feedback that could disadvantage certain groups of researchers.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 3</summary>
+        <p>Supplementary Figure 3 is a bar chart that illustrates the perceived helpfulness of LLM-based scientific feedback among participants with varying levels of publishing experience. The x-axis represents five categories of publishing experience: &quot;No experience,&quot; &quot;1-3 years,&quot; &quot;3-5 years,&quot; &quot;5-10 years,&quot; and &quot;More than 10 years.&quot; The y-axis represents the proportion of respondents, ranging from 0.0 to 0.7. Five bars, each in a different color, represent the five levels of perceived helpfulness: &quot;Not at all helpful,&quot; &quot;Slightly helpful,&quot; &quot;Moderately helpful,&quot; &quot;Helpful,&quot; and &quot;Highly helpful.&quot; Notably, the &quot;Helpful&quot; (green) and &quot;Highly helpful&quot; (purple) bars are consistently taller across all experience levels, indicating a generally positive perception of LLM feedback&#x27;s helpfulness. For example, in the &quot;No experience&quot; category, approximately 60% of respondents found the feedback &quot;Helpful,&quot; and around 10% found it &quot;Highly helpful.&quot; Similar trends are observed in other experience categories, with &quot;Helpful&quot; consistently receiving the highest proportion of responses.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Our analysis suggests that people from diverse educational backgrounds and publishing experience can find the LLM scientific feedback generation framework useful (Supp. Fig. 3,4)."</p>
+            <p><strong>Context:</strong> This sentence appears in the first paragraph of the Discussion section, highlighting the broad applicability of the LLM feedback framework across different researcher demographics.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 3 supports the claim that LLM-based scientific feedback is perceived as helpful by researchers with varying levels of publishing experience. This finding suggests that the LLM feedback framework can be a valuable tool for both novice and experienced researchers, potentially democratizing access to constructive feedback in scientific writing.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is clear and easy to understand.</li><li>The labels are clear and concise, and the color scheme is effective.</li><li>However, the caption is separated from the figure by a large block of text. This could be improved by placing the caption directly below the figure.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure effectively demonstrates that the perceived helpfulness of LLM feedback is consistent across different levels of publishing experience.</li><li>The lack of statistical tests or confidence intervals makes it difficult to assess the statistical significance of the observed differences between groups.</li><li>Further analysis could explore potential interactions between publishing experience and other factors, such as research field or professional status, to provide a more nuanced understanding of the LLM feedback&#x27;s impact.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Proportion of respondents with &#x27;No experience&#x27; who found LLM feedback &#x27;Helpful&#x27;:</strong> 0.6</li><li><strong>Proportion of respondents with &#x27;No experience&#x27; who found LLM feedback &#x27;Highly helpful&#x27;:</strong> 0.1</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 4</summary>
+        <p>Figure 4 is a bar chart that displays the perceived helpfulness of LLM-based scientific feedback across different professional statuses. The x-axis lists seven professional statuses: &quot;Undergraduate Student,&quot; &quot;Master Student,&quot; &quot;Doctoral Student,&quot; &quot;Postdoc,&quot; &quot;Faculty or Academic Staff,&quot; and &quot;Researcher in Industry.&quot; The y-axis represents the proportion of respondents, with values ranging from 0 to 0.8. For each professional status, there are five bars, each representing a level of perceived helpfulness, as indicated in the legend on the right. Similar to Figure 3, the &quot;Helpful&quot; and &quot;Highly helpful&quot; categories generally receive higher proportions of responses across different professional statuses, suggesting a positive perception of LLM feedback in scientific writing. For instance, among &quot;Doctoral Students,&quot; approximately 65% found the feedback &quot;Helpful,&quot; and around 10% found it &quot;Highly helpful.&quot; This trend of &quot;Helpful&quot; being the most frequent response is consistent across most professional statuses.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Our analysis suggests that people from diverse educational backgrounds and publishing experience can find the LLM scientific feedback generation framework useful (Supp. Fig. 3,4)."</p>
+            <p><strong>Context:</strong> This sentence, also from the first paragraph of the Discussion section, emphasizes the inclusivity of the LLM feedback framework, suggesting its potential benefit for researchers across various career stages and roles.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 4 complements Figure 3 by demonstrating that the perceived helpfulness of LLM feedback extends across different professional statuses. This finding further supports the claim that LLM feedback can be a valuable tool for a diverse range of researchers, regardless of their career stage or position.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is clear and easy to understand.</li><li>The labels are clear and concise, and the color scheme is effective.</li><li>The caption is, again, separated from the figure by a large block of text, which could be improved by placing the caption closer to the figure.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure effectively illustrates that the perceived helpfulness of LLM feedback is generally consistent across different professional statuses.</li><li>The absence of statistical tests or confidence intervals limits the ability to draw definitive conclusions about the statistical significance of the observed differences.</li><li>Future research could investigate potential variations in the perceived helpfulness of LLM feedback within specific professional statuses, considering factors like research experience, publication record, or institutional affiliation.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Proportion of &#x27;Doctoral Students&#x27; who found LLM feedback &#x27;Helpful&#x27;:</strong> 0.65</li><li><strong>Proportion of &#x27;Doctoral Students&#x27; who found LLM feedback &#x27;Highly helpful&#x27;:</strong> 0.1</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>Methods</h3>
+            
+            <h4>Overview</h4>
+            <p>The Methods section outlines the data sources and procedures used in the study. It details the selection criteria and characteristics of the Nature Family Journals dataset and the ICLR dataset, both used for retrospective analysis. The section also describes the pipeline for generating scientific feedback using GPT-4, including PDF parsing, prompt construction, and feedback structure. Finally, it explains the retrospective comment matching pipeline, involving extractive text summarization and semantic text matching, and its validation through human verification.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Nature Family Journals Dataset:</strong>The dataset includes 3,096 accepted papers and 8,745 reviews from 15 Nature family journals published between January 1, 2022, and June 17, 2023, sourced from the Nature website.</li><li><strong>ICLR Dataset:</strong>The dataset comprises 1,709 papers and 6,506 reviews from ICLR 2022 and 2023, stratified by decision categories (Oral, Spotlight, Poster, Reject, Withdrawn), retrieved using the OpenReview API.</li><li><strong>LLM Feedback Generation Pipeline:</strong>The pipeline uses GPT-4 to generate structured feedback, parsing PDFs with ScienceBeam, constructing prompts with title, abstract, captions, and main text (up to 6,500 tokens), and generating feedback in four sections: significance and novelty, potential reasons for acceptance, potential reasons for rejection, and suggestions for improvement.</li><li><strong>Retrospective Comment Matching Pipeline:</strong>This two-stage pipeline extracts comments from LLM and human feedback using extractive text summarization and then matches shared comments using semantic text matching, validated through human verification with an F1 score of 96.8% for extraction and 82.4% for matching.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Detailed Data Description</strong>
+        <p>The section provides a thorough description of the datasets used, including the number of papers and reviews, publication period, selection criteria, and sources. This transparency allows for replication and assessment of the data&#x27;s representativeness.</p>
+        <div class="quote">"Our dataset comprises papers from 15 Nature family journals, published between January 1, 2022, and June 17, 2023. We sourced papers from 15 Nature family journals, focusing on those published between January 1, 2022, and June 17, 2023. Within this period, our dataset includes 773 accepted papers from Nature with 2,324 reviews, 810 sampled accepted papers from Nature Communications with 2,250 reviews, and many others. In total, our dataset includes 3,096 accepted papers and 8,745 reviews (Supp. Table 1). The data were sourced directly from the Nature website (https://nature.com/)." (Page 8)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Pipeline Explanation</strong>
+        <p>The section clearly explains the steps involved in both the LLM feedback generation pipeline and the retrospective comment matching pipeline. This clarity allows readers to understand how the data was processed and analyzed.</p>
+        <div class="quote">"We prototyped a pipeline to generate scientific feedback using OpenAI’s GPT-419 (Fig. 1a). The system’s input was the academic paper in PDF format, which was then parsed with the machine-learning-based ScienceBeam PDF parser53. Given the token constraint of GPT-4, which allows 8,192 tokens for combined input and output, the initial 6,500 tokens of the extracted title, abstract, figure and table captions, and main text were utilized to construct the prompt for GPT-4 (Supp. Fig. 5)." (Page 8)</div>
+    </li>
+    
+    <li>
+        <strong>Human Verification of Matching</strong>
+        <p>The section describes the human verification process used to validate the accuracy of the comment matching pipeline. This step strengthens the reliability of the overlap analysis and demonstrates the authors&#x27; commitment to ensuring the validity of their results.</p>
+        <div class="quote">"We validated our retrospective comment matching pipeline using human verification. In the extractive text summarization stage, we randomly selected 639 pieces of scientific feedback, including 150 from the LLM and 489 from human contributors. Two co-authors assessed each feedback and its corresponding list of extracted comments, identifying true positives (correctly extracted comments), false negatives (missed relevant comments), and false positives (incorrectly extracted or split comments). This process resulted in an F1 score of 0.968, with a precision of 0.977 and a recall of 0.960 (Supp. Table 3a), demonstrating the accuracy of the extractive summarization stage." (Page 9)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Elaborate on Prompt Engineering</strong>
+        <p>While the section mentions prompt construction, it could benefit from a more detailed explanation of the specific prompts used for GPT-4, including any variations or refinements made during the study. This would provide insights into how the prompts were designed to elicit relevant and comprehensive feedback.</p>
+        <div class="quote">"Given the token constraint of GPT-4, which allows 8,192 tokens for combined input and output, the initial 6,500 tokens of the extracted title, abstract, figure and table captions, and main text were utilized to construct the prompt for GPT-4 (Supp. Fig. 5)." (Page 8)</div>
+        <p><strong>Rationale:</strong> Prompt engineering is crucial for eliciting desired responses from LLMs. A detailed description of the prompts used would enhance the reproducibility of the study and allow other researchers to understand the specific instructions given to GPT-4.</p>
+        <p><strong>Implementation:</strong> Include the full prompt templates used for both the Nature Family Journals dataset and the ICLR dataset as supplementary figures. Additionally, discuss any iterative refinements made to the prompts based on preliminary results or feedback from human annotators.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Token Limit Impact</strong>
+        <p>The section acknowledges the token limit of GPT-4 but doesn&#x27;t discuss its potential impact on the analysis. It would be beneficial to address whether this limit resulted in any information loss or affected the comprehensiveness of the LLM feedback.</p>
+        <div class="quote">"Given the token constraint of GPT-4, which allows 8,192 tokens for combined input and output, the initial 6,500 tokens of the extracted title, abstract, figure and table captions, and main text were utilized to construct the prompt for GPT-4 (Supp. Fig. 5). This token limit exceeds the 5,841.46-token average of ICLR papers and covers over half of the 12,444.06-token average for Nature family journal papers (Supp. Table 4)." (Page 8)</div>
+        <p><strong>Rationale:</strong> The token limit of LLMs is a known constraint that can affect their ability to process and analyze long documents. Addressing this limitation would enhance the transparency of the study and allow readers to assess the potential impact on the results.</p>
+        <p><strong>Implementation:</strong> Analyze the distribution of paper lengths in both datasets and compare it to the token limit of GPT-4. Discuss whether any papers exceeded the limit and, if so, how this was handled. Additionally, explore potential mitigation strategies for future studies, such as using techniques for summarizing or compressing long documents before feeding them to the LLM.</p>
+    </li>
+    
+    <li>
+        <strong>Clarify Comment Extraction Criteria</strong>
+        <p>The section mentions focusing on criticisms in the feedback but doesn&#x27;t provide specific criteria for identifying criticisms. A clearer explanation of how criticisms were distinguished from other types of comments would improve the transparency and replicability of the analysis.</p>
+        <div class="quote">"We focused on criticisms in the feedback, as they provide direct feedback to help authors improve their papers54." (Page 9)</div>
+        <p><strong>Rationale:</strong> The definition of &quot;criticisms&quot; can be subjective and vary between reviewers. Providing clear criteria for identifying criticisms would ensure consistency in the analysis and allow other researchers to replicate the study.</p>
+        <p><strong>Implementation:</strong> Define the specific criteria used to identify criticisms in both LLM and human feedback. This could involve using keywords, phrases, or sentence structures that indicate a critical comment. Additionally, provide examples of comments that were classified as criticisms and comments that were not, to illustrate the distinction.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Table 1</summary>
+        <p>Supplementary Table 1 provides a summary of the papers and their associated reviews sampled from 15 Nature family journals. It lists the journal name, the number of papers sampled from that journal, and the total number of reviews associated with those papers. For example, 773 papers were sampled from Nature with 2,324 associated reviews, and 810 papers were sampled from Nature Communications with 2,250 associated reviews. In total, the table includes data for 3,096 papers and 8,745 reviews across 15 Nature family journals.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The first dataset, sourced from Nature family journals, includes 8,745 comments from human reviewers for 3,096 accepted papers across 15 Nature family journals, including Nature, Nature Biomedical Engineering, Nature Human Behaviour, and Nature Communications (Supp. Table 1, Methods)."</p>
+            <p><strong>Context:</strong> This sentence, located in the third paragraph of the Results section, introduces the first dataset used in the retrospective analysis, which comprises papers and reviews from Nature family journals. It mentions Supplementary Table 1 as a source for more detailed information about the dataset.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Table 1 is relevant to the Methods section as it provides a detailed breakdown of the papers and reviews included in the Nature family journals dataset, which is one of the two main datasets used in the study&#x27;s retrospective analysis. This table allows readers to understand the scope and composition of the dataset, including the number of papers and reviews from each journal, which is crucial for assessing the generalizability of the study&#x27;s findings.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clear, well-organized, and easy to read.</li><li>The use of clear headers and simple formatting enhances readability.</li><li>The table effectively communicates the intended information.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table provides a comprehensive overview of the Nature family journals dataset, including the number of papers and reviews from each journal.</li><li>The inclusion of a total row summarizing the counts for all journals facilitates easy understanding of the dataset&#x27;s overall size.</li><li>The table does not provide information about the selection criteria for the papers or the distribution of papers across different research areas, which could be relevant for assessing the representativeness of the dataset.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Number of papers sampled from Nature:</strong> 773</li><li><strong>Number of reviews associated with papers from Nature:</strong> 2324</li><li><strong>Number of papers sampled from Nature Communications:</strong> 810</li><li><strong>Number of reviews associated with papers from Nature Communications:</strong> 2250</li><li><strong>Total number of papers in the dataset:</strong> 3096</li><li><strong>Total number of reviews in the dataset:</strong> 8745</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Table 2</summary>
+        <p>Supplementary Table 2 summarizes the ICLR papers and their associated reviews sampled from the years 2022 and 2023, grouped by decision category. The table presents the number of papers and reviews for each decision category, including Accept (Oral), Accept (Spotlight), Accept (Poster), Reject after author rebuttal, and Withdrawn after reviews, for both ICLR 2022 and ICLR 2023. For example, in ICLR 2022, there were 55 accepted papers with oral presentations and 200 associated reviews, while in ICLR 2023, there were 90 accepted papers with oral presentations and 317 associated reviews. The table also provides the total number of papers and reviews for each year, with 820 papers and 3,168 reviews in ICLR 2022 and 889 papers and 3,337 reviews in ICLR 2023.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Our second dataset was sourced from ICLR (International Conference on Learning Representations), a leading computer science venue on artificial intelligence (Supp. Table 2, Methods)."</p>
+            <p><strong>Context:</strong> This sentence, found in the third paragraph of the Introduction section, introduces the second dataset used in the study, which consists of papers and reviews from the ICLR machine learning conference. It mentions Supplementary Table 2 as a source for more detailed information about this dataset.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Table 2 is relevant to the Methods section as it provides a detailed breakdown of the ICLR dataset used in the study&#x27;s retrospective analysis. The table presents the number of papers and reviews for each decision category (accept with oral presentation, accept with spotlight presentation, accept with poster presentation, reject, and withdraw) for both ICLR 2022 and ICLR 2023. This information is crucial for understanding the composition of the dataset and for assessing the generalizability of the study&#x27;s findings across different acceptance outcomes.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is well-organized and easy to read.</li><li>The headings are clear and informative.</li><li>The use of different columns for 2022 and 2023 data makes the comparison straightforward.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table provides a comprehensive overview of the ICLR dataset, including the number of papers and reviews for each decision category and year.</li><li>The table allows for a direct comparison of the number of papers and reviews between ICLR 2022 and ICLR 2023, which is helpful for understanding the growth of the conference.</li><li>The table does not provide information about the distribution of papers across different research areas within machine learning, which could be relevant for assessing the representativeness of the dataset.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Number of accepted papers with oral presentations in ICLR 2022:</strong> 55</li><li><strong>Number of reviews associated with accepted papers with oral presentations in ICLR 2022:</strong> 200</li><li><strong>Number of accepted papers with oral presentations in ICLR 2023:</strong> 90</li><li><strong>Number of reviews associated with accepted papers with oral presentations in ICLR 2023:</strong> 317</li><li><strong>Total number of papers in ICLR 2022:</strong> 820</li><li><strong>Total number of reviews in ICLR 2022:</strong> 3168</li><li><strong>Total number of papers in ICLR 2023:</strong> 889</li><li><strong>Total number of reviews in ICLR 2023:</strong> 3337</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Table 3</summary>
+        <p>Supplementary Table 3 presents the results of human verification conducted on the retrospective comment extraction and matching pipeline. It is divided into two subtables: (a) Extractive Summarization and (b) Semantic Matching. Subtable (a) focuses on the accuracy of extracting comments from scientific feedback, reporting the counts of true positives (correctly extracted comments), false negatives (missed relevant comments), and false positives (incorrectly extracted or split comments). It also presents the calculated Precision, Recall, and F1 Score for this stage, with an F1 score of 0.968. Subtable (b) evaluates the accuracy of pairing extracted comments based on semantic similarity. It displays the counts of matches and mismatches between human judgment and the system&#x27;s predictions, providing Precision, Recall, and F1 Score for this stage, with an F1 score of 0.824.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "We validated the pipeline’s accuracy through human verification, yielding an F1 score of 96.8% for extraction (Supp. Table 3a, Methods) and 82.4% for matching (Supp. Table 3b, Methods)."</p>
+            <p><strong>Context:</strong> This sentence, located at the end of the third paragraph in the Results section, describes the human verification process used to validate the accuracy of the comment matching pipeline. It specifically mentions Supplementary Table 3a for extraction results and Supplementary Table 3b for matching results.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Table 3 is highly relevant to the Methods section as it provides detailed results of the human verification process used to validate the accuracy of the comment extraction and matching pipeline. This pipeline is a crucial component of the study&#x27;s methodology, as it enables the comparison of LLM-generated feedback with human feedback. The table presents key performance metrics, including precision, recall, and F1 score, for both the extraction and matching stages, demonstrating the high accuracy of the pipeline and strengthening the reliability of the study&#x27;s findings.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is generally well-organized and easy to understand.</li><li>The labeling is clear, and the division into subtables helps to separate the results for different stages of the process.</li><li>The use of abbreviations (TP, FN, FP) is standard in this context and unlikely to cause confusion.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table provides a clear and concise presentation of the human verification results, including both raw counts and calculated performance metrics.</li><li>The high F1 scores for both extraction (0.968) and matching (0.824) indicate that the pipeline is highly accurate in identifying and pairing relevant comments.</li><li>The table does not provide information about the inter-rater reliability of the human annotations, which would be helpful for assessing the consistency of the human judgments.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>F1 score for comment extraction:</strong> 0.968</li><li><strong>F1 score for comment matching:</strong> 0.824</li><li><strong>Precision for comment extraction:</strong> 0.977</li><li><strong>Recall for comment extraction:</strong> 0.96</li><li><strong>Precision for comment matching:</strong> 0.777</li><li><strong>Recall for comment matching:</strong> 0.878</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Table 4</summary>
+        <p>Supplementary Table 4 presents the mean token lengths of papers and human reviews in the two datasets used in the study: ICLR and Nature Family Journals. The table shows that ICLR papers have a mean token length of 5,841.46, while Nature Family Journal papers have a mean token length of 12,444.06. Similarly, human reviews for ICLR papers have a mean token length of 671.53, while those for Nature Family Journal papers have a mean token length of 1,337.93.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "This token limit exceeds the 5,841.46-token average of ICLR papers and covers over half of the 12,444.06-token average for Nature family journal papers (Supp. Table 4)."</p>
+            <p><strong>Context:</strong> This sentence, found in the last paragraph of the Methods section, explains the rationale for using the initial 6,500 tokens of the extracted text to construct the prompt for GPT-4. It refers to Supplementary Table 4 for the mean token lengths of papers in both datasets, justifying the chosen token limit.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Table 4 is relevant to the Methods section as it provides context for the decision to use the initial 6,500 tokens of the extracted text to construct the prompt for GPT-4. The table shows the mean token lengths of papers in both the ICLR and Nature Family Journals datasets, highlighting the difference in length between the two. This information justifies the chosen token limit, as it exceeds the average length of ICLR papers and covers over half of the average length of Nature Family Journal papers, ensuring that a substantial portion of each paper is included in the prompt.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clear and well-organized.</li><li>The labeling is straightforward and easy to understand.</li><li>The choice of a table format is appropriate for presenting this type of data.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table effectively conveys the difference in mean token lengths between ICLR and Nature Family Journal papers, providing justification for the chosen token limit.</li><li>The table only presents mean token lengths, without providing information about the distribution of token lengths or the standard deviation, which could be helpful for understanding the variability in paper lengths.</li><li>The table does not explain the method used for tokenization, which could be relevant for understanding how the token lengths were calculated.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Mean token length of ICLR papers:</strong> 5841.46</li><li><strong>Mean token length of Nature Family Journal papers:</strong> 12444.06</li><li><strong>Mean token length of human reviews for ICLR papers:</strong> 671.53</li><li><strong>Mean token length of human reviews for Nature Family Journal papers:</strong> 1337.93</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Table 5</summary>
+        <p>Supplementary Table 5 presents examples of comments extracted from both LLM (GPT-4) and human feedback on papers submitted to the ICLR conference, categorized by human coding. The table is organized by human coding aspects, such as &#x27;Clarity and Presentation&#x27;, &#x27;Comparison to Previous Studies&#x27;, &#x27;Theoretical Soundness&#x27;, &#x27;Novelty&#x27;, and &#x27;Reproducibility&#x27;. For each category, the table provides both the human and GPT-4 generated comments, allowing for a direct comparison of the feedback provided by both sources. The comments highlight various aspects of the paper, such as writing quality, comparison with existing methods, theoretical rigor, novelty of the approach, and reproducibility of the results.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Using our extractive text summarization pipeline, we extracted lists of comments from both the LLM and human feedback for each paper. Each comment was then annotated according to our predefined schema, identifying any of the 11 aspects it represented (Supp. Table 5,6,7)."</p>
+            <p><strong>Context:</strong> This sentence, located in the last paragraph of the Methods section, describes the process of annotating comments extracted from LLM and human feedback according to a predefined schema of 11 key aspects. It mentions Supplementary Tables 5, 6, and 7 as examples of the annotated comments.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Table 5 is relevant to the Methods section as it provides examples of the annotated comments extracted from LLM and human feedback. The table showcases the different aspects of scientific papers that were considered in the annotation process, such as clarity and presentation, comparison to previous studies, theoretical soundness, novelty, and reproducibility. This information helps readers understand the scope and depth of the annotation schema and provides concrete examples of how the comments were categorized.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is well-organized and easy to read.</li><li>The use of clear headers and concise comments makes the information readily accessible.</li><li>The table could benefit from highlighting the key differences between the human and LLM comments for each aspect, making the comparison more explicit.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table provides a diverse range of examples, covering various aspects of scientific papers, which demonstrates the comprehensiveness of the annotation schema.</li><li>The comments themselves are insightful and provide valuable feedback on the papers, showcasing the potential of both human and LLM feedback for improving scientific writing.</li><li>The table does not provide information about the frequency of each aspect in the dataset, which would be helpful for understanding the relative importance of different aspects in scientific feedback.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Table 6</summary>
+        <p>Supplementary Table 6 presents example comments extracted from both LLM (GPT-4) and human feedback on papers submitted to the ICLR conference. The table is organized by &#x27;Human Coding&#x27;, which categorizes the comments based on their focus: &#x27;Add ablations experiments&#x27;, &#x27;Implications of the Research&#x27;, or &#x27;Ethical Aspects&#x27;. For each category, the table provides both the human and GPT-4 generated comments. This table illustrates the similarities and differences in feedback provided by humans and the LLM.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "null"</p>
+            <p><strong>Context:</strong> null</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> While Supplementary Table 6 is not explicitly mentioned in the Methods section, it is relevant as it provides examples of the types of comments that the comment matching pipeline would be processing. It showcases the diversity of feedback aspects and the nuances in language used by both humans and LLMs, which the pipeline needs to accurately capture and compare.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clear and well-organized.</li><li>The use of separate columns for human and LLM feedback allows for easy comparison.</li><li>The table effectively communicates the different perspectives on paper review from human and LLM sources.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table provides valuable qualitative insights into the types of comments generated by both humans and LLMs.</li><li>The examples highlight the LLM&#x27;s ability to identify similar concerns as human reviewers, such as the need for ablation experiments or the discussion of ethical implications.</li><li>The table also reveals differences in the level of detail and specificity between human and LLM comments, which is a key finding discussed in the Results section.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Table 7</summary>
+        <p>Table 7 presents example comments from both a large language model (LLM) and human reviewers regarding a scientific paper submitted to ICLR. The comments are categorized by human coding aspects such as &#x27;Add ablations experiments&#x27;, &#x27;Implications of the Research&#x27;, and &#x27;Ethical Aspects&#x27;. Each row includes the source of the comment (Human or GPT-4) and the comment itself.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "null"</p>
+            <p><strong>Context:</strong> null</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Similar to Supplementary Table 6, Table 7, though not directly mentioned in the Methods section, is relevant as it provides additional examples of the comments that the comment matching pipeline would be analyzing. It further illustrates the range of feedback aspects covered by both human and LLM feedback and the variations in language and specificity.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clearly structured, with distinct headers and easy-to-read text.</li><li>The categories provide useful context for the comments.</li><li>However, without the original paper, the comments lack sufficient context for a reader to fully understand them.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table offers further qualitative evidence of the LLM&#x27;s ability to generate feedback that aligns with human concerns, such as the need for ablation studies or the consideration of ethical implications.</li><li>The examples highlight the LLM&#x27;s capacity to identify potential issues that human reviewers might overlook, such as the lack of IRB approval information.</li><li>The table also reinforces the observation that LLM feedback can sometimes be less specific or actionable compared to human feedback, as seen in the examples related to &#x27;Add ablations experiments&#x27;.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 6</summary>
+        <p>This flow diagram illustrates a three-stage pipeline designed to compare comments generated by a Large Language Model (LLM) with those from human reviewers. The pipeline begins with &#x27;Language Model Feedback,&#x27; where key comments are extracted from the LLM&#x27;s analysis of a scientific paper. The second stage, &#x27;Language Model Summary,&#x27; condenses the extracted comments into a more succinct form. Finally, in the &#x27;Feedback Matching&#x27; stage, the original feedback and the summarized feedback are compared using semantic similarity analysis, with matching points highlighted and a similarity rating assigned.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "We developed a retrospective comment matching pipeline to evaluate the overlap between feedback from LLM and human reviewers (Fig. 1b, Methods)."</p>
+            <p><strong>Context:</strong> This sentence, located in the fourth paragraph of the Results section, introduces the retrospective comment matching pipeline and refers to Figure 1b for a visual representation of the process. However, Figure 1b is a simplified overview, and Supplementary Figure 6 provides a more detailed workflow of the pipeline.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 6 is crucial for understanding the methodology used to compare LLM and human feedback. It visually details the steps involved in extracting comments, summarizing them, and matching them based on semantic similarity. This pipeline is central to the study&#x27;s retrospective analysis, enabling the quantification of overlap between LLM and human feedback.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The flow diagram is generally clear and easy to follow, with distinct stages and connecting arrows.</li><li>However, it might benefit from a more visually appealing layout and the inclusion of specific examples for each stage.</li><li>Adding visual cues to differentiate between LLM and human feedback throughout the pipeline could enhance clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure clearly outlines the key steps involved in the comment matching process, providing a transparent view of the methodology.</li><li>The use of semantic similarity analysis for matching comments is a robust approach, capturing the meaning and intent behind the feedback rather than relying solely on keyword matching.</li><li>The inclusion of a similarity rating and justification for each matched pair adds a layer of granularity to the analysis, allowing for a more nuanced assessment of the overlap between LLM and human feedback.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 7</summary>
+        <p>Figure 7 explores the robustness of hit rate measurements in ICLR data by controlling for the number of comments. Five bar graphs (a-e) depict hit rate comparisons for various categories of ICLR papers, considering factors like acceptance type (oral presentation, spotlight, poster) and post-review status (rejected, withdrawn). Each bar graph compares the hit rates of &#x27;GPT-4 vs. Human,&#x27; &#x27;Human vs. Human,&#x27; &#x27;Human (w/o control) vs. Human,&#x27; and &#x27;GPT-4 (shuffle) vs. Human.&#x27; The presence of error bars suggests the use of confidence intervals, likely at 95%, although the caption doesn&#x27;t explicitly confirm this. Statistical significance is indicated using asterisks with varying levels: *P &lt; 0.05, **P &lt; 0.01, ***P &lt; 0.001, and ****P &lt; 0.0001.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The results, with and without this control, were largely similar across both the ICLR dataset for different decision outcomes (Supp. Fig. 7,10) and the Nature family journals dataset across different journals (Supp. Fig. 8,9,10)."</p>
+            <p><strong>Context:</strong> This sentence, found in the eighth paragraph of the Methods section, refers to Supplementary Figure 7 as part of the robustness check performed to ensure that controlling for the number of comments does not significantly alter the hit rate results in the ICLR data.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 7 is crucial for demonstrating the robustness of the study&#x27;s findings regarding the overlap between LLM and human feedback. It shows that controlling for the number of comments in the ICLR data does not significantly affect the hit rate results, supporting the claim that the observed overlap is not simply an artifact of the number of comments generated.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is well-organized and clearly labeled, with distinct categories and consistent labeling across the graphs.</li><li>The color scheme effectively distinguishes the different comparison groups.</li><li>The use of error bars and statistical significance markers enhances the interpretation of the results.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure effectively demonstrates the robustness of the hit rate results across different categories of ICLR papers and with and without controlling for the number of comments.</li><li>The consistent pattern of higher hit rates for &#x27;GPT-4 vs. Human&#x27; and &#x27;Human vs. Human&#x27; compared to &#x27;GPT-4 (shuffle) vs. Human&#x27; further supports the claim that LLM feedback is paper-specific and not simply generic.</li><li>The use of statistical significance markers provides a clear indication of the statistical robustness of the observed differences between groups.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 8</summary>
+        <p>Supplementary Figure 8 comprises nine bar graphs, labeled (a) to (i), showcasing a robustness check by controlling for the number of comments when measuring overlap within datasets from nine Nature family journals. Each graph depicts the &#x27;Hit Rate (%)&#x27; across three scenarios: comparing GPT-4 feedback to human feedback (&#x27;GPT-4 vs. Human&#x27;), comparing feedback from two different human reviewers (&#x27;Human vs. Human&#x27;), and comparing feedback from two groups of human reviewers where one group&#x27;s data is shuffled to control for the number of comments (&#x27;Human (w/o control) vs. Human (shuffle) vs. Human&#x27;). The figure aims to demonstrate that controlling for the number of comments yields similar results to analyses without this control, suggesting that the observed overlap between LLM and human feedback is comparable to the overlap between different human reviewers. The caption further states that additional results for other Nature family journals are presented in Supplementary Figure 9 and that the error bars in the graphs represent 95% confidence intervals. Statistical significance is indicated by asterisks: * for P &lt; 0.05, ** for P &lt; 0.01, *** for P &lt; 0.001, and **** for P &lt; 0.0001.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The results, with and without this control, were largely similar across both the ICLR dataset for different decision outcomes (Supp. Fig. 7,10) and the Nature family journals dataset across different journals (Supp. Fig. 8,9,10)."</p>
+            <p><strong>Context:</strong> This sentence, also from the eighth paragraph of the Methods section, refers to Supplementary Figure 8 as part of the robustness check for the Nature family journals data. It highlights that the results are consistent with and without controlling for the number of comments, further supporting the reliability of the findings.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 8 is essential for demonstrating the robustness of the study&#x27;s findings in the Nature family journals data. It shows that controlling for the number of comments does not significantly alter the hit rate results, reinforcing the claim that the observed overlap between LLM and human feedback is comparable to the overlap between human reviewers.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is generally clear and well-organized, with each graph clearly labeled and the statistical significance clearly marked.</li><li>The use of different colors for the bars representing different comparison groups could enhance readability.</li><li>The caption provides a comprehensive explanation of the figure&#x27;s purpose, methodology, and results.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure effectively demonstrates the consistency of the hit rate results across different Nature family journals and with and without controlling for the number of comments.</li><li>The similar hit rates observed for &#x27;GPT-4 vs. Human&#x27; and &#x27;Human vs. Human&#x27; across most journals further support the claim that LLM feedback is comparable to human feedback in terms of identifying similar concerns.</li><li>The use of statistical significance markers and the reporting of p-values provide a robust assessment of the statistical significance of the observed differences.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 10</summary>
+        <p>Supplementary Figure 10 consists of four scatter plots that examine the robustness of controlling for the number of comments when analyzing the correlation of hit rates between GPT-4 and human reviewers in predicting peer review outcomes. Each scatter plot compares the hit rate of GPT-4 versus human reviewers with the hit rate of human reviewers versus other human reviewers. Subplot (a) focuses on hit rates across various Nature family journals while controlling for the number of comments, showing a correlation coefficient (r) of 0.80 and a p-value of 3.69 x 10^-4. Subplot (b) examines hit rates across ICLR papers with different decision outcomes, also controlling for the number of comments, with an r-value of 0.98 and a p-value of 3.28 x 10^-3. Subplot (c) analyzes hit rates across Nature family journals without controlling for the number of comments (r = 0.75, P = 1.37 x 10^-3). Lastly, subplot (d) investigates hit rates across ICLR papers with different decision outcomes without controlling for the number of comments (r = 0.98, P = 2.94 x 10^-3). The circle size in each scatter plot represents the sample size for each data point.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Results with and without this control, were largely similar across both the ICLR dataset for different decision outcomes (Supp. Fig. 7,10) and the Nature family journals dataset across different journals (Supp. Fig. 8,9,10)."</p>
+            <p><strong>Context:</strong> This sentence, located in the fifth paragraph of the Methods section, refers to Supplementary Figure 10 as part of a robustness check to demonstrate that controlling for the number of comments yields similar results to analyses without this control when comparing hit rates between GPT-4 and human reviewers across different journals and decision outcomes.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 10 is relevant to the Methods section as it provides a visual representation of the robustness check performed to validate the consistency of the study&#x27;s findings regarding the correlation of hit rates between GPT-4 and human reviewers. It demonstrates that the observed correlations are not significantly affected by variations in the number of comments, strengthening the reliability of the study&#x27;s conclusions.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is well-organized and easy to understand, with each subplot clearly labeled and the axes appropriately scaled.</li><li>The use of different colors for different journals and decision outcomes in subplots (a) and (b) enhances readability and allows for easy comparison.</li><li>The inclusion of a diagonal dashed line representing a perfect match in each subplot provides a helpful visual reference for assessing the correlation between hit rates.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure effectively demonstrates the robustness of the correlation between GPT-4 and human hit rates, both with and without controlling for the number of comments.</li><li>The inclusion of correlation coefficients (r) and p-values for each subplot provides a quantitative measure of the strength and significance of the observed correlations.</li><li>The figure could benefit from a more detailed explanation of the method used to control for the number of comments, such as specifying whether regression analysis or another statistical technique was employed.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Correlation coefficient (r) for hit rates across Nature family journals, controlling for the number of comments:</strong> 0.8</li><li><strong>P-value for hit rates across Nature family journals, controlling for the number of comments:</strong> 0.000369</li><li><strong>Correlation coefficient (r) for hit rates across ICLR papers with different decision outcomes, controlling for the number of comments:</strong> 0.98</li><li><strong>P-value for hit rates across ICLR papers with different decision outcomes, controlling for the number of comments:</strong> 0.00328</li><li><strong>Correlation coefficient (r) for hit rates across Nature family journals without controlling for the number of comments:</strong> 0.75</li><li><strong>P-value for hit rates across Nature family journals without controlling for the number of comments:</strong> 0.00137</li><li><strong>Correlation coefficient (r) for hit rates across ICLR papers with different decision outcomes without controlling for the number of comments:</strong> 0.98</li><li><strong>P-value for hit rates across ICLR papers with different decision outcomes without controlling for the number of comments:</strong> 0.00294</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 12</summary>
+        <p>Supplementary Figure 12 presents the prompt template used with GPT-4 to generate scientific feedback on papers from the Nature journal family dataset. The template instructs GPT-4 to draft a high-quality review outline for a Nature family journal, starting with &quot;Review outline:&quot; followed by four sections: &quot;1. Significance and novelty,&quot; &quot;2. Potential reasons for acceptance,&quot; &quot;3. Potential reasons for rejection,&quot; and &quot;4. Suggestions for improvement.&quot; For the &quot;Potential reasons for rejection&quot; section, the template emphasizes providing multiple key reasons with at least two sub-bullet points for each reason, detailing the arguments with specificity. Similarly, the &quot;Suggestions for improvement&quot; section encourages listing multiple key suggestions with detailed explanations. The template emphasizes providing thoughtful and constructive feedback in outline form only.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p>This prompt is then fed into GPT-4, which generates the scientific feedback in a single pass. Further details and validations of the pipeline can be found in the Supplementary Information.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 12 is crucial for understanding the specific instructions provided to GPT-4 for generating scientific feedback. It reveals the structure and content requirements of the feedback, highlighting the emphasis on detailed explanations, multiple reasons for rejection, and specific suggestions for improvement. This information is essential for interpreting the quality and nature of the LLM-generated feedback analyzed in the study.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is not visually present; only the caption is provided, which adequately describes the prompt template.</li><li>Presenting the prompt template as plain text within the caption is appropriate, as it allows for easy readability and understanding of the instructions.</li><li>Including a visual representation of the prompt template, such as a screenshot of the input interface, could further enhance clarity and provide a more concrete understanding of how the prompt is presented to GPT-4.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt template demonstrates a well-structured approach to eliciting scientific feedback from GPT-4, covering key aspects of a peer review.</li><li>The emphasis on detailed explanations, multiple reasons for rejection, and specific suggestions for improvement encourages the LLM to generate comprehensive and constructive feedback.</li><li>The template could benefit from further refinement to encourage GPT-4 to provide more specific and actionable feedback, potentially by incorporating examples or prompting for specific types of evidence or analysis.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 13</summary>
+        <p>Supplementary Figure 13 displays the prompt template used with GPT-4 for extractive text summarization of comments in both LLM-generated and human-written feedback. The template instructs GPT-4 to identify the key concerns raised in a review, focusing specifically on potential reasons for rejection. It requires the analysis to be presented in JSON format, including a concise summary and the exact wording from the review for each concern. The template provides an example JSON format, illustrating how to structure the output with numbered keys representing each concern and corresponding values containing a summary and verbatim quote. It emphasizes ignoring minor issues like typos and clarifications and instructs GPT-4 to output only the JSON data.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p>The pipeline first performs extractive text summarization34–37 to extract the comments from both LLM and human-written feedback.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 13 is essential for understanding how comments are extracted from both LLM and human feedback for subsequent analysis. It reveals the specific instructions given to GPT-4 for identifying key concerns, focusing on potential reasons for rejection, and structuring the output in JSON format. This information is crucial for interpreting the accuracy and reliability of the comment extraction process and the subsequent comparison between LLM and human feedback.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is not visually present; only the caption is provided, which adequately describes the prompt template.</li><li>Presenting the prompt template as plain text within the caption is appropriate, as it allows for easy readability and understanding of the instructions.</li><li>Including a visual representation of the prompt template, such as a screenshot of the input interface or an example JSON output, could further enhance clarity and provide a more concrete understanding of the extraction process.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt template focuses on extracting key concerns, particularly potential reasons for rejection, which aligns with the study&#x27;s objective of evaluating the LLM&#x27;s ability to provide constructive feedback.</li><li>The requirement for JSON format ensures structured and machine-readable output, facilitating automated analysis and comparison of comments.</li><li>The template could benefit from further refinement to encourage GPT-4 to extract more specific and actionable comments, potentially by prompting for specific types of evidence or analysis related to the identified concerns.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Supplementary Figure 14</summary>
+        <p>Supplementary Figure 14 presents the prompt template used with GPT-4 for semantic text matching to identify shared comments between two sets of feedback. The input consists of two JSON files containing extracted comments from the previous step, one for each review being compared (either LLM vs. human or human vs. human). GPT-4 is instructed to match points with a significant degree of similarity in their concerns, avoiding superficial similarities or weak connections. For each matched pair, GPT-4 is asked to provide a rationale explaining the match and rate the similarity on a scale of 5 to 10, with detailed descriptions for each rating level. The output is expected in JSON format, with each key representing a matched pair (e.g., &quot;A1-B2&quot;) and the corresponding value containing the rationale and similarity rating. If no match is found, an empty JSON object should be output.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p>It then applies semantic text matching38–40 to identify shared comments between the two feedback sources.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Supplementary Figure 14 is crucial for understanding how shared comments are identified between LLM and human feedback. It reveals the specific instructions given to GPT-4 for matching comments based on semantic similarity, avoiding superficial matches, providing rationales for each match, and rating the similarity level. This information is essential for interpreting the accuracy and reliability of the comment matching process and the subsequent analysis of overlap between LLM and human feedback.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is not visually present; only the caption is provided, which adequately describes the prompt template.</li><li>Presenting the prompt template as plain text within the caption is appropriate, as it allows for easy readability and understanding of the instructions.</li><li>Including a visual representation of the prompt template, such as a screenshot of the input interface or an example JSON output with matched pairs, could further enhance clarity and provide a more concrete understanding of the matching process.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt template emphasizes matching comments based on significant similarity in concerns, avoiding superficial matches, which enhances the reliability of the overlap analysis.</li><li>The requirement for rationales for each match provides transparency and allows for human verification of the matching process.</li><li>The similarity rating scale with detailed descriptions for each level provides a nuanced measure of the degree of overlap between comments, allowing for a more fine-grained analysis of the LLM&#x27;s performance.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Minimum similarity rating for a match to be considered valid:</strong> 7</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        // Show/hide back-to-top button
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
