@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluating the Planning Abilities of Large Language and Reasoning Models using PlanBench</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Evaluating the Planning Abilities of Large Language and Reasoning Models using PlanBench</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">Introduction</a></li><li><a href="#section-2">State-of-the-Art LLMs Still Can’t Plan</a></li><li><a href="#section-3">From Approximate Retrieval to Approximate Reasoning: Evaluating o1</a></li><li><a href="#section-4">Conclusion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>This research paper evaluates the planning capabilities of Large Language Models (LLMs) and Large Reasoning Models (LRMs), focusing on OpenAI&#39;s o1 model, using the PlanBench benchmark, which features block-stacking problems. The study reveals that while LLMs have made limited progress in planning, o1 demonstrates significant improvement due to its approximate reasoning abilities as opposed to the approximate retrieval approach of LLMs. However, o1&#39;s performance isn&#39;t perfect, particularly with complex or longer problems, highlighting the need for further research in LRM architecture and evaluation methodologies. The study emphasizes that evaluating LRMs requires considering not only accuracy but also efficiency, cost, and guarantees, which are critical for practical applications.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li>LLMs struggle with planning: Even advanced LLMs show limited success on PlanBench, particularly with variations like &#39;Mystery Blocksworld,&#39; which uses obfuscated language. This suggests that LLMs rely on pattern recognition rather than true understanding, highlighting their limitations in reasoning and planning compared to retrieval tasks. The best LLM only achieves around 62.6% accuracy on standard Blocksworld, demonstrating substantial room for improvement.</li><li>o1 demonstrates improved planning abilities: o1, categorized as an LRM, exhibits significantly better performance on PlanBench compared to LLMs, including the challenging &#39;Mystery Blocksworld.&#39; This improvement suggests that o1&#39;s approximate reasoning approach is more effective than the approximate retrieval used by LLMs. For instance, o1 achieves nearly perfect accuracy (close to 100%) on standard Blocksworld with shorter plans.</li><li>o1&#39;s performance degrades with problem complexity: While o1 excels at simpler Blocksworld problems, its accuracy drops as the required plan length increases or when dealing with unsolvable instances. This indicates limitations in o1&#39;s reasoning capabilities when faced with more complex scenarios. For example, its accuracy decreases to around 23.63% on Blocksworld problems requiring 20 or more steps.</li><li>o1 faces challenges with unsolvable problems: o1 can sometimes identify unsolvable Blocksworld instances, but not consistently. It can either propose impossible plans or incorrectly label solvable problems as unsolvable, suggesting further development is needed to improve its handling of such scenarios. For instance, it correctly identifies only 27% of unsolvable Blocksworld instances while falsely labeling 0% of solvable ones as unsolvable.</li><li>LRMs have higher computational costs: o1, while demonstrating improved performance, incurs significantly higher computational costs compared to LLMs. This raises concerns about its practical deployment and necessitates considering cost-effectiveness when evaluating different planning approaches. Table 4 shows o1-preview costing $42.12 per 100 instances compared to GPT-4 Turbo&#39;s $1.2.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li>Clear distinction between LLMs and LRMs: The paper clearly differentiates between LLMs (approximate retrievers) and LRMs (approximate reasoners), providing a conceptual framework for understanding their distinct capabilities and limitations in planning. This distinction highlights the significance of o1&#39;s different approach.</li><li>Comprehensive performance analysis: The paper offers a detailed analysis of o1&#39;s performance on PlanBench, considering various factors such as problem size, obfuscation, and unsolvability. This thorough evaluation provides valuable insights into o1&#39;s strengths and weaknesses, facilitating a deeper understanding of its reasoning capabilities.</li><li>Emphasis on practical considerations: The study doesn&#39;t solely focus on accuracy but also addresses critical practical considerations such as computational cost and the lack of guarantees associated with LRMs. This broader perspective is essential for real-world applications where efficiency and reliability are paramount.</li><li>Use of established benchmark: Employing the PlanBench benchmark allows for a consistent evaluation of different models and facilitates comparison with previous research. This strengthens the study&#39;s validity and allows for tracking progress in the field of AI planning.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li>Deeper investigation of o1&#39;s reasoning process: While the paper speculates on o1&#39;s architecture, a more detailed analysis of its internal reasoning would be beneficial. Analyzing intermediate steps or reasoning traces (if available) could reveal how o1 generates solutions and handles unsolvable problems. This would facilitate targeted improvements to the model&#39;s architecture and training.</li><li>Comparison with other reasoning approaches: Comparing o1&#39;s performance with alternative reasoning methods like symbolic planners or hybrid approaches would provide a broader context for evaluating its strengths and weaknesses. This comparison would help identify scenarios where alternative approaches might be more suitable.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>Table 2</h4>
+        <p><strong>Description:</strong> Table 2 compares the performance (accuracy and time) of o1, other LLMs, and a classical planner (Fast Downward) on various Blocksworld tasks. It shows that while o1 outperforms LLMs, it&#39;s not as fast or accurate as Fast Downward, highlighting the trade-off between general-purpose models and specialized systems.</p>
+        <p><strong>Relevance:</strong> This table underscores the performance gap between LRMs and dedicated planning systems, highlighting the need for further research to bridge this gap and improve LRM efficiency.</p>
+    </div>
+    
+    <div>
+        <h4>Figure 3</h4>
+        <p><strong>Description:</strong> Figure 3 depicts the decrease in o1&#39;s accuracy as the length of the required plan increases in Blocksworld. It visually demonstrates the model&#39;s limitations in handling more complex problems.</p>
+        <p><strong>Relevance:</strong> This figure visually reinforces the key finding that o1&#39;s reasoning abilities struggle with increased problem complexity, highlighting a crucial area for future development.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>This research paper demonstrates that while Large Reasoning Models (LRMs) like o1 represent a significant advancement over LLMs in planning tasks, challenges remain, particularly in handling complex problems and unsolvable instances. o1&#39;s improved performance comes at a higher computational cost, emphasizing the need to consider efficiency alongside accuracy in practical applications. Future research should focus on developing more robust LRM architectures that can efficiently handle longer plans and unsolvable problems, exploring hybrid approaches that combine the strengths of LLMs/LRMs with dedicated solvers, and developing more comprehensive evaluation methods that consider accuracy, efficiency, and guarantees. Furthermore, a deeper understanding of LRM reasoning processes and error analysis will be crucial for refining these models and unlocking their full potential in real-world planning scenarios.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>This abstract introduces a study evaluating the planning abilities of Large Language Models (LLMs) and Large Reasoning Models (LRMs), particularly OpenAI&#39;s o1 model, using the PlanBench benchmark. It highlights the slow progress of LLMs in planning tasks and suggests that o1, while significantly improved, still has limitations in terms of accuracy, efficiency, and guarantees.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>LLM Planning Limitations:</strong> Traditional LLMs struggle with planning tasks, potentially due to their reliance on approximate retrieval rather than reasoning.</li><li><strong>PlanBench Benchmark:</strong> This benchmark is used to evaluate the planning capabilities of LLMs and LRMs, focusing on block-stacking problems.</li><li><strong>o1 (LRM) Performance:</strong> OpenAI&#39;s o1 model demonstrates a substantial improvement over previous LLMs in planning, but still falls short of perfect accuracy.</li><li><strong>Efficiency and Cost Concerns:</strong> o1&#39;s improved performance comes at a higher computational cost, raising questions about its practical deployment.</li><li><strong>Need for New Evaluation Metrics:</strong> The emergence of LRMs necessitates new evaluation methods that consider efficiency, cost, and guarantees, in addition to accuracy.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Motivation</strong>
+        <p>The abstract effectively establishes the importance of planning in AI and the need to evaluate new models like o1.</p>
+        <div class="quote">"The ability to plan a course of action that achieves a desired state of affairs has long been considered a core competence of intelligent agents and has been an integral part of AI research since its inception." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Concise Summary of Findings</strong>
+        <p>The abstract succinctly presents the key findings, highlighting both o1&#39;s improvements and its remaining limitations.</p>
+        <div class="quote">"As we shall see, while o1’s performance is a quantum improvement on the benchmark, outpacing the competition, it is still far from saturating it." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Elaborate on Evaluation Metrics</strong>
+        <p>While the abstract mentions the need for new metrics, it could briefly elaborate on what these might be.</p>
+        <div class="quote">"This improvement also brings to the fore questions about accuracy, efficiency, and guarantees which must be considered before deploying such systems." (Page 1)</div>
+        <p><strong>Rationale:</strong> Providing more specific examples of new metrics would strengthen the abstract&#39;s call for future research.</p>
+        <p><strong>Implementation:</strong> Mention specific metrics like planning time, cost per plan, or robustness to variations in problem descriptions.</p>
+    </li>
+    
+    <li>
+        <strong>Quantify o1&#39;s Improvement</strong>
+        <p>The abstract uses qualitative terms like &quot;quantum improvement.&quot; Adding some quantitative data would make the improvement more concrete.</p>
+        <div class="quote">"As we shall see, while o1’s performance is a quantum improvement on the benchmark, outpacing the competition, it is still far from saturating it." (Page 1)</div>
+        <p><strong>Rationale:</strong> Quantifying the improvement would give readers a better understanding of the magnitude of o1&#39;s advancement.</p>
+        <p><strong>Implementation:</strong> Include a brief statement like &quot;o1 achieved X% accuracy compared to the previous best of Y%.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Overview</h4>
+            <p>This introduction sets the stage for evaluating Large Reasoning Models (LRMs), specifically OpenAI&#39;s o1, using the PlanBench benchmark. It emphasizes the shift from approximate retrieval in LLMs to approximate reasoning in LRMs, highlighting o1&#39;s potential and the need for new evaluation methods.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>PlanBench&#39;s Role:</strong> PlanBench serves as a tool to evaluate the planning capabilities of LLMs and now LRMs, providing a consistent measure of progress.</li><li><strong>LRM vs. LLM:</strong> The introduction distinguishes between Large Language Models (LLMs) and Large Reasoning Models (LRMs), suggesting o1 belongs to the latter category due to its different architecture and capabilities.</li><li><strong>o1 as an Approximate Reasoner:</strong> Unlike LLMs, which are described as approximate retrievers, o1 is presented as an approximate reasoner, implying a more sophisticated approach to problem-solving.</li><li><strong>Need for New Evaluation Tools:</strong> The unique nature of LRMs like o1 requires new evaluation tools and methods, especially given the limited information about their internal workings.</li><li><strong>Extending PlanBench:</strong> The introduction foreshadows the need to extend PlanBench to better assess the capabilities of LRMs and address questions of efficiency, cost, and guarantees.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Distinction between LLMs and LRMs</strong>
+        <p>The introduction clearly differentiates between LLMs and LRMs, highlighting the shift from retrieval to reasoning.</p>
+        <div class="quote">"In particular, unlike the LLMs which came before it, which can roughly be viewed as approximate retrievers, o1 seems to have been trained to be an approximate reasoner." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Justification for New Evaluation Methods</strong>
+        <p>The introduction effectively justifies the need for new evaluation methods for LRMs by emphasizing their unique characteristics.</p>
+        <div class="quote">"To properly evaluate this new kind of model and understand its abilities and limitations will require new tools and evaluation methods, especially if details of the overall model structure are kept secret and internal traces remain inaccessible to outside researchers." (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>More Concrete Examples of o1&#39;s Reasoning</strong>
+        <p>While the introduction states that o1 is an approximate reasoner, providing specific examples of its reasoning process would strengthen the argument.</p>
+        <div class="quote">"o1 seems to have been trained to be an approximate reasoner." (Page 2)</div>
+        <p><strong>Rationale:</strong> Concrete examples would make the distinction between LLMs and LRMs more tangible and persuasive.</p>
+        <p><strong>Implementation:</strong> Include a brief example of how o1 approaches a planning problem differently from an LLM, perhaps using a simplified block-stacking scenario.</p>
+    </li>
+    
+    <li>
+        <strong>Expand on PlanBench Extension Directions</strong>
+        <p>The introduction mentions extending PlanBench but could briefly elaborate on potential directions for this extension.</p>
+        <div class="quote">"Now that LRMs score so highly on at least parts of the original test set, those tools will become ever more important for future evaluations." (Page 2)</div>
+        <p><strong>Rationale:</strong> Providing specific directions for extending PlanBench would further motivate the research and provide a roadmap for future work.</p>
+        <p><strong>Implementation:</strong> Suggest specific extensions like incorporating more complex planning domains, varying problem sizes, or introducing uncertainty into the environment.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>State-of-the-Art LLMs Still Can’t Plan</h3>
+            
+            <h4>Overview</h4>
+            <p>This section examines the performance of existing Large Language Models (LLMs) on the PlanBench benchmark, particularly focusing on block-stacking problems. It finds that even the most advanced LLMs struggle with these planning tasks, especially variations like &quot;Mystery Blocksworld,&quot; suggesting their limitations in reasoning and planning compared to retrieval tasks.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>PlanBench Performance:</strong> LLMs show limited success on PlanBench, even with simpler block-stacking problems.</li><li><strong>Mystery Blocksworld:</strong> LLMs perform poorly on this obfuscated version of Blocksworld, highlighting their difficulty with semantic understanding.</li><li><strong>Translation and Reasoning:</strong> Providing explicit translations between problem representations doesn&#39;t significantly improve LLM performance, suggesting a lack of compositional reasoning abilities.</li><li><strong>One-Shot vs. Zero-Shot Prompting:</strong> One-shot prompting doesn&#39;t consistently improve performance over zero-shot prompting, and can even be detrimental for some models.</li><li><strong>Accuracy Limitations:</strong> The best-performing LLM achieves only around 62.6% accuracy on standard Blocksworld, indicating substantial room for improvement.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Performance Comparison</strong>
+        <p>The section provides a clear comparison of different LLMs on various Blocksworld tasks, allowing for a direct assessment of their capabilities.</p>
+        <div class="quote">"In Table 1, we present the results of running current and previous generation LLMs on a static test set of 600 three to five block Blocksworld problems, as well as on a set of 600 semantically identical but syntactically obfuscated instances which we call Mystery Blocksworld." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Highlighting Limitations</strong>
+        <p>The section effectively highlights the limitations of LLMs in planning, emphasizing the gap between their performance and the desired level of competence.</p>
+        <div class="quote">"PlanBench remains a challenging benchmark for vanilla LLMs (massive transformer models which have been fine-tuned via RLHF), and their lackluster performance on even our easiest test set leads us to continue to believe that planning cannot be generally and robustly solved by approximate retrieval alone." (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Investigate Reasons for One-Shot Degradation</strong>
+        <p>The section notes that one-shot prompting can worsen performance but doesn&#39;t delve into the reasons behind this.</p>
+        <div class="quote">"We also find that, contrary to previous claims, one-shot prompting is not a strict improvement over zero-shot. In fact, for many models it seems to do significantly worse!" (Page 3)</div>
+        <p><strong>Rationale:</strong> Understanding why one-shot prompting sometimes fails could lead to better prompting strategies or model improvements.</p>
+        <p><strong>Implementation:</strong> Analyze the specific cases where one-shot prompting performs worse, looking for patterns in the prompts or the model&#39;s responses.</p>
+    </li>
+    
+    <li>
+        <strong>Explore Alternative Obfuscation Methods</strong>
+        <p>The Mystery Blocksworld obfuscation might be too brittle or easily reversed by LLMs.</p>
+        <div class="quote">"Despite the underlying problems being identical, Mystery Blocksworld performance lags far behind–no LLM achieves even 5% on our test set–and performance on one version of the domain does not clearly predict performance on the other." (Page 3)</div>
+        <p><strong>Rationale:</strong> Different obfuscation techniques could provide a more robust test of semantic understanding and reasoning.</p>
+        <p><strong>Implementation:</strong> Experiment with obfuscations that involve more complex semantic transformations or require more inferential steps to reverse.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>table 1</summary>
+        <p>Table 1 compares the performance of various Large Language Models (LLMs) on two block-stacking tasks: &#39;Blocksworld&#39; and &#39;Mystery Blocksworld&#39;. &#39;Blocksworld&#39; involves arranging blocks according to clear instructions, while &#39;Mystery Blocksworld&#39; uses confusing language for the same task. The table shows how many out of 600 problems each LLM solved correctly in both zero-shot (no example) and one-shot (one example provided) scenarios. The models are grouped by family (Claude, GPT, LLaMA, Gemini).</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 1: Performance on 600 instances from the Blocksworld and Mystery Blocksworld domains across large language models from different families, using both zero-shot and one-shot prompts. Best-in-class accuracies are bolded."</p>
+            <p><strong>Context:</strong> This table appears in the &#39;State-of-the-Art LLMs Still Can&#39;t Plan&#39; section on page 2. It presents the performance of various LLMs on the Blocksworld and Mystery Blocksworld tasks, which serves as a baseline for comparison with the newer LRM models discussed later.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is crucial because it demonstrates that even the most advanced LLMs struggle with planning tasks, especially when the instructions are unclear. This highlights the need for models with better reasoning abilities, like the LRMs discussed in the paper.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is well-organized and easy to read.</li><li>Using bold font for the best results in each row makes it easy to see which model performed best in each category.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table clearly shows that LLMs are much better at &#39;Blocksworld&#39; than &#39;Mystery Blocksworld&#39;, suggesting they rely on recognizing familiar phrasing rather than true understanding.</li><li>Including both the number of correct solutions and the percentage makes the data easier to interpret.</li><li>The table could benefit from a brief explanation of why &#39;Mystery Blocksworld&#39; is a useful test.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Best Blocksworld Zero-Shot Accuracy:</strong> 376 correct instances out of 600 (62.6%)</li><li><strong>Best Mystery Blocksworld Zero-Shot Accuracy:</strong> 21 correct instances out of 600 (3.5%)</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>From Approximate Retrieval to Approximate Reasoning: Evaluating o1</h3>
+            
+            <h4>Overview</h4>
+            <p>This section discusses the shift from approximate retrieval (like looking up answers in a vast library) in Large Language Models (LLMs) to approximate reasoning (like figuring things out step-by-step) in Large Reasoning Models (LRMs), using OpenAI&#39;s o1 as a prime example. It evaluates o1&#39;s performance on PlanBench, a benchmark for planning tasks, and finds that while o1 shows significant improvement over LLMs, its performance isn&#39;t perfect and degrades with more complex problems.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Approximate Retrieval vs. Approximate Reasoning:</strong> LLMs retrieve information like searching a database, while LRMs attempt to reason through problems step-by-step.</li><li><strong>o1&#39;s Architecture and Operation:</strong> o1 likely combines a large language model with a system that guides its reasoning process, possibly using reinforcement learning.</li><li><strong>PlanBench Evaluation:</strong> o1 performs well on basic block-stacking problems in PlanBench, exceeding LLMs, but struggles with more complex or obfuscated versions.</li><li><strong>Accuracy with Increased Problem Size:</strong> o1&#39;s accuracy drops significantly when the block-stacking problems require longer plans, indicating limitations in its reasoning abilities.</li><li><strong>Performance on Unsolvable Instances:</strong> o1 can sometimes identify unsolvable problems, but also makes mistakes, either by proposing impossible plans or incorrectly claiming solvable problems are unsolvable.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Explanation of LLM Limitations</strong>
+        <p>The section effectively explains why traditional LLMs struggle with planning tasks, using the analogy of approximate retrieval to illustrate their limitations.</p>
+        <div class="quote">"Many researchers, including us, have argued that &quot;standard&quot; autoregressive LLMs generate outputs via approximate retrieval, and that, while they show impressive performance on a range of System 1 tasks, they are unlikely to achieve more System 2-like approximate reasoning capabilities critical for planning tasks (c.f. [9])." (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Detailed Performance Analysis of o1</strong>
+        <p>The section provides a comprehensive analysis of o1&#39;s performance on various PlanBench tasks, including different problem sizes and unsolvable instances.</p>
+        <div class="quote">"Evaluating LRMs on the Original Test Set: We test o1-preview and o1-mini on the static PlanBench test set." (Page 4)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Further Investigation of o1&#39;s Reasoning Process</strong>
+        <p>While the section speculates about o1&#39;s architecture, a deeper investigation of its internal reasoning process would be valuable.</p>
+        <div class="quote">"As far as we can tell, o1 combines an underlying LLM, most likely a modified GPT-4o, into an RL-trained system that steers the creation, curation, and final selection of private Chain-of-Thought reasoning traces." (Page 4)</div>
+        <p><strong>Rationale:</strong> Understanding how o1 reasons would help identify its strengths and weaknesses, leading to better model development.</p>
+        <p><strong>Implementation:</strong> Analyze the intermediate steps or reasoning traces (if accessible) to understand how o1 arrives at its solutions or identifies unsolvable problems.</p>
+    </li>
+    
+    <li>
+        <strong>Comparison with Other Reasoning Approaches</strong>
+        <p>Comparing o1&#39;s performance with other reasoning methods, such as symbolic planners or hybrid approaches, would provide a broader context.</p>
+        <div class="quote">"in what are called LLM-Modulo systems [10, 11]. o1 attempts to supplement an underlying LLM with System 2-like abilities in a different way." (Page 4)</div>
+        <p><strong>Rationale:</strong> This comparison would help assess the relative advantages and disadvantages of different reasoning approaches for planning tasks.</p>
+        <p><strong>Implementation:</strong> Evaluate the performance of symbolic planners or LLM-Modulo systems on the same PlanBench tasks used to evaluate o1, and compare their accuracy, efficiency, and robustness.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 1</summary>
+        <p>Figure 1 shows two line graphs comparing the performance of different models on the &#39;Mystery Blocksworld&#39; task. One graph represents &#39;zero-shot&#39; performance (no prior example given), and the other shows &#39;one-shot&#39; performance (one example provided). The x-axis of each graph represents the length of the solution plan (number of steps), and the y-axis represents the percentage of problems solved correctly. Each line on the graphs corresponds to a different model, and you can see how their accuracy changes as the plans get longer. Generally, the lines slope downwards, meaning accuracy drops as the problems get harder (longer plans needed).</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 1: These examples are on Mystery Blocksworld. Fast Downward, a domain-independent planner [8] solves all given instances near-instantly with guaranteed perfect accuracy. LLMs struggle on even the smallest instances. The two LRMs we tested, o1-preview and o1-mini, are surprisingly effective, but this performance is still not robust, and degrades quickly with length."</p>
+            <p><strong>Context:</strong> This figure is introduced at the beginning of the &#39;From Approximate Retrieval to Approximate Reasoning: Evaluating o1&#39; section on page 3. It visually demonstrates the performance difference between LLMs, LRMs (o1-preview and o1-mini), and a classical planner (Fast Downward) on the Mystery Blocksworld task, highlighting the relative effectiveness of the LRMs compared to LLMs and their limitations compared to Fast Downward.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it visually shows that the new &#39;reasoning&#39; models (LRMs) perform much better than standard language models (LLMs) on the tricky &#39;Mystery Blocksworld&#39; task. It also shows that even these new models aren&#39;t perfect and struggle with longer, more complex problems. This supports the idea that while LRMs are a step forward, there&#39;s still a lot of room for improvement in planning and reasoning.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The graphs are generally clear, but the colors of some lines are too similar, making them hard to distinguish.</li><li>The y-axis label &#39;% correct&#39; could be more descriptive, such as &#39;Accuracy (%)&#39;.</li><li>Adding a clear visual marker (like a thicker line or distinct symbol) for the best-performing LRM would improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure effectively demonstrates the performance degradation with increasing plan length.</li><li>It would be helpful to include a brief explanation of &#39;zero-shot&#39; and &#39;one-shot&#39; in the caption for a broader audience.</li><li>While the figure shows trends, it lacks any indication of statistical significance or variability (e.g., error bars).</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 2</summary>
+        <p>Table 2 shows how well different models perform on several variations of the &#39;Blocksworld&#39; problem, including a tricky version called &#39;Mystery Blocksworld&#39; and an even trickier &#39;Randomized Mystery Blocksworld&#39;. It compares the new &#39;reasoning&#39; models (o1-preview and o1-mini) with a traditional planning system called &#39;Fast Downward&#39;. The table shows how many out of 600 problems each model solved correctly and the average time it took them. &#39;Fast Downward&#39; solves all the problems perfectly and very quickly. The o1 models do well on the regular &#39;Blocksworld&#39; but struggle more with the &#39;Mystery&#39; versions, taking much longer to answer.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 2: Performance and average time taken on 600 instances from the Blocksworld, Mystery Blocksworld and Randomized Mystery Blocksworld domains by OpenAI&#39;s ol family of large reasoning models and Fast Downward"</p>
+            <p><strong>Context:</strong> This table, appearing on page 3, follows Figure 1 and provides a more detailed breakdown of the performance of the o1 models and Fast Downward on different Blocksworld variations, including accuracy and average time taken. It further emphasizes the performance gap between LRMs and a dedicated planner.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is important because it provides a direct comparison between the new LRMs, older LLMs (indirectly through comparison with Fast Downward), and a dedicated planning system. It shows that while LRMs are much better than LLMs, they are still not as good or as fast as specialized tools. This highlights the trade-offs between general-purpose language models and specialized systems.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is well-structured, but some empty cells make it slightly harder to compare all models directly.</li><li>Adding a visual cue to highlight the best performance in each row (besides Fast Downward) would be helpful.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table effectively presents both accuracy and time data, allowing for a more comprehensive evaluation.</li><li>Including the &#39;Randomized Mystery Blocksworld&#39; is important to show that the results aren&#39;t just due to the specific wording of &#39;Mystery Blocksworld&#39;.</li><li>The table could benefit from a brief explanation of why &#39;Fast Downward&#39; is used as a comparison point.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>o1-preview Blocksworld Accuracy:</strong> 587 correct instances out of 600 (97.8%)</li><li><strong>o1-mini Blocksworld Accuracy:</strong> 600 correct instances out of 600 (100%)</li><li><strong>Fast Downward Blocksworld Accuracy:</strong> 600 correct instances out of 600 (100%)</li><li><strong>o1-preview Blocksworld Average Time:</strong> 40.43 seconds</li><li><strong>o1-mini Blocksworld Average Time:</strong> 35.54 seconds</li><li><strong>Fast Downward Blocksworld Average Time:</strong> 0.265 seconds</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 2</summary>
+        <p>Figure 2 presents two graphs illustrating the relationship between plan length and the average number of reasoning tokens used by the o1-preview model. Graph (a) shows this relationship for &#39;Mystery Blocksworld&#39;, where obfuscated language is used to describe the block stacking task. Graph (b) shows the same relationship for the standard &#39;Blocksworld&#39; task with clear instructions. Both graphs have &#39;Plan Length&#39; on the x-axis and &#39;Average Reasoning Tokens&#39; on the y-axis.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 2"</p>
+            <p><strong>Context:</strong> This figure is introduced on page 4, in the section discussing the shift from approximate retrieval to approximate reasoning. It is used to illustrate how o1-preview&#39;s resource usage (reasoning tokens) changes with the complexity of the planning problem.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 2 helps to understand how o1-preview&#39;s reasoning process scales with problem complexity. It shows whether the model&#39;s resource consumption increases proportionally with the difficulty of the task, which is important for evaluating its efficiency.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The graphs are generally clear, with labeled axes and titles.</li><li>The shaded areas around the lines, presumably representing variability, are a bit too dark and make it slightly difficult to see the exact trend lines.</li><li>Using different colors or line styles for the trend lines and the shaded areas would improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The caption could be more explicit about what &#39;reasoning tokens&#39; are and why they matter.</li><li>The graphs don&#39;t show a clear correlation between plan length and reasoning tokens for the standard Blocksworld task, which raises questions about the model&#39;s behavior.</li><li>It would be helpful to include some statistical measure of the correlation or lack thereof between the variables.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 3</summary>
+        <p>Figure 3, as visible (it is partially out of frame in the provided document), appears to be a line graph showing how the accuracy of different models changes as the length of the plan (number of steps) increases. The x-axis represents &#39;Plan Length&#39;, and the y-axis represents &#39;% correct&#39;. Multiple lines, likely representing different models, are plotted on the graph, showing a general trend of decreasing accuracy with increasing plan length.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 3: All models are evaluated on Blocksworld. ol-preview outperforms the other LLMs, but its performance degrades more quickly with length."</p>
+            <p><strong>Context:</strong> This figure, first mentioned on page 4, is part of the discussion on evaluating o1 and its performance on the Blocksworld task, especially as the problem size increases. It is presented after the discussion of o1&#39;s performance on the original test set and before the analysis of unsolvable instances.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it shows how well o1-preview scales to more complex planning problems compared to other LLMs. The ability to handle longer plans is a key indicator of a model&#39;s reasoning capabilities.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is unfortunately cut off in the provided document, making it impossible to fully interpret the data or see the legend.</li><li>The visible portion suggests that the lines might be close together, which could make it hard to distinguish between different models. Different line styles or markers would help.</li><li>The caption should be placed below the figure for better readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The caption mentions that o1-preview&#39;s performance degrades quickly with length, but it would be more informative to quantify this degradation (e.g., &#39;accuracy drops by X% for every Y additional steps&#39;).</li><li>It&#39;s unclear from the visible portion what the range of plan lengths tested is. This information is crucial for understanding the scope of the evaluation.</li><li>The caption could explain why performance degradation with length is a significant issue for planning models.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 3</summary>
+        <p>Figure 3 is a line graph showing how the accuracy of the o1-preview model changes as the problems it tries to solve get more complex. The x-axis represents the number of steps needed to solve a problem (like the number of moves to stack blocks a certain way), ranging from 20 to 40. The y-axis represents how often the model gets the right answer (percentage correct), from 0% to 100%. There are multiple lines on the graph, likely comparing o1-preview&#39;s performance to other models or ideal solutions. The graph likely shows that as the number of steps increases, o1-preview&#39;s accuracy goes down.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 3: Extending even the (regular, not obfuscated) Blocksworld dataset to problems requiring greater numbers of steps worsens the performance of o1-preview. When tested on 110 instances which each require at least 20 steps to solve, it only manages 23.63%."</p>
+            <p><strong>Context:</strong> This figure is introduced on page 4 in the section &#39;From Approximate Retrieval to Approximate Reasoning: Evaluating o1&#39;. It is presented to show how o1-preview&#39;s performance changes as the complexity of the Blocksworld problems increases.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it shows that even though o1-preview is better than older models, it still has trouble with harder problems. This tells us that there&#39;s still room for improvement in how these models reason and plan.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The graph is partially cut off on page 4, making it hard to see the full picture.</li><li>The lines and shaded areas overlap, making it difficult to distinguish the performance of different models or conditions.</li><li>The labels on the axes are clear, but the legend or model descriptions are not fully visible on page 4.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure focuses on how accuracy changes with problem complexity, which is a key aspect of evaluating planning models.</li><li>The caption clearly states the main takeaway: o1-preview&#39;s performance degrades with increasing problem size.</li><li>The figure would be stronger if it included some measure of variability or uncertainty, like error bars or confidence intervals.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>o1-preview Accuracy on 20+ step problems:</strong> 23.63 %</li><li><strong>Number of instances tested:</strong> 110 null</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 3</summary>
+        <p>Table 3 shows how well OpenAI&#39;s o1-preview model can tell if a block-stacking problem is impossible to solve. It looks at two types of problems: regular &#39;Blocksworld&#39; and a more complicated version called &#39;Randomized Mystery Blocksworld&#39;. The table tells us two things: 1. The &#39;True Negative&#39; rate: how often the model correctly says a problem is impossible when it actually is. 2. The &#39;False Negative&#39; rate: how often the model wrongly says a problem is impossible when it actually has a solution. Think of it like a medical test - you want it to correctly identify the sick people (true negative) and not misdiagnose healthy people as sick (false negative).</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 3: Rate of claiming that a problem is impossible by OpenAI’s ol-preview on 100 unsolvable and 600 solvable instances in the Blocksworld and Randomized Mystery Blocksworld domains. The True Negative rate is the percent of unsolvable instances that were correctly marked as unsolvable. The False Negative rate is the percent of solvable instances that were incorrectly marked as unsolvable. Previous models are not shown in this table as their true negative and false negative rates were generally 0% across the board."</p>
+            <p><strong>Context:</strong> This table appears on page 5, within the section discussing o1&#39;s evaluation. It follows the discussion of o1-preview&#39;s performance on larger Blocksworld problems and precedes the analysis of accuracy/cost tradeoffs.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is important because it shows a new aspect of o1-preview&#39;s abilities - figuring out when a problem can&#39;t be solved at all. This is useful in real-world situations where knowing something is impossible is just as important as finding a solution.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is simple and easy to understand.</li><li>Clearly labeling the columns and rows makes the data easy to interpret.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table clearly shows that o1-preview is better at identifying impossible problems in regular &#39;Blocksworld&#39; than in &#39;Randomized Mystery Blocksworld&#39;.</li><li>The caption explains &#39;True Negative&#39; and &#39;False Negative&#39; rates clearly, which is helpful for a non-expert audience.</li><li>The table could be improved by showing results for other models, even if their rates are mostly 0%, to provide a better comparison.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Blocksworld True Negative Rate:</strong> 27 %</li><li><strong>Blocksworld False Negative Rate:</strong> 0 %</li><li><strong>Randomized Mystery Blocksworld True Negative Rate:</strong> 16 %</li><li><strong>Randomized Mystery Blocksworld False Negative Rate:</strong> 11.5 %</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 4</summary>
+        <p>This table presents the cost per 100 instances, measured in US dollars, for using different Large Language Models (LLMs) and Large Reasoning Models (LRMs). It separates the models into two categories: LLMs (like Claude, GPT variants, and Gemini) and LRMs (specifically o1-preview and o1-mini).</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 4: Cost per 100 instances (in USD). LRMs are significantly more expensive than LLMs."</p>
+            <p><strong>Context:</strong> This table is presented on page 6, within the discussion of accuracy/cost tradeoffs and guarantees for LRMs. It follows the analysis of o1&#39;s performance and precedes a comparison with classical planners and LLM-Modulo systems.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is highly relevant because it directly addresses the cost implications of using LRMs for planning tasks. It highlights the significant cost difference between LLMs and LRMs, which is a crucial factor to consider when evaluating their practical applicability.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clear and easy to read, with a simple structure that facilitates quick comparison between models.</li><li>The division into LLMs and LRMs is helpful for understanding the cost disparities between the two model types.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table effectively communicates the substantial cost difference between LLMs and LRMs, emphasizing the financial implications of using more computationally intensive models.</li><li>While the table focuses on cost, it would be beneficial to connect these costs to the performance differences shown in earlier tables and figures. This would provide a more comprehensive view of the cost-benefit tradeoff.</li><li>The table could also include a brief explanation of the &#39;reasoning tokens&#39; and how they contribute to the higher cost of LRMs.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Cost of o1-preview (per 100 instances):</strong> 42.12 USD</li><li><strong>Cost of o1-mini (per 100 instances):</strong> 3.69 USD</li><li><strong>Cost of GPT-4 (per 100 instances):</strong> 1.8 USD</li><li><strong>Cost of GPT-4 Turbo (per 100 instances):</strong> 1.2 USD</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>Conclusion</h3>
+            
+            <h4>Overview</h4>
+            <p>This conclusion summarizes the findings of the study, highlighting the improved performance of Large Reasoning Models (LRMs like OpenAI&#39;s o1) compared to traditional LLMs on planning tasks using the PlanBench benchmark. While LLMs showed some progress on basic Blocksworld problems, they struggled with more complex or obfuscated versions. LRMs, particularly o1, demonstrated significantly better accuracy but still faced limitations with longer problems and unsolvable instances. The conclusion also emphasizes the importance of considering accuracy/efficiency trade-offs and the lack of correctness guarantees with LRMs, suggesting alternative approaches like LLM-Modulo systems or dedicated solvers for certain applications.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>LLM Progress:</strong> LLMs have shown limited improvement on standard Blocksworld problems, reaching a maximum accuracy of around 62.5%.</li><li><strong>Mystery Blocksworld Performance:</strong> LLMs performed poorly on the obfuscated Mystery Blocksworld, revealing their reliance on surface-level patterns rather than true understanding.</li><li><strong>LRM (o1) Performance:</strong> LRMs, especially o1, demonstrated substantially better accuracy on both standard and Mystery Blocksworld, indicating improved reasoning abilities.</li><li><strong>Limitations of LRMs:</strong> Despite improvements, o1&#39;s performance degraded with longer problems and unsolvable instances, highlighting remaining challenges.</li><li><strong>Accuracy/Efficiency Trade-offs:</strong> The conclusion emphasizes the need to consider the computational cost and lack of guarantees associated with LRMs when comparing them to other approaches.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Concise Summary of Findings</strong>
+        <p>The conclusion effectively summarizes the key findings of the study, highlighting the relative strengths and weaknesses of LLMs and LRMs.</p>
+        <div class="quote">"We took a fresh look at the planning capabilities of both SOTA LLMs, and examined the performance of OpenAI’s new o1 models on PlanBench. Over time, LLMs have improved their performance on vanilla Blocksworld–with the best performing model, LlaMA 3.1 405B, reaching 62.5% accuracy." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Emphasis on Practical Considerations</strong>
+        <p>The conclusion goes beyond simply reporting accuracy and discusses important practical considerations like efficiency, cost, and guarantees.</p>
+        <div class="quote">"We also discussed the critical accuracy/efficiency tradeoffs that are brought up by the fact that o1 that uses (and charges for) significant inference-time compute, as well as how it compares to other LLM-based approaches (such as LLM-Modulo [10]) and dedicated solvers." (Page 7)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on Future Research Directions</strong>
+        <p>While the conclusion briefly mentions future evaluations, it could expand on specific research directions to address the identified limitations.</p>
+        <div class="quote">"We hope this research note gives a good snapshot of the planning capabilities of LLMs and LRMs as well as useful suggestions for realistically evaluating them." (Page 7)</div>
+        <p><strong>Rationale:</strong> Providing more concrete future research directions would strengthen the conclusion&#39;s impact and guide further work in the field.</p>
+        <p><strong>Implementation:</strong> Suggest specific research areas like developing new LRM architectures that address the limitations with longer problems and unsolvable instances, or exploring hybrid approaches that combine the strengths of LLMs/LRMs with dedicated solvers.</p>
+    </li>
+    
+    <li>
+        <strong>Deeper Analysis of LRM Errors</strong>
+        <p>The conclusion notes o1&#39;s limitations but could provide a deeper analysis of the types of errors it makes and their potential causes.</p>
+        <div class="quote">"Encouraged by this, we have also evaluated o1’s performance on longer problems and unsolvable instances, and found that these accuracy gains are not general or robust." (Page 7)</div>
+        <p><strong>Rationale:</strong> A more detailed error analysis would provide valuable insights into the nature of LRM reasoning and guide future model improvements.</p>
+        <p><strong>Implementation:</strong> Categorize the errors made by o1, such as incorrect action sequences, failure to recognize unsolvability, or exceeding computational limits. Investigate whether these errors are due to limitations in the model&#39;s architecture, training data, or reasoning process.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        // Show/hide back-to-top button
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
