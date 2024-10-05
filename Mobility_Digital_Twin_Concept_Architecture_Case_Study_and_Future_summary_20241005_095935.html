@@ -1,0 +1,1039 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Mobility Digital Twin (MDT) Framework for Connected Vehicles Using Cloud-Edge Computing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>A Mobility Digital Twin (MDT) Framework for Connected Vehicles Using Cloud-Edge Computing</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">Introduction</a></li><li><a href="#section-2">Literature Review</a></li><li><a href="#section-3">Mobility Digital Twin Concept</a></li><li><a href="#section-4">Example Architecture with Cloud-Edge Computing</a></li><li><a href="#section-5">Example Microservices and Case Study</a></li><li><a href="#section-6">Future Challenges</a></li><li><a href="#section-7">Conclusion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>This paper proposes a Mobility Digital Twin (MDT) framework to improve mobility services by creating a digital replica of the transportation ecosystem. This framework includes digital representations of humans, vehicles, and traffic, interacting in real-time with their physical counterparts through a cloud-edge-device architecture. Using Amazon Web Services (AWS), the framework supports real-time monitoring, modeling, and prediction to improve existing and future mobility services. A personalized adaptive cruise control (P-ACC) system demonstrates the MDT&#39;s practical application. The framework&#39;s potential to improve services by incorporating personalized data and real-time feedback is significant, and the paper also addresses future challenges like standardization and AI integration.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li>The MDT framework effectively integrates data from human, vehicle, and traffic digital twins. This integration enables a holistic view of the transportation system, allowing for more informed decision-making and personalized services. The connection between the physical and digital entities is established through a cloud-edge-device communication plane, enabling real-time data exchange and synchronization. This constant feedback loop ensures that the digital twin accurately reflects the current state of the physical system and enables timely interventions or adjustments. For example, real-time driver behavior data can be combined with current traffic conditions and vehicle status to provide personalized guidance and improve safety.</li><li>The P-ACC case study demonstrates a significant improvement over traditional ACC systems. By incorporating personalized driver behavior models learned using Max-Ent Inverse Reinforcement Learning (IRL), the P-ACC system reduced driver takeover events by 86.4%. Takeover events, where the driver has to manually intervene due to discomfort with the system&#39;s performance, are a key indicator of ACC effectiveness. This reduction highlights the P-ACC&#39;s ability to provide a more comfortable and reliable driving experience. This improvement was measured by comparing the takeover percentages in real-world driving tests with a Lexus LS vehicle equipped with both P-ACC and traditional ACC. The lower takeover rate with P-ACC demonstrates its practical value in enhancing driving experience and potentially safety.</li><li>The proposed cloud-edge architecture, built on AWS, supports real-time data processing and model inference. The latency analysis revealed that the cloud computing and downlink latency remained relatively constant at around 16 seconds, even with increasing data frequencies. While the uplink latency increased with data volume, the constant processing time in the cloud suggests efficient resource allocation and scalability. This performance is crucial for real-time applications like P-ACC, where timely feedback and control adjustments are essential. This finding is important because it demonstrates the feasibility of deploying complex, data-driven algorithms in a real-time setting for mobility applications.</li><li>Driver classification within the Human Digital Twin utilizes real-time data and the MOVESTAR model. This classification system categorizes drivers based on their driving scores across various dimensions like safety, comfort, and eco-friendliness. This allows for personalized feedback and tailored recommendations. For instance, a driver classified as &#39;reckless&#39; might receive more frequent safety alerts or incentives for improving their driving behavior. This personalized approach has the potential to improve overall road safety and promote more efficient driving practices.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li>The clear definition of the MDT framework and its three planes (physical, digital, communication) provides a strong conceptual foundation. This structured approach facilitates understanding of the complex interactions between the physical and digital worlds. By explicitly outlining the roles of each plane and their building blocks, the paper lays the groundwork for a practical implementation of the Digital Twin concept in the mobility domain. This clarity is crucial for researchers and developers building upon this framework.</li><li>The use of established technologies like AWS, Kafka, and Spark ensures the reliability and scalability of the proposed architecture. These widely adopted technologies provide a robust foundation for building and deploying complex systems like the MDT framework. Leveraging these existing tools also reduces development time and effort, allowing researchers to focus on the novel aspects of the MDT framework. This practical approach strengthens the paper&#39;s contribution by providing a readily implementable solution.</li><li>The P-ACC case study provides a compelling demonstration of the MDT framework&#39;s practical value. By showing how the framework can be applied to a real-world problem and achieving measurable improvements, the paper strengthens its impact and relevance. The quantitative results, particularly the significant reduction in driver takeover events, provide concrete evidence of the P-ACC&#39;s effectiveness. This real-world validation enhances the credibility of the MDT framework and encourages further exploration of its potential applications.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li>While the architecture uses an edge layer, its specific role and implementation could be further clarified. Providing more details on the hardware and software used for edge computing would strengthen the technical aspects of the paper. Future research could explore different edge computing paradigms and their impact on system performance. A more detailed discussion of how data is processed and managed at the edge would also be valuable.</li><li>The paper lacks a thorough discussion of security and privacy considerations. Given the sensitivity of mobility data, addressing these issues is crucial for real-world deployment. Future work should explore security measures at each layer of the architecture, including data encryption, access control, and intrusion detection. Additionally, privacy-preserving techniques, such as data anonymization and differential privacy, should be considered to protect user information.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>Figure 2</h4>
+        <p><strong>Description:</strong> Figure 2 depicts the four-layered architecture of the MDT framework, showcasing the cloud, edge, device, and API layers. It visually represents the data flow and interaction between these layers, highlighting the use of AWS services and other technologies.</p>
+        <p><strong>Relevance:</strong> This figure is crucial for understanding the system&#39;s architecture and how it supports the MDT framework&#39;s functionality.</p>
+    </div>
+    
+    <div>
+        <h4>Table I</h4>
+        <p><strong>Description:</strong> Table I presents the P-ACC case study results, comparing takeover percentages between traditional ACC and the personalized P-ACC. It quantitatively demonstrates the significant reduction in takeover events achieved by the P-ACC system.</p>
+        <p><strong>Relevance:</strong> This table provides strong evidence supporting the effectiveness of the MDT framework and the P-ACC system in improving driver comfort and potentially safety.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>This paper presents a novel Mobility Digital Twin (MDT) framework for connected vehicles using a cloud-edge computing architecture built on AWS. The framework integrates digital twins of humans, vehicles, and traffic, enabling real-time data exchange and personalized services. The P-ACC case study demonstrates the framework&#39;s practical effectiveness by significantly reducing driver takeover events compared to traditional ACC. While the architecture and case study showcase the MDT&#39;s potential, future research should address security and privacy concerns, further investigate the role of edge computing, and explore the framework&#39;s generalizability to diverse traffic scenarios and vehicle types. Continued development in these areas will pave the way for broader adoption and unlock the full potential of MDT technology to revolutionize transportation systems.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>This paper proposes a Mobility Digital Twin (MDT) framework, an AI-driven system for enhancing mobility services. It replicates human, vehicle, and traffic elements in a digital space, using cloud-edge-device interactions. The framework allows for real-time monitoring, modeling, and prediction to improve services like personalized adaptive cruise control (P-ACC). A cloud-edge architecture using Amazon Web Services (AWS) supports the framework, and a P-ACC case study demonstrates its effectiveness compared to traditional systems. The paper also discusses future challenges like standardization and the role of AI.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>MDT Framework:</strong> The core concept is a digital replica of mobility elements (human, vehicle, traffic) interacting with their physical counterparts through a cloud-edge-device framework. This enables real-time data analysis and feedback for improved mobility services.</li><li><strong>Cloud-Edge Architecture:</strong> AWS is used to build a cloud-edge architecture that supports the MDT framework, providing the necessary storage, computing power, and communication capabilities.</li><li><strong>P-ACC Case Study:</strong> A personalized adaptive cruise control system demonstrates the MDT&#39;s practical application, integrating data from all three digital twins (human, vehicle, and traffic) to improve performance compared to traditional ACC.</li><li><strong>Future Challenges:</strong> The paper identifies key challenges for MDT development, including standardization, AI integration for cloud-edge computing, public vs. private cloud choices, and handling heterogeneous communication networks.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Definition of MDT</strong>
+        <p>The abstract clearly defines the MDT framework and its purpose, making it easy for readers to understand the core concept.</p>
+        <div class="quote">"In this study, a mobility digital twin (MDT) framework is proposed, which is defined as an artificial intelligence (AI)-based data-driven cloud–edge–device framework for mobility services." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Highlights Key Contributions</strong>
+        <p>The abstract effectively summarizes the main contributions of the paper, including the MDT framework, AWS architecture, and P-ACC case study.</p>
+        <div class="quote">"This MDT consists of three building blocks in the physical space (namely, Human, Vehicle, and Traffic), and their associated Digital Twins in the digital space." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Addresses Future Challenges</strong>
+        <p>The abstract acknowledges future challenges, demonstrating a forward-looking perspective and suggesting areas for further research.</p>
+        <div class="quote">"Future challenges of the proposed MDT framework are discussed toward the end of the article, including standardization, AI for computing, public or private cloud service, and network heterogeneity." (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify P-ACC Benefits</strong>
+        <p>While the abstract mentions improved P-ACC performance, it would be stronger with specific quantitative results to showcase the impact of the MDT framework.</p>
+        <div class="quote">"A case study of the personalized adaptive cruise control (P-ACC) system is conducted, which integrates the key microservices of all three digital building blocks of the MDT framework" (Page 2)</div>
+        <p><strong>Rationale:</strong> Providing concrete numbers would make the benefits of the MDT framework more compelling and attract readers&#39; attention.</p>
+        <p><strong>Implementation:</strong> Include a brief statement quantifying the improvement in P-ACC performance, such as percentage reduction in takeover events or improvement in fuel efficiency.</p>
+    </li>
+    
+    <li>
+        <strong>Expand on AI&#39;s Role</strong>
+        <p>The abstract briefly mentions AI but could elaborate on its specific applications within the MDT framework.</p>
+        <div class="quote">"This MDT consists of three building blocks in the physical space (namely, Human, Vehicle, and Traffic), and their associated Digital Twins in the digital space." (Page 2)</div>
+        <p><strong>Rationale:</strong> Highlighting the specific AI techniques used would strengthen the paper&#39;s contribution in this area.</p>
+        <p><strong>Implementation:</strong> Mention specific AI methods used, such as machine learning for driver classification or reinforcement learning for traffic optimization.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Overview</h4>
+            <p>The introduction sets the stage for the Mobility Digital Twin (MDT) framework by highlighting the growing importance of the Internet of Things (IoT) in various sectors, including transportation. It emphasizes the increasing attention and market value of Digital Twin technology, particularly in the automotive industry. The paper points out the lack of a holistic framework connecting different mobility entities (human, vehicle, and traffic) and positions the proposed MDT framework as a solution. The introduction also outlines the contributions of the MDT framework, such as its power, shareability, manageability, and extendibility, and provides a roadmap for the rest of the paper.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>IoT and Transportation:</strong> The introduction establishes the context of the research by highlighting the role of IoT in transforming various sectors, including transportation, paving the way for the MDT concept.</li><li><strong>Digital Twin Market Growth:</strong> The substantial growth and market value of Digital Twin technology, especially in the automotive and transportation industry, are emphasized to underscore the relevance and timeliness of the research.</li><li><strong>Need for a Holistic Framework:</strong> The paper identifies the gap in existing research, which lacks a comprehensive framework connecting human, vehicle, and traffic entities in a Digital Twin context.</li><li><strong>Contributions of MDT:</strong> The introduction clearly outlines the key advantages of the proposed MDT framework, including its power, shareability, manageability, and extendibility, compared to traditional systems.</li><li><strong>Paper Structure:</strong> A brief overview of the paper&#39;s organization is provided, guiding the reader through the subsequent sections and their respective topics.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Contextual Background</strong>
+        <p>The introduction effectively establishes the context by discussing the relevance of IoT and the growth of Digital Twin technology in the transportation sector.</p>
+        <div class="quote">"The recent development of the Internet of Things (IoT) has been facilitating all kinds of cutting-edge technologies, where their application scenarios are rooted both in the user level (namely, individual consumer or private company), and the system level (namely, commercial or industrial sector)." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Problem Statement</strong>
+        <p>The introduction clearly identifies the lack of a holistic framework connecting mobility entities as a key problem that the proposed MDT framework aims to address.</p>
+        <div class="quote">"Very recently, a few Digital Twin studies have been conducted in the transportation domain [17]–[19], but none of them has a holistic framework connecting various mobility entities (i.e., human, vehicle, and traffic) together." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Well-Defined Contributions</strong>
+        <p>The introduction explicitly states the contributions of the MDT framework, highlighting its advantages and setting clear expectations for the reader.</p>
+        <div class="quote">"On the contrary, the proposed MDT framework in this study addresses these constraints by making the following contributions." (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>More Specific Examples</strong>
+        <p>While the introduction mentions general applications of IoT and Digital Twins, providing more specific examples related to mobility would enhance reader engagement.</p>
+        <div class="quote">"From the user’s perspective, the introduction of the IoT will play a leading role in scenarios like assisted living, e-health, and enhanced learning." (Page 2)</div>
+        <p><strong>Rationale:</strong> Concrete examples would make the potential benefits of the MDT framework more tangible and relatable for the reader.</p>
+        <p><strong>Implementation:</strong> Include examples like real-time traffic optimization, personalized route planning, or predictive vehicle maintenance.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on Challenges</strong>
+        <p>The introduction could briefly touch upon the challenges associated with developing and implementing the MDT framework.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging challenges early on would provide a more balanced perspective and prepare the reader for the discussion in later sections.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two mentioning potential challenges like data security, communication reliability, or computational complexity.</p>
+    </li>
+    
+    <li>
+        <strong>Stronger Hook</strong>
+        <p>The introduction could benefit from a stronger opening hook to immediately capture the reader&#39;s attention and emphasize the significance of the research.</p>
+        <div class="quote">"The recent development of the Internet of Things (IoT) has been facilitating all kinds of cutting-edge technologies" (Page 2)</div>
+        <p><strong>Rationale:</strong> A compelling hook would make the introduction more engaging and encourage the reader to continue reading.</p>
+        <p><strong>Implementation:</strong> Start with a striking statistic about the growth of connected vehicles or the potential impact of Digital Twins on the transportation industry.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>Literature Review</h3>
+            
+            <h4>Overview</h4>
+            <p>This section reviews existing research on cloud computing and Digital Twins in the context of connected vehicles. It discusses transportation applications using cloud computing, highlighting the limitations of traditional systems that rely on onboard resources. The review also covers the use of Digital Twins for connected vehicles, noting the confusion surrounding its definition and its connection to other technologies like model-based design. The section emphasizes the need for a holistic framework that connects various mobility entities (human, vehicle, and traffic), which is the focus of the current paper. It also mentions related work on parallel driving and recent studies by the authors on Digital Twins for connected vehicles, highlighting the limitations of these studies in terms of cloud architecture, data structures, and workflows.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Cloud Computing in Transportation:</strong> The review discusses various transportation applications using cloud computing, such as traffic management, navigation optimization, and emission detection. It emphasizes the benefits of cloud computing in overcoming the limitations of traditional onboard systems.</li><li><strong>Digital Twins for Connected Vehicles:</strong> The review examines the use of Digital Twins in the transportation domain, highlighting the confusion surrounding its definition and its relationship to other technologies. It discusses previous efforts that use Digital Twin concepts but lack a holistic framework.</li><li><strong>Parallel Driving and Transportation:</strong> The section touches upon the concept of parallel driving and its relevance to Digital Twins, noting that many applications in this area are limited by onboard resources.</li><li><strong>Authors&#39; Previous Work:</strong> The review mentions recent studies by the authors on Digital Twins for connected vehicles, including a Digital Twin paradigm for ADAS and a simulation architecture. However, it points out that these studies also lack a holistic framework connecting mobility entities.</li><li><strong>Need for a Holistic Framework:</strong> The review emphasizes the need for a comprehensive framework that connects human, vehicle, and traffic entities in a Digital Twin context, setting the stage for the proposed MDT framework in the current paper.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Overview</strong>
+        <p>The literature review provides a comprehensive overview of relevant research on cloud computing and Digital Twins in transportation, covering various applications and highlighting the limitations of existing approaches.</p>
+        <div class="quote">"The Digital Twin concept has been loosely defined and adopted in the transportation domain since its emergence, partly due to its similarity and connection with other technologies." (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Identification of Gaps</strong>
+        <p>The review clearly identifies the gaps in existing research, particularly the lack of a holistic framework connecting mobility entities, which justifies the need for the proposed MDT framework.</p>
+        <div class="quote">"However, none of these recent studies, which are from the authors of this study as well, designs a holistic system framework that connects mobility entities (i.e., human, vehicle, and traffic) together, and neither do they develop any cloud architecture with detailed data structures or workflows." (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Relevant to the Proposed Framework</strong>
+        <p>The literature review is directly relevant to the proposed MDT framework, providing a solid foundation for the subsequent sections and highlighting the novelty of the current research.</p>
+        <div class="quote">"It needs to be noted that, many studies consider the Digital Twin simply as a high-fidelity modeling and simulation environment of real-world entities. Although this statement is partially correct, our understanding of the Digital Twin covers wider than merely modeling and simulation, namely, sampling and actuation in the physical space, and storage, modeling, learning, simulation, and prediction in the digital space." (Page 4)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>More Focus on Recent Advances</strong>
+        <p>While the review covers a range of studies, it could benefit from a stronger focus on the most recent advances in Digital Twin technology and cloud-edge computing for connected vehicles.</p>
+        
+        <p><strong>Rationale:</strong> Highlighting the latest developments would strengthen the paper&#39;s timeliness and relevance.</p>
+        <p><strong>Implementation:</strong> Include more recent publications and discuss emerging trends in the field, such as the use of 5G and edge AI for Digital Twins.</p>
+    </li>
+    
+    <li>
+        <strong>Deeper Analysis of Selected Studies</strong>
+        <p>The review could provide a deeper analysis of a few key studies, comparing and contrasting their approaches and highlighting their strengths and weaknesses in more detail.</p>
+        
+        <p><strong>Rationale:</strong> A more in-depth analysis would provide a more nuanced understanding of the existing research landscape.</p>
+        <p><strong>Implementation:</strong> Select 2-3 influential studies and dedicate a paragraph to each, discussing their methodologies, findings, and limitations in relation to the proposed MDT framework.</p>
+    </li>
+    
+    <li>
+        <strong>Clearer Connection to MDT Components</strong>
+        <p>The review could more explicitly connect the discussed literature to the specific components of the proposed MDT framework (human, vehicle, and traffic).</p>
+        
+        <p><strong>Rationale:</strong> This would strengthen the link between the literature review and the subsequent sections of the paper.</p>
+        <p><strong>Implementation:</strong> When discussing each study, mention which component(s) of the MDT framework it relates to and how it informs the design of the proposed framework.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>Mobility Digital Twin Concept</h3>
+            
+            <h4>Overview</h4>
+            <p>This section introduces the Mobility Digital Twin (MDT) framework, which consists of three interconnected planes: the physical space (human, vehicle, traffic), the digital space (digital replicas), and the communication plane facilitating data exchange between them. The MDT leverages IoT technologies to connect these entities, enabling real-time data flow and synchronization. The section details the functions of each plane and their building blocks, emphasizing the importance of the communication plane in maintaining synchronization between the physical and digital worlds.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Communication Plane:</strong> This plane enables real-time and non-real-time data flow between the physical and digital spaces, crucial for the synchronization that defines a Digital Twin. It allows for data sampling in the physical world to be processed in the digital world and then acted upon in the physical world.</li><li><strong>Physical Space:</strong> This space encompasses the human, vehicle, and traffic elements, focusing on sampling data through sensors and actuating commands received from the digital space. It emphasizes minimal onboard computing, as most processing occurs in the digital space.</li><li><strong>Digital Space:</strong> This space houses the digital replicas and performs storage, modeling, learning, simulation, and prediction using data from the physical space. The data lake is a key component, enabling centralized storage and sharing of structured and unstructured data.</li><li><strong>Human, Vehicle, and Traffic Building Blocks:</strong> Each building block in the physical space has a corresponding Digital Twin in the digital space. This allows for specialized data processing and microservices tailored to each entity (e.g., driver classification in Human Digital Twin, predictive maintenance in Vehicle Digital Twin, traffic flow monitoring in Traffic Digital Twin).</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Framework Description</strong>
+        <p>The section clearly describes the MDT framework and its three planes, providing a good understanding of the overall concept and the interactions between the physical and digital worlds.</p>
+        <div class="quote">"The MDT framework proposed in this study, as shown in Fig. 1, consists of three planes: 1) the lower plane, highlighted in yellow, stands for the physical space where human beings, vehicles, and traffic infrastructures reside; 2) the upper plane, highlighted in blue, represents the digital space where the digital replicas of those physical entities are located at; and 3) between these two planes, the communication plane (in gray) plays a crucial role in this framework to allow real-time and nonreal-time data streaming for both upstream and downstream." (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Detailed Explanation of Components</strong>
+        <p>The section provides a detailed explanation of the building blocks within each plane, including their functions and how they contribute to the overall framework.</p>
+        <div class="quote">"Three entities are considered in this MDT framework: Human, Vehicle, and Traffic. Given the existence of the communication plane, each of the entity can be connected to the digital space (e.g., Internet) and exchanges data with each other." (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Emphasis on Synchronization</strong>
+        <p>The section emphasizes the importance of the communication plane in maintaining synchronization between the physical and digital spaces, which is a crucial aspect of the Digital Twin concept.</p>
+        <div class="quote">"The major difference between a Digital Twin framework with an iteration framework, or a model-based design framework is that, a Digital Twin framework always maintains synchronized versions of the physical system and its digital counterpart [32]." (Page 5)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>More Concrete Examples of Microservices</strong>
+        <p>While the section mentions various potential microservices, providing more concrete examples with specific inputs and outputs would enhance clarity and demonstrate the practical applications of the MDT.</p>
+        <div class="quote">"Those data will go through one or multiple processes in the digital space internally, including storage, modeling, learning, simulation, and prediction, and the resulting data are transmitted downstream to the physical space via the communication plane." (Page 5)</div>
+        <p><strong>Rationale:</strong> Concrete examples would make the potential of the MDT framework more tangible and easier to grasp.</p>
+        <p><strong>Implementation:</strong> For instance, describe a microservice that uses real-time traffic data to optimize traffic light timings or a microservice that predicts vehicle maintenance needs based on sensor data.</p>
+    </li>
+    
+    <li>
+        <strong>Clarify Data Lake Implementation</strong>
+        <p>The section mentions the data lake as a key component but could provide more details on its implementation, such as the type of database used and how data consistency is maintained.</p>
+        <div class="quote">"One of the biggest strengths of this MDT framework over traditional mobility system frameworks is the data lake, which is a centralized repository that allows structured or unstructured data at any scale to be stored." (Page 6)</div>
+        <p><strong>Rationale:</strong> More details on the data lake implementation would strengthen the technical credibility of the framework.</p>
+        <p><strong>Implementation:</strong> Specify the database technology used (e.g., NoSQL, distributed database) and discuss how data consistency and integrity are ensured across the different Digital Twins.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Security and Privacy Considerations</strong>
+        <p>The section could address security and privacy considerations related to the data exchange and storage within the MDT framework.</p>
+        
+        <p><strong>Rationale:</strong> Given the sensitive nature of some mobility data, discussing security and privacy aspects is crucial for building trust and ensuring responsible development of the MDT.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing potential security threats and outlining measures to protect data privacy, such as encryption, access control, and data anonymization.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 1</summary>
+        <p>This figure illustrates the Mobility Digital Twin (MDT) framework. It shows the interaction between the physical space (human, vehicle, and traffic), the digital space (Human Digital Twin, Vehicle Digital Twin, and Traffic Digital Twin), and the communication plane connecting them. Each digital twin has an associated data lake. The communication plane facilitates data flow between the physical and digital spaces, enabling real-time updates and synchronization.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The MDT framework proposed in this study, as shown in Fig. 1, consists of three planes"</p>
+            <p><strong>Context:</strong> This section introduces the core concept of the Mobility Digital Twin (MDT) framework, explaining its three main components: the physical space, the digital space, and the communication plane connecting them. It emphasizes the role of the communication plane in enabling real-time data exchange and synchronization between the physical and digital worlds.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding the core concept of the MDT framework and how it connects the physical and digital worlds to enable real-time monitoring, modeling, and prediction for improved mobility services.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could benefit from a clearer visual separation between the physical and digital spaces. Perhaps using different background colors or adding a border could enhance this distinction.</li><li>The arrows representing data flow could be made more prominent and directional to better illustrate the two-way communication between the physical and digital spaces.</li><li>Adding a legend explaining the different elements and their functionalities would improve the figure&#39;s accessibility to a wider audience.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could include a simplified representation of the data flow within the digital space, showing how the different digital twins interact and share information.</li><li>The figure could visually represent the types of data being exchanged between the physical and digital spaces, such as sensor data, control commands, or model parameters.</li><li>The figure could highlight the role of AI and machine learning within the digital twins, perhaps by adding icons or labels representing these functionalities.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>Example Architecture with Cloud-Edge Computing</h3>
+            
+            <h4>Overview</h4>
+            <p>This section details an example architecture implementing the MDT framework using cloud and edge computing. It leverages AWS for cloud services and incorporates an edge layer for low-latency processing. The architecture is divided into four layers: cloud, edge, device, and API. The cloud layer handles data storage, analytics, and microservices. The edge layer manages communication, computing, and temporary data caching. The device layer represents real-world entities like vehicles and simulators. The API layer connects the system to external data sources. This architecture enables real-time and batch data processing, supporting the MDT&#39;s functionalities.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Cloud Layer (AWS):</strong> This layer utilizes various AWS services like EKS, Kafka, and S3 to handle real-time processing, data storage, and analytics. It also hosts the AI/ML framework and Digital Twin microservices.</li><li><strong>Edge Layer:</strong> This layer acts as an intermediary between the cloud and devices, managing communication, performing edge computing tasks, and caching data. It uses protocols like HTTPS, MQTT, and Zenoh.</li><li><strong>Device Layer:</strong> This layer represents the physical entities in the MDT framework, including mobile apps, real and RC vehicles, and simulators. It&#39;s responsible for data sampling and command actuation.</li><li><strong>API Layer:</strong> This layer connects the cloud to external APIs, enriching the MDT with data from sources like TomTom, OpenStreetMap, and OpenWeather. It also includes an event query API and a web portal for visualization.</li><li><strong>Four-Layered Architecture:</strong> The architecture&#39;s layered design (cloud, edge, device, API) allows for a clear separation of concerns and enables efficient data flow and processing.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Architecture</strong>
+        <p>The architecture covers all necessary components for a Digital Twin implementation, including data ingestion, processing, storage, and communication, across both cloud and edge layers.</p>
+        <div class="quote">"In this section, we build an example architecture for the proposed MDT concept by leveraging cloud computing and edge computing, enabling both real-time and bulk-batch ingestion, processing, and analytics of mobility data." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Use of Established Technologies</strong>
+        <p>The architecture leverages established technologies like AWS, Kafka, and Spark, ensuring reliability and scalability.</p>
+        <div class="quote">"As shown in Fig. 2, the architecture can be divided into four layers: 1) the cloud layer, which is built on AWS and its Virtual Private Cloud (VPC) [57]; 2) the edge layer, which has a computing component, a communication component, and a storage component; 3) the device layer, which generates data and consumes guidance; 4) the API (Application Programming Interface) layer, which hooks up the cloud layer with external APIs." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Layer Definitions</strong>
+        <p>The four-layer architecture (cloud, edge, device, API) provides a clear separation of concerns and facilitates understanding of the system&#39;s structure and data flow.</p>
+        <div class="quote">"The major purpose of designing this architecture is to accommodate the proposed MDT framework shown in Fig. 1, so the Digital Twin does not just remain in the conceptual phase but can also be deployed in the real world with the help of cloud computing and edge computing." (Page 8)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Elaborate on Edge Computing Details</strong>
+        <p>While the edge layer is mentioned, more details on the specific hardware and software used for edge computing would be beneficial.</p>
+        <div class="quote">"In this example architecture, an edge layer is designed with three different modules: computing, communication, and storage." (Page 9)</div>
+        <p><strong>Rationale:</strong> This would provide a more concrete understanding of the edge layer&#39;s capabilities and limitations.</p>
+        <p><strong>Implementation:</strong> Specify the type of edge devices used, their processing power, and the software platform employed for edge computing tasks.</p>
+    </li>
+    
+    <li>
+        <strong>Address Security Considerations</strong>
+        <p>The section lacks discussion on security aspects of the architecture, which is crucial for a system handling potentially sensitive data.</p>
+        
+        <p><strong>Rationale:</strong> Security is a critical concern in any cloud-edge architecture, and addressing it would strengthen the proposal.</p>
+        <p><strong>Implementation:</strong> Include a paragraph discussing security measures implemented at each layer, such as data encryption, access control, and intrusion detection.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Scalability and Fault Tolerance</strong>
+        <p>The architecture should address scalability and fault tolerance, especially given the dynamic nature of mobility data and the distributed nature of the system.</p>
+        
+        <p><strong>Rationale:</strong> Ensuring scalability and fault tolerance is crucial for real-world deployment of the MDT framework.</p>
+        <p><strong>Implementation:</strong> Discuss how the architecture can handle increasing data volumes and device connections, and how it ensures system resilience in case of component failures.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 2</summary>
+        <p>This figure presents a four-layered architecture designed to implement the Mobility Digital Twin (MDT) concept using cloud and edge computing. The layers are: 1) Cloud Layer (built on AWS and its Virtual Private Cloud), containing data lakes, microservices, model training, and real-time processing components; 2) Edge Layer, responsible for storage, computing, and communication between the cloud and devices; 3) Device Layer, comprising mobile apps, simulators, real vehicles, and RC vehicles, which generate data and receive instructions; and 4) API Layer, connecting the cloud to external APIs for additional data sources like traffic, map, and weather information. Arrows indicate the flow of data and interactions between the layers.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "As shown in Fig. 2, the architecture can be divided into four layers"</p>
+            <p><strong>Context:</strong> This section details the architecture of the proposed MDT framework, which leverages cloud and edge computing. It describes the four layers of the architecture (cloud, edge, device, and API) and how they interact to enable real-time and bulk data processing for various mobility applications.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is essential for understanding how the MDT framework can be implemented in a real-world setting using cloud and edge computing. It provides a visual representation of the system&#39;s architecture and the flow of data between different components.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>While the layered structure is clear, visually separating the layers with distinct backgrounds or borders could improve readability.</li><li>The arrows indicating data flow could be thicker and more directional to enhance clarity. Labeling the arrows with the type of data being exchanged (e.g., sensor data, control commands) would be beneficial.</li><li>Using different icons or visual cues to represent specific technologies within each layer (e.g., AWS, Kafka, MQTT) could make the diagram more informative.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could benefit from a more detailed representation of the data flow within the cloud layer, showing how data is processed and used by different microservices.</li><li>The figure could visually highlight the security measures implemented at different layers, such as encryption or access control, to address potential security concerns.</li><li>The figure could include a simplified representation of the interaction between the MDT architecture and the three digital twins (human, vehicle, and traffic) to better connect the architecture to the overall framework.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 2</summary>
+        <p>This figure illustrates the architecture of the proposed Mobility Digital Twin (MDT) system, which comprises four layers: Cloud Layer, Edge Layer, Device Layer, and API Layer. The Cloud Layer, within an Amazon VPC, includes Data Lakes, Analytics Workbench, Data Stores, Distributed Real-time Processing, Rule Engine, AI/ML Framework &amp; Digital Twin Microservices, Bulk Data Ingestion, and OpenID Connect for authentication. The Edge Layer handles Edge Computing and Communication. The Device Layer consists of Mobile Apps, Real &amp; RC Vehicles, and Simulators. The API Layer connects to external data sources like Traffic, Map, and Weather Data via an API Gateway, Customized Event Query API, and a Customized Web Portal.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "As shown in Fig. 2, the architecture can be divided into four layers"</p>
+            <p><strong>Context:</strong> This section presents a detailed architecture for the proposed MDT concept, leveraging cloud and edge computing. It describes the four layers of the architecture (cloud, edge, device, and API) and their respective components, explaining how they interact to enable real-time and bulk data processing for various mobility applications.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding the detailed architecture of the MDT system and how different components interact to support the framework&#39;s functionalities. It shows the specific technologies and services used in each layer, providing a concrete implementation of the MDT concept.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The diagram is quite dense; grouping related components within each layer and using visual separators could improve clarity.</li><li>The arrows representing data flow, while directional, could be labeled with the type of data being exchanged to enhance understanding.</li><li>Different colors or icons could be used to distinguish between different types of components (e.g., data stores, processing units, communication channels) within each layer.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The diagram could better illustrate the interaction between the different digital twins (human, vehicle, and traffic) within the cloud layer.</li><li>The security aspects of the architecture could be visually highlighted, showing how data is protected during transmission and storage.</li><li>The diagram could include a simplified representation of the data processing pipeline, showing how data flows from the device layer to the cloud layer and back, highlighting key processing steps.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-5" class="section">
+            <h3>Example Microservices and Case Study</h3>
+            
+            <h4>Overview</h4>
+            <p>This section details example microservices within each Digital Twin (Human, Vehicle, Traffic) and presents a case study of a Personalized Adaptive Cruise Control (P-ACC) system. The Human Digital Twin demonstrates user management and driver classification. The Vehicle Digital Twin showcases cloud-based ADAS features. The Traffic Digital Twin covers traffic flow monitoring and variable speed limits. The P-ACC case study integrates these microservices, demonstrating improved performance over traditional ACC by incorporating personalized driver behavior, vehicle type, and environmental factors.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Human Digital Twin Microservices:</strong> User management features allow for role-based access control (admin, supervisor, viewer) and human-vehicle association. Driver classification is performed using real-time data and the MOVESTAR model, categorizing drivers based on driving scores (overall, eco, safe, comfort).</li><li><strong>Vehicle Digital Twin Microservices:</strong> Cloud-based ADAS functionalities leverage data from a human-in-the-loop simulation. Machine learning algorithms analyze historical data to predict driver behavior and provide guidance through an AR HUD, displaying information like driving proficiency, potential actions, and mood.</li><li><strong>Traffic Digital Twin Microservices:</strong> Traffic flow monitoring uses data from a mobile app to visualize traffic density and speed on a map. Variable speed limits are implemented using geofences, allowing customized speed recommendations based on location and entry/exit rules.</li><li><strong>P-ACC Case Study Integration:</strong> The P-ACC system integrates microservices from all three Digital Twins, considering driver type, vehicle type, weather, road type, and traffic conditions. It uses Max-Ent IRL to learn personalized driving models and determine desired car-following gaps.</li><li><strong>Real-world P-ACC Evaluation:</strong> Real-world testing with a Lexus LS vehicle demonstrates the P-ACC system&#39;s effectiveness, showing an 86.4% reduction in takeover events compared to traditional ACC. Latency results are also presented, highlighting the time required for model inference.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Microservice Examples</strong>
+        <p>The section provides clear examples of microservices for each Digital Twin, illustrating their functionalities and potential applications.</p>
+        <div class="quote">"This section first introduces example microservices of each digital building block of the proposed MDT framework, including user management and driver type classification of the Human Digital Twin, cloud-based ADAS of the Vehicle Digital Twin, and traffic flow monitoring and variable speed limit of the Traffic Digital Twin." (Page 10)</div>
+    </li>
+    
+    <li>
+        <strong>Comprehensive Case Study</strong>
+        <p>The P-ACC case study effectively integrates the microservices and demonstrates the benefits of the MDT framework in a real-world application.</p>
+        <div class="quote">"Then, a case study of the P-ACC system is conducted, which integrates aforementioned example microservices into one application." (Page 10)</div>
+    </li>
+    
+    <li>
+        <strong>Quantitative Results</strong>
+        <p>The inclusion of quantitative results, such as the takeover percentage and latency measurements, strengthens the case for the P-ACC system&#39;s effectiveness.</p>
+        <div class="quote">"Based on the test results from three different drivers in different environments, the takeover event happens 86.4% less frequently when drivers use the proposed IRL-based P-ACC, compared to a traditional PID-based ACC that purely relies on real-time onboard computing." (Page 13)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Elaborate on Model Training</strong>
+        <p>While the section mentions Max-Ent IRL, more details on the training process, including data collection and model validation, would be beneficial.</p>
+        <div class="quote">"In this case study, the maximum entropy inverse reinforcement learning (Max-Ent IRL) algorithm [89] is adopted" (Page 12)</div>
+        <p><strong>Rationale:</strong> A more detailed explanation of the model training process would enhance the technical rigor of the case study.</p>
+        <p><strong>Implementation:</strong> Provide information on the size and characteristics of the training dataset, the training procedure, and the metrics used for model evaluation.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Limitations of P-ACC</strong>
+        <p>The section focuses on the benefits of P-ACC but could also discuss its limitations and potential challenges for real-world deployment.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging limitations would provide a more balanced perspective and open avenues for future research.</p>
+        <p><strong>Implementation:</strong> Discuss potential challenges like handling unexpected events, ensuring safety in diverse traffic conditions, and addressing ethical considerations related to personalized driving models.</p>
+    </li>
+    
+    <li>
+        <strong>Expand on Generalizability</strong>
+        <p>The section could discuss the generalizability of the P-ACC system to different vehicle types, driver demographics, and traffic environments.</p>
+        
+        <p><strong>Rationale:</strong> Addressing generalizability would strengthen the case for the broader applicability of the MDT framework and the P-ACC system.</p>
+        <p><strong>Implementation:</strong> Discuss how the system can be adapted to different contexts and what further research is needed to ensure its robustness and effectiveness in diverse scenarios.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 3</summary>
+        <p>This figure shows a real-world demonstration of the cloud-based driver scoring system in Mountain View, CA. The system is used for user management and driver type classification. The image depicts a dashboard display inside a vehicle, showing scores for Safety (75), Comfort (83), Eco (97), and an Overall score (85). It also displays the current speed (16 mph) and indicators for &#39;Trip&#39; and &#39;Cloud&#39;. The &#39;CONNECTED CAR CLOUD DOWNLINK&#39; banner suggests real-time data transfer from the cloud to the vehicle.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "One example is shown as Fig. 3, where different driving scores of a driver (i.e., overall score, eco score, safe score, and comfort score) are calculated by the opensource MOVESTAR model [83] running on the cloud in real time."</p>
+            <p><strong>Context:</strong> This subsection discusses example microservices of the Human Digital Twin, including user management and driver type classification. It describes a web portal for data management and visualization, and how driver scores are calculated and used for classification.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure demonstrates a practical application of the Human Digital Twin, showing how real-time driver scoring and feedback can be implemented using the MDT framework. It highlights the connection between data collected in the physical space and its use for user management and driver classification in the digital space.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could benefit from a clearer explanation of how the scores are calculated. Adding a brief description of the underlying metrics and algorithms used by the MOVESTAR model would be helpful.</li><li>The visual design of the dashboard could be improved to make it more intuitive and user-friendly. For example, using color-coding to represent different score ranges could enhance readability.</li><li>The figure could show different examples of driver classifications (e.g., reckless, intermediate, competent) to illustrate how the scores are used for categorization.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could provide more context about how the driver scores are used for user management. For example, explaining how different user groups (viewer, supervisor, admin) interact with the scoring system would be helpful.</li><li>The figure could discuss the implications of driver classification for personalized services. For example, how might the system adapt its behavior based on the driver&#39;s classification?</li><li>The figure could address potential privacy concerns related to collecting and storing driver data. Explaining how the system ensures data security and anonymity would be important.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Safety Score:</strong> 75</li><li><strong>Comfort Score:</strong> 83</li><li><strong>Eco Score:</strong> 97</li><li><strong>Overall Score:</strong> 85</li><li><strong>Speed:</strong> 16 mph</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 4</summary>
+        <p>This figure shows the user management page on the web portal of the MDT. It displays the user&#39;s driver risk class (reckless, intermediate, or competent) using a circular gauge chart. In this specific instance, the driver is classified as &#39;Intermediate&#39;. The page also lists past trips with details like start and end times, vehicle name, total distance, and completion status. Clickable links (in light blue) provide access to more details about each trip.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "An example classification result is visualized on the Web portal (currently shown as “Competent” in Fig. 4)"</p>
+            <p><strong>Context:</strong> This subsection describes how driver scores are calculated in real-time and used for driver type classification. It explains how the classification result is visualized on the web portal and how historical data can be accessed.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure illustrates the user management and driver classification aspects of the Human Digital Twin. It shows how the MDT framework stores and presents driver data, including risk assessment and trip history, enabling personalized services and user management functionalities.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The circular gauge chart could be more visually informative. Using color-coding to represent different risk levels (e.g., red for reckless, yellow for intermediate, green for competent) would enhance its impact.</li><li>The table of past trips could benefit from visual cues, such as color-coding or icons, to highlight important information like long trips or incomplete trips.</li><li>The figure could include a brief explanation of the information available through the clickable links. This would give users a better understanding of the level of detail provided.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could explain how the driver risk class is determined. Describing the underlying algorithms and data used for classification would be helpful.</li><li>The figure could discuss how the trip history data is used for personalized services. For example, how might the system use this data to provide customized recommendations or feedback?</li><li>The figure could address data privacy concerns. Explaining how the system protects user data and ensures anonymity would be important.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 5</summary>
+        <p>This figure shows a human-in-the-loop simulation of a cloud-based Advanced Driver-Assistance System (ADAS). The simulation uses AWS for cloud computing, the Unity game engine for creating the virtual driving environment, and a Logitech G29 Driving Force steering wheel and pedals for human input. The image displays the in-car view of the simulation, along with two panels showing the data exchange between Unity and AWS. A smaller inset shows a person using the steering wheel, highlighting the &#39;human-in-the-loop&#39; aspect. The &#39;Unity-AWS Uplink Message&#39; panel likely shows the data being sent from the simulation to the cloud, while the &#39;AWS-Unity Downlink Message&#39; panel shows the information being sent back from the cloud to the simulation, such as control commands or guidance information.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "As shown in Fig. 5, a human-in-the-loop simulation (built with AWS, the Unity game engine, and the Logitech G29 Driving Force) is conducted to emulate the data sampling process from a connected vehicle in the physical space [39]."</p>
+            <p><strong>Context:</strong> This subsection describes how a cloud-based ADAS works within the Vehicle Digital Twin. It explains how data is collected from a simulated vehicle in Unity, sent to the cloud (AWS) for processing, and then returned to the simulation as guidance information. The figure illustrates this process and the human driver&#39;s interaction with the simulation.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it visually demonstrates how the Vehicle Digital Twin can be used to develop and test cloud-based ADAS functionalities. It shows the interaction between the simulation (representing the physical vehicle), the cloud platform (AWS), and the human driver, highlighting the real-time data exchange and control loop.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The content of the &#39;Uplink&#39; and &#39;Downlink&#39; message panels is difficult to read and understand. Displaying a few key data points with clear labels would be more informative.</li><li>The inset showing the driver interaction is too small. A larger image or a separate image focusing on the driver&#39;s interaction with the steering wheel and pedals would be more impactful.</li><li>The figure could benefit from visual cues to indicate the flow of data between the simulation, the cloud, and the driver. Arrows or color-coding could be used to highlight this flow.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure doesn&#39;t clearly explain what types of data are being exchanged between Unity and AWS. Adding labels or annotations to indicate the data types (e.g., vehicle speed, steering angle, control commands) would improve understanding.</li><li>The figure doesn&#39;t show how the received downlink messages are used within the simulation. A visual representation of how these messages affect the simulated vehicle&#39;s behavior would be helpful.</li><li>The figure could be enhanced by showing how this simulation setup connects to the broader MDT framework. A simplified diagram linking the simulation to the Vehicle Digital Twin and other components of the MDT could provide valuable context.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 9</summary>
+        <p>This figure consists of two parts illustrating the real-world data collection process for the Personalized Adaptive Cruise Control (P-ACC) case study. Part (a) shows a Lexus LS, a mass-produced vehicle used in the study to collect real-world driving data. This emphasizes that the proposed framework is tested on a real car, not just in simulation. Part (b) shows a person driving the Lexus LS on Highway 237 in California. This image represents the 10-minute driving sessions used to gather Controller Area Network (CAN BUS) data, which is the vehicle&#39;s internal communication network. This data is then used to train and evaluate the P-ACC system.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "A real-world end-to-end test is conducted, which utilizes the CAN BUS data generated from a Lexus LS test vehicle shown as Fig. 9(a), including 15 data fields, such as position, speed, acceleration, and so on."</p>
+            <p><strong>Context:</strong> This subsection describes the real-world testing of the P-ACC system. It explains that data was collected from a Lexus LS vehicle during 10-minute drives on Highway 237 in California. The figure shows the vehicle and a driver inside, illustrating the data collection process.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it grounds the P-ACC case study in real-world data. It shows the actual vehicle and driving scenario used to collect the CAN BUS data, which is crucial for training and validating the personalized driving models used in the P-ACC system.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Part (a) could be more informative by showing the sensors used for data collection, such as cameras or radar. Highlighting these sensors would visually connect the physical vehicle to the data being collected.</li><li>Part (b) could benefit from a map inset showing the section of Highway 237 where the data was collected. This would provide geographical context.</li><li>The images could be larger and of higher resolution to provide more detail.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure caption could explain why a 10-minute driving session was chosen for data collection. Is this duration representative of typical driving behavior? What are the trade-offs of using shorter or longer sessions?</li><li>The figure could be enhanced by briefly describing the 15 data fields collected from the CAN BUS. Listing a few key data points would provide more insight into the data used for model training.</li><li>The figure could connect the data collection process to the broader MDT framework. A simple diagram showing how the CAN BUS data flows from the vehicle to the edge layer and then to the cloud could be helpful.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Trip Duration:</strong> 10 minutes</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>TABLE I</summary>
+        <p>Table I presents a comparison of takeover percentages between the proposed Personalized Adaptive Cruise Control (P-ACC) and traditional ACC. Takeover percentage represents the proportion of time during a trip when the driver intervenes by using the accelerator or brake pedals because they feel uncomfortable with the system&#39;s performance. Lower takeover percentages indicate better system performance and greater driver comfort.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The results are presented in Table I."</p>
+            <p><strong>Context:</strong> This subsection discusses the results of a real-world end-to-end test comparing the proposed P-ACC with traditional ACC. The key metric is the &#39;takeover percentage,&#39; which measures how often drivers feel the need to intervene and take control of the vehicle. The results demonstrate a significant reduction in takeover events with the P-ACC system.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table provides quantitative evidence of the P-ACC system&#39;s effectiveness compared to traditional ACC. It directly supports the claim that the MDT framework improves driver comfort and reduces the need for interventions.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Clearly label the units (percentage) in the column headers for P-ACC and ACC to avoid ambiguity.</li><li>Consider adding a visual representation of the data, such as a bar chart, to quickly convey the magnitude of the improvement.</li><li>Use a consistent number of decimal places for all percentage values to maintain visual consistency.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Provide a brief explanation of how the takeover percentage is calculated (takeover time / overall activation time).</li><li>Discuss the statistical significance of the observed improvement, perhaps by including p-values or confidence intervals.</li><li>Consider including additional metrics, such as average takeover duration or frequency, to provide a more comprehensive performance comparison.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Driver A - P-ACC:</strong> 4.8 %</li><li><strong>Driver A - ACC:</strong> 27.3 %</li><li><strong>Driver A - Improvement:</strong> 81.1 %</li><li><strong>Driver B - P-ACC:</strong> 2.1 %</li><li><strong>Driver B - ACC:</strong> 24.2 %</li><li><strong>Driver B - Improvement:</strong> 91.4 %</li><li><strong>Driver C - P-ACC:</strong> 3.5 %</li><li><strong>Driver C - ACC:</strong> 25.8 %</li><li><strong>Driver C - Improvement:</strong> 86.7 %</li><li><strong>Average Improvement:</strong> 86.4 %</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>TABLE II</summary>
+        <p>Table II shows the latency results for processing 10 minutes of CAN bus data and querying the data lakes. It breaks down the latency into three components: Uplink Latency (time to upload data to the cloud), Cloud Computing + Downlink Latency (time for processing in the cloud and downloading results), and Overall Latency (total time from data sampling to receiving results). The table presents these latencies for different data frequencies (0.5 Hz, 1 Hz, 5 Hz, and 10 Hz), showing how the increasing data volume affects the uplink latency while the cloud processing time remains relatively constant.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The end-to-end latency results are shown in Table II"</p>
+            <p><strong>Context:</strong> This subsection discusses the end-to-end latency of the P-ACC system, which is the time it takes for data to be sampled from the vehicle, processed in the cloud, and for the results to be sent back to the vehicle. The latency is broken down into uplink, cloud processing, and downlink components, and the results are presented for different data sampling frequencies.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table provides insights into the system&#39;s responsiveness and the time required for different stages of data processing. It&#39;s important for understanding the feasibility of real-time applications and identifying potential bottlenecks.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Clearly label the units (seconds and MB) in the column headers to avoid any confusion.</li><li>Consider using bold font or highlighting to emphasize the overall latency values, as they are the key takeaway.</li><li>Add a brief explanation of what CAN bus data is and why it&#39;s being used in this context.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain the reason for the constant cloud computing and downlink latency despite increasing data frequency. Is it due to parallel processing or some other optimization?</li><li>Discuss the implications of the observed latencies for real-time applications. Are these latencies acceptable for safety-critical functions like adaptive cruise control?</li><li>Consider including the standard deviation or range of latency values to provide a measure of variability across multiple test runs.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Data Frequency (0.5 Hz) - Uplink Data Size:</strong> 12 MB</li><li><strong>Data Frequency (0.5 Hz) - Uplink Latency:</strong> 1.4 s</li><li><strong>Data Frequency (0.5 Hz) - Cloud Computing + Downlink Latency:</strong> 16.1 s</li><li><strong>Data Frequency (0.5 Hz) - Overall Latency:</strong> 17.5 s</li><li><strong>Data Frequency (1 Hz) - Uplink Data Size:</strong> 24 MB</li><li><strong>Data Frequency (1 Hz) - Uplink Latency:</strong> 2.9 s</li><li><strong>Data Frequency (1 Hz) - Cloud Computing + Downlink Latency:</strong> 16.1 s</li><li><strong>Data Frequency (1 Hz) - Overall Latency:</strong> 19 s</li><li><strong>Data Frequency (5 Hz) - Uplink Data Size:</strong> 120 MB</li><li><strong>Data Frequency (5 Hz) - Uplink Latency:</strong> 14.1 s</li><li><strong>Data Frequency (5 Hz) - Cloud Computing + Downlink Latency:</strong> 16.1 s</li><li><strong>Data Frequency (5 Hz) - Overall Latency:</strong> 30.2 s</li><li><strong>Data Frequency (10 Hz) - Uplink Data Size:</strong> 240 MB</li><li><strong>Data Frequency (10 Hz) - Uplink Latency:</strong> 21.1 s</li><li><strong>Data Frequency (10 Hz) - Cloud Computing + Downlink Latency:</strong> 16.1 s</li><li><strong>Data Frequency (10 Hz) - Overall Latency:</strong> 37.2 s</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-6" class="section">
+            <h3>Future Challenges</h3>
+            
+            <h4>Overview</h4>
+            <p>This section discusses the future challenges in developing and implementing Digital Twin technology for connected vehicles, focusing on standardization, AI integration, cloud platform choices, and heterogeneous communication environments. It highlights the need for specific standards for the transportation domain, the importance of robust AI techniques for cloud-edge computing, the trade-offs between public and private cloud platforms, and the complexities of managing diverse communication technologies for connected vehicles.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Digital Twin Standardization:</strong> The lack of universal standards for Digital Twins in transportation poses challenges for interoperability and data exchange between different entities. Developing specific standards for APIs, data access, and HMIs is crucial for widespread adoption.</li><li><strong>AI for Cloud-Edge Computing:</strong> Integrating AI techniques into cloud-edge computing systems for Digital Twins presents challenges in system management, data quality, generalization ability, and robustness in real-world traffic conditions.</li><li><strong>Public vs. Private Cloud:</strong> Choosing between public and private cloud platforms involves trade-offs between security, cost, scalability, and flexibility. Public clouds offer scalability and cost-effectiveness but raise security and privacy concerns, while private clouds offer greater control but are more expensive and less scalable.</li><li><strong>Heterogeneous Wireless Communication:</strong> The increasing heterogeneity of vehicular networks, with coexisting technologies like DSRC, Wi-Fi, LTE, and C-V2X, creates challenges in maintaining seamless connectivity, balancing latency and cost, and securing data shared between vehicles and infrastructure.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Identifies Key Challenges</strong>
+        <p>The section effectively identifies key challenges related to Digital Twin development for connected vehicles, covering important aspects like standardization, AI integration, cloud platforms, and communication.</p>
+        <div class="quote">"In the future development and utilization of the Digital Twin technology in both academia and industry, together with the involvements of the connected vehicle technology and cloud–edge computing, numerous challenges need to be addressed from the perspectives of both research and engineering." (Page 14)</div>
+    </li>
+    
+    <li>
+        <strong>Open Questions for Future Research</strong>
+        <p>The section raises important open questions for future research, stimulating further investigation and discussion in the field.</p>
+        <div class="quote">"Some of the major challenges are discussed in this section with open questions for future studies to solve." (Page 14)</div>
+    </li>
+    
+    <li>
+        <strong>Balanced Discussion of Cloud Platforms</strong>
+        <p>The section provides a balanced discussion of the advantages and disadvantages of public and private cloud platforms, offering a nuanced perspective on this important decision.</p>
+        <div class="quote">"Therefore, based on specific requirements and needs of end users, choices can be made between public and private cloud platforms, considering their advantages and disadvantages described above." (Page 14)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>More Concrete Examples</strong>
+        <p>While the section discusses the challenges in general terms, providing more concrete examples would enhance clarity and impact.</p>
+        <div class="quote">"Such standards can be used by different organizations to define APIs for Digital Twin data access, enabling different transportation entities (e.g., human drivers, vehicles, and traffic infrastructures) to securely and reliably store, manage, and retrieve records." (Page 14)</div>
+        <p><strong>Rationale:</strong> Concrete examples would make the challenges more relatable and easier to understand.</p>
+        <p><strong>Implementation:</strong> For example, in the standardization section, describe a specific scenario where the lack of standards creates interoperability issues between different Digital Twin implementations. In the AI section, provide an example of how poor data quality can affect the performance of an AI-based Digital Twin system.</p>
+    </li>
+    
+    <li>
+        <strong>Prioritize Challenges</strong>
+        <p>The section could prioritize the challenges based on their potential impact and urgency, providing a clearer roadmap for future research and development.</p>
+        
+        <p><strong>Rationale:</strong> Prioritization would help focus efforts on the most critical challenges and guide resource allocation.</p>
+        <p><strong>Implementation:</strong> Rank the challenges based on their importance and provide a brief justification for the chosen ranking. This could be done in a separate paragraph or by using visual cues like numbered lists or bullet points.</p>
+    </li>
+    
+    <li>
+        <strong>Suggest Potential Solutions</strong>
+        <p>While the section identifies the challenges, it could also suggest potential solutions or research directions to address them.</p>
+        
+        <p><strong>Rationale:</strong> Suggesting potential solutions would make the section more constructive and contribute to the advancement of the field.</p>
+        <p><strong>Implementation:</strong> For each challenge, briefly discuss potential solutions or research directions. For example, in the standardization section, suggest specific organizations or initiatives that could lead the development of Digital Twin standards for transportation. In the AI section, mention specific research areas, such as robust machine learning or explainable AI, that could address the challenges of AI integration.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-7" class="section">
+            <h3>Conclusion</h3>
+            
+            <h4>Overview</h4>
+            <p>This conclusion summarizes the key contributions of the paper, reiterating the development of the Mobility Digital Twin (MDT) framework for connected vehicles using cloud and edge computing. It emphasizes the novelty of the framework, particularly its integration of cloud-edge computing with detailed microservices for connected vehicles. The paper highlights the use of AWS for the cloud-edge architecture and the successful implementation of a Personalized Adaptive Cruise Control (P-ACC) case study demonstrating the framework&#39;s effectiveness. Finally, it concludes by mentioning key considerations for Digital Twin framework design (scalability, reliability, security, cost, latency, and fidelity) and anticipates further research in the mobility domain.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>MDT Framework Development:</strong> The conclusion emphasizes the creation of the MDT framework, a novel approach to integrating digital twins with cloud-edge computing for connected vehicles.</li><li><strong>Cloud-Edge Architecture with AWS:</strong> The use of AWS for deploying the MDT framework and its architecture is highlighted, demonstrating a practical implementation of the concept.</li><li><strong>P-ACC Case Study Success:</strong> The successful implementation of the P-ACC case study is reiterated, showcasing the effectiveness and practical benefits of the MDT framework.</li><li><strong>Key Design Considerations:</strong> The conclusion identifies key factors to consider when designing Digital Twin frameworks, including scalability, reliability, security, cost, latency, and fidelity.</li><li><strong>Future Research in Mobility:</strong> The conclusion anticipates further research in the mobility domain, driven by the rapid development and potential of Digital Twin technology.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Concise Summary</strong>
+        <p>The conclusion provides a concise and clear summary of the paper&#39;s key contributions and findings.</p>
+        <div class="quote">"In this study, a MDT framework has been developed for connected vehicles with the help of cloud computing and edge computing." (Page 15)</div>
+    </li>
+    
+    <li>
+        <strong>Highlights Novelty</strong>
+        <p>The conclusion effectively highlights the novelty of the MDT framework and its integration of cloud-edge computing with microservices.</p>
+        <div class="quote">"It has been found from the literature review that, although the Digital Twin concept has been recently studied in the transportation domain, there is no related literature that leverages this technology together with cloud–edge computing to benefit connected vehicles with detailed microservices." (Page 15)</div>
+    </li>
+    
+    <li>
+        <strong>Forward-Looking Perspective</strong>
+        <p>The conclusion offers a forward-looking perspective by anticipating future research in the mobility domain, suggesting continued relevance and potential for growth.</p>
+        <div class="quote">"Along with the rapid development of the Digital Twin, it can be envisioned that more related studies will be conducted in the mobility domain to tackle the real-world challenges in the near future." (Page 15)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify Impact</strong>
+        <p>While the conclusion mentions the P-ACC case study, quantifying its impact with specific metrics would strengthen the overall message.</p>
+        <div class="quote">"To showcase the effectiveness of the MDT framework, a case study of P-ACC has been conducted leveraging the key microservices of the MDT framework" (Page 15)</div>
+        <p><strong>Rationale:</strong> Providing concrete numbers would make the benefits of the MDT framework more compelling and memorable.</p>
+        <p><strong>Implementation:</strong> Include a brief statement quantifying the improvement achieved by the P-ACC system, such as the percentage reduction in takeover events or improvement in fuel efficiency.</p>
+    </li>
+    
+    <li>
+        <strong>Broader Implications</strong>
+        <p>The conclusion could discuss the broader implications of the MDT framework beyond the specific case study, highlighting its potential impact on the transportation industry as a whole.</p>
+        
+        <p><strong>Rationale:</strong> Discussing broader implications would enhance the significance of the research and its potential for real-world impact.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two discussing the potential of the MDT framework to improve traffic flow, enhance road safety, or enable new mobility services.</p>
+    </li>
+    
+    <li>
+        <strong>Call to Action</strong>
+        <p>The conclusion could include a call to action, encouraging further research and collaboration in the development and implementation of Digital Twin technology for connected vehicles.</p>
+        
+        <p><strong>Rationale:</strong> A call to action would engage the reader and promote continued progress in the field.</p>
+        <p><strong>Implementation:</strong> Add a sentence encouraging researchers and industry professionals to explore the potential of the MDT framework and contribute to its further development and application.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        // Show/hide back-to-top button
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
