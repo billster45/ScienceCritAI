@@ -1,0 +1,1933 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLMs Know What They Don&#39;t Know: Discovering the Internal Representations of Truthfulness</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>LLMs Know What They Don&#39;t Know: Discovering the Internal Representations of Truthfulness</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">Introduction</a></li><li><a href="#section-2">Background</a></li><li><a href="#section-3">Better Error Detection</a></li><li><a href="#section-4">Generalization Between Tasks</a></li><li><a href="#section-5">Investigating Error Types</a></li><li><a href="#section-6">Detecting the Correct Answer</a></li><li><a href="#section-7">Discussion and Conclusions</a></li><li><a href="#section-8">Implementation Details</a></li><li><a href="#section-9">Full Error Detection Results</a></li><li><a href="#section-10">Full Generalization Results</a></li><li><a href="#section-11">Taxonomy of Errors</a></li><li><a href="#section-12">Detecting the Correct Answer Full Results</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>This paper investigates how Large Language Models (LLMs) internally represent the truthfulness of their generated text, focusing on the location of this information within the model&#39;s internal activations. The study analyzes various error detection methods, including probing classifiers applied to specific tokens within the LLM output, and compares their performance across different LLMs and datasets. The research reveals that truthfulness information is concentrated in specific tokens, improving error detection. Furthermore, the study explores the generalization of these methods across tasks, the predictability of error types, and the discrepancy between internal knowledge and generated answers. The findings shed light on the inner workings of LLMs and their limitations in generating truthful and accurate information.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li><strong>Truthfulness information is localized:</strong> LLMs store signals related to the correctness of their answers within specific tokens, particularly the &quot;exact answer tokens.&quot; These tokens are the words in the generated text that directly contribute to the answer&#39;s correctness. By focusing on these tokens, researchers can build more accurate error detectors. This finding was derived by training probing classifiers (simple machine learning models) to predict correctness using the activations of different tokens and observing peak performance at the exact answer tokens. Figure 2 visually demonstrates this localization by showing higher AUC scores (a measure of how well the probe distinguishes between correct and incorrect answers, like a percentage) for exact answer tokens. This localization is important because it helps improve error detection and provides insight into how LLMs process information.</li><li><strong>Limited generalization across tasks:</strong> Error detectors trained on one type of task (e.g., trivia questions) do not perform well on other tasks (e.g., sentiment analysis). This implies that LLMs may have different ways of encoding truthfulness for different skills. This was discovered by training a probe on one dataset and testing it on others. Figure 3 shows that after accounting for information present in output logits (the raw probabilities assigned to each possible next word), the probe&#39;s performance drops significantly on unrelated tasks. This suggests LLMs have specialized &#39;truthfulness circuits&#39; for different types of reasoning, not a single general one.</li><li><strong>LLMs can predict their own error types:</strong> LLMs&#39; internal states contain information about the kinds of errors they are likely to make (e.g., consistently wrong, occasionally wrong, random guesses). The study defined error categories based on the consistency of correct/incorrect answers generated across multiple tries (like flipping a weighted coin many times). Probing classifiers trained on these categories achieved high AUC scores (Table 2), showing that these error types are predictable from the model&#39;s internal representations. This is important because understanding these patterns can lead to better debugging and mitigation of common errors.</li><li><strong>Internal-External Discrepancy:</strong> Sometimes, LLMs seem to &#39;know&#39; the correct answer internally but still output a wrong one. This was observed by comparing the answer chosen by the probe to the LLM&#39;s generated answer. Figure 5 demonstrates that when the LLM generates different answers on repeated attempts, the probe often picks the correct one, even when the LLM itself rarely generates it. This surprising result implies that current methods for extracting answers from LLMs (like just taking the first answer) might be suboptimal. Improving these methods to align with internal knowledge might boost accuracy without changing the LLM itself.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li><strong>Novel approach to error analysis:</strong> The paper&#39;s focus on internal representations of truthfulness, rather than just external behavior, provides a deeper understanding of how LLMs process and represent information. This shift from user-centric to model-centric analysis is crucial for developing better error detection and mitigation strategies.</li><li><strong>Thorough experimental setup:</strong> The experiments were conducted across multiple LLMs and datasets, covering a range of tasks and model architectures. This breadth strengthens the generalizability of the findings and provides a more comprehensive view of how LLMs encode truthfulness.</li><li><strong>Clear and detailed explanations:</strong> The paper clearly explains the methodology, including the implementation of probing classifiers, error categorization, and answer selection strategies. This transparency allows for reproducibility and facilitates critical evaluation of the results.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li><strong>Explore alternative probe architectures and training methods:</strong> The study primarily uses simple linear probes. Investigating more complex probe architectures, such as recurrent or attention-based models, might capture more nuanced aspects of truthfulness representations. Additionally, exploring different training objectives, like directly predicting answer correctness, could further improve error detection.</li><li><strong>Expand error analysis to other error types and datasets:</strong> The focus on factual errors in TriviaQA limits the generalizability of the error taxonomy and analysis. Extending the research to other types of errors, such as logical fallacies, biases, or commonsense errors, and evaluating them across diverse datasets would provide a more complete understanding of how LLMs handle different types of information and reasoning.</li><li><strong>Develop practical mitigation strategies based on internal representations:</strong> The study focuses on diagnosing and understanding LLM errors. Further research could explore how the findings can be translated into practical mitigation strategies. For instance, the probe-based answer selection method could be incorporated into existing LLM decoding strategies or used to develop new error mitigation techniques.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>Figure 2</h4>
+        <p><strong>Description:</strong> Figure 2 visually demonstrates the localized nature of truthfulness information by showing heatmaps of error detection performance across different layers and tokens for the Mistral-7b-instruct model. The heatmaps clearly show that the highest AUC scores are achieved at the exact answer tokens, confirming that these tokens hold the most information about the correctness of the LLM&#39;s output.</p>
+        <p><strong>Relevance:</strong> This figure provides strong visual evidence for the key finding that truthfulness information is localized within specific tokens, supporting the argument for using exact answer tokens in error detection.</p>
+    </div>
+    
+    <div>
+        <h4>Table 1</h4>
+        <p><strong>Description:</strong> Table 1 provides a quantitative comparison of different error detection techniques across various LLMs and datasets, using the AUC metric. The table clearly shows that probing classifiers applied to the exact answer tokens achieve the best performance compared to other methods, such as using aggregated logits or probabilities. The table includes numerical results (AUC scores) demonstrating the improved performance achieved by focusing on exact answer tokens.</p>
+        <p><strong>Relevance:</strong> This table provides quantitative support for the paper&#39;s main claim by showing that probing classifiers applied to the exact answer tokens significantly outperform other error detection methods across multiple LLMs and datasets.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>This paper demonstrates that LLMs encode truthfulness information within their internal representations, particularly in the &quot;exact answer tokens.&quot; This finding enables improved error detection, especially in open-source models. However, the limited generalization of these truthfulness features across different tasks suggests the presence of skill-specific mechanisms within LLMs. The ability to predict error types and the observed discrepancy between internal knowledge and generated answers further highlight the complexity of LLM behavior. Future research should focus on exploring these skill-specific mechanisms, developing more robust error detection methods that generalize across tasks, and leveraging internal knowledge to improve LLM decoding strategies and mitigate the generation of incorrect information. This could involve developing adaptive probes that tailor their analysis to the specific task or designing new training procedures that encourage LLMs to better align their internal knowledge with their external behavior. Ultimately, these efforts will contribute to building more reliable and trustworthy LLMs for a wider range of applications.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>Large language models (LLMs) often make errors, known as hallucinations. This paper shows that LLMs store information about the truthfulness of their answers, especially within specific tokens. This information can be used to detect errors more effectively, but these detectors don&#39;t work universally across different tasks. The paper also shows how to predict the types of errors LLMs are likely to make and reveals that sometimes LLMs internally know the correct answer but still generate a wrong one.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Internal Truthfulness Encoding:</strong> LLMs hold information within their internal states about whether their generated text is accurate or not.</li><li><strong>Token-Specific Encoding:</strong> This truthfulness information is concentrated in specific tokens, particularly those directly related to the answer, improving error detection.</li><li><strong>Skill-Specific Truthfulness:</strong> Error detectors trained on one type of task don&#39;t generalize well to other tasks, suggesting LLMs have different ways of understanding truth for different skills.</li><li><strong>Error Type Prediction:</strong> LLM representations can be used to predict the kinds of errors they&#39;re prone to, which could help in developing targeted solutions.</li><li><strong>Internal-External Discrepancy:</strong> Sometimes, LLMs internally encode the correct answer but consistently output an incorrect one, revealing a gap between their knowledge and behavior.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear and Concise Summary</strong>
+        <p>The abstract effectively summarizes the key findings and contributions of the paper in a concise and understandable manner.</p>
+        <div class="quote">"In this work, we show that the internal representations of LLMs encode much more information about truthfulness than previously recognized." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Highlights Novel Contributions</strong>
+        <p>The abstract clearly points out the novel aspects of the research, such as the token-specific encoding and the discrepancy between internal knowledge and external behavior.</p>
+        <div class="quote">"We first discover that the truthfulness information is concentrated in specific tokens, and leveraging this property significantly enhances error detection performance." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Motivates Further Research</strong>
+        <p>The abstract concludes by suggesting potential future research directions based on the findings, encouraging further exploration in the field.</p>
+        <div class="quote">"Taken together, these insights deepen our understanding of LLM errors from the model’s internal perspective, which can guide future research on enhancing error analysis and mitigation." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify Improvement</strong>
+        <p>While the abstract mentions improved error detection, it would be beneficial to quantify this improvement (e.g., by stating the percentage increase in accuracy).</p>
+        <div class="quote">"leveraging this property significantly enhances error detection performance" (Page 1)</div>
+        <p><strong>Rationale:</strong> Providing concrete numbers would strengthen the impact of the claim and give readers a better understanding of the practical significance of the findings.</p>
+        <p><strong>Implementation:</strong> Include a specific metric or percentage improvement achieved by the proposed method.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on Methodology</strong>
+        <p>The abstract could briefly mention the methodology used to analyze the internal representations (e.g., probing classifiers).</p>
+        <div class="quote">"In this work, we show that the internal representations of LLMs encode much more information about truthfulness than previously recognized." (Page 1)</div>
+        <p><strong>Rationale:</strong> This would provide readers with a better understanding of the technical approach and the nature of the analysis.</p>
+        <p><strong>Implementation:</strong> Add a concise phrase or sentence describing the core technique used, such as &quot;using probing classifiers trained on internal activations.&quot;</p>
+    </li>
+    
+    <li>
+        <strong>Broader Implications</strong>
+        <p>While the abstract focuses on error analysis and mitigation, it could briefly mention the broader implications of the findings for understanding LLM behavior and cognition.</p>
+        <div class="quote">"Taken together, these insights deepen our understanding of LLM errors from the model’s internal perspective" (Page 1)</div>
+        <p><strong>Rationale:</strong> This would connect the research to a wider audience interested in the cognitive aspects of LLMs.</p>
+        <p><strong>Implementation:</strong> Add a short phrase suggesting the broader implications, such as &quot;These findings offer insights into the nature of LLM knowledge and reasoning.&quot;</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Overview</h4>
+            <p>Large language models (LLMs) are prone to generating incorrect information, often called &quot;hallucinations.&quot; This paper shifts from focusing on how humans perceive these errors to examining how LLMs internally encode truthfulness. The research explores how this internal encoding can be used to better detect errors, predict error types, and potentially mitigate them. The paper also addresses the broad definition of &quot;hallucinations&quot; used in the study.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Broad Definition of Hallucinations:</strong> The paper uses a broad definition of hallucinations, encompassing various LLM errors like factual inaccuracies, biases, and reasoning failures, to draw general conclusions.</li><li><strong>Shift to Model-Centric Perspective:</strong> The research moves away from user-centric analysis of LLM errors to focus on the model&#39;s internal representations of truthfulness.</li><li><strong>Internal Encoding of Truthfulness:</strong> The paper investigates how LLMs internally encode signals related to the truthfulness of their generated output, going beyond simply detecting errors.</li><li><strong>Token-Level Analysis:</strong> The research examines the importance of specific tokens in encoding truthfulness, particularly the exact answer tokens.</li><li><strong>Potential for Error Mitigation:</strong> The study explores how understanding internal truthfulness encoding can lead to better error analysis and development of more nuanced mitigation strategies.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Motivation</strong>
+        <p>The introduction clearly establishes the motivation for the research by highlighting the limitations of existing user-centric approaches to understanding LLM hallucinations.</p>
+        <div class="quote">"However, this approach does not adequately address how these errors are encoded within the LLMs." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Novel Approach</strong>
+        <p>The introduction effectively emphasizes the novelty of the model-centric approach and its potential to provide deeper insights into LLM errors.</p>
+        <div class="quote">"In this work, we reveal that the internal representations of LLMs encode much more information about truthfulness than previously recognized." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Well-Defined Scope</strong>
+        <p>The introduction clearly defines the scope of the research, including the broad definition of hallucinations used and the focus on internal representations.</p>
+        <div class="quote">"Our framework adopts a broad interpretation, considering hallucinations to encompass all errors produced by an LLM, including factual inaccuracies, biases, common-sense reasoning failures, and other real-world errors." (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide a Roadmap</strong>
+        <p>The introduction could benefit from a more explicit roadmap outlining the structure and key contributions of each section of the paper.</p>
+        
+        <p><strong>Rationale:</strong> A clear roadmap would improve the readability and help readers navigate the paper more effectively.</p>
+        <p><strong>Implementation:</strong> Add a brief paragraph at the end of the introduction summarizing the content and purpose of each subsequent section.</p>
+    </li>
+    
+    <li>
+        <strong>Illustrative Example</strong>
+        <p>Including a brief, illustrative example of an LLM hallucination and how the model-centric approach might be applied could enhance the introduction.</p>
+        
+        <p><strong>Rationale:</strong> A concrete example would make the concepts more accessible to readers and further motivate the research.</p>
+        <p><strong>Implementation:</strong> Add a short example demonstrating an LLM error and how analyzing internal representations might reveal insights into its origin.</p>
+    </li>
+    
+    <li>
+        <strong>Connect to Broader Context</strong>
+        <p>While the introduction mentions the limitations of user-centric approaches, it could further strengthen the motivation by connecting the research to the broader context of LLM development and deployment.</p>
+        
+        <p><strong>Rationale:</strong> Connecting the research to broader challenges in the field would increase its relevance and impact.</p>
+        <p><strong>Implementation:</strong> Briefly discuss the implications of LLM hallucinations for real-world applications and the importance of developing robust error detection and mitigation techniques.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>Background</h3>
+            
+            <h4>Overview</h4>
+            <p>This section defines LLM errors, often called &quot;hallucinations,&quot; and discusses existing research on detecting these errors. It emphasizes the lack of a universal definition for hallucinations and adopts a broad interpretation encompassing all types of LLM errors. The section also reviews prior work on error detection, including methods using external knowledge, output logits, and probing classifiers, highlighting the need for a more holistic approach.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Definition of Hallucinations:</strong> The term &quot;hallucinations&quot; lacks a consistent definition in the literature, and this paper defines it broadly as any error produced by an LLM.</li><li><strong>Human-Centric vs. Model-Centric View:</strong> Existing research often focuses on how humans perceive LLM errors, but this paper shifts to a model-centric perspective by examining internal LLM activations.</li><li><strong>Error Detection Methods:</strong> Various error detection methods are discussed, including using external knowledge, output logits, and probing classifiers.</li><li><strong>Limitations of Current Approaches:</strong> Current approaches often focus on specific error types or simplify the analysis by using few-shot settings or single-token generation.</li><li><strong>Need for Holistic Approach:</strong> The diverse errors generated by LLMs necessitate a holistic approach to error detection that can address any error type.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Overview</strong>
+        <p>The section provides a thorough overview of existing research on LLM hallucinations and error detection, covering various perspectives and approaches.</p>
+        <div class="quote">"The term “hallucinations” is widely used across various subfields such as conversational AI, abstractive summarization, and machine translation, each interpreting the term differently." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Definition and Justification</strong>
+        <p>The section clearly defines the broad interpretation of hallucinations used in the paper and justifies this approach.</p>
+        <div class="quote">"Instead, we adopt a broad interpretation of hallucinations. Here, we define hallucinations as any type of error generated by an LLM, including factual inaccuracies, biases, failures in common-sense reasoning, and others." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Focus on Model-Centric Perspective</strong>
+        <p>The section effectively highlights the shift from human-centric to model-centric analysis, emphasizing the importance of examining internal LLM activations.</p>
+        <div class="quote">"Hence, we propose shifting the focus from human-centric interpretations of hallucinations to a model-centric perspective, examining the model’s intermediate activations." (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>More Specific Examples</strong>
+        <p>While the section mentions various error types, providing more specific examples of these errors could enhance clarity and understanding.</p>
+        <div class="quote">"Here, we define hallucinations as any type of error generated by an LLM, including factual inaccuracies, biases, failures in common-sense reasoning, and others." (Page 3)</div>
+        <p><strong>Rationale:</strong> Concrete examples would make the different error types more tangible and relatable for the reader.</p>
+        <p><strong>Implementation:</strong> Include specific examples of factual inaccuracies, biases, and reasoning failures in LLM outputs.</p>
+    </li>
+    
+    <li>
+        <strong>Deeper Discussion of Probing Classifiers</strong>
+        <p>Given the later focus on probing classifiers, a more detailed explanation of their workings and limitations in this section would be beneficial.</p>
+        <div class="quote">"Another line of work trains probing classifiers to discover and utilize truthfulness features." (Page 3)</div>
+        <p><strong>Rationale:</strong> A more in-depth introduction to probing classifiers would prepare the reader for the subsequent sections and facilitate a better understanding of the methodology.</p>
+        <p><strong>Implementation:</strong> Expand on the concept of probing classifiers, explaining how they are trained and used to analyze internal representations.</p>
+    </li>
+    
+    <li>
+        <strong>Connect to Research Questions</strong>
+        <p>Explicitly stating the research questions addressed in the paper and how the background information relates to these questions would strengthen the section&#39;s focus.</p>
+        
+        <p><strong>Rationale:</strong> Connecting the background information to specific research questions would provide a clearer direction for the reader and enhance the overall coherence of the paper.</p>
+        <p><strong>Implementation:</strong> State the research questions at the beginning or end of the section and link the discussed literature to these questions.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>Better Error Detection</h3>
+            
+            <h4>Overview</h4>
+            <p>This section describes experiments on detecting errors in LLM-generated text. It focuses on how choosing the right token within the LLM&#39;s output significantly improves error detection. The section defines the task, explains the experimental setup (datasets, models, and metrics), and introduces the concept of using &quot;exact answer tokens&quot; for better error detection.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Task Definition:</strong> The task is to predict whether an LLM-generated response to a given prompt is correct or incorrect, without using external resources.</li><li><strong>Experimental Setup:</strong> Experiments were conducted on four LLMs (Mistral-7b, Mistral-7b-instruct, Llama-3-8b, Llama-3-8b-instruct) and ten datasets covering various tasks. Area Under the ROC Curve (AUC) is used as the evaluation metric.</li><li><strong>Error Detection Methods:</strong> Several methods are compared, including using aggregated probabilities/logits, prompting the LLM to evaluate its own answer (P(True)), and probing classifiers.</li><li><strong>Exact Answer Tokens:</strong> The section introduces the concept of focusing on the tokens corresponding to the exact answer in the LLM&#39;s output, rather than just the last generated token or an aggregate.</li><li><strong>Improved Performance:</strong> Using exact answer tokens improves the performance of various error detection methods, especially probing classifiers.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Task Definition</strong>
+        <p>The section clearly defines the error detection task and its constraints, making the experimental setup easy to understand.</p>
+        <div class="quote">"Given an LLM M , an input prompt p and the LLM-generated response ˆy, the task is to predict whether ˆy is correct or wrong." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Comprehensive Experimental Setup</strong>
+        <p>The section provides a detailed description of the experimental setup, including the datasets, models, and evaluation metric used.</p>
+        <div class="quote">"We perform all experiments on four LLMs: Mistral-7b, Mistral-7b-instruct-v0.2 (denoted Mistral-7b-instruct), Llama3-8b, and Llama3-8b-instruct." (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Novel Approach with Exact Answer Tokens</strong>
+        <p>The introduction of &quot;exact answer tokens&quot; is a novel approach that addresses a key limitation of existing methods and leads to improved error detection.</p>
+        <div class="quote">"We investigate a previously unexamined token location: the exact answer tokens, which represent the most meaningful parts of the generated response." (Page 4)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Justification for Datasets</strong>
+        <p>While the section lists the datasets used, it doesn&#39;t fully justify the selection. Explaining why these specific datasets were chosen and their relevance to the research question would strengthen the section.</p>
+        <div class="quote">"We consider 10 different datasets spanning various domains and tasks: TriviaQA, HotpotQA with/without context, Natural Questions, Winobias, Winogrande, MNLI, Math, IMDB review sentiment analysis, and a dataset of movie roles (movies) that we curate." (Page 4)</div>
+        <p><strong>Rationale:</strong> A stronger justification for the dataset selection would enhance the rigor and validity of the experiments.</p>
+        <p><strong>Implementation:</strong> Provide a brief explanation of the criteria used for dataset selection and how each dataset contributes to the overall analysis.</p>
+    </li>
+    
+    <li>
+        <strong>Illustrative Example for Exact Answer Tokens</strong>
+        <p>Providing a concrete example of how exact answer tokens are identified in an LLM output would improve clarity.</p>
+        <div class="quote">"We define exact answer tokens as those whose modification alters the answer’s correctness, disregarding subsequent generated content." (Page 4)</div>
+        <p><strong>Rationale:</strong> A concrete example would make the concept of exact answer tokens more tangible and easier to grasp.</p>
+        <p><strong>Implementation:</strong> Include an example input prompt, LLM output, and the corresponding exact answer tokens.</p>
+    </li>
+    
+    <li>
+        <strong>Discussion of Limitations</strong>
+        <p>The section could briefly discuss the limitations of using exact answer tokens, such as the potential difficulty in identifying these tokens automatically in real-world scenarios.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging the limitations would provide a more balanced perspective and highlight potential challenges for future research.</p>
+        <p><strong>Implementation:</strong> Add a short paragraph discussing the potential challenges and limitations of the proposed approach.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 1</summary>
+        <p>Figure 1 provides examples of an input prompt and the LLM&#39;s response from the TriviaQA dataset. It highlights the specific tokens that can be probed for truthfulness information, including the first and last exact answer tokens within the generated response. This figure helps to visualize the concept of exact answer tokens and their position within the LLM&#39;s output.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 1: Example for the input and LLM output from the TriviaQA dataset, and the names of the tokens that can be probed."</p>
+            <p><strong>Context:</strong> Existing methods often overlook a critical nuance: the token selection for error detection, typically focusing on the last generated token or taking a mean. However, since LLMs typically generate long-form responses, this practice may miss crucial details (Brunner et al., 2020). Other approaches use the last token of the prompt (Slobodkin et al., 2023, inter alia), but this is inherently inaccurate due to LLMs’ unidirectional nature, failing to account for the generated response and missing cases where different sampled answers from the same model vary in correctness. We investigate a previously unexamined token location: the exact answer tokens, which represent the most meaningful parts of the generated response. We define exact answer tokens as those whose modification alters the answer’s correctness, disregarding subsequent generated content.3 Figure 1 illustrates the different token locations.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is relevant because it visually demonstrates the concept of &#39;exact answer tokens,&#39; which are crucial for the proposed error detection method. By highlighting these tokens, the figure clarifies how the research pinpoints the locations within the LLM&#39;s output where truthfulness signals are strongest.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could benefit from clearer visual cues to distinguish between the prompt and the LLM&#39;s response. Perhaps different background colors or bounding boxes could be used.</li><li>The font size for the token labels (e.g., &#39;[INST]&#39;, &#39;[/INST]&#39;) is small and might be difficult to read. Increasing the font size would improve readability.</li><li>While the figure shows the exact answer tokens, it could be enhanced by visually highlighting the other token positions mentioned in the text (e.g., last generated token, end of question token) for comparison.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could be more impactful by showing examples of both correct and incorrect answers to illustrate how the exact answer tokens differ in these cases.</li><li>The figure focuses on a single dataset (TriviaQA). Including examples from other datasets used in the paper would demonstrate the broader applicability of the concept.</li><li>The figure could be accompanied by a brief explanation of how the exact answer tokens are identified (e.g., using an external algorithm) to provide more context.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 2</summary>
+        <p>Figure 2 displays heatmaps showing the performance (AUC values) of a probe error detector across different layers and tokens of the Mistral-7b-instruct LLM. The heatmaps reveal that the error detection performance peaks at the exact answer tokens, particularly in the middle to later layers of the model. This visualization supports the claim that truthfulness information is concentrated in these specific tokens.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 2: AUC values of a probe error detector across layers and tokens, Mistral-7b-instruct. Generation proceeds from left to right, with detection performance peaking at the exact answer tokens."</p>
+            <p><strong>Context:</strong> Following prior work, we use a linear probing classifier for error detection (Li et al., 2024, inter alia) on static tokens: the last generated token (hl,−1), the one before it (hl,−2), and the final prompt token (hl,k). The layer l is selected per token based on validation set performance. For further details on the implementation of each method, refer to Appendix A.4. 3.3 EXACT ANSWER TOKENS Existing methods often overlook a critical nuance: the token selection for error detection, typically focusing on the last generated token or taking a mean. However, since LLMs typically generate long-form responses, this practice may miss crucial details (Brunner et al., 2020). Other approaches use the last token of the prompt (Slobodkin et al., 2023, inter alia), but this is inherently inaccurate due to LLMs’ unidirectional nature, failing to account for the generated response and missing cases where different sampled answers from the same model vary in correctness. We investigate a previously unexamined token location: the exact answer tokens, which represent the most meaningful parts of the generated response. We define exact answer tokens as those whose modification alters the answer’s correctness, disregarding subsequent generated content.3 Figure 1 illustrates the different token locations. In the following experiments, we implement each error detection method with an “exact answer” version, demonstrating that it often improves performance, especially in probing. These exact answer is identified from a lengthy generated answer using an external algorithm, which processes the question and the LLM’s response, A(qi, ˆyi), to extract the exact answer. In our implementation, we use Mistral-7b-Instruct in a few-shot learning setup as A. However, we demonstrate that all the LLMs we evaluate are capable of extracting exact answers from their own outputs, as explained in AppendixA.2. After extracting the exact answer, the exact answer tokens are identified through a simple search process. We focus on four specific tokens: the one immediately preceding the first exact answer token, the first exact answer token itself, the last exact answer token, and the one immediately following it. 3.4 RESULTS Patterns of truthfulness encoding. We first focus on probing classifiers to gain insights into the internal representations of LLMs. Specifically, we extensively analyze the effects of layer and token selection on activation extraction for these classifiers. This is done by systematically probing all layers of the model, starting with the last question token and continuing through to the final generated token. Figure 2 shows the AUC metrics of trained probes across various layers and tokens of Mistral-7b-Instruct. While some datasets seem easier for error prediction, all exhibit consistent truthfulness encoding patterns.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 2 directly supports a central claim of the paper: that truthfulness information is concentrated in the exact answer tokens. The heatmaps visually demonstrate the peak performance of the error detector at these tokens, providing strong evidence for this claim.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The color scale could be improved for better contrast and easier identification of peak performance areas.</li><li>Adding clear labels or annotations directly on the heatmaps to pinpoint the exact answer token locations would enhance readability.</li><li>The figure could benefit from a more descriptive caption that explains the axes, the color scale, and the key takeaways.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure only shows results for one LLM (Mistral-7b-instruct). Including similar heatmaps for other LLMs would strengthen the generalizability of the findings.</li><li>The figure could be more informative by including a baseline comparison (e.g., performance at the last generated token) to highlight the improvement achieved by focusing on exact answer tokens.</li><li>A brief explanation of the statistical significance of the observed peak performance (e.g., p-values) would strengthen the analysis.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 1</summary>
+        <p>Table 1 compares the performance of various error detection techniques across different Large Language Models (LLMs) and datasets, using the Area Under the Curve (AUC) metric. The techniques include simple baselines like &#39;Majority&#39; and more sophisticated methods like &#39;Logits-mean&#39;, &#39;Logits-min&#39;, &#39;p(True)&#39;, and &#39;Probe&#39;. The table also shows the impact of using exact answer tokens on the performance of these techniques. The best-performing method for each LLM-dataset combination is highlighted in bold.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 1: Comparison of error detection techniques using AUC metric, across different models and datasets. The best-performing method is bolded. Using exact answer tokens is useful for many cases, especially probing."</p>
+            <p><strong>Context:</strong> Next, we evaluate various error detection methods by comparing their performance with and without the use of exact answer tokens. Table 1 compares the AUC across three representative datasets (additional datasets and models in Appendix B, showing consistent patterns). Here we present results for the last exact answer token, which outperformed both the first exact answer token and the one preceding it, while the token following the last performed similarly.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is crucial for understanding the effectiveness of different error detection methods and the impact of using exact answer tokens. It directly addresses the paper&#39;s main contribution of improving error detection by focusing on specific tokens.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from visual separation between the two LLM groups (Mistral and Llama) to improve readability.</li><li>Using a color gradient to represent AUC values could make it easier to quickly identify high-performing methods.</li><li>Adding a brief explanation of the different methods in a footnote or caption would make the table more self-contained.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While standard deviations are provided, adding p-values or confidence intervals would strengthen the statistical significance of the results.</li><li>The table could include a discussion of the limitations of the AUC metric and potential alternative evaluation measures.</li><li>A more detailed analysis of the differences in performance between the methods, particularly the impact of exact answer tokens, would be valuable.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Mistral-7B-Instruct, TriviaQA, Probe @ Exact:</strong> 0.92 AUC</li><li><strong>Mistral-7B-Instruct, Winobias, Probe @ Exact:</strong> 0.92 AUC</li><li><strong>Mistral-7B-Instruct, Math, Probe @ Exact:</strong> 0.95 AUC</li><li><strong>Llama 3-8b-Instruct, TriviaQA, Probe @ Exact:</strong> 0.93 AUC</li><li><strong>Llama 3-8b-Instruct, Winobias, Probe @ Exact:</strong> 0.95 AUC</li><li><strong>Llama 3-8b-Instruct, Math, Probe @ Exact:</strong> 0.83 AUC</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 5</summary>
+        <p>Table 5 presents a comparison of error detection performance, measured by AUC, on the Mistral-7B-Instruct model. Various methods are compared, including majority voting, logit-based methods (mean, min, with and without exact answer tokens), probability-based methods, p(True), and probing at different token positions. The table covers several datasets, including TriviaQA, Winobias, Math, Movies, IMDB, HotpotQA, HotpotQA-WC, Winogrande, NLI, and NQ-WC.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 5: Comparison of error detection performance (AUC) on Mistral-7B-Instruct."</p>
+            <p><strong>Context:</strong> In Table 8 we present some qualitative samples from Mistral-7b-instruct, for the phenomenon we observe at error type (C2) Consistently incorrect but generates the correct answer at least one time. The samples in the table represent cases where the probe chose the correct answer. Table 9 compares different decoding mechanisms, including the choice via probe, on non-instruct models, and Table 10 compares on the instruct models.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table provides a comprehensive overview of the error detection performance of the Mistral-7B-Instruct model across various methods and datasets, allowing for a direct comparison of their effectiveness.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could be improved by visually separating the different datasets into groups (e.g., factual, common sense, etc.) for better readability.</li><li>Highlighting the best-performing method for each dataset would make it easier to quickly identify the most effective strategies.</li><li>The table could benefit from a clearer explanation of the different probing locations and their significance.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the table includes standard deviations, adding p-values or confidence intervals would strengthen the statistical significance of the results.</li><li>A discussion of the limitations of the AUC metric and potential alternative evaluation measures would be valuable.</li><li>The table could include a more detailed analysis of the impact of using exact answer tokens on the performance of the different methods.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>TriviaQA, Probe @ Exact answer last:</strong> 0.85 AUC</li><li><strong>Winobias, Probe @ Exact answer last:</strong> 0.92 AUC</li><li><strong>Math, Probe @ Exact answer last:</strong> 0.92 AUC</li><li><strong>Movies, Probe @ Exact answer last:</strong> 0.96 AUC</li><li><strong>IMDB, Probe @ Exact answer last:</strong> 0.97 AUC</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 6</summary>
+        <p>Table 6 presents a comparison of error detection performance, measured by the Area Under the Curve (AUC) score, for the Llama-8b language model. The table is structured to compare various error detection methods across different datasets, including TriviaQA, Winobias, Math, Movies, IMDB, HotpotQA, HotpotQA-WC, Winogrande, NLI, and NQ-WC. The methods compared include a majority baseline, logits-based methods (with and without exact answer tokens), probabilities-based methods, p(True) methods, and probing at different token positions (last generated, before last generated, end of question, exact answer last, and exact answer last+1). Each cell in the table provides the AUC score and its standard deviation for a specific method and dataset combination.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 6: Comparison of error detection performance (AUC) on Llama-8b."</p>
+            <p><strong>Context:</strong> The caption is located above Table 6 on page 26.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is highly relevant as it provides a comprehensive comparison of different error detection methods on the Llama-8b model. It allows for direct comparison of the effectiveness of various techniques and highlights the impact of using exact answer tokens. The results contribute to understanding the strengths and weaknesses of each method and inform the choice of appropriate error detection strategies for different datasets and tasks.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Clear Layout: The table is well-organized and easy to read, with clear headings for datasets and methods.</li><li>Standard Deviations: The inclusion of standard deviations provides valuable information about the variability of the results.</li><li>Two-Part Structure: The division of the table into two sections for different groups of datasets improves readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Comprehensive Comparison: The table includes a wide range of error detection methods, allowing for a thorough comparison.</li><li>Impact of Exact Answers: The inclusion of methods with and without exact answer tokens highlights the importance of this factor in error detection.</li><li>Statistical Significance: While standard deviations are provided, the table could benefit from including statistical significance tests (e.g., p-values) to determine if the differences between methods are statistically significant.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 7</summary>
+        <p>Table 7 provides a comparison of error detection performance, using the AUC metric, for the Llama-8b-Instruct model. It compares various error detection methods across multiple datasets, including TriviaQA, Winobias, Math, Movies, IMDB, HotpotQA, HotpotQA-WC, Winogrande, NLI, and NQ-WC. The methods compared include a majority baseline, logits-based methods (with and without exact answer tokens), probabilities-based methods, p(True) methods, and probing at different token positions. Each cell presents the AUC score and its standard deviation for a specific method and dataset.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 7: Comparison of error detection performance (AUC) on Llama-8b-Instruct."</p>
+            <p><strong>Context:</strong> The caption is above Table 7 on page 27.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is crucial for understanding the performance of different error detection techniques on the Llama-8b-Instruct model. It allows for direct comparison of the methods and shows the effect of using exact answer tokens. The results contribute to evaluating the effectiveness of each method and inform the selection of suitable error detection strategies for different datasets and tasks.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Clear Structure: The table is well-organized and easy to read, with clear headings for datasets and methods.</li><li>Standard Deviations: The inclusion of standard deviations provides valuable information about the variability of the results.</li><li>Two-Part Structure: The division of the table into two sections for different groups of datasets improves readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Comprehensive Comparison: The table includes a wide range of error detection methods, allowing for a thorough comparison.</li><li>Impact of Exact Answers: The inclusion of methods with and without exact answer tokens highlights the importance of this factor in error detection.</li><li>Statistical Significance: While standard deviations are provided, the table would benefit from statistical significance tests (e.g., p-values) to determine if the differences between methods are statistically significant.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>Generalization Between Tasks</h3>
+            
+            <h4>Overview</h4>
+            <p>This section investigates how well error detection models, specifically probing classifiers, generalize across different tasks. While initial results suggest some generalization, further analysis reveals that this is mostly due to information already present in the output logits. True generalization, beyond what logits can capture, is limited to tasks requiring similar skills, like factual recall. This suggests LLMs have multiple, task-specific ways of encoding truthfulness, not a single universal mechanism.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Probing Classifier Generalization:</strong> This section examines whether a probing classifier trained to detect errors on one dataset can effectively detect errors on other datasets.</li><li><strong>Apparent vs. True Generalization:</strong> Initial results show some generalization across datasets, but this is largely explained by information available in the output logits. Subtracting the logit-based performance reveals the true generalization capability of the probing classifier.</li><li><strong>Skill-Specific Generalization:</strong> Meaningful generalization occurs primarily between tasks that share similar skills, such as factual retrieval or common-sense reasoning.</li><li><strong>Multifaceted Truthfulness:</strong> The limited generalization suggests that LLMs don&#39;t have a single, universal way of representing truthfulness, but rather multiple, task-specific mechanisms.</li><li><strong>Implications for Error Detection:</strong> These findings highlight the importance of carefully considering the task when deploying error detectors and suggest that a single, universally trained detector may not be effective.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Research Question</strong>
+        <p>The section clearly states the research question regarding the generalization of probing classifiers across tasks, providing a clear focus for the analysis.</p>
+        <div class="quote">"Therefore, we explore whether a probe trained on one dataset can detect errors in others." (Page 6)</div>
+    </li>
+    
+    <li>
+        <strong>Thorough Analysis</strong>
+        <p>The section presents a thorough analysis of the generalization performance, including both raw AUC scores and the performance difference compared to a logit-based baseline.</p>
+        <div class="quote">"This adjusted heatmap reveals the probe’s generalization rarely exceeds what can be achieved by examining logits alone." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Insightful Interpretation</strong>
+        <p>The section provides an insightful interpretation of the results, connecting the limited generalization to the concept of skill-specific truthfulness mechanisms.</p>
+        <div class="quote">"This implies that the apparent generalization does not stem from a universal internal encoding of truthfulness but rather reflects information already accessible through external features like logits." (Page 7)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Explore Additional Tasks</strong>
+        <p>While the experiments cover a range of tasks, exploring additional, more diverse tasks could further strengthen the conclusions about skill-specific generalization.</p>
+        
+        <p><strong>Rationale:</strong> Including a wider variety of tasks would provide a more comprehensive understanding of the limits of generalization and the nature of skill-specific truthfulness.</p>
+        <p><strong>Implementation:</strong> Consider adding tasks that involve different types of reasoning, language understanding, or knowledge domains.</p>
+    </li>
+    
+    <li>
+        <strong>Investigate Asymmetric Generalization</strong>
+        <p>The section mentions unexplained asymmetric generalization patterns (e.g., TriviaQA to Math). Further investigation into these patterns could reveal interesting insights.</p>
+        <div class="quote">"However, some patterns remain unexplained, such as the asymmetric generalization from TriviaQA to Math tasks." (Page 7)</div>
+        <p><strong>Rationale:</strong> Understanding the reasons behind asymmetric generalization could shed light on the relationships between different skills and truthfulness mechanisms.</p>
+        <p><strong>Implementation:</strong> Analyze the specific features or representations that contribute to the asymmetric generalization and explore potential explanations.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Practical Implications</strong>
+        <p>The section could further elaborate on the practical implications of the findings for developing and deploying error detection systems in real-world applications.</p>
+        <div class="quote">"Our results highlight the caution needed when applying a trained error detector across different settings." (Page 7)</div>
+        <p><strong>Rationale:</strong> A more detailed discussion of the practical implications would increase the relevance of the research for practitioners and guide future development of error detection systems.</p>
+        <p><strong>Implementation:</strong> Discuss how the findings could inform the design and training of more robust and adaptable error detectors.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 3</summary>
+        <p>Figure 3 presents two heatmaps illustrating the generalization performance of the Mistral-7b-instruct model across different datasets. Heatmap (a) shows the raw AUC values when a probe trained on one dataset is tested on another. Values above 0.5 suggest some generalization. Heatmap (b) shows the difference in AUC between the probe and a logit-based method. Positive values indicate that the probe generalizes better than simply using logits, suggesting the probe learns something beyond what&#39;s available in the output probabilities.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 3: Generalization between datasets, Mistral-7b-instruct. After subtracting the logit-based method&#39;s performance, we observe that most datasets show limited or no meaningful generalization."</p>
+            <p><strong>Context:</strong> Results. Figure 3a shows the generalization results for Mistral-7b-instruct, with similar patterns observed for other LLMs in Appendix C. In this context, values above 0.5 indicate successful generalization. At first glance, the results appear consistent with previous research: most heatmap values exceed 0.5, implying some degree of generalization across tasks. This observation supports the existence of a universal mechanism for decoding truthfulness, since the same linear directions—captured by the probe—encode truthfulness information across many datasets. However, upon closer inspection, it turns out that most of this performance can be achieved by logit-based truthfulness detection, which only observes the output logits. Figure 3b presents the same heatmap after subtracting results from our strongest logit-based baseline (Logit-min-exact). This adjusted heatmap reveals the probe’s generalization rarely exceeds what can be achieved by examining logits alone. This implies that the apparent generalization does not stem from a universal internal encoding of truthfulness but rather reflects information already accessible through external features like logits.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is central to the paper&#39;s argument about the limitations of generalization in error detection. It shows that while some generalization appears to occur, it&#39;s mostly explained by information already present in the output logits, challenging the idea of a universal truthfulness encoding.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The color scales in both heatmaps could be adjusted for better contrast, making it easier to distinguish between different levels of generalization.</li><li>Labeling the axes with dataset names directly on the heatmaps, rather than just in the caption, would improve readability.</li><li>Adding a visual guide or annotation to highlight areas of meaningful generalization (i.e., high values in heatmap (b)) would make the key findings more readily apparent.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The caption could be more explicit about the logit-based method used for comparison in heatmap (b).</li><li>Including a brief explanation of the statistical significance of the observed differences between the probe and logit-based methods would strengthen the analysis.</li><li>The figure could be enhanced by adding a third heatmap showing the performance of the logit-based method alone, allowing for a direct visual comparison.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-5" class="section">
+            <h3>Investigating Error Types</h3>
+            
+            <h4>Overview</h4>
+            <p>This section explores the different types of errors LLMs make, focusing on the TriviaQA dataset. It introduces a taxonomy of errors based on how consistently the LLM generates correct or incorrect answers when prompted repeatedly. The section then investigates whether the LLM&#39;s internal representations can predict these error types.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Error Taxonomy:</strong> A taxonomy of LLM errors is introduced, categorizing errors based on the frequency of correct and incorrect answers across multiple samples. This taxonomy helps differentiate between consistent errors, occasional errors, and random guesses.</li><li><strong>Repeated Sampling:</strong> The method involves repeatedly sampling answers from the LLM for the same question to observe the distribution of responses and categorize errors.</li><li><strong>Error Type Examples:</strong> Illustrative examples are provided to demonstrate different error types, such as consistently incorrect answers, occasional hallucinations, and generating many different answers.</li><li><strong>Predicting Error Types:</strong> Probing classifiers are trained on the LLM&#39;s internal representations to predict the error type for a given question. This explores whether the LLM internally encodes information about the kinds of errors it&#39;s likely to make.</li><li><strong>TriviaQA Focus:</strong> The analysis focuses on the TriviaQA dataset, which represents factual errors, a common issue in LLMs.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Novel Error Taxonomy</strong>
+        <p>The introduction of a taxonomy based on repeated sampling provides a new perspective on LLM errors, moving beyond simple binary classifications of correct/incorrect.</p>
+        <div class="quote">"Intuitively, not all mistakes are identical. In one case, an LLM may consistently generate an incorrect answer, considering it correct, while in another case, it could issue a best guess." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Examples</strong>
+        <p>The illustrative examples in Figure 4 effectively demonstrate the different error types and the rationale behind the taxonomy.</p>
+        <div class="quote">"Figure 4 illustrates three representative error types." (Page 8)</div>
+    </li>
+    
+    <li>
+        <strong>Connecting Internal Representations to Error Types</strong>
+        <p>The investigation into predicting error types from internal representations provides valuable insights into the LLM&#39;s internal workings and potential error mechanisms.</p>
+        <div class="quote">"Using a different set of probing classifiers trained on the exact answer tokens, we find that error types are predictable from the LLM representations, drawing a connection between the models’s internal representations and its external behavior." (Page 8)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand to Other Datasets</strong>
+        <p>While the focus on TriviaQA is understandable, applying the error taxonomy and prediction analysis to other datasets would strengthen the generalizability of the findings.</p>
+        <div class="quote">"In this section, we focus on the types of errors LLMs make in a specific task—TriviaQA—which represents factual errors, a commonly studied issue in LLMs" (Page 7)</div>
+        <p><strong>Rationale:</strong> Analyzing error types in different datasets would reveal whether the taxonomy and prediction capabilities hold across various tasks and error types.</p>
+        <p><strong>Implementation:</strong> Apply the same methodology to other datasets used in the paper, such as Winobias, Math, or NLI.</p>
+    </li>
+    
+    <li>
+        <strong>Quantify Taxonomy Coverage</strong>
+        <p>The section mentions that the taxonomy covers 96% of errors in TriviaQA for Mistral-7b-instruct. Providing similar statistics for other models and datasets would be informative.</p>
+        <div class="quote">"This taxonomy covers 96% of the errors in TriviaQA for Mistral-7b-instruct." (Page 8)</div>
+        <p><strong>Rationale:</strong> Quantifying the coverage of the taxonomy across different models and datasets would help assess its comprehensiveness and identify potential gaps.</p>
+        <p><strong>Implementation:</strong> Calculate and report the percentage of errors covered by the taxonomy for each model and dataset combination.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Limitations of Taxonomy</strong>
+        <p>The section acknowledges some overlap between error types. A more detailed discussion of the limitations of the taxonomy and potential areas for improvement would be beneficial.</p>
+        <div class="quote">"Although some overlap exists between types, our goal is to identify general patterns and explore their connection to the models’s internal representations." (Page 8)</div>
+        <p><strong>Rationale:</strong> A critical discussion of the taxonomy&#39;s limitations would enhance the rigor of the analysis and provide directions for future refinement.</p>
+        <p><strong>Implementation:</strong> Elaborate on the specific areas of overlap and discuss potential ways to address these ambiguities in the taxonomy.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 4</summary>
+        <p>Figure 4 illustrates three distinct error types observed in the free-form generation of a large language model (LLM) when the same question is sampled multiple times. Each panel (a, b, and c) depicts a different scenario. Panel (a) shows a case where the LLM mostly generates the correct answer but occasionally produces incorrect ones (hallucinations). Panel (b) shows a case where the LLM mostly generates the same incorrect answer, but occasionally produces the correct one, suggesting some underlying knowledge of the correct answer. Panel (c) shows a case where the LLM generates many different answers, with the correct answer appearing infrequently, indicating low confidence and high variability in its responses.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 4: Different error types in free-form generation, exposed when resampled many times."</p>
+            <p><strong>Context:</strong> To analyze errors from the LLM’s perspective, we sample K = 30 responses at a temperature setting of T = 14 for each example in the dataset and then analyze the resulting distribution of answers. Figure 4 illustrates three representative error types. In one (Figure 4a), the model usually gives the correct answer but occasionally make an error, implying correct information is present but sampling may lead to mistakes. In another (Figure 4b, the model often responds incorrectly, though it is capable of providing the right answer, indicating some retained knowledge despite consistently making the same error. In a third type (Figure 4c), the model generates a wide array of mostly incorrect answers, reflecting low confidence in any generated answer.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding the different ways LLMs can make errors. It moves beyond simply labeling an answer as correct or incorrect and delves into the patterns of errors, which is essential for developing targeted mitigation strategies.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Using more distinct colors for the correct (green) and incorrect (red) labels would improve visibility and accessibility.</li><li>Including the actual questions being asked in each panel would provide more context and make the examples more understandable.</li><li>Adding a brief explanation of the temperature setting (T=1) and its effect on sampling would be helpful for readers unfamiliar with this concept.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the figure shows representative examples, it doesn&#39;t provide information on the prevalence of each error type in the dataset. Adding this information would give a better understanding of the overall error distribution.</li><li>The figure focuses on a single dataset (TriviaQA). Showing examples from other datasets would demonstrate the generalizability of the error types.</li><li>The figure could be strengthened by connecting the observed error types to the specific limitations or biases of LLMs, providing a deeper explanation of why these errors occur.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 2</summary>
+        <p>Table 2 presents the AUC scores for classifying different error types using the internal representations of four LLMs: Mistral-7b, Mistral-Instr-7b, Llama3-8b, and Llama3-Instr-8b. The error types include (A) Refuses to answer, (B) Consistently correct, (C) Consistently incorrect, (D) Two competing, and (E) Many answers. The AUC scores, along with their standard deviations, indicate how well the models&#39; internal representations can predict these error types. Higher AUC scores suggest better predictability.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 2: AUC scores for error type classification. Error types are predictable from the inner model representations, indicating the encoding of fine-grained information on errors."</p>
+            <p><strong>Context:</strong> Our taxonomy offers an external, behavioral analysis of LLMs, which we complement by an intrinsic evaluation. We explore whether LLMs encode information on potential error types within their intermediate activations, offering a deeper insight into the underlying mechanisms. To investigate this, we train a probe in a one-to-many setting, where a single probe identifies a specific error type from all others. We use representations extracted from the answers produced via greedy decoding. Table 2 presents the test set results for all models. Our findings demonstrate that the error type can be predicted from the intermediate representations of the greedy decoding generations, suggesting that they may encode not just output correctness but also features that are correlative with fine-grained information about potential errors. This predictability opens up possibilities for targeted interventions on specific error types.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table directly supports the claim that LLMs encode information about the types of errors they are likely to make. The AUC scores demonstrate that error types are predictable from internal representations, suggesting a link between internal states and external behavior.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could be more visually appealing by using color gradients or shading to represent the AUC values, making it easier to compare performance across models and error types.</li><li>Adding a clear visual separation between the different LLMs would improve readability.</li><li>The error type labels could be made more descriptive to provide a better understanding of each category.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the table includes standard deviations, adding p-values or confidence intervals would strengthen the statistical significance of the results and allow for more robust comparisons between models.</li><li>The table could benefit from a discussion of the limitations of using AUC as the sole evaluation metric and potential alternative measures.</li><li>A more detailed analysis of the features or representations that contribute to the prediction of each error type would provide deeper insights into the underlying mechanisms.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Mistral-7b, Refuses to answer:</strong> 0.86 AUC</li><li><strong>Mistral-Instr-7b, Refuses to answer:</strong> 0.85 AUC</li><li><strong>Llama3-8b, Refuses to answer:</strong> 0.87 AUC</li><li><strong>Llama3-Instr-8b, Refuses to answer:</strong> 0.88 AUC</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-6" class="section">
+            <h3>Detecting the Correct Answer</h3>
+            
+            <h4>Overview</h4>
+            <p>This section explores whether the internal signals of LLMs about correctness align with their actual generated answers. By using a &quot;probe&quot; trained to detect errors, the researchers select answers from a pool of generated responses and compare the accuracy of this probe-based selection to traditional methods like greedy decoding. The results show that the probe significantly improves accuracy, especially when the LLM doesn&#39;t consistently generate the correct answer, suggesting a disconnect between the LLM&#39;s internal knowledge and its external behavior.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Probe-Based Answer Selection:</strong> A probe, trained on error detection, is used to select the most likely correct answer from multiple generated responses.</li><li><strong>Accuracy Comparison:</strong> The accuracy of probe-based selection is compared to greedy decoding, random selection, and majority voting.</li><li><strong>Internal-External Alignment:</strong> The comparison aims to assess whether the LLM&#39;s internal representation of truthfulness matches its external behavior (i.e., the answers it generates).</li><li><strong>Improved Accuracy with Probe:</strong> The probe-based selection method improves accuracy across different tasks, particularly for error types where the LLM struggles to consistently generate the correct answer.</li><li><strong>Disconnect Between Knowledge and Behavior:</strong> The probe&#39;s effectiveness in cases where the LLM inconsistently generates the correct answer suggests that the LLM may internally know the correct answer but fail to consistently output it.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Novel Approach</strong>
+        <p>Using a probe trained on error detection for answer selection is a novel approach that provides a unique way to investigate the internal-external alignment of LLMs.</p>
+        <div class="quote">"To this end, we use our probe,5 trained on error detection, to select an answer from a pool of 30 generated responses to the same question." (Page 9)</div>
+    </li>
+    
+    <li>
+        <strong>Targeted Analysis</strong>
+        <p>Focusing the analysis on different error types provides valuable insights into the specific scenarios where the probe is most effective and highlights the disconnect between internal knowledge and external behavior.</p>
+        <div class="quote">"However, the extent of improvement varies by error type." (Page 9)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Results and Implications</strong>
+        <p>The results clearly demonstrate the improvement in accuracy achieved by the probe-based selection and suggest potential directions for leveraging internal knowledge to reduce errors.</p>
+        <div class="quote">"These results suggest that even when the model encodes information of which answer is correct, it can still generate an incorrect answer in practice." (Page 9)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Explore Different Probe Training Methods</strong>
+        <p>The section uses a probe trained on error detection. Exploring different probe training objectives (e.g., directly predicting answer correctness) could provide further insights.</p>
+        <div class="quote">"We use our probe,5 trained on error detection, to select an answer from a pool of 30 generated responses to the same question." (Page 9)</div>
+        <p><strong>Rationale:</strong> Different training objectives might lead to different answer selection strategies and reveal different aspects of the LLM&#39;s internal representations.</p>
+        <p><strong>Implementation:</strong> Train probes with different objectives, such as predicting answer correctness or ranking candidate answers, and compare their performance in answer selection.</p>
+    </li>
+    
+    <li>
+        <strong>Analyze Probe Behavior</strong>
+        <p>The section focuses on the accuracy improvement. Analyzing the probe&#39;s behavior (e.g., which features it relies on, which answers it selects) could provide a deeper understanding of its effectiveness.</p>
+        
+        <p><strong>Rationale:</strong> Understanding how the probe selects answers could reveal the specific internal representations that contribute to improved accuracy and provide insights into the LLM&#39;s decision-making process.</p>
+        <p><strong>Implementation:</strong> Analyze the probe&#39;s activations, attention patterns, or other relevant features to understand its answer selection strategy.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Practical Applications</strong>
+        <p>While the section mentions the probe as a diagnostic tool, it could further discuss potential practical applications of the findings for error mitigation or improvement of LLM decoding strategies.</p>
+        <div class="quote">"While using the probe to select the answer proves effective, it is not proposed here as an error mitigation strategy but rather as a diagnostic tool." (Page 9)</div>
+        <p><strong>Rationale:</strong> Discussing potential practical applications would increase the impact of the research and provide directions for future work.</p>
+        <p><strong>Implementation:</strong> Explore how the probe-based selection method could be incorporated into existing LLM decoding strategies or used to develop new error mitigation techniques.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 5</summary>
+        <p>Figure 5 presents two bar charts comparing the accuracy of different answer selection strategies for the Mistral-7B-Instruct model on two datasets: (a) TriviaQA and (b) Math. The strategies compared are: greedy decoding (taking the first generated answer), random selection, selecting the most frequent answer (majority vote), and selecting the answer with the highest probability according to a probe trained to detect correct answers. The bars are grouped by error types, which categorize the model&#39;s behavior across multiple generations of the same question (e.g., consistently correct, consistently incorrect, two competing answers, many answers). The figure highlights that using the probe to select answers leads to significant accuracy improvements, especially for error types where the model doesn&#39;t show a clear preference for the correct answer across multiple generations.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 5: Different answer choice strategies, Mistral-7B-Instruct. A notable improvement in accuracy is observed for error types where the LLM shows no preference for the correct answer across repeated generations."</p>
+            <p><strong>Context:</strong> Results The results for Mistral-7b-instruct are summarized in Figure 5, with additional results for other LLMs and datasets as well as qualitative examples provided in Appendix E. We only present results on error types that appear 30 times or more in our test dataset. Overall, using the probe to select answers enhances the LLMs accuracy across all examined tasks. However, the extent of improvement varies by error type. For instance, in the TriviaQA dataset, there is minimal gain in the “mostly correct” category (B2). In contrast, substantial gains—ranging from 30 to 40 points in some cases—are observed in the “mostly incorrect” (C2), “two competing answers” (D), and “many answers” (E1) categories. Interestingly, and perhaps surprisingly, the probe is most effective in cases where the LLM lacks any (external) preference for the correct answer during generation. The fact that the probe can effectively identify the correct answer in these scenarios, points at a significant disconnect between the LLM’s internal encoding and its external behavior. These results suggest that even when the model encodes information of which answer is correct, it can still generate an incorrect answer in practice.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is highly relevant as it directly addresses the research question of whether the LLM&#39;s internal knowledge of truthfulness aligns with its external behavior (answer generation). It shows that using a probe based on internal representations can significantly improve answer selection, especially when the model&#39;s generation behavior is inconsistent or incorrect, revealing a disconnect between internal knowledge and external behavior.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Adding a legend explaining the colors used for each answer selection strategy would improve clarity.</li><li>Labeling the y-axis with &#39;Accuracy&#39; would make it more explicit what the bars represent.</li><li>The error type labels on the x-axis could be made more concise and easier to understand at a glance. Using abbreviations or shorter descriptions would help.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure only shows results for Mistral-7B-Instruct. Including similar charts for other LLMs would strengthen the generalizability of the findings.</li><li>While the caption mentions &#39;notable improvement,&#39; quantifying this improvement with specific percentage increases would make the results more impactful.</li><li>The figure could be enhanced by adding error bars to the bars, representing standard deviations or confidence intervals, to show the statistical significance of the observed differences.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-7" class="section">
+            <h3>Discussion and Conclusions</h3>
+            
+            <h4>Overview</h4>
+            <p>This section summarizes the paper&#39;s findings, highlighting the localized nature of truthfulness information within exact answer tokens. This improves error detection, particularly in open-source LLMs. The study also reveals that truthfulness features don&#39;t generalize well across different tasks, suggesting skill-specific mechanisms. Furthermore, LLMs can often predict their own error types, and there&#39;s a discrepancy between internal knowledge and generated answers, where LLMs might internally know the correct answer but still generate an incorrect one. The paper concludes by emphasizing the value of analyzing internal representations for understanding and mitigating LLM errors.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Localized Truthfulness Information:</strong> Truthfulness signals are strongest within the exact answer tokens, which improves error detection.</li><li><strong>Limited Generalization:</strong> Error detection models don&#39;t generalize well across different tasks, suggesting LLMs have separate truthfulness mechanisms for different skills.</li><li><strong>Error Type Prediction:</strong> LLM internal representations can predict the types of errors the model is likely to make.</li><li><strong>Internal-External Discrepancy:</strong> LLMs sometimes encode the correct answer internally but consistently generate an incorrect one.</li><li><strong>Importance of Internal Analysis:</strong> Analyzing internal representations is crucial for understanding LLM errors and developing better mitigation strategies.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Concise Summary of Findings</strong>
+        <p>The section effectively summarizes the key findings of the paper in a clear and concise manner, highlighting the most important contributions.</p>
+        <div class="quote">"In this study, we analyzed the errors of LLMs by examining their internal representations." (Page 10)</div>
+    </li>
+    
+    <li>
+        <strong>Highlights Practical Implications</strong>
+        <p>The section discusses the practical implications of the findings, such as improved error detection and the potential for developing targeted mitigation strategies.</p>
+        <div class="quote">"From a practical perspective, this finding significantly enhances error detection methods applicable to production-level LLMs." (Page 10)</div>
+    </li>
+    
+    <li>
+        <strong>Identifies Future Research Directions</strong>
+        <p>The section points out areas for future research, such as investigating the factors influencing generalization and leveraging internal knowledge for error reduction.</p>
+        <div class="quote">"Since the best layer and token combination for error detection varies by dataset, analyzing their effect on generalization may uncover insights into these mechanisms." (Page 10)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on Open-Source Limitation</strong>
+        <p>The section mentions the limitation of requiring access to internal representations, primarily affecting open-source models. Elaborating on this limitation and potential solutions for closed-source models would be beneficial.</p>
+        <div class="quote">"However, our approach requires access to internal representations, limiting its applicability mainly to open-source models." (Page 10)</div>
+        <p><strong>Rationale:</strong> This would address a key practical concern and broaden the applicability of the findings.</p>
+        <p><strong>Implementation:</strong> Discuss potential techniques for analyzing closed-source models, such as using API calls or developing methods that rely on external behavior.</p>
+    </li>
+    
+    <li>
+        <strong>Quantify Generalization Performance</strong>
+        <p>The section states that truthfulness features generalize poorly across tasks. Quantifying this poor generalization with specific metrics or examples would strengthen the claim.</p>
+        <div class="quote">"Our findings also suggest that truthfulness features generalize poorly across tasks and datasets, performing better in tasks requiring similar skills." (Page 10)</div>
+        <p><strong>Rationale:</strong> Providing concrete evidence of poor generalization would make the argument more convincing.</p>
+        <p><strong>Implementation:</strong> Include specific examples of cross-task performance or report the drop in accuracy when applying a model trained on one task to another.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on Discrepancy and Mitigation</strong>
+        <p>The section mentions a discrepancy between internal knowledge and generated answers. Providing more details about this discrepancy and potential mitigation strategies would be valuable.</p>
+        <div class="quote">"Lastly, we identified a significant discrepancy between the model’s external behavior and internal states, where a model generates an incorrect response repeatedly even though its internal representations encode the correct answer." (Page 10)</div>
+        <p><strong>Rationale:</strong> This would provide a deeper understanding of the issue and potential avenues for improving LLM performance.</p>
+        <p><strong>Implementation:</strong> Discuss possible reasons for the discrepancy, such as training objectives or decoding strategies, and suggest concrete mitigation techniques, such as modifying the training process or using different decoding methods.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-8" class="section">
+            <h3>Implementation Details</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix details the implementation of the error detection methods, including how errors were identified, how the probing classifiers were implemented, the datasets used, and the baseline methods. This information is crucial for reproducing the study&#39;s results and understanding the methodology.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Task-Specific Error Detection:</strong> Details on how errors were determined for each task, crucial for understanding how the ground truth labels were obtained.</li><li><strong>Probing Implementation:</strong> Specifics of how the probing classifiers were implemented, including the type of classifier used and the layer from which activations were extracted.</li><li><strong>Datasets:</strong> Description of the datasets used in the study, including their size and characteristics, essential for reproducibility.</li><li><strong>Baselines:</strong> Details on the implementation of the baseline methods used for comparison, ensuring a fair and accurate evaluation of the proposed approach.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Detailed Explanation of Probing</strong>
+        <p>The section provides a clear explanation of the probing methodology, including the choice of MLP output for analysis and the use of logistic regression.</p>
+        <div class="quote">"We examine the intermediate representations of the exact answer tokens generated by a large language model (LLM) during the answer generation process. The intermediate representation selected for this analysis is derived from the output of the final multi-layer perceptron (MLP)." (Page 19)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Description of Correctness Labeling</strong>
+        <p>The section clearly describes how the correctness labels were obtained for the probing dataset, including the use of heuristics and an instruct LLM for validation.</p>
+        <div class="quote">"An answer is generally considered correct if it includes the correct answer label and appears before any alternative incorrect labels." (Page 19)</div>
+    </li>
+    
+    <li>
+        <strong>Justification for Exact Answer Token Extraction</strong>
+        <p>The section justifies the method used for extracting exact answer tokens and explains the steps taken to avoid bias in the probing task.</p>
+        <div class="quote">"To avoid bias in our probing task, we only retain questions for which a valid exact answer was successfully extracted." (Page 20)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide More Details on Hyperparameter Tuning</strong>
+        <p>The section mentions using logistic regression but doesn&#39;t provide details on hyperparameter tuning. Explaining how hyperparameters were chosen would improve reproducibility.</p>
+        <div class="quote">"For the probing classifier, we employ a logistic regression model from the scikit-learn library (Pedregosa et al., 2011)." (Page 19)</div>
+        <p><strong>Rationale:</strong> Providing details on hyperparameter tuning would allow others to replicate the experiments more accurately and ensure a fair comparison.</p>
+        <p><strong>Implementation:</strong> Include information on the hyperparameters used (e.g., regularization strength) and the method used for tuning (e.g., cross-validation).</p>
+    </li>
+    
+    <li>
+        <strong>Clarify Dataset Splitting</strong>
+        <p>While the section mentions using 10K training and test samples, it&#39;s unclear how these splits were created. Providing more details on the splitting process would enhance reproducibility.</p>
+        <div class="quote">"For each dataset we used a split of 10K training samples and 10K test samples, unless the dataset is too small, in which case we mention the size." (Page 21)</div>
+        <p><strong>Rationale:</strong> A clear description of the dataset splitting process is essential for reproducibility and ensures that the results are not influenced by the specific split used.</p>
+        <p><strong>Implementation:</strong> Specify whether random splitting or a predefined split was used. If random splitting was used, provide the seed used for randomization.</p>
+    </li>
+    
+    <li>
+        <strong>Include Examples of Prompts</strong>
+        <p>The section mentions using different prompts for different datasets and LLMs but doesn&#39;t provide specific examples. Including examples of the prompts used would improve clarity and reproducibility.</p>
+        <div class="quote">"To see the exact formats we used to prompt each dataset and LLM, refer to our code implementation at https://github.com/technion-cs-nlp/LLMsKnow." (Page 21)</div>
+        <p><strong>Rationale:</strong> Providing examples of the prompts would allow others to understand the specific instructions given to the LLMs and replicate the experiments more accurately.</p>
+        <p><strong>Implementation:</strong> Include a few representative examples of the prompts used for different datasets and LLMs in the appendix.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>Table 3</summary>
+        <p>Table 3 shows the success rate of different large language models (LLMs) in extracting the exact answer from their own generated long-form answers. It lists four models (Mistral-7b, Mistral-Instruct-7b, Llama3-8b, and Llama3-Instruct-8b) and their respective success rates. This demonstrates that LLMs can, to a large extent, identify the key information within their own outputs, even if they don&#39;t always present it as the final, concise answer.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 3: Success rate of extracting exact answer from a long model answer. Each model is used to extract answers from its own output."</p>
+            <p><strong>Context:</strong> To avoid bias in our probing task, we only retain questions for which a valid exact answer was successfully extracted. This ensures there is no unfair correlation between invalid answers and incorrect answers in the experiments. We note the following: (a) While it is possible to use an instruct LLM to extract every answer regardless of its correctness, we chose the aforementioned strategy to improve the efficiency of our experiments; (b) This is just one possible implementation. For each LLM, one could use the same LLM to extract its own exact answer token, as demonstrated in a proof-of-concept over 1000 samples of TriviaQA in Table 3. Alternatively, it may be more efficient to train a smaller system specifically designed for detecting exact answer tokens, which would be more suitable for real-world scenarios. We choose to keep the extraction process as abstract as possible, as our primary focus is not on the specific implementation, but on analyzing the potential gains from probing these locations. Additionally, if the exact answer token is not among the first generated tokens, we examine the token immediately preceding it (“before exact answer token”). If the exact answer token is not the last one, we also examine the following token. When the exact answer spans multiple tokens, the first and last exact answer tokens are probed separately.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 3 is relevant because it demonstrates the feasibility of automatically extracting the exact answer from an LLM&#39;s output. This extraction process is crucial for the proposed method of probing exact answer tokens for truthfulness signals. The high success rates shown in the table validate the use of this approach.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is very simple and could be visually enhanced with clearer headings and formatting. For example, bolding the model names would improve readability.</li><li>Adding a row indicating the dataset used for this evaluation (TriviaQA) would provide important context.</li><li>The success rates are presented as decimals. While clear, presenting them as percentages might be more intuitive for a broader audience.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table only presents a proof-of-concept with 1000 samples. While indicative, it would be stronger to show results on the full dataset or a larger sample size.</li><li>The table doesn&#39;t provide any measure of variability or uncertainty (e.g., standard deviation, confidence intervals). Including such measures would make the results more robust.</li><li>The table could benefit from a brief discussion of the extraction method used and its potential limitations. This would provide more context and transparency.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Mistral-7b:</strong> 0.99</li><li><strong>Mistral-Instruct-7b:</strong> 0.96</li><li><strong>Llama3-8b:</strong> 0.99</li><li><strong>Llama3-Instruct-8b:</strong> 0.95</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-9" class="section">
+            <h3>Full Error Detection Results</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix provides the complete error detection results, complementing the findings presented in the main paper. It includes figures showing the performance of the probe across different layers and tokens for various datasets and models, as well as tables with detailed results for all error detection methods and datasets. These results support the main paper&#39;s conclusions.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Complete Results:</strong> The appendix includes the full set of error detection results, allowing for a more comprehensive analysis and validation of the findings presented in the main paper.</li><li><strong>Probe Performance Visualization:</strong> Figure 6 shows the AUC values of the probe across layers and tokens for Mistral-7b-instruct, visually demonstrating the concentration of truthfulness information in exact answer tokens.</li><li><strong>Detailed Performance Tables:</strong> Tables 4, 5, 6, and 7 provide detailed AUC scores for all error detection methods and datasets, allowing for a thorough comparison of different techniques and models.</li><li><strong>Consistency with Main Paper:</strong> The results presented in the appendix are consistent with the findings discussed in the main paper, strengthening the overall conclusions of the study.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Results</strong>
+        <p>The appendix provides a complete set of results, allowing readers to thoroughly examine the data and verify the claims made in the main paper.</p>
+        <div class="quote">"Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper&#39;s findings and allowing for a more comprehensive analysis." (Page 22)</div>
+    </li>
+    
+    <li>
+        <strong>Visualizations and Tables</strong>
+        <p>The inclusion of both visualizations (Figure 6) and tables (Tables 4-7) provides multiple ways to understand the data and facilitates a deeper analysis.</p>
+        <div class="quote">"Figure 6 presents the AUC values of a traind probe across layers and token for Mistral-7b-instruct, showing a similar pattern across all datasets." (Page 22)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide Aggregated Statistics</strong>
+        <p>While the tables provide detailed results, adding aggregated statistics (e.g., average AUC across datasets for each method) would make it easier to compare overall performance.</p>
+        
+        <p><strong>Rationale:</strong> Aggregated statistics would provide a high-level overview of the performance and facilitate comparisons between different methods.</p>
+        <p><strong>Implementation:</strong> Add a separate table or section summarizing the average AUC scores and other relevant statistics across datasets for each error detection method.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Inconsistencies or Unexpected Results</strong>
+        <p>While the appendix states that the results are consistent with the main paper, it would be beneficial to explicitly discuss any inconsistencies or unexpected results and provide potential explanations.</p>
+        <div class="quote">"Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper&#39;s findings" (Page 22)</div>
+        <p><strong>Rationale:</strong> Addressing any discrepancies would enhance the transparency and credibility of the analysis.</p>
+        <p><strong>Implementation:</strong> Add a section discussing any deviations from the expected patterns and provide potential explanations or interpretations.</p>
+    </li>
+    
+    <li>
+        <strong>Provide Access to Full Results</strong>
+        <p>The appendix mentions Figure 6 and Tables 4-7 but only shows a portion of Figure 6. Providing access to the full results, either within the appendix or through a supplementary material link, would be essential for reproducibility and further analysis.</p>
+        <div class="quote">"See our repo https://github.com/technion-cs-nlp/LLMsKnowfor the figures." (Page 22)</div>
+        <p><strong>Rationale:</strong> Providing access to the complete results is crucial for transparency and allows other researchers to verify the findings and build upon the work.</p>
+        <p><strong>Implementation:</strong> Include the full Figure 6 and Tables 4-7 in the appendix or provide a clear link to supplementary material where these results can be accessed.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 6</summary>
+        <p>Figure 6 presents heatmaps visualizing the Area Under the Curve (AUC) values of a trained probe across different layers and tokens for the Mistral-7b-instruct model. Each heatmap corresponds to a different dataset (HotpotQA, HotpotQA with context, Movies, Winogrande, NLI, IMDB). The x-axis represents the tokens, with the exact answer tokens highlighted. The y-axis represents the model&#39;s layers. The color intensity indicates the AUC value, with darker blue representing higher AUC and thus better error detection performance. The figure demonstrates that the error detection performance peaks around the exact answer tokens, particularly in the middle to later layers of the model, similar to the pattern observed in Figure 2 for TriviaQA, Winobias, and Math.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 6 presents the AUC values of a traind probe across layers and token for Mistral-7b-instruct, showing a similar pattern across all datasets. We also observe similar patterns across other models. See our repo https://github.com/technion-cs-nlp/LLMsKnow for the figures."</p>
+            <p><strong>Context:</strong> B FULL ERROR DETECTION RESULTS Figure 6 presents the AUC values of a traind probe across layers and token for Mistral-7b-instruct, showing a similar pattern across all datasets. We also observe similar patterns across other models. See our repo https://github.com/technion-cs-nlp/LLMsKnowfor the figures. Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper results.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 6 expands upon the findings presented in Figure 2 by showing that the pattern of peak error detection performance at the exact answer tokens holds across a wider range of datasets. This reinforces the paper&#39;s central argument about the localized nature of truthfulness information within LLMs.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The color scale could be improved for better contrast, making it easier to distinguish between different AUC values.</li><li>Directly labeling the exact answer tokens on the x-axis of each heatmap would improve readability.</li><li>The figure caption could be more descriptive, explaining the meaning of the axes and the color scale in more detail.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the caption mentions similar patterns across other models, it would be beneficial to include these heatmaps in the appendix or provide a reference to where they can be found.</li><li>The figure could be strengthened by including a baseline comparison, such as the performance at the last generated token, to visually demonstrate the improvement achieved by focusing on exact answer tokens.</li><li>A brief discussion of the statistical significance of the observed peak performance (e.g., p-values) would add rigor to the analysis.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 4</summary>
+        <p>Table 4 compares the performance (AUC) of various error detection methods on the Mistral-7B model across ten datasets. The methods include simple strategies like always predicting the majority class, using the mean or minimum of logits or probabilities (with and without considering the &#39;exact&#39; answer tokens), prompting the model to assess its own truthfulness (&#39;p(True)&#39;), and using probing classifiers at different token locations. The table shows that probing the exact answer token generally yields the highest AUC scores, indicating better error detection performance.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper results."</p>
+            <p><strong>Context:</strong> B FULL ERROR DETECTION RESULTS Figure 6 presents the AUC values of a traind probe across layers and token for Mistral-7b-instruct, showing a similar pattern across all datasets. We also observe similar patterns across other models. See our repo https://github.com/technion-cs-nlp/LLMsKnow for the figures. Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper results.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 4 provides comprehensive results supporting the paper&#39;s claim that focusing on exact answer tokens improves error detection. It compares various methods, including established baselines and the proposed probing technique, demonstrating the latter&#39;s superior performance across multiple datasets.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from visual grouping of related methods (e.g., logits-based, probabilities-based) to improve readability.</li><li>Highlighting the best-performing method for each dataset would make it easier to quickly identify the most effective strategies.</li><li>The table could be split into two separate tables, one for each model, to avoid excessive width and improve clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the table includes standard deviations, adding p-values or confidence intervals would strengthen the statistical significance of the results and allow for more robust comparisons.</li><li>The table could include a discussion of the limitations of the AUC metric and potential alternative evaluation measures.</li><li>A more detailed analysis of the impact of using &#39;exact&#39; answer tokens on the performance of different methods would be valuable.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 5</summary>
+        <p>Table 5, similar to Table 4, presents a comparison of error detection performance (AUC) but for the Mistral-7B-Instruct model. It evaluates various methods across the same ten datasets, including majority voting, logits and probabilities (with mean, min, max, and exact answer variations), p(True), and probing at different token positions. The results consistently show that probing, especially at the exact answer token, often outperforms other methods.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper results."</p>
+            <p><strong>Context:</strong> Same as Table 4&#39;s first mention.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 5 provides further evidence supporting the paper&#39;s main claim by demonstrating the effectiveness of probing exact answer tokens for error detection on an instructed version of the LLM. This shows that the method&#39;s benefits extend beyond the base model to a more refined, instruction-tuned version.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could be improved by visually separating different groups of methods (e.g., logits-based, probabilities-based) for better readability.</li><li>Highlighting the rows corresponding to the probing methods would emphasize the key findings.</li><li>The table could be split into two separate tables, one for each model, to avoid excessive width and improve clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While standard deviations are provided, adding p-values or confidence intervals would strengthen the statistical significance of the comparisons.</li><li>A discussion of the limitations of the AUC metric and potential alternative evaluation measures would be beneficial.</li><li>A more detailed analysis of the differences in performance between methods, particularly the impact of using exact answer tokens, would be valuable.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 6</summary>
+        <p>Table 6 presents the error detection performance (AUC) for the Llama-8b model, similar in structure to Tables 4 and 5. It compares various methods, including majority voting, logits and probabilities (with and without exact answer tokens), p(True), and probing at different token positions, across the same ten datasets. The results generally show that probing at the exact answer token yields the best performance.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper results."</p>
+            <p><strong>Context:</strong> Same as Table 4&#39;s first mention.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 6 extends the analysis to a different LLM architecture (Llama-8b), demonstrating that the benefits of probing exact answer tokens for error detection are not limited to a specific model (Mistral). This strengthens the generalizability of the findings.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from visual grouping of related methods (e.g., logits-based, probabilities-based) to improve readability.</li><li>Highlighting the best-performing method for each dataset would make it easier to identify the most effective strategies.</li><li>The table could be split into two separate tables, one for each model, to avoid excessive width and improve clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While standard deviations are provided, adding p-values or confidence intervals would strengthen the statistical significance of the results.</li><li>The table could include a discussion of the limitations of the AUC metric and potential alternative evaluation measures.</li><li>A more detailed analysis of the impact of using &#39;exact&#39; answer tokens on the performance of different methods would be valuable.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 7</summary>
+        <p>Table 7 presents the error detection performance (AUC) for the Llama-8b-Instruct model, mirroring the structure of the previous tables. It compares various methods, including majority voting, logits and probabilities (with and without exact answer tokens), p(True), and probing at different token positions, across ten datasets. The results generally indicate that probing at the exact answer token leads to the best error detection performance.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper results."</p>
+            <p><strong>Context:</strong> Same as Table 4&#39;s first mention.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 7 completes the comprehensive analysis by presenting results for the instruction-tuned version of the Llama model. This demonstrates the consistency of the findings across both base and instructed versions of two different LLM architectures (Mistral and Llama), further strengthening the generalizability of the paper&#39;s claims.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from visual grouping of related methods (e.g., logits-based, probabilities-based) to improve readability.</li><li>Highlighting the best-performing method for each dataset would make it easier to identify the most effective strategies.</li><li>The table could be split into two separate tables, one for each model, to avoid excessive width and improve clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While standard deviations are provided, adding p-values or confidence intervals would strengthen the statistical significance of the results.</li><li>The table could include a discussion of the limitations of the AUC metric and potential alternative evaluation measures.</li><li>A more detailed analysis of the impact of using &#39;exact&#39; answer tokens on the performance of different methods would be valuable.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 6</summary>
+        <p>Figure 6 presents heatmaps visualizing the performance of a probe error detector across different layers and tokens for the Mistral-7b-instruct model. Each heatmap corresponds to a different dataset (HotpotQA, HotpotQA with context, Movies, Winogrande, NLI, IMDB). The x-axis represents the tokens, with the exact answer tokens highlighted. The y-axis represents the model&#39;s layers. The color intensity indicates the AUC value, with darker blue representing higher AUC and thus better error detection performance. The key observation is that the detection performance spikes at the exact answer tokens, supporting the idea that truthfulness information is concentrated there.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 6: AUC values of a probe error detector across layers and tokens, Mistral-7b-instruct. The detection performance spikes at the exact answer tokens."</p>
+            <p><strong>Context:</strong> B FULL ERROR DETECTION RESULTS Figure 6 presents the AUC values of a traind probe across layers and token for Mistral-7b-instruct, showing a similar pattern across all datasets. We also observe similar patterns across other models. See our repo https://github.com/technion-cs-nlp/LLMsKnowfor the figures. Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper results.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 6 is highly relevant as it visually demonstrates the core finding of the paper: that truthfulness information is concentrated in the exact answer tokens. The heatmaps show a clear spike in error detection performance (AUC) at these tokens across various datasets, providing strong evidence for this claim.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The x-axis labels could be made more readable by increasing the font size or using abbreviations.</li><li>Adding a clear visual marker (e.g., a vertical line or a different color) to indicate the exact answer token position on each heatmap would improve clarity.</li><li>The color scale could be adjusted for better contrast, making it easier to distinguish between different AUC values.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the figure shows results for Mistral-7b-instruct, including similar heatmaps for other LLMs analyzed in the paper would strengthen the generalizability of the findings.</li><li>The figure could benefit from a baseline comparison, such as showing the AUC values for the last generated token or other token positions, to highlight the improvement achieved by focusing on exact answer tokens.</li><li>A brief discussion of the statistical significance of the observed spikes in AUC values (e.g., p-values or confidence intervals) would strengthen the analysis.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 4</summary>
+        <p>Table 4 compares the performance (AUC) of various error detection methods on the Mistral-7B model across ten different datasets. The methods include simple strategies like always predicting the majority class, using the mean, minimum, or maximum of logits or probabilities, prompting the model to assess its own truthfulness (&#39;p(True)&#39;), and using probing classifiers at various token positions. The table shows that probing the exact answer tokens generally yields the highest AUC scores, indicating superior error detection performance.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 4: Comparison of error detection performance (AUC) on Mistral-7B."</p>
+            <p><strong>Context:</strong> B FULL ERROR DETECTION RESULTS Figure 6 presents the AUC values of a traind probe across layers and token for Mistral-7b-instruct, showing a similar pattern across all datasets. We also observe similar patterns across other models. See our repo https://github.com/technion-cs-nlp/LLMsKnowfor the figures. Tables 4, 5, 6, and 7 present the full error detection results across all baselines and datasets, which are consistent with the main paper results.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 4 provides a comprehensive comparison of different error detection methods, demonstrating the effectiveness of the proposed approach (probing exact answer tokens) compared to existing baselines. This table supports the central claim of improved error detection.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could be more readable by grouping the datasets based on task similarity (e.g., factual vs. common sense).</li><li>Highlighting the best-performing method for each dataset would make it easier to quickly identify the most effective strategies.</li><li>The table could benefit from a clearer visual separation between the different types of methods (e.g., logits-based, probabilities-based, probing).</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the table includes standard deviations, adding p-values or confidence intervals would strengthen the statistical significance of the results and allow for more robust comparisons between methods.</li><li>The table could be enhanced by including a discussion of the limitations of the AUC metric and potential alternative evaluation measures.</li><li>A more detailed analysis of the differences in performance between methods, particularly the impact of using exact answer tokens, would be valuable.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>TriviaQA, Probe @ Exact answer last:</strong> 0.89 AUC</li><li><strong>Winobias, Probe @ Exact answer last:</strong> 0.96 AUC</li><li><strong>Math, Probe @ Exact answer last:</strong> 0.95 AUC</li><li><strong>Movies, Probe @ Exact answer last:</strong> 0.92 AUC</li><li><strong>IMDB, Probe @ Exact answer last:</strong> 0.88 AUC</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-10" class="section">
+            <h3>Full Generalization Results</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix provides the full set of results for the generalization experiments, complementing the analysis in the main paper. It includes heatmaps showing the generalization performance of three LLMs (Mistral-7b, Llama-3-8b, and Llama-3-8b-instruct) across different datasets. The heatmaps show both raw AUC values and the performance difference between the probe method and a logit-based baseline. These results further support the paper&#39;s findings about the limited generalization of truthfulness features across tasks.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Complete Generalization Results:</strong> The appendix presents the full set of results for the generalization experiments, allowing for a more comprehensive analysis.</li><li><strong>Multiple LLM Architectures:</strong> The results cover three different LLMs (Mistral-7b, Llama-3-8b, and Llama-3-8b-instruct), demonstrating the consistency and variability of generalization patterns across architectures.</li><li><strong>Raw AUC and Difference Heatmaps:</strong> The heatmaps show both raw AUC values and the performance difference between the probe and a logit-based baseline, providing a clearer picture of true generalization.</li><li><strong>Cross-Dataset Analysis:</strong> The heatmaps illustrate the generalization performance across various datasets, revealing the extent to which truthfulness features transfer between tasks.</li><li><strong>Support for Main Paper Findings:</strong> The results in this appendix reinforce the main paper&#39;s conclusions about the limited generalization of truthfulness features and the skill-specific nature of these features.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Results</strong>
+        <p>The appendix provides a complete set of generalization results for multiple LLMs, allowing for a thorough examination of the data and supporting the main paper&#39;s analysis.</p>
+        <div class="quote">"Figures 7, 8 and 9 present the generalization results for the remaining models." (Page 28)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Visualization</strong>
+        <p>The use of heatmaps effectively visualizes the generalization performance across different datasets and models, making it easy to identify patterns and trends.</p>
+        <div class="quote">"Figures 7, 8 and 9 present the generalization results for the remaining models. While these results exhibit similar high-level patterns to those found in the main paper on Mistral-7b-instruct, notable differences suggest that these models may possess different mechanisms for encoding truthfulness." (Page 28)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Discuss Model-Specific Differences</strong>
+        <p>While the appendix mentions notable differences between models, it would be beneficial to elaborate on these differences and provide potential explanations.</p>
+        <div class="quote">"While these results exhibit similar high-level patterns to those found in the main paper on Mistral-7b-instruct, notable differences suggest that these models may possess different mechanisms for encoding truthfulness." (Page 28)</div>
+        <p><strong>Rationale:</strong> Discussing model-specific differences would provide a deeper understanding of the factors influencing generalization and the varying ways in which LLMs encode truthfulness.</p>
+        <p><strong>Implementation:</strong> Analyze the specific patterns observed in each model&#39;s heatmaps and discuss potential reasons for the differences, considering factors such as model architecture, training data, or size.</p>
+    </li>
+    
+    <li>
+        <strong>Connect to Skill-Specific Generalization</strong>
+        <p>The appendix could explicitly connect the observed generalization patterns to the concept of skill-specific truthfulness discussed in the main paper.</p>
+        
+        <p><strong>Rationale:</strong> Connecting the results to the skill-specific generalization concept would strengthen the overall coherence of the paper and provide a more unified interpretation of the findings.</p>
+        <p><strong>Implementation:</strong> Discuss how the observed generalization patterns support or challenge the idea of skill-specific truthfulness and elaborate on the implications for error detection and mitigation.</p>
+    </li>
+    
+    <li>
+        <strong>Provide Statistical Significance</strong>
+        <p>The heatmaps show raw AUC values and differences. Adding statistical significance measures (e.g., p-values or confidence intervals) would strengthen the analysis and make the results more robust.</p>
+        
+        <p><strong>Rationale:</strong> Statistical significance measures would provide a more rigorous assessment of the observed differences in generalization performance and help determine whether the patterns are statistically significant or due to random variation.</p>
+        <p><strong>Implementation:</strong> Calculate and report p-values or confidence intervals for the AUC values and differences shown in the heatmaps.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 7</summary>
+        <p>Figure 7 illustrates the generalization capabilities of the Mistral-7b model across different datasets using two heatmaps. Heatmap (a) displays raw AUC values, where values above 0.5 suggest some level of generalization. Heatmap (b) shows the difference in AUC scores between the probe method and a logit-based method. Positive values in heatmap (b) indicate that the probe generalizes better than the logit-based method, learning additional information beyond what is captured by the output logits. The datasets used for both training and testing include TriviaQA, HotpotQA, Movies, Winobias, Winogrande, NLI, IMDB, Math, HotpotQA with context (WC), and Natural Questions with context (WC).</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 7: Generalization between datasets, Mistral-7b."</p>
+            <p><strong>Context:</strong> Figures 7, 8 and 9 present the generalization results for the remaining models. While these results exhibit similar high-level patterns to those found in the main paper on Mistral-7b-instruct, notable differences suggest that these models may possess different mechanisms for encoding truthfulness.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 7 is relevant because it provides a visual representation of how well the error detection capabilities of Mistral-7b generalize across different tasks. It helps to understand whether the model has a universal truthfulness mechanism or if it&#39;s task-specific. This is important for determining the practical applicability of error detection methods.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The color scales could be improved for better contrast and to highlight areas of strong or weak generalization more effectively.</li><li>Labeling the axes directly with the dataset names instead of relying solely on the caption would improve readability.</li><li>Adding a visual cue, such as a diagonal line, to separate the training and testing datasets on the heatmaps would make it easier to interpret the results.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the caption mentions raw AUC values and differences, it would be beneficial to include the actual values in the figure or a supplementary table for more detailed analysis.</li><li>The figure could be strengthened by including a statistical significance test (e.g., p-values) to determine if the observed differences between the probe and logit-based methods are statistically significant.</li><li>The caption could provide more context by briefly explaining the logit-based method used for comparison.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 8</summary>
+        <p>Figure 8, similar to Figure 7, presents the generalization performance but for the Llama-3-8b model. It uses two heatmaps: (a) shows the raw AUC values, where values above 0.5 suggest some generalization across datasets, and (b) shows the difference in AUC between the probe method and a logit-based method. Positive values in (b) indicate that the probe learns information beyond what&#39;s captured by the logits. The same datasets are used for training and testing as in Figure 7: TriviaQA, HotpotQA, Movies, Winobias, Winogrande, NLI, IMDB, Math, HotpotQA WC, and NQ WC.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 8: Generalization between datasets, Llama-3-8b."</p>
+            <p><strong>Context:</strong> Figures 7, 8 and 9 present the generalization results for the remaining models. While these results exhibit similar high-level patterns to those found in the main paper on Mistral-7b-instruct, notable differences suggest that these models may possess different mechanisms for encoding truthfulness.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 8 is relevant as it provides insights into the generalization capabilities of the Llama-3-8b model, complementing the analysis of Mistral-7b in Figure 7. Comparing the two figures allows for an assessment of whether the observed generalization patterns are model-specific or hold across different LLM architectures. This is crucial for understanding the broader applicability of the findings.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The color scales could be improved for better contrast, making it easier to distinguish between different levels of generalization.</li><li>Labeling the axes directly with dataset names, rather than just in the caption, would improve readability.</li><li>Adding a visual separation between the training and testing datasets on the heatmaps would enhance clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the caption mentions raw AUC values and differences, it would be beneficial to include the actual values in the figure or a supplementary table for more detailed analysis.</li><li>The figure could be strengthened by including a statistical significance test (e.g., p-values) to determine if the observed differences between the probe and logit-based methods are statistically significant.</li><li>The caption could provide more context by briefly explaining the logit-based method used for comparison and its limitations.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 7</summary>
+        <p>Figure 7 presents two heatmaps illustrating the generalization performance of Mistral-7b across different datasets. Heatmap (a) shows raw AUC values, where values above 0.5 suggest some level of generalization. Heatmap (b) shows the difference in AUC between the probe method and a logit-based method. Positive values indicate that the probe generalizes better than the logit-based method. The datasets used for both training and testing include TriviaQA, HotpotQA, Movies, Winobias, Winogrande, NLI, IMDB, Math, HotpotQA with context (WC), and Natural Questions with context (WC).</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 7: Generalization between datasets, Mistral-7b."</p>
+            <p><strong>Context:</strong> C FULL GENERALIZATION RESULTS Figures 7, 8 and 9 present the generalization results for the remaining models. While these results exhibit similar high-level patterns to those found in the main paper on Mistral-7b-instruct, notable differences suggest that these models may possess different mechanisms for encoding truthfulness.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 7 provides a visual representation of the generalization capabilities of the Mistral-7b model. It helps to understand how well the model can transfer knowledge about truthfulness detection from one dataset to another. This is important for assessing the model&#39;s robustness and its potential for real-world applications where it might encounter unseen data.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The color scales could be improved for better contrast and to highlight areas of strong or weak generalization more effectively.</li><li>Labeling the axes directly with the dataset names, instead of relying solely on the caption, would improve readability.</li><li>Adding a visual cue, such as a diagonal line, to separate the training and testing datasets on the heatmaps could enhance clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the figure shows raw AUC values and the difference compared to a logit-based method, it would be beneficial to include the performance of the logit-based method itself for a more direct comparison.</li><li>The figure could be strengthened by adding a discussion of the statistical significance of the observed differences. For example, are the improvements shown in heatmap (b) statistically significant?</li><li>The caption could be more explicit about the specific logit-based method used for the comparison in heatmap (b).</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 8</summary>
+        <p>Figure 8, similar to Figure 7, presents the generalization performance but for the Llama-3-8b model. It includes two heatmaps: (a) raw AUC values, where values above 0.5 suggest some generalization, and (b) the difference in AUC between the probe method and a logit-based method. Positive values in (b) indicate that the probe generalizes better than the logit-based method. The same datasets are used as in Figure 7.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 8: Generalization between datasets, Llama-3-8b."</p>
+            <p><strong>Context:</strong> C FULL GENERALIZATION RESULTS Figures 7, 8 and 9 present the generalization results for the remaining models. While these results exhibit similar high-level patterns to those found in the main paper on Mistral-7b-instruct, notable differences suggest that these models may possess different mechanisms for encoding truthfulness.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 8 is important because it allows for a comparison of the generalization performance between Mistral-7b (shown in Figure 7) and Llama-3-8b. This comparison helps to understand whether the observed generalization patterns are model-specific or more general across different LLM architectures.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Using a consistent color scale across Figures 7, 8, and 9 would facilitate easier comparison between the models.</li><li>Labeling the axes directly with dataset names would improve readability and reduce reliance on the caption.</li><li>Adding a visual separation between the training and testing datasets on the heatmaps could enhance clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could be more informative by including the performance of the logit-based method itself, allowing for a direct comparison with the probe method.</li><li>A discussion of the statistical significance of the observed differences between the probe and logit-based methods would strengthen the analysis.</li><li>The caption could be more explicit about the specific logit-based method used for the comparison.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 9</summary>
+        <p>Figure 9 presents the generalization performance of Llama-3-8b-instruct across different datasets, using the same format as Figures 7 and 8. It includes two heatmaps: (a) raw AUC values, where values above 0.5 suggest some generalization, and (b) the difference in AUC between the probe method and a logit-based method. Positive values in (b) indicate better generalization by the probe compared to the logit-based method.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 9: Generalization between datasets, Llama-3-8b-instruct."</p>
+            <p><strong>Context:</strong> C FULL GENERALIZATION RESULTS Figures 7, 8 and 9 present the generalization results for the remaining models. While these results exhibit similar high-level patterns to those found in the main paper on Mistral-7b-instruct, notable differences suggest that these models may possess different mechanisms for encoding truthfulness.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 9 completes the generalization analysis by showing the results for the instruction-tuned version of the Llama model. This allows for a comparison between the base Llama model (Figure 8) and its instructed counterpart, as well as with the Mistral models (Figures 3 and 7). This comparison helps to understand the impact of instruction tuning on generalization performance and whether the observed patterns are consistent across different model variants.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Maintaining a consistent color scale across all generalization figures (Figures 3, 7, 8, and 9) would facilitate easier comparison between models and variants.</li><li>Labeling the axes directly with dataset names would improve readability.</li><li>Adding a visual separation between training and testing datasets on the heatmaps could enhance clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Including the performance of the logit-based method itself would provide a more complete picture and allow for a direct comparison with the probe method.</li><li>Discussing the statistical significance of the observed differences between the probe and logit-based methods would strengthen the analysis.</li><li>The caption could be more explicit about the specific logit-based method used for the comparison.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-11" class="section">
+            <h3>Taxonomy of Errors</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix explains the way errors are categorized (taxonomy) in the research, providing more detail and justification for the chosen categories.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Error Categorization:</strong> The taxonomy categorizes errors based on patterns observed in repeated sampling of LLM responses.</li><li><strong>Justification:</strong> The rationale for the chosen categorization is explained, providing transparency and clarity.</li><li><strong>Detailed Elaboration:</strong> The appendix provides further details on the error taxonomy, expanding on the information presented in the main paper.</li><li><strong>Repeated Sampling Analysis:</strong> The taxonomy is based on analyzing the distribution of answers generated by the LLM when prompted multiple times with the same question.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide Examples</strong>
+        <p>Including concrete examples of how errors are classified according to the taxonomy would significantly improve understanding.</p>
+        
+        <p><strong>Rationale:</strong> Examples would make the abstract categories more concrete and demonstrate the practical application of the taxonomy.</p>
+        <p><strong>Implementation:</strong> Add a table or list of examples showing different error types and how they are classified based on the repeated sampling analysis.</p>
+    </li>
+    
+    <li>
+        <strong>Visual Representation</strong>
+        <p>A visual representation of the taxonomy, such as a flowchart or diagram, would enhance clarity and make it easier to grasp the different categories and their relationships.</p>
+        
+        <p><strong>Rationale:</strong> A visual representation would complement the textual description and provide a more intuitive understanding of the taxonomy.</p>
+        <p><strong>Implementation:</strong> Create a flowchart or diagram illustrating the different error categories and the criteria used for classification.</p>
+    </li>
+    
+    <li>
+        <strong>Comparison with Other Taxonomies</strong>
+        <p>Comparing the proposed taxonomy with existing error taxonomies in the literature would provide context and highlight its unique contributions.</p>
+        
+        <p><strong>Rationale:</strong> Comparing with other taxonomies would demonstrate the novelty and relevance of the proposed approach and position it within the broader field of LLM error analysis.</p>
+        <p><strong>Implementation:</strong> Add a section discussing existing error taxonomies and comparing them with the proposed taxonomy, highlighting similarities and differences.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 10</summary>
+        <p>Figure 10 is a line graph showing the percentage of answers for which at least one generated answer was correct when resampling the LLM&#39;s response multiple times. The x-axis represents the number of resamples (from 1, which is equivalent to greedy decoding, up to 31). The y-axis represents the percentage of correct answers. The graph shows an increasing trend, meaning that as the number of resamples increases, the chance of getting at least one correct answer also increases. However, the rate of increase diminishes as the number of resamples grows, suggesting a point of diminishing returns.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 10: The percentage of answers for which at least one generated answer was correct. The first step is greedy decoding."</p>
+            <p><strong>Context:</strong> D TAXONOMY OF ERRORS Figure 10 presents, for each amount of resamples, the amount percentage of answers for which at least one generated answer was correct. The experiment was done on Mistral-7b-instruct with the TriviaQA dataset. For many answers that the greedy decoding fails to correctly provide an answer, the LLM is still able to generate the correct answer in at least one resample. The plot plateues around 30 resamples.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is relevant because it justifies the choice of K=30 resamples used in the error type taxonomy. It shows that increasing the number of resamples improves the chances of finding the correct answer, but the improvement plateaus around 30, suggesting that further resampling would yield diminishing returns.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The y-axis label could be more descriptive, such as &#39;Percentage of questions with at least one correct answer among resamples&#39;.</li><li>Adding a horizontal line at the level achieved by greedy decoding (1 resample) would provide a clear visual comparison.</li><li>The figure could benefit from a title that clearly states the dataset and model used (TriviaQA, Mistral-7b-instruct).</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could be more informative by showing the distribution of correct answers across resamples, not just the percentage of questions with at least one correct answer. For example, a box plot or violin plot could be used.</li><li>The figure only shows results for one dataset and model. Including similar graphs for other datasets and models would strengthen the generalizability of the findings.</li><li>The caption could include a brief discussion of the implications of the diminishing returns, such as the trade-off between computational cost and accuracy improvement.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Correctness at 1 resample (greedy decoding):</strong> 63 %</li><li><strong>Correctness at 30 resamples:</strong> 88 %</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-12" class="section">
+            <h3>Detecting the Correct Answer Full Results</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix provides complete results for the experiments on detecting the correct answer within a pool of generated responses, expanding on the analysis in the main paper. It includes examples where the model internally encoded the correct answer but consistently generated an incorrect one. The appendix also presents tables comparing different answer selection strategies, including probe-based selection, for both instruct and non-instruct LLMs across various datasets. The results consistently show that probe-based selection improves accuracy, especially when the LLM doesn&#39;t have a strong preference for the correct answer during generation.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Complete Results:</strong> The appendix presents the full set of results for the correct answer detection experiments, complementing the analysis in the main paper.</li><li><strong>Qualitative Examples:</strong> Table 8 provides qualitative examples where the probe successfully identified the correct answer even when the LLM consistently generated an incorrect one.</li><li><strong>Answer Selection Strategies:</strong> Tables 9 and 10 compare different answer selection strategies, including greedy decoding, random selection, majority voting, and probe-based selection.</li><li><strong>Instruct and Non-Instruct LLMs:</strong> The analysis includes results for both instruct and non-instruct versions of the LLMs, allowing for a comparison of their behavior and the effectiveness of the probe.</li><li><strong>Improved Accuracy with Probe:</strong> The results consistently show that probe-based selection improves accuracy, particularly for error types where the LLM struggles to generate the correct answer consistently.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Results</strong>
+        <p>The appendix provides a complete set of results, allowing for a more thorough understanding of the answer selection experiments and supporting the findings in the main paper.</p>
+        <div class="quote">"In Table 8 we present some qualitative samples from Mistral-7b-instruct, for the phenomenon we observe at error type (C2) Consistently incorrect but generates the correct answer at least one time." (Page 30)</div>
+    </li>
+    
+    <li>
+        <strong>Qualitative and Quantitative Analysis</strong>
+        <p>The appendix combines qualitative examples (Table 8) with quantitative results (Tables 9 and 10), providing a more holistic view of the probe&#39;s effectiveness in answer selection.</p>
+        <div class="quote">"The samples in the table represent cases where the probe chose the correct answer. Table 9 compares different decoding mechanisms, including the choice via probe, on non-instruct models, and Table 10 compares on the instruct models." (Page 30)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Elaborate on Probe Training Details</strong>
+        <p>The appendix doesn&#39;t provide details on how the probe used for answer selection was trained. Providing more information about the probe&#39;s training data and objective would enhance reproducibility.</p>
+        
+        <p><strong>Rationale:</strong> Understanding the probe&#39;s training process is crucial for interpreting its behavior and replicating the experiments.</p>
+        <p><strong>Implementation:</strong> Include details on the dataset used to train the probe, the training objective (e.g., error detection, answer correctness prediction), and any relevant hyperparameters.</p>
+    </li>
+    
+    <li>
+        <strong>Analyze Probe&#39;s Selection Behavior</strong>
+        <p>While the appendix shows that the probe improves accuracy, it doesn&#39;t analyze how the probe selects the correct answer. Investigating the probe&#39;s behavior (e.g., which features it relies on) would provide deeper insights.</p>
+        
+        <p><strong>Rationale:</strong> Analyzing the probe&#39;s selection behavior could reveal the underlying mechanisms that contribute to its effectiveness and provide a better understanding of the LLM&#39;s internal representations.</p>
+        <p><strong>Implementation:</strong> Analyze the probe&#39;s activations, attention patterns, or other relevant features to understand its answer selection strategy. For example, visualize the probe&#39;s attention on different parts of the LLM&#39;s output to see which tokens or features it focuses on when selecting an answer.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Implications for Decoding Strategies</strong>
+        <p>The appendix could discuss the implications of the findings for improving existing LLM decoding strategies or developing new ones. For example, how could the probe be integrated into the decoding process to improve answer selection?</p>
+        
+        <p><strong>Rationale:</strong> Connecting the findings to practical applications in LLM decoding would increase the impact of the research and provide directions for future work.</p>
+        <p><strong>Implementation:</strong> Discuss potential ways to incorporate the probe into the decoding process, such as using the probe&#39;s probability scores to rerank or filter generated answers. Explore the potential benefits and challenges of such integration.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>table 8</summary>
+        <p>Table 8 presents examples where Mistral-7b-Instruct consistently generated the wrong answer but occasionally produced the correct one. The probe successfully identified the correct answer in these instances. The table shows five questions from TriviaQA, the incorrect answer most frequently generated, how many times that incorrect answer was generated out of 30 samples, the correct answer, and how many times the correct answer was generated. This table highlights the disconnect between the model&#39;s internal knowledge and its external behavior.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 8: Examples of questions where Mistral-7b-Instruct consistently provided incorrect answers but occasionally generated the correct one. In these instances, the probe successfully identified the right answer. For each question, the model was samples 30 times."</p>
+            <p><strong>Context:</strong> In Table 8 we present some qualitative samples from Mistral-7b-instruct, for the phenomenon we observe at error type (C2) Consistently incorrect but generates the correct answer at least one time. The samples in the table represent cases where the probe chose the correct answer. Table 9 compares different decoding mechanisms, including the choice via probe, on non-instruct models, and Table 10 compares on the instruct models. For all datasets and models, we observe similar conclusions to those in the main paper: significant improvement is observed for error types where the LLM shows no preference to the correct answer.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 8 is highly relevant because it provides specific examples demonstrating that the LLM sometimes knows the correct answer but fails to generate it consistently. This supports the paper&#39;s key finding of a discrepancy between the LLM&#39;s internal knowledge and its external behavior. The probe&#39;s ability to identify the correct answer from the sample pool further emphasizes its effectiveness.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from clearer headings. Instead of &#39;Wrong Answer&#39; and &#39;Correct Answer&#39;, more descriptive headings like &#39;Most Frequent Incorrect Answer&#39; and &#39;Correct Answer (identified by probe)&#39; would be helpful.</li><li>Adding a column indicating the percentage of times each answer was generated could provide a quicker understanding of the answer distribution.</li><li>Visually separating the question from the answers (e.g., with a horizontal line) would improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table only shows five examples. While illustrative, including more examples or providing statistics on how often this phenomenon occurs in the dataset would strengthen the analysis.</li><li>The table focuses on Mistral-7b-Instruct. Showing similar examples for other LLMs would demonstrate the generalizability of the finding.</li><li>The table could be enhanced by briefly explaining how the probe identifies the correct answer among the samples, providing more insight into its mechanism.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Question 1, Incorrect Answer Count:</strong> 29</li><li><strong>Question 1, Correct Answer Count:</strong> 1</li><li><strong>Question 2, Incorrect Answer Count:</strong> 27</li><li><strong>Question 2, Correct Answer Count:</strong> 1</li><li><strong>Question 3, Incorrect Answer Count:</strong> 18</li><li><strong>Question 3, Correct Answer Count:</strong> 2</li><li><strong>Question 4, Incorrect Answer Count:</strong> 17</li><li><strong>Question 4, Correct Answer Count:</strong> 3</li><li><strong>Question 5, Incorrect Answer Count:</strong> 21</li><li><strong>Question 5, Correct Answer Count:</strong> 4</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 9</summary>
+        <p>Table 9 compares different answer choice strategies for non-instruct LLMs (Mistral-7b and Llama-8b) across three datasets (TriviaQA, Math, Winobias). The strategies include greedy decoding, random sampling, majority vote (choosing the most frequent answer), and using the probe. The table shows the performance (accuracy with standard deviation) of each strategy for different error types, as defined in the paper&#39;s taxonomy. Hyphens indicate missing data or inapplicable strategies. The table highlights how different strategies perform for various error types and models, providing a comprehensive comparison.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 9: Various answer choice strategies, non-instruct models."</p>
+            <p><strong>Context:</strong> In Table 8 we present some qualitative samples from Mistral-7b-instruct, for the phenomenon we observe at error type (C2) Consistently incorrect but generates the correct answer at least one time. The samples in the table represent cases where the probe chose the correct answer. Table 9 compares different decoding mechanisms, including the choice via probe, on non-instruct models, and Table 10 compares on the instruct models. For all datasets and models, we observe similar conclusions to those in the main paper: significant improvement is observed for error types where the LLM shows no preference to the correct answer.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 9 is relevant as it provides a detailed comparison of different answer selection strategies for non-instruct LLMs. It shows how these strategies perform across various error types and datasets, offering insights into their strengths and weaknesses. This comparison helps to understand the effectiveness of the probe-based selection method relative to other strategies.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is quite dense and could benefit from clearer visual separation between datasets and models. Using different background colors or borders could improve readability.</li><li>The error type labels could be made more concise or abbreviations could be used to reduce clutter.</li><li>Highlighting the best-performing strategy for each error type and model would make it easier to identify key trends.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the table shows accuracy with standard deviation, it would be beneficial to include statistical significance tests (e.g., p-values) to determine if the differences between strategies are statistically significant.</li><li>The table could be enhanced by including a discussion of the limitations of each strategy and the reasons behind their varying performance across error types.</li><li>The table focuses on non-instruct models. A direct comparison with the performance of instruct models (as shown in Table 10) would be valuable for understanding the impact of instruction tuning on answer selection strategies.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 10</summary>
+        <p>Table 10 presents the accuracy of different answer selection strategies for instruction-tuned language models on the TriviaQA, Math, and Winobias datasets. The strategies include greedy decoding, random sampling, majority voting (choosing the most frequent answer), and probe-based selection. The results are broken down by error type, which categorizes the model&#39;s response patterns across multiple generations of the same question. The table shows how the accuracy of each strategy varies depending on the type of error the model makes.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 10: Various answer choice strategies, instruct models."</p>
+            <p><strong>Context:</strong> In Table 8 we present some qualitative samples from Mistral-7b-instruct, for the phenomenon we observe at error type (C2) Consistently incorrect but generates the correct answer at least one time. The samples in the table represent cases where the probe chose the correct answer. Table 9 compares different decoding mechanisms, including the choice via probe, on non-instruct models, and Table 10 compares on the instruct models. For all datasets and models, we observe similar conclusions to those in the main paper: significant improvement is observed for error types where the LLM shows no preference to the correct answer.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 10 is relevant because it directly compares the performance of different answer selection strategies, including the proposed probe-based method, for instruction-tuned LLMs. It shows how the effectiveness of each strategy varies depending on the type of error the LLM makes, providing insights into the strengths and weaknesses of each approach.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from clearer visual separation between the different datasets and models. Using different background colors or borders could improve readability.</li><li>Highlighting the best-performing strategy for each error type and dataset would make it easier to identify the most effective approaches.</li><li>The error type labels could be made more concise or explained in a footnote to avoid cluttering the table.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the table shows accuracy values, it would be beneficial to include standard deviations or confidence intervals to provide a measure of uncertainty.</li><li>The table could be enhanced by adding a discussion of the statistical significance of the observed differences between the strategies. Are the improvements achieved by the probe statistically significant?</li><li>The table could include a more detailed analysis of why certain strategies perform better for specific error types. This would provide a deeper understanding of the relationship between LLM behavior and answer selection strategies.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>TriviaQA, Mistral-7b-Instruct, All Error Types, Probing:</strong> 0.89</li><li><strong>Math, Mistral-7b-Instruct, All Error Types, Probing:</strong> 0.96</li><li><strong>Winobias, Mistral-7b-Instruct, All Error Types, Probing:</strong> 0.91</li><li><strong>TriviaQA, Llama-8b-Instruct, All Error Types, Probing:</strong> 0.93</li><li><strong>Math, Llama-8b-Instruct, All Error Types, Probing:</strong> 0.92</li><li><strong>Winobias, Llama-8b-Instruct, All Error Types, Probing:</strong> 1.0</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        // Show/hide back-to-top button
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
