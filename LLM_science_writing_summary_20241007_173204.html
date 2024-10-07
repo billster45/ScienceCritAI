@@ -1,0 +1,1655 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rise of Large Language Models in Scientific Writing: A Large-Scale Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>The Rise of Large Language Models in Scientific Writing: A Large-Scale Analysis</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">Introduction</a></li><li><a href="#section-2">Related Work</a></li><li><a href="#section-3">Background: the distributional LLM quantification framework</a></li><li><a href="#section-4">Implementation and Validations</a></li><li><a href="#section-5">Main Results and Findings</a></li><li><a href="#section-6">Discussion</a></li><li><a href="#section-7">Limitations</a></li><li><a href="#section-8">Estimated Fraction of LLM-Modified Sentences in Introductions</a></li><li><a href="#section-9">LLM prompts used in the study</a></li><li><a href="#section-10">Additional Information on Implementation and Validations</a></li><li><a href="#section-11">Word Frequency Shift in arXiv Computer Science introductions</a></li><li><a href="#section-12">Fine-grained Main Findings</a></li><li><a href="#section-13">Proofreading Results on arXiv data</a></li><li><a href="#section-14">Extended Related Work</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>This study investigates the growing use of Large Language Models (LLMs), specifically GPT-3.5-turbo-0125 (a version of ChatGPT), in scientific writing. By analyzing nearly a million papers from arXiv, bioRxiv, and Nature portfolio journals published between January 2020 and February 2024, the researchers used a distributional quantification framework to estimate the prevalence of LLM-modified content. This framework compares word usage patterns between human-written and LLM-generated text to estimate the overall proportion of LLM influence. The study found a steady increase in LLM usage after ChatGPT&#39;s release in late 2022, particularly in Computer Science, and explored correlations with author preprint posting frequency, research area crowdedness, and paper length. These findings raise concerns about the potential impact of LLMs on scientific integrity and call for further research into responsible LLM use.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li><strong>Increased LLM Usage After ChatGPT Release:</strong> The study found a significant increase in the estimated fraction of LLM-modified sentences in both abstracts and introductions of scientific papers after the public release of ChatGPT in late 2022. This increase was most pronounced in Computer Science, reaching 17.5% for abstracts and 15.5% for introductions by February 2024. This finding was measured using the distributional quantification framework, which compares word usage patterns. The rapid adoption of LLMs in scientific writing highlights their potential to transform research practices.</li><li><strong>Correlation with Preprint Posting Frequency:</strong> Researchers who frequently post preprints on arXiv tend to have a higher fraction of LLM-modified content in their papers. This correlation was observed across various Computer Science subcategories. This finding suggests a potential link between preprint posting behavior, often associated with faster dissemination of research, and the adoption of LLM writing tools, possibly to accelerate the writing process. However, the study does not establish a causal relationship.</li><li><strong>Correlation with Research Area Crowdedness:</strong> Papers in more crowded research areas, measured by the similarity of their abstracts to other papers, tend to exhibit higher LLM usage. This trend was observed across different Computer Science subcategories. This finding raises the question of whether LLM use might be contributing to the convergence of research topics or whether researchers in competitive fields are more likely to utilize LLMs to keep pace with rapid publication cycles. Further research is needed to understand the direction of causality and the potential impact on research diversity.</li><li><strong>Correlation with Paper Length:</strong> Shorter papers tend to have a higher fraction of LLM-modified content compared to longer papers. This trend was consistent in Computer Science subcategories like Computer Vision (cs.CV) and Machine Learning (cs.LG) but not in Computational Linguistics (cs.CL). This finding may suggest that researchers working on shorter papers, often subject to stricter length limitations (e.g., conference papers), might be more inclined to use LLMs for conciseness or to meet deadlines. The lack of correlation in cs.CL might be due to the smaller sample size or specific writing practices in this subfield.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li><strong>Robust Methodology:</strong> The study employed a robust distributional quantification framework adapted from Liang et al. (2024). This framework, by analyzing word usage patterns at the population level, avoids the limitations of individual document classification and provides more stable and accurate estimations of LLM-modified content, handling temporal distribution shifts effectively.</li><li><strong>Large-Scale Dataset:</strong> The study analyzed a large dataset of nearly a million papers from diverse sources, including arXiv, bioRxiv, and Nature portfolio journals, spanning multiple disciplines and a substantial time period. This large and diverse dataset increases the generalizability and reliability of the findings.</li><li><strong>Thorough Validation:</strong> The researchers conducted thorough validation of their methodology using pre-ChatGPT data, demonstrating the accuracy and calibration of their model. The construction of validation sets with varying proportions of LLM-modified content and the use of different vocabulary subsets further strengthens the robustness of their findings.</li><li><strong>Detailed Implementation Description:</strong> The paper provides a detailed description of the implementation, including data collection, LLM model choice and parameters, and the training data generation process. This level of transparency enhances reproducibility and allows other researchers to validate and build upon the study&#39;s findings.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li><strong>Expand LLM Scope:</strong> While focusing on ChatGPT (gpt-3.5-turbo-0125) is justified by its dominant market share, future research should include other LLMs to capture a more complete picture of LLM usage in scientific writing. This would address the limitation of focusing on a single, albeit dominant, LLM and provide a more generalizable understanding of the phenomenon.</li><li><strong>Investigate Causal Relationships:</strong> The study primarily identifies correlations between LLM usage and various factors. Future research should employ experimental or quasi-experimental designs to explore causal relationships. This would provide a deeper understanding of the factors driving LLM adoption and their impact on scientific writing.</li><li><strong>Explore Ethical Implications:</strong> The study briefly touches upon potential risks associated with LLM use. Future research should delve deeper into the ethical implications, including issues of plagiarism, bias, transparency, and the potential impact on scientific integrity. This would contribute to the development of ethical guidelines for responsible LLM use in scientific writing.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>Figure 1</h4>
+        <p><strong>Description:</strong> Figure 1 displays the estimated fraction of LLM-modified sentences in abstracts across different academic venues over time. It visually demonstrates the increase in LLM usage after the release of ChatGPT, particularly in Computer Science.</p>
+        <p><strong>Relevance:</strong> This figure directly visualizes the central finding of the study: the increasing prevalence of LLM-modified content in scientific writing.</p>
+    </div>
+    
+    <div>
+        <h4>Figure 7</h4>
+        <p><strong>Description:</strong> Figure 7, similar to Figure 1, shows the estimated fraction of LLM-modified sentences in introductions across different academic venues over time. This figure reinforces the findings from the abstract analysis and extends them to another crucial section of scientific papers.</p>
+        <p><strong>Relevance:</strong> This figure provides further evidence of the widespread adoption of LLMs in scientific writing, showing consistent trends across different sections of papers.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>This study provides compelling evidence for the increasing use of LLMs, particularly ChatGPT, in scientific writing. The observed correlations between LLM usage and factors like preprint posting frequency, research area crowdedness, and paper length raise important questions about the potential impact of LLMs on scientific practice, including concerns about homogenization of research, potential bias, and the need for transparency. Future research should focus on establishing causal relationships, exploring the ethical implications of LLM use, and developing guidelines for responsible LLM integration in scientific writing. This research is crucial for navigating the evolving landscape of scientific communication and ensuring the integrity and diversity of scientific knowledge production in the age of AI.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>This paper investigates the increasing use of Large Language Models (LLMs) like ChatGPT in scientific writing. The authors conducted a large-scale analysis of nearly a million papers published on arXiv, bioRxiv, and Nature portfolio journals between January 2020 and February 2024. They used a statistical framework to estimate the prevalence of LLM-modified content over time and across different academic fields. The study found a steady increase in LLM usage, with the highest growth in Computer Science papers. Furthermore, the analysis revealed correlations between higher LLM modification and factors such as first-author preprint posting frequency, research area crowdedness, and shorter paper length.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. LLM Use Measurement:</strong> The study uses a population-level statistical framework to estimate the prevalence of LLM-modified content in scientific papers. This approach is more robust than analyzing individual instances and allows for the identification of broader trends.</li><li><strong>2. Increasing LLM Usage:</strong> The research reveals a steady increase in LLM usage across various academic fields, with the most significant growth observed in Computer Science papers.</li><li><strong>3. Field-Specific Differences:</strong> The study highlights differences in LLM adoption across disciplines, with Computer Science showing the highest growth and Mathematics and Nature portfolio journals showing the least.</li><li><strong>4. Correlating Factors:</strong> The analysis identifies correlations between higher LLM modification and factors like frequent preprint posting by first authors, crowded research areas (measured by paper similarity), and shorter paper lengths.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Research Question</strong>
+        <p>The abstract clearly states the research question: to measure the extent of LLM use in academic writing and its potential impact on scientific practices. This focus provides a strong foundation for the study.</p>
+        <div class="quote">"However, we lack a precise measure of the proportion of academic writing substantially modified or produced by LLMs. To address this gap, we conduct the first systematic, large-scale analysis across 950,965 papers..." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Methodology and Scope</strong>
+        <p>The abstract effectively summarizes the methodology, including the statistical framework used and the large dataset analyzed. This transparency strengthens the credibility of the findings.</p>
+        <div class="quote">"...published between January 2020 and February 2024 on the arXiv, bioRxiv, and Nature portfolio journals, using a population-level statistical framework..." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Key Findings</strong>
+        <p>The abstract clearly presents the key findings, including the overall increase in LLM usage and its association with specific factors. This concise presentation of results makes the study&#39;s contributions readily apparent.</p>
+        <div class="quote">"Our findings reveal a steady increase in LLM usage...with the largest and fastest growth observed in Computer Science papers...higher levels of LLM-modification are associated with papers whose first authors post preprints more frequently..." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify Key Findings</strong>
+        <p>While the abstract mentions the increase in LLM usage, providing specific percentages for the growth observed in different fields would strengthen the impact.</p>
+        <div class="quote">"Our findings reveal a steady increase in LLM usage, with the largest and fastest growth observed in Computer Science papers." (Page 1)</div>
+        <p><strong>Rationale:</strong> Quantifying the findings would provide a more concrete understanding of the scale of LLM adoption in different fields.</p>
+        <p><strong>Implementation:</strong> Include specific percentage increases observed in Computer Science and other fields, e.g., &#39;up to X% in Computer Science compared to Y% in Mathematics&#39;.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on Implications</strong>
+        <p>The abstract could briefly mention the potential implications of the findings for scientific practices. This would broaden the context and highlight the study&#39;s significance.</p>
+        
+        <p><strong>Rationale:</strong> Highlighting the implications would underscore the importance of the research and its potential impact on the future of scientific writing.</p>
+        <p><strong>Implementation:</strong> Add a sentence briefly discussing the potential implications, e.g., &#39;These findings raise important questions about the future of academic writing and the role of LLMs in scientific research.&#39;</p>
+    </li>
+    
+    <li>
+        <strong>Specify LLM</strong>
+        <p>While the abstract mentions LLMs like ChatGPT, explicitly stating which LLM (e.g., GPT-3.5) was used in the study would enhance clarity and reproducibility.</p>
+        <div class="quote">"Recently, there has been immense speculation about how many people are using large language models (LLMs) like ChatGPT in their academic writing..." (Page 1)</div>
+        <p><strong>Rationale:</strong> Specifying the LLM used would provide crucial information for researchers interested in replicating or building upon the study.</p>
+        <p><strong>Implementation:</strong> Replace &quot;LLMs like ChatGPT&quot; with the specific LLM used, e.g., &quot;GPT-3.5&quot;.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Overview</h4>
+            <p>The introduction discusses the growing use of LLMs like ChatGPT in academic writing and the need to measure its prevalence. It highlights the challenges of detecting LLM-generated text at the individual level and emphasizes the importance of a large-scale analysis to understand the structural factors motivating LLM use and its impact on scientific publishing. The introduction also mentions concerns about accuracy, plagiarism, and ownership, leading some institutions to restrict LLM use in publications. Finally, it introduces the paper&#39;s goal: to conduct a systematic, large-scale analysis to quantify the prevalence of LLM-modified content across multiple academic platforms.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. The Challenge of Detection:</strong> Identifying LLM-generated text in individual papers is difficult due to the subtle nature of modifications, making large-scale analysis crucial.</li><li><strong>2. Importance of Large-Scale Analysis:</strong> Examining LLM use at scale helps uncover structural factors influencing its adoption and reveals subtle epistemic and linguistic shifts.</li><li><strong>3. Institutional Concerns and Restrictions:</strong> Concerns about accuracy, plagiarism, and ownership have led some institutions to restrict or ban LLM-generated content in publications.</li><li><strong>4. Focus on LLM-Modified Content:</strong> The study focuses on text substantially modified by LLMs, going beyond basic spelling and grammar edits, including summaries and prose generation from outlines.</li><li><strong>5. Scope of the Study:</strong> The paper aims to conduct the first systematic, large-scale analysis to quantify the prevalence of LLM-modified content across multiple academic platforms.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Contextual Background</strong>
+        <p>The introduction effectively sets the context by mentioning anecdotal examples of LLM use in papers and peer reviews, highlighting both the humor and concern surrounding this practice.</p>
+        <div class="quote">"Since the release of ChatGPT in late 2022, anecdotal examples of both published papers (Okunyt ˙e, 2023; Deguerin, 2024) and peer reviews (Oransky &amp; Marcus, 2024) which appear to be ChatGPT-generated have inspired humor and concern." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Justification for Large-Scale Analysis</strong>
+        <p>The introduction clearly explains the rationale for a large-scale analysis, emphasizing its importance in understanding structural motivations and capturing subtle shifts that individual-level analysis might miss.</p>
+        <div class="quote">"Applied to scientific publishing, the importance of this at-scale approach is two-fold: first, rather than looking at LLM-use as a type of rule-breaking on an individual level, we can begin to uncover structural circumstances which might motivate its use. Second, by examining LLM-use in academic publishing at-scale, we can capture epistemic and linguistic shifts, miniscule at the individual level, which become apparent with a birdseye view." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Research Goal</strong>
+        <p>The introduction clearly states the paper&#39;s objective: to conduct a systematic, large-scale analysis to quantify LLM-modified content. This provides a clear direction for the reader.</p>
+        <div class="quote">"We conduct the first systematic, large-scale analysis to quantify the prevalence of LLM-modified content across multiple academic platforms..." (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on the Definition of LLM-Modified</strong>
+        <p>While the introduction defines &quot;LLM-modified,&quot; providing more specific examples of what constitutes substantial modification would enhance clarity.</p>
+        <div class="quote">"Throughout this paper, we use the term “LLM-modified” to refer to text content substantially updated by ChatGPT beyond basic spelling and grammatical edits." (Page 2)</div>
+        <p><strong>Rationale:</strong> A more precise definition would help readers understand the scope of the analysis and the types of modifications being considered.</p>
+        <p><strong>Implementation:</strong> Include more concrete examples of substantial modifications, such as rewriting paragraphs, adding new sections, or significantly altering the argumentation.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Potential Benefits of LLMs</strong>
+        <p>While the introduction focuses on concerns, briefly acknowledging potential benefits of LLMs in scientific writing could provide a more balanced perspective.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging potential benefits would demonstrate a nuanced understanding of the issue and avoid presenting LLMs solely as a threat.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two acknowledging potential benefits, such as improved clarity, conciseness, or language editing, while still emphasizing the need to address the associated risks.</p>
+    </li>
+    
+    <li>
+        <strong>Strengthen the Connection to Later Sections</strong>
+        <p>The introduction could briefly preview the specific methods and datasets used in the study. This would create a smoother transition to the subsequent sections.</p>
+        
+        <p><strong>Rationale:</strong> Previewing the methods and datasets would provide a roadmap for the reader and enhance the overall flow of the paper.</p>
+        <p><strong>Implementation:</strong> Add a brief sentence mentioning the specific datasets (arXiv, bioRxiv, Nature portfolio) and the statistical framework used in the analysis.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 1</summary>
+        <p>This figure shows the estimated percentage of sentences in academic paper abstracts that were significantly changed by a Large Language Model (LLM) over time. It compares different subject areas like Computer Science, Electrical Engineering, Mathematics, Physics, Statistics from arXiv, bioRxiv, and Nature portfolio journals. There&#39;s a noticeable increase in LLM use after ChatGPT was released in late 2022, especially in Computer Science. Think of it like measuring how much of a cake was made by a machine versus a human baker, but for sentences in research papers.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 1: Estimated Fraction of LLM-Modified Sentences across Academic Writing Venues over Time."</p>
+            <p><strong>Context:</strong> This figure displays the fraction (α) of sentences estimated to have been substantially modified by LLM in abstracts from various academic writing venues.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial because it directly addresses the main research question: how much are LLMs being used in scientific writing? It shows a clear trend of increasing LLM use after ChatGPT&#39;s release.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The y-axis label &#39;Estimated alpha&#39; could be more descriptive, like &#39;Estimated Fraction of LLM-Modified Sentences&#39;.</li><li>The figure could benefit from a title summarizing the main takeaway, such as &#39;Increasing LLM Use in Scientific Abstracts After ChatGPT Release&#39;.</li><li>Using a logarithmic scale for the y-axis might better visualize the changes, especially the smaller percentages before ChatGPT.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure focuses on abstracts, but it would be helpful to see similar data for other sections of papers.</li><li>The figure doesn&#39;t show the actual number of papers analyzed, which would provide more context.</li><li>It would be interesting to see a breakdown of LLM use within specific subfields of Computer Science.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Maximum Estimated Alpha (Computer Science):</strong> 0.175 fraction</li><li><strong>Minimum Estimated Alpha (Mathematics):</strong> 0.049 fraction</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 7</summary>
+        <p>This figure is similar to Figure 1, but instead of abstracts, it looks at the introduction sections of papers. It shows the estimated percentage of sentences modified by LLMs over time, again comparing different academic areas. It also highlights the increase after ChatGPT&#39;s launch, mirroring the trend seen in abstracts. It&#39;s like comparing the machine-made versus human-made parts of a different layer of the cake.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 7: Estimated Fraction of LLM-Modified Sentences in Introductions Across Academic Writing Venues Over Time."</p>
+            <p><strong>Context:</strong> Further analysis of paper introductions is presented in Figure 7.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure adds to the main finding by showing that the increased use of LLMs isn&#39;t limited to abstracts but extends to introductions as well. This strengthens the argument for widespread LLM adoption in scientific writing.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Similar to Figure 1, the y-axis label could be more descriptive and a summarizing title could be added.</li><li>A direct comparison with Figure 1 (e.g., a combined plot or side-by-side presentation) would highlight the similarities and differences between abstracts and introductions.</li><li>A logarithmic scale for the y-axis could improve visualization of smaller percentages.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The exclusion of bioRxiv introductions due to data limitations should be explicitly mentioned in the figure caption.</li><li>Providing the actual number of papers analyzed would enhance the context.</li><li>A breakdown of LLM use within specific subfields, especially in Computer Science, would be informative.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Maximum Estimated Alpha (Computer Science):</strong> 0.155 fraction</li><li><strong>Minimum Estimated Alpha (Mathematics):</strong> 0.039 fraction</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>Related Work</h3>
+            
+            <h4>Overview</h4>
+            <p>This section discusses existing methods for detecting LLM-generated text, including zero-shot and training-based approaches. It highlights the limitations of these methods, such as overfitting, vulnerability to attacks, and bias. The section also mentions LLM watermarking as a detection method. Finally, it emphasizes the advantage of the distributional GPT quantification framework used in this paper, which estimates the fraction of LLM-modified content at the population level, avoiding the need to classify individual documents.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Zero-Shot Detection:</strong> These methods rely on statistical signatures of machine-generated content, but face challenges like needing access to LLM internals and vulnerability to adversarial attacks.</li><li><strong>2. Training-Based Detection:</strong> These methods train classifiers on human and LLM-generated text, but suffer from overfitting, bias, and questionable reliability.</li><li><strong>3. LLM Watermarking:</strong> This technique embeds imperceptible signals into the text for detection, but requires the model owner&#39;s involvement.</li><li><strong>4. Distributional GPT Quantification Framework:</strong> This framework, used in the paper, estimates the fraction of LLM-modified content at the population level, offering advantages in stability, accuracy, and computational efficiency.</li><li><strong>5. Limitations of Existing Methods:</strong> The section highlights the limitations of current detection methods, justifying the use of the distributional framework.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Overview</strong>
+        <p>The section provides a good overview of various LLM detection methods, including zero-shot, training-based, and watermarking techniques. This breadth demonstrates a thorough understanding of the field.</p>
+        <div class="quote">"Various methods have been proposed for detecting LLM-modified text, including zero-shot approaches...and training-based methods..." (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Critical Evaluation</strong>
+        <p>The section critically evaluates the limitations of existing methods, highlighting their weaknesses and justifying the need for a different approach. This critical perspective strengthens the paper&#39;s argument.</p>
+        <div class="quote">"However, these approaches face challenges such as the need for access to LLM internals, overfitting to training data and language models, vulnerability to adversarial attacks..." (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Justification for Chosen Method</strong>
+        <p>The section clearly explains why the distributional GPT quantification framework is chosen, emphasizing its advantages over existing methods. This justification reinforces the rationale for the study&#39;s methodology.</p>
+        <div class="quote">"In this study, we apply the recently proposed distributional GPT quantification framework (Liang et al., 2024), which estimates the fraction of LLM-modified content in a text corpus at the population level, circumventing the need for classifying individual documents or sentences and improving upon the stability, accuracy, and computational efficiency of existing approaches." (Page 4)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Elaborate on Specific Watermarking Techniques</strong>
+        <p>While watermarking is mentioned, briefly discussing specific techniques would provide a more complete picture.</p>
+        <div class="quote">"LLM watermarking. Text watermarking introduces a method to detect AI-modified text by embedding an imperceptible signal, known as a watermark, directly into the text." (Page 24)</div>
+        <p><strong>Rationale:</strong> Elaborating on specific techniques would enhance the reader&#39;s understanding of watermarking and its potential for LLM detection.</p>
+        <p><strong>Implementation:</strong> Briefly describe different watermarking methods, such as synonym substitution, syntactic restructuring, or embedding watermarks in the decoding process.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Ethical Implications of Detection Methods</strong>
+        <p>The section could briefly address the ethical implications of using LLM detection methods, particularly regarding potential misuse or bias.</p>
+        
+        <p><strong>Rationale:</strong> Discussing ethical implications would demonstrate a responsible approach to the topic and acknowledge the potential societal impact of these technologies.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two discussing potential ethical concerns, such as false accusations of plagiarism or discriminatory use of detection tools.</p>
+    </li>
+    
+    <li>
+        <strong>Provide More Context on the Distributional Framework</strong>
+        <p>While the advantages of the distributional framework are mentioned, providing a more concise explanation of how it works would be beneficial.</p>
+        <div class="quote">"...which estimates the fraction of LLM-modified content in a text corpus at the population level..." (Page 4)</div>
+        <p><strong>Rationale:</strong> A brief explanation of the framework&#39;s underlying principles would enhance the reader&#39;s understanding of its strengths and limitations.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two summarizing the core idea behind the distributional framework, such as its focus on population-level statistics and its ability to handle temporal distribution shifts.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>Background: the distributional LLM quantification framework</h3>
+            
+            <h4>Overview</h4>
+            <p>This section describes the distributional LLM quantification framework adapted from Liang et al. (2024). This framework estimates the proportion of AI-modified content in a corpus of documents. It works by comparing the probability distributions of words in human-written and LLM-modified documents. The framework doesn&#39;t analyze individual documents but looks at word usage patterns across the entire collection to estimate the overall fraction of AI-influenced text.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Problem Formulation:</strong> Defines the problem as estimating the fraction (alpha) of AI-modified documents in a corpus, represented as a mixture of human-written and LLM-modified probability distributions.</li><li><strong>2. Parameterization:</strong> Uses the probabilities of specific words appearing in human and LLM-generated text to distinguish between the two. This involves selecting a set of words and calculating their occurrence probabilities in both types of documents.</li><li><strong>3. Estimation:</strong> Estimates these word probabilities using separate collections of known human-written and LLM-modified documents. This step involves calculating how often each chosen word appears in each type of document.</li><li><strong>4. Inference:</strong> Estimates the fraction (alpha) by finding the value that best explains the observed word frequencies in the mixed corpus. This uses a statistical method called maximum likelihood estimation.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Problem Definition</strong>
+        <p>The section starts by clearly defining the problem of estimating the fraction of AI-modified documents, setting the stage for the framework description.</p>
+        <div class="quote">"Let P and Q be the probability distributions of human-written and LLM-modified documents, respectively. The mixture distribution is given by Dα(X) = (1 − α)P (x) + αQ(x), where α is the fraction of AI-modified documents. The goal is to estimate α based on observed documents {Xi}N i=1 ∼ Dα." (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Step-by-Step Explanation</strong>
+        <p>The framework is explained in a clear, step-by-step manner, making it easy to follow the logic and understand each component.</p>
+        <div class="quote">"The framework consists of the following steps: 1. Problem formulation: ... 2. Parameterization: ... 3. Estimation: ... 4. Inference: ..." (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Mathematical Formulation</strong>
+        <p>The use of mathematical equations provides a precise and rigorous description of the framework, allowing for a clear understanding of the underlying calculations.</p>
+        <div class="quote">"Dα(X) = (1 − α)P (x) + αQ(x)" (Page 4)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Illustrative Example</strong>
+        <p>While the mathematical formulation is precise, a simple example would make the framework more accessible to a broader audience.</p>
+        
+        <p><strong>Rationale:</strong> An example would help readers grasp the practical application of the framework and visualize how it works with real data.</p>
+        <p><strong>Implementation:</strong> Include a simple example with a small set of words and documents to illustrate the calculation of alpha.</p>
+    </li>
+    
+    <li>
+        <strong>Explain Choice of Tokens</strong>
+        <p>The section mentions using token occurrence probabilities but doesn&#39;t explain how the tokens (words) are chosen. Clarifying this would strengthen the methodology.</p>
+        <div class="quote">"To make α identifiable, the framework models the distributions of token occurrences in human-written and LLM-modified documents, denoted as PT and QT, respectively, for a chosen list of tokens T = {ti}M i=1." (Page 4)</div>
+        <p><strong>Rationale:</strong> Explaining the token selection process would address potential biases and improve the transparency of the method.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two explaining how the tokens are selected, considering factors like frequency, distinctiveness, or relevance to the domain.</p>
+    </li>
+    
+    <li>
+        <strong>Connect to Implementation</strong>
+        <p>The section could briefly mention how the framework is implemented in the study, creating a smoother transition to the next section.</p>
+        
+        <p><strong>Rationale:</strong> Connecting the theoretical framework to its practical implementation would enhance the overall coherence of the paper.</p>
+        <p><strong>Implementation:</strong> Add a sentence briefly mentioning the specific implementation details, such as the choice of programming language or software libraries used.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>Implementation and Validations</h3>
+            
+            <h4>Overview</h4>
+            <p>This section details the implementation of the distributional LLM quantification framework and the validation process used in the study. The authors describe the data collection process from arXiv, bioRxiv, and the Nature portfolio, sampling up to 2,000 papers per month. They explain how the data is split for training and validation, how the model is fitted, and the evaluation metrics used. The validation process involved using pre-ChatGPT papers to assess the model&#39;s accuracy in estimating the proportion of LLM-modified content. The results showed good performance, with low prediction error across different levels of LLM modification.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Data Collection:</strong> Data was collected from arXiv, bioRxiv, and 15 Nature portfolio journals, sampling up to 2,000 papers per month from January 2020 to February 2024.</li><li><strong>2. Data Split and Model Fitting:</strong> The data was split temporally, with data from 2020 used for training and data from 2021 onwards used for validation and inference. Separate models were fitted for abstracts and introductions for each major category.</li><li><strong>3. Model Evaluation:</strong> The model&#39;s accuracy was evaluated using pre-ChatGPT papers (before November 2022) as validation data. Validation sets were constructed with varying proportions of LLM-modified content.</li><li><strong>4. Validation Results:</strong> The validation showed good performance, with a prediction error consistently less than 3.5% across different levels of LLM modification, using various vocabulary subsets (full vocabulary, adjectives, adverbs, and verbs).</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Data Sources</strong>
+        <p>The section clearly identifies the data sources (arXiv, bioRxiv, Nature portfolio) and the sampling strategy (2,000 papers per month), providing transparency and reproducibility.</p>
+        <div class="quote">"We collect data from three sources: arXiv, bioRxiv, and 15 journals from the Nature portfolio. For each source, we randomly sample up to 2,000 papers per month from January 2020 to February 2024." (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Well-Defined Validation Process</strong>
+        <p>The validation process is well-described, including the temporal data split, the construction of validation sets with varying LLM modification proportions, and the use of pre-ChatGPT data.</p>
+        <div class="quote">"To evaluate model accuracy and calibration under temporal distribution shift, we use 3,000 papers from January 1, 2022, to November 29, 2022, a time period prior to the release of ChatGPT, as the validation data." (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Robust Validation Results</strong>
+        <p>The validation results demonstrate the model&#39;s good performance with low prediction error, strengthening the reliability of the study&#39;s findings.</p>
+        <div class="quote">"Full vocabulary, adjectives, adverbs, and verbs all performed well in our application, with a prediction error consistently less than 3.5% at the population level across various ground truth α values (Figure 3)." (Page 5)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Clarify Introduction Section Focus</strong>
+        <p>The section mentions focusing on introduction sections but doesn&#39;t fully explain why. Providing a stronger rationale would improve the justification.</p>
+        <div class="quote">"We focused on the introduction sections for the main texts, as the introduction was the most consistently and commonly occurring section across diverse categories of papers." (Page 5)</div>
+        <p><strong>Rationale:</strong> A clearer explanation of the focus on introductions would strengthen the methodological choices.</p>
+        <p><strong>Implementation:</strong> Elaborate on why introductions are more suitable than other sections, such as abstracts or methods, for this specific analysis. Consider factors like length, content consistency, or relevance to LLM usage.</p>
+    </li>
+    
+    <li>
+        <strong>Explain Model Fitting Process in Detail</strong>
+        <p>The section mentions fitting separate models but lacks details about the specific fitting process. Providing more information would enhance reproducibility.</p>
+        <div class="quote">"We fit the model with data from 2020, and use data from January 2021 onwards for validation and inference. We fit separate models for abstracts and introductions for each major category." (Page 5)</div>
+        <p><strong>Rationale:</strong> A more detailed description of the model fitting process would allow other researchers to replicate the study and validate the findings.</p>
+        <p><strong>Implementation:</strong> Describe the specific algorithms, parameters, and software used for model fitting. Explain how the models were trained and optimized, including any hyperparameter tuning or cross-validation procedures.</p>
+    </li>
+    
+    <li>
+        <strong>Provide More Detail on LLM-Generated Corpus Creation</strong>
+        <p>While Section 3 is referenced, briefly summarizing the process of generating the LLM-modified corpus in this section would improve clarity and flow.</p>
+        <div class="quote">"The procedure for generating the LLM-generated corpus data is described in Section § 3." (Page 5)</div>
+        <p><strong>Rationale:</strong> Repeating the key aspects of the LLM-generated corpus creation would make this section more self-contained and easier to understand.</p>
+        <p><strong>Implementation:</strong> Summarize the two-stage approach used to generate LLM-produced text, including the abstractive summarization and paragraph generation steps. Briefly mention the prompts used and the rationale behind this approach.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 3</summary>
+        <p>This figure validates how well the model estimates the fraction of LLM-modified content (alpha) when there&#39;s a time gap between the training data (up to 2020) and the validation data (from early 2022, before ChatGPT). Each small graph within the figure represents a different academic area (like Computer Science, Physics, etc.) and shows how the model&#39;s estimate of alpha compares to the actual alpha. It uses different sets of words (full vocabulary, adjectives, adverbs, verbs) to see which works best. Imagine you&#39;re trying to guess how much of a cookie is chocolate chips (alpha) based on how sweet it tastes. This figure is like checking if your sweetness-based guess is accurate by comparing it to cookies with known chocolate chip percentages.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 3: Fine-grained Validation of Model Performance Under Temporal Distribution Shift."</p>
+            <p><strong>Context:</strong> We construct validation sets with LLM-modified content proportions (α) ranging from 0% to 25%, in 5% increments, and compared the model’s estimated α with the ground truth α (Figure 3).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it shows how reliable the model is, even when dealing with data from different time periods. This reliability is key for trusting the model&#39;s estimates of LLM use over time.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is a bit crowded with 13 small graphs. Separating them into two figures, one for abstracts and one for introductions, might improve readability.</li><li>The labels on the x and y axes could be larger for easier reading.</li><li>The caption could explain what the different colors of the bars represent (full vocabulary, adjectives, etc.).</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the caption mentions a prediction error less than 3.5%, the figure itself doesn&#39;t visually represent this error. Adding a line or shaded area to represent this threshold would be helpful.</li><li>The figure doesn&#39;t show how the model performs with data after ChatGPT&#39;s release. Including a similar validation with post-ChatGPT data would strengthen the analysis.</li><li>The caption mentions excluding bioRxiv introductions due to data limitations. Explaining this limitation in more detail (e.g., why the data was unavailable) would be helpful.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Maximum Estimation Error:</strong> 0.035 fraction</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-5" class="section">
+            <h3>Main Results and Findings</h3>
+            
+            <h4>Overview</h4>
+            <p>This section presents the main findings of the study regarding the prevalence and trends of LLM-modified content in scientific writing. Key findings include a steady increase in LLM usage after the release of ChatGPT, with the most significant growth in Computer Science. The analysis also reveals correlations between LLM usage and factors like first-author preprint posting frequency, paper similarity (indicating crowded research areas), and paper length.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Temporal Trends:</strong> The study observes a steady increase in LLM-modified content in both abstracts and introductions of scientific papers, with the largest increase in Computer Science.</li><li><strong>2. Preprint Frequency Correlation:</strong> Researchers who post more preprints on arXiv tend to have a higher fraction of LLM-modified content in their papers.</li><li><strong>3. Paper Similarity Correlation:</strong> Papers in more crowded research areas (measured by similarity to neighboring papers) exhibit higher LLM usage.</li><li><strong>4. Paper Length Correlation:</strong> Shorter papers tend to have a higher fraction of LLM-modified content than longer papers.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Presentation of Results</strong>
+        <p>The results are presented clearly, with specific data points and trends highlighted for each key finding. This clarity makes the findings easily understandable.</p>
+        <div class="quote">"Our findings reveal a steady increase in the fraction of AI-modified content (α) in both the abstracts (Figure 1) and the introductions (Figure 7), with the largest and fastest growth observed in Computer Science papers." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Use of Visualizations</strong>
+        <p>The section effectively uses figures (referenced but not included in the text content analysis) to illustrate the key findings, making the data more accessible and engaging.</p>
+        <div class="quote">"Our findings reveal a steady increase in the fraction of AI-modified content (α) in both the abstracts (Figure 1) and the introductions (Figure 7)..." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Specific Data Points</strong>
+        <p>The section provides specific data points, such as the estimated α values for different fields and time points, which adds weight and credibility to the findings.</p>
+        <div class="quote">"By February 2024, the estimated α for Computer Science had increased to 17.5% for abstracts and 15.5% for introductions." (Page 7)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Discuss Potential Confounding Factors</strong>
+        <p>While the section presents correlations, it would be beneficial to discuss potential confounding factors that might influence the observed relationships. For example, the correlation between preprint frequency and LLM usage could be influenced by other factors related to research productivity or field-specific practices.</p>
+        <div class="quote">"Our results suggest that researchers posting more preprints tend to utilize LLMs more extensively in their writing." (Page 7)</div>
+        <p><strong>Rationale:</strong> Addressing potential confounding factors would strengthen the analysis and provide a more nuanced interpretation of the results.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing potential confounding factors for each correlation presented. For example, consider factors like career stage, research area, or institutional policies that might influence both preprint frequency and LLM usage.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on the Implications of Paper Similarity Findings</strong>
+        <p>The section notes the correlation between paper similarity and LLM usage but doesn&#39;t fully explore its implications. Discussing the potential impact on research diversity and originality would be valuable.</p>
+        <div class="quote">"There are several ways to interpret these findings. First, LLM-use in writing could cause the similarity in writing or content." (Page 8)</div>
+        <p><strong>Rationale:</strong> Exploring the implications of increased similarity would highlight the potential risks of widespread LLM adoption for the advancement of scientific knowledge.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing the potential consequences of increased similarity, such as reduced diversity of research approaches, stifled innovation, or increased difficulty in identifying truly novel contributions.</p>
+    </li>
+    
+    <li>
+        <strong>Provide More Context for Paper Length Correlation</strong>
+        <p>The section mentions the correlation between shorter papers and higher LLM usage but could benefit from more context. Discussing the potential reasons behind this correlation, such as time constraints or the nature of shorter papers (e.g., conference papers vs. journal articles), would enhance the analysis.</p>
+        <div class="quote">"Shorter papers consistently showed higher LLM-modification compared to longer papers, which may indicate that researchers working under time constraints are more likely to rely on AI for writing assistance." (Page 9)</div>
+        <p><strong>Rationale:</strong> Providing more context would help readers understand the factors contributing to the observed correlation and its implications for different types of scientific publications.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing potential reasons for the correlation, considering factors like time pressure, page limits for conference papers, or the nature of research presented in shorter versus longer papers. Also, consider exploring whether the use of LLMs in shorter papers is primarily for generating core content or for polishing existing text.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 4</summary>
+        <p>This figure examines whether authors who post more preprints on arXiv also tend to have a higher percentage of LLM-modified content in their Computer Science papers. The papers are split into two groups based on how many preprints the first author published in a year: two or fewer, or three or more. The figure then shows the estimated fraction of LLM-modified sentences in both abstracts and introductions for each group over time. It&#39;s like checking if students who write more practice essays also use grammar-checking software more often.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 4: Papers authored by first authors who post preprints more frequently tend to have a higher fraction of LLM-modified content."</p>
+            <p><strong>Context:</strong> Papers in arXiv Computer Science are stratified into two groups based on the preprint posting frequency of their first author, as measured by the number of first-authored preprints in the year.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure explores a potential link between preprint posting frequency and LLM use, suggesting that authors who publish more preprints might be more inclined to use LLMs for writing assistance.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could benefit from a more descriptive title, such as &#39;LLM Use and Preprint Posting Frequency&#39;.</li><li>The x-axis labels could be made more readable by shortening the time period representations (e.g., &#39;22.1-3&#39; instead of &#39;2022.1-3&#39;).</li><li>Adding a legend directly on the graphs would improve clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure only shows correlation, not causation. It doesn&#39;t prove that posting more preprints *causes* higher LLM use.</li><li>Other factors, such as the specific research area or the author&#39;s experience, could influence both preprint frequency and LLM use.</li><li>The use of 2023 author groupings for 2024 data, due to incomplete data, should be more clearly explained and justified in the caption.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Estimated Alpha (Abstracts, &gt;=3 preprints, Feb 2024):</strong> 0.193 fraction</li><li><strong>Estimated Alpha (Abstracts, &lt;=2 preprints, Feb 2024):</strong> 0.156 fraction</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 5</summary>
+        <p>This figure investigates whether papers in more &#39;crowded&#39; research areas (those with abstracts more similar to other abstracts) have more LLM-modified content. They measure similarity by converting abstracts into numerical vectors and calculating the distance between these vectors. Papers are grouped into &#39;more similar&#39; (closer vectors) and &#39;less similar&#39; (further vectors). The figure then shows how LLM use changes over time for these two groups. Imagine research papers as points on a map; closer points represent similar research. This figure checks if points clustered together have more LLM use.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 5: Papers in more crowded research areas tend to have a higher fraction of LLM-modified content."</p>
+            <p><strong>Context:</strong> Papers in arXiv Computer Science are divided into two groups based on their abstract&#39;s embedding distance to their closest peer: papers more similar to their closest peer (below median distance) and papers less similar to their closest peer (above median distance).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure explores the relationship between research area &#39;crowdedness&#39; and LLM use, suggesting that LLM use might be higher in areas where papers are more similar to each other.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>A more descriptive title, such as &#39;LLM Use and Research Area Crowdedness&#39;, would be beneficial.</li><li>Shortening the x-axis labels and adding a legend directly on the graphs would improve readability.</li><li>Using different colors or patterns for the bars representing &#39;more similar&#39; and &#39;less similar&#39; papers would enhance visual distinction.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure only shows correlation, not causation. It&#39;s unclear whether LLM use *causes* similarity or if similar research areas are more prone to LLM use.</li><li>The method for calculating similarity (embedding distance) could be explained more clearly for a broader audience.</li><li>The implications of the findings, such as potential homogenization of scientific writing, could be discussed further.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Estimated Alpha (More similar, Feb 2024):</strong> 0.222 fraction</li><li><strong>Estimated Alpha (Less similar, Feb 2024):</strong> 0.147 fraction</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 6</summary>
+        <p>This figure explores if shorter papers tend to have more LLM-modified content. arXiv Computer Science papers are divided into two groups: those shorter than 5,000 words and those longer. The figure shows the estimated LLM use in abstracts and introductions for both groups over time. It&#39;s like checking if shorter student essays use grammar-checking tools more than longer essays.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 6: Shorter papers tend to have a higher fraction of LLM-modified content."</p>
+            <p><strong>Context:</strong> arXiv Computer Science papers are stratified by their full text word count, including appendices, into two bins: below or above 5,000 words (the rounded median).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure investigates the relationship between paper length and LLM use, suggesting that shorter papers might have a higher proportion of LLM-generated content.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>A more descriptive title, such as &#39;LLM Use and Paper Length&#39;, would improve clarity.</li><li>The x-axis labels could be shortened for better readability.</li><li>Adding a legend directly on the graphs would be helpful.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Correlation does not equal causation. Shorter papers might have more LLM use, but the figure doesn&#39;t explain why.</li><li>Other factors, like the paper&#39;s topic or the author&#39;s resources, could influence both length and LLM use.</li><li>The caption mentions a robustness check and limitations for cs.CL. Explaining these in more detail would strengthen the analysis.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Estimated Alpha (Shorter papers, Feb 2024):</strong> 0.177 fraction</li><li><strong>Estimated Alpha (Longer papers, Feb 2024):</strong> 0.136 fraction</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-6" class="section">
+            <h3>Discussion</h3>
+            
+            <h4>Overview</h4>
+            <p>This section discusses the key findings of the study, highlighting the increase in LLM-modified content in academic writing since the release of ChatGPT, particularly in Computer Science. It also summarizes the correlations found between LLM usage and factors like preprint posting frequency, research area crowdedness, and paper length. The discussion briefly touches on potential risks associated with LLM use in scientific publishing and calls for further research on promoting transparency and diversity in academic writing.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Increased LLM Usage:</strong> The study found a sharp increase in LLM-modified content after ChatGPT&#39;s release, especially in Computer Science, potentially due to researchers&#39; familiarity with LLMs and pressure to publish quickly.</li><li><strong>2. Correlation with Preprint Frequency:</strong> Authors who post preprints more frequently tend to have higher LLM usage, possibly indicating a desire to accelerate the writing process in competitive fields.</li><li><strong>3. Correlation with Research Area Crowdedness:</strong> Papers in more crowded research areas show higher LLM modification, suggesting either LLM-induced similarity or higher LLM use in competitive subfields.</li><li><strong>4. Correlation with Paper Length:</strong> Shorter papers exhibit higher LLM modification, potentially indicating that researchers with time constraints rely more on AI assistance.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Concise Summary of Findings</strong>
+        <p>The discussion effectively summarizes the main findings of the study in a clear and concise manner, making it easy for readers to grasp the key takeaways.</p>
+        <div class="quote">"Our findings show a sharp increase in the estimated fraction of LLM-modified content in academic writing beginning about five months after the release of ChatGPT, with the fastest growth observed in Computer Science papers." (Page 9)</div>
+    </li>
+    
+    <li>
+        <strong>Contextualization of Findings</strong>
+        <p>The discussion provides context for the findings, linking the increased LLM usage in Computer Science to factors like researchers&#39; familiarity with LLMs and the pressure to publish quickly.</p>
+        <div class="quote">"This trend may be partially explained by Computer Science researchers’ familiarity with and access to large language models. Additionally, the fast-paced nature of LLM research and the associated pressure to publish quickly may incentivize the use of LLM writing assistance (Foster et al., 2015)." (Page 9)</div>
+    </li>
+    
+    <li>
+        <strong>Highlights Potential Implications</strong>
+        <p>The discussion briefly touches on the potential risks associated with widespread LLM use in scientific publishing, raising important questions about the security and independence of scientific practice.</p>
+        <div class="quote">"If the majority of modification comes from an LLM owned by a private company, there could be risks to the security and independence of scientific practice." (Page 10)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on Potential Risks</strong>
+        <p>While the discussion mentions potential risks, it would be beneficial to elaborate on these risks in more detail. For example, the discussion could explore the potential for bias in LLM-generated text, the ethical implications of using LLMs without proper attribution, and the potential impact on the integrity of the scientific record.</p>
+        <div class="quote">"If the majority of modification comes from an LLM owned by a private company, there could be risks to the security and independence of scientific practice." (Page 10)</div>
+        <p><strong>Rationale:</strong> A more detailed discussion of the risks would provide a more comprehensive understanding of the potential downsides of LLM use in scientific writing and inform future discussions on responsible AI practices.</p>
+        <p><strong>Implementation:</strong> Add a paragraph specifically addressing the potential risks of LLM use, including bias, lack of transparency, and ethical concerns related to authorship and intellectual property.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Mitigation Strategies</strong>
+        <p>The discussion could benefit from a discussion of potential mitigation strategies to address the identified risks. This could include guidelines for responsible LLM use, transparency requirements for authors, or the development of more sophisticated detection methods.</p>
+        
+        <p><strong>Rationale:</strong> Discussing mitigation strategies would provide a more proactive approach to the issue and offer concrete steps for promoting responsible LLM use in scientific writing.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing potential mitigation strategies, such as guidelines for transparent LLM use, requirements for disclosing LLM assistance in publications, or the development of tools and methods for detecting and mitigating bias in LLM-generated text.</p>
+    </li>
+    
+    <li>
+        <strong>Strengthen Call for Future Research</strong>
+        <p>While the discussion calls for further research, it would be beneficial to be more specific about the directions future research should take. This could include investigating the impact of LLMs on specific aspects of scientific writing, exploring the effectiveness of different detection methods, or developing guidelines for responsible LLM use.</p>
+        <div class="quote">"We hope our results inspire further studies of widespread LLM-modified text and conversations about how to promote transparent, epistemically diverse, accurate, and independent scientific publishing." (Page 10)</div>
+        <p><strong>Rationale:</strong> A more specific call for future research would provide a clearer roadmap for researchers interested in contributing to this important area of study.</p>
+        <p><strong>Implementation:</strong> Expand on the call for future research by outlining specific research questions, such as: How do LLMs impact the quality and originality of scientific writing? What are the most effective methods for detecting and mitigating bias in LLM-generated text? How can we develop guidelines and policies for responsible LLM use in academic publishing?</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-7" class="section">
+            <h3>Limitations</h3>
+            
+            <h4>Overview</h4>
+            <p>This section acknowledges the limitations of the study. The focus on ChatGPT, while being the dominant LLM, excludes other large language models used in academic writing. The study also addresses the potential for false positives in identifying LLM-generated text, particularly among non-native English writers, but asserts that the low false positive rate in 2022 supports the validity of their findings. Finally, the section recognizes that the observed correlations between LLM usage and paper characteristics are not necessarily causal and suggests further research to explore these relationships.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Focus on ChatGPT:</strong> The study primarily focuses on ChatGPT, acknowledging that other LLMs exist and are used for academic writing.</li><li><strong>2. Potential for False Positives:</strong> The possibility of misidentifying non-native English writing as LLM-generated is acknowledged, but the study&#39;s 2022 data suggests a low false positive rate.</li><li><strong>3. Correlation vs. Causation:</strong> The study recognizes that the observed relationships between LLM usage and paper characteristics (preprint frequency, similarity, length) are correlational, not necessarily causal.</li><li><strong>4. Future Research:</strong> The section suggests future research to explore causal relationships and other factors influencing LLM usage in academic writing.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Acknowledges LLM Diversity</strong>
+        <p>The section explicitly recognizes that ChatGPT is not the only LLM used for academic writing, demonstrating awareness of the broader landscape of language models.</p>
+        <div class="quote">"While our study focused on ChatGPT, which accounts for more than three-quarters of worldwide internet traffic in the category (Van Rossum, 2024), we acknowledge that there are other large language models used for assisting academic writing." (Page 10)</div>
+    </li>
+    
+    <li>
+        <strong>Addresses False Positives</strong>
+        <p>The section directly addresses the concern of false positives, particularly regarding non-native English writers, and provides evidence from their 2022 data to support the validity of their findings.</p>
+        <div class="quote">"Furthermore, while Liang et al. (2023a) demonstrate that GPT-detection methods can falsely identify the writing of language learners as LLM-generated, our results showed that consistently low false positives estimates of α in 2022, which contains a significant fraction of texts written by multilingual scholars." (Page 10)</div>
+    </li>
+    
+    <li>
+        <strong>Acknowledges Correlation vs. Causation</strong>
+        <p>The section clearly distinguishes between correlation and causation, acknowledging that the observed relationships between LLM usage and paper characteristics might be influenced by other factors.</p>
+        <div class="quote">"Finally, the associations that we observe between LLM usage and paper characteristics are correlations which could be affected by other factors such as research topics." (Page 10)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Discuss Potential Impact of Other LLMs</strong>
+        <p>While the limitation of focusing on ChatGPT is acknowledged, the section could briefly discuss the potential impact of including other LLMs in the analysis. This would provide a more nuanced perspective on the generalizability of the findings.</p>
+        <div class="quote">"While our study focused on ChatGPT...we acknowledge that there are other large language models used for assisting academic writing." (Page 10)</div>
+        <p><strong>Rationale:</strong> Discussing the potential influence of other LLMs would strengthen the discussion of the study&#39;s limitations and provide insights for future research.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two speculating on how the results might change if other popular LLMs were included in the analysis. For example, consider whether the observed trends might be amplified or attenuated if different models were considered.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on Future Research Directions</strong>
+        <p>While future research is mentioned, providing more specific research questions or directions would be beneficial. This would guide future work and provide a clearer roadmap for addressing the limitations.</p>
+        <div class="quote">"More causal studies is an important direction for future work." (Page 10)</div>
+        <p><strong>Rationale:</strong> More specific suggestions for future research would make the limitations section more actionable and encourage further investigation.</p>
+        <p><strong>Implementation:</strong> Expand on the mention of future research by suggesting specific research questions or methodologies. For example, suggest exploring causal relationships using experimental designs or quasi-experimental methods with control groups. Also, suggest investigating the impact of specific LLMs other than ChatGPT.</p>
+    </li>
+    
+    <li>
+        <strong>Quantify the Limitations</strong>
+        <p>Where possible, quantifying the limitations would provide a more concrete understanding of their potential impact. For example, estimating the usage share of other LLMs compared to ChatGPT would provide a clearer picture of the scope of this limitation.</p>
+        <div class="quote">"While our study focused on ChatGPT, which accounts for more than three-quarters of worldwide internet traffic in the category (Van Rossum, 2024)..." (Page 10)</div>
+        <p><strong>Rationale:</strong> Quantifying the limitations would provide a more precise assessment of their potential influence on the study&#39;s findings.</p>
+        <p><strong>Implementation:</strong> If possible, provide estimates or data on the usage share of other LLMs in academic writing. This would help contextualize the focus on ChatGPT and quantify the potential impact of excluding other models.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-8" class="section">
+            <h3>Estimated Fraction of LLM-Modified Sentences in Introductions</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section presents Figure 7, a graph illustrating the estimated fraction of sentences modified by LLMs in the introductions of scientific papers across different academic venues over time. The inclusion of introductions complements the analysis of abstracts presented earlier in the paper (Figure 1). The figure shows trends similar to those observed in abstracts, with a notable increase in LLM usage after the launch of ChatGPT, especially in Computer Science. BioRxiv introductions were not included due to the unavailability of bulk PDF downloads.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Focus on Introductions:</strong> This section specifically analyzes LLM modification in introductions, complementing the analysis of abstracts presented earlier in the paper.</li><li><strong>2. Trend Consistency:</strong> The observed trends in LLM usage in introductions are consistent with those found in abstracts, showing a similar increase after the release of ChatGPT.</li><li><strong>3. Computer Science Dominance:</strong> As with abstracts, Computer Science papers show the most significant increase in LLM-modified sentences in introductions.</li><li><strong>4. BioRxiv Exclusion:</strong> Introductions from BioRxiv are excluded from this analysis due to the lack of bulk PDF download access.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Complementary Analysis</strong>
+        <p>Analyzing introductions alongside abstracts provides a more comprehensive view of LLM usage in scientific writing, strengthening the overall analysis.</p>
+        <div class="quote">"We focused on the introduction sections for the main texts, as the introduction was the most consistently and commonly occurring section across different categories of papers." (Page 16)</div>
+    </li>
+    
+    <li>
+        <strong>Consistent Findings</strong>
+        <p>The consistent trends observed in both abstracts and introductions reinforce the validity and generalizability of the findings regarding the increasing use of LLMs.</p>
+        <div class="quote">"We found that the results are consistent with those observed in abstracts (Figure 1)." (Page 16)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Justification for BioRxiv Exclusion</strong>
+        <p>The clear explanation for excluding BioRxiv introductions due to data limitations enhances transparency and addresses potential questions about the scope of the analysis.</p>
+        <div class="quote">"We did not include bioRxiv introductions as there is no bulk download of PDFs available." (Page 16)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Direct Comparison with Abstract Analysis</strong>
+        <p>While consistency is mentioned, a direct visual or numerical comparison between the results for abstracts and introductions would strengthen the claim of similar trends.</p>
+        <div class="quote">"We found that the results are consistent with those observed in abstracts (Figure 1)." (Page 16)</div>
+        <p><strong>Rationale:</strong> A direct comparison would provide more compelling evidence for the consistent trends and allow readers to easily identify any subtle differences between the two sections.</p>
+        <p><strong>Implementation:</strong> Include a table or a combined plot showing the estimated alpha values for both abstracts and introductions side-by-side, or calculate and report the correlation between the alpha values for the two sections across different venues and time points.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Implications of Findings for Introductions Specifically</strong>
+        <p>The section could discuss the specific implications of LLM usage in introductions, considering the unique role of introductions in scientific papers.</p>
+        
+        <p><strong>Rationale:</strong> Discussing the specific implications for introductions would provide a more nuanced understanding of how LLMs are being used in this crucial section of a paper.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing the potential impact of LLM usage on the quality, clarity, and originality of introductions. Consider how LLM-generated introductions might influence readers&#39; perception of the research and its contribution to the field.</p>
+    </li>
+    
+    <li>
+        <strong>Explore Potential Reasons for Data Limitations</strong>
+        <p>While the lack of bulk downloads is mentioned, exploring potential reasons for this limitation or alternative data acquisition methods would enhance the discussion.</p>
+        <div class="quote">"We did not include bioRxiv introductions as there is no bulk download of PDFs available." (Page 16)</div>
+        <p><strong>Rationale:</strong> Exploring the reasons for data limitations and potential solutions would demonstrate a proactive approach to addressing these limitations and pave the way for future research.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two discussing the reasons behind the unavailability of bulk downloads for BioRxiv introductions. Explore alternative methods for accessing this data, such as contacting BioRxiv directly or using web scraping techniques (with appropriate ethical considerations). If alternative methods are not feasible, discuss the potential impact of this limitation on the generalizability of the findings.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-9" class="section">
+            <h3>LLM prompts used in the study</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section details the LLM prompts used in the study to generate LLM-modified text. The process involves a two-stage approach: first, summarizing a human-written paragraph into bullet points (a skeleton) and then expanding that skeleton back into a full paragraph using an LLM. This approach simulates a potential author workflow and allows the researchers to control for content while examining the stylistic differences between human and LLM-generated text. A third prompt for proofreading is also included.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Two-Stage Approach:</strong> The study uses a two-stage approach to generate LLM-modified text, involving summarizing a human-written paragraph into bullet points and then expanding those points back into a full paragraph using an LLM.</li><li><strong>2. Simulating Author Workflow:</strong> This two-stage process simulates how scientists might use LLMs in their writing, starting with an outline and then using the LLM to generate the full text.</li><li><strong>3. Content Control:</strong> By starting with a human-written paragraph and summarizing it, the researchers control for content and focus on the stylistic differences introduced by the LLM.</li><li><strong>4. Proofreading Prompt:</strong> A separate prompt is used for proofreading, focusing on grammatical accuracy with minimal changes to the original content.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Prompt Descriptions</strong>
+        <p>The prompts are described clearly and concisely, making it easy to understand the purpose and instructions of each stage.</p>
+        <div class="quote">"Now as a first step, first summarize the goal of the text, e.g., is it introduction, or method, results? and then given a complete piece of text from a paper, reverse-engineer it into a list of bullet points." (Page 17)</div>
+    </li>
+    
+    <li>
+        <strong>Rationale for Two-Stage Approach</strong>
+        <p>The rationale for the two-stage approach is well-explained, highlighting its purpose in simulating author workflow and controlling for content.</p>
+        <div class="quote">"Our two-stage approach can be considered a counterfactual framework for generating LLM text: given a paragraph written entirely by a human, how would the text read if it conveyed almost the same content but was generated by an LLM? This additional abstractive summarization step can be seen as the control for the content." (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Inclusion of Proofreading Prompt</strong>
+        <p>The inclusion of a proofreading prompt adds another layer of realism to the simulation of author workflow and addresses the potential use of LLMs for polishing text.</p>
+        <div class="quote">"Your task is to proofread the provided sentence for grammatical accuracy. Ensure that the corrections introduce minimal distortion to the original content." (Page 17)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide Full Prompts</strong>
+        <p>While the prompts are described, providing the exact wording of the prompts used in the study would enhance reproducibility.</p>
+        <div class="quote">"See Appendix for full prompts." (Page 5)</div>
+        <p><strong>Rationale:</strong> Providing the full prompts would allow other researchers to replicate the study precisely and validate the findings.</p>
+        <p><strong>Implementation:</strong> Include the full text of each prompt used in the study, including any specific instructions or parameters provided to the LLM. Consider using a separate appendix section or a supplementary file for this purpose if space is limited.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Prompt Engineering Choices</strong>
+        <p>The section could benefit from a discussion of the prompt engineering choices made, such as the specific instructions, constraints, or parameters used. This would provide insights into the process of generating realistic LLM-modified text.</p>
+        
+        <p><strong>Rationale:</strong> Discussing prompt engineering choices would enhance the transparency of the methodology and allow readers to understand the potential influence of different prompt variations on the generated text.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing the specific prompt engineering choices made, such as the use of instructions, constraints, or parameters. Explain the rationale behind these choices and how they contribute to generating realistic LLM-modified text. Consider discussing any challenges encountered during prompt engineering and how they were addressed.</p>
+    </li>
+    
+    <li>
+        <strong>Provide Examples of Generated Text</strong>
+        <p>Including examples of both the skeleton outlines and the LLM-generated paragraphs would provide a more concrete understanding of the process and its outcomes.</p>
+        
+        <p><strong>Rationale:</strong> Providing examples would allow readers to see the actual output of the two-stage process and assess the quality and realism of the LLM-generated text.</p>
+        <p><strong>Implementation:</strong> Include a few examples of human-written paragraphs, their corresponding skeleton outlines, and the final LLM-generated paragraphs. This would illustrate the transformation process and allow readers to evaluate the effectiveness of the two-stage approach.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 8</summary>
+        <p>This figure presents an example prompt used to instruct an LLM to summarize a paragraph from a human-written paper into a skeleton outline. This process mimics how an author might extract the core ideas and information from a piece of text and condense it into a structured, concise form. It&#39;s like creating a blueprint or summary of the original paragraph, highlighting the main points and their relationships.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 8: Example prompt for summarizing a paragraph from a human-authored paper into a skeleton"</p>
+            <p><strong>Context:</strong> This process simulates how an author might first only write the main ideas and core information into a concise outline. The goal is to capture the essence of the paragraph in a structured and succinct manner, serving as a foundation for the previous prompt.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is relevant because it illustrates the first stage of the two-stage process used to generate realistic LLM-produced training data. By summarizing human-written paragraphs into skeleton outlines, the researchers can then use these outlines to prompt the LLM to generate new text, simulating a potential use case of LLMs in scientific writing.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Instead of just presenting the prompt as plain text, consider using a visual representation, such as a flowchart or diagram, to illustrate the summarization process.</li><li>Highlighting key phrases within the prompt, such as &#39;summarize the goal&#39; and &#39;reverse-engineer it into a list of bullet points&#39;, would improve readability.</li><li>Consider adding a visual example of a paragraph being summarized into a skeleton outline to further clarify the process.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt could be more specific about the desired level of detail in the skeleton outline. Providing examples of different levels of summarization would be helpful.</li><li>The prompt mentions &#39;reverse-engineering&#39; which might be confusing to a non-technical audience. Rephrasing this as &#39;summarizing&#39; or &#39;condensing&#39; would improve clarity.</li><li>The prompt could benefit from a clearer explanation of why this summarization step is important for generating realistic LLM-produced text.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 9</summary>
+        <p>This figure shows an example prompt used to instruct an LLM to expand a skeleton outline into a full text paragraph. This simulates the second stage of the training data generation process, where the LLM elaborates on the concise outline to create a more detailed and fleshed-out piece of writing. Think of it like taking a blueprint and using it to construct the actual building.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 9: Example prompt for expanding the skeleton into a full text"</p>
+            <p><strong>Context:</strong> The aim here is to simulate the process of using the structured outline as a basis to generate comprehensive and coherent text. This step mirrors the way an author might flesh out the outline into detailed paragraphs, effectively transforming the condensed ideas into a fully articulated section of a paper.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is relevant because it illustrates the second stage of the two-stage process for creating LLM-generated training data. This expansion step simulates how scientists might use LLMs to generate text based on their own outlines, providing a more realistic representation of LLM-assisted writing.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Similar to Figure 8, a visual representation of the expansion process, such as a diagram or example, would enhance understanding.</li><li>Highlighting key phrases like &#39;expand upon the concise version&#39; and &#39;develop it into a fully fleshed-out text&#39; would improve visual clarity.</li><li>Consider showing a visual example of a skeleton outline being expanded into a full text paragraph to demonstrate the process.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt could be more specific about the desired style and tone of the generated text. Should the LLM aim for a formal academic style or a more informal tone?</li><li>The prompt could benefit from a clearer explanation of how this expansion step contributes to generating realistic LLM-produced text and why this realism is important for the study.</li><li>Providing examples of different expansion styles would be helpful for illustrating the range of possible outputs.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 10</summary>
+        <p>This figure presents an example prompt for instructing an LLM to proofread a sentence. The goal is to ensure grammatical accuracy while minimizing changes to the original content. This is like using a grammar-checking tool to polish a sentence without altering its meaning.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 10: Example prompt for proofreading."</p>
+            <p><strong>Context:</strong> Your task is to proofread the provided sentence for grammatical accuracy. Ensure that the corrections introduce minimal distortion to the original content.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is relevant because it demonstrates the prompt used for the proofreading step in the training data generation process. While not as central as the summarization and expansion steps, proofreading ensures the grammatical correctness of both human-written and LLM-generated text used in the analysis.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Presenting the prompt as plain text is sufficient, but adding a simple visual element, such as an icon representing proofreading, could enhance visual appeal.</li><li>Highlighting key phrases like &#39;grammatical accuracy&#39; and &#39;minimal distortion&#39; would emphasize the main goals of the proofreading task.</li><li>Consider adding a before-and-after example of a sentence being proofread to illustrate the process.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt could be more specific about the types of grammatical errors to be addressed. Should the LLM focus on punctuation, syntax, or other specific aspects of grammar?</li><li>The phrase &#39;minimal distortion&#39; could be further clarified. Providing examples of acceptable and unacceptable changes would be helpful.</li><li>The prompt could benefit from a clearer explanation of why proofreading is important for the overall analysis and how it contributes to the reliability of the results.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-10" class="section">
+            <h3>Additional Information on Implementation and Validations</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix provides supplementary information about the data collection, the LLMs used, and their parameter settings. The data was collected from arXiv, bioRxiv, and 15 Nature portfolio journals, sampling up to 2,000 papers per month from January 2020 to February 2024. The gpt-3.5-turbo-0125 model, trained on data up to September 2021, was used to generate the training data. The rationale for focusing on ChatGPT is its dominant market share and strong performance in understanding scientific papers. The decoding temperature was set to 1.0, maximum decoding length to 2048 tokens, Top P to 1.0, and both frequency and presence penalties to 0.0. No specific stop sequences were configured.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Data Sources and Sampling:</strong> Details the data collection process, including the sources (arXiv, bioRxiv, Nature portfolio journals), sampling strategy (up to 2,000 papers per month), and time frame (January 2020 to February 2024).</li><li><strong>2. LLM Choice and Rationale:</strong> Explains the use of the gpt-3.5-turbo-0125 model and justifies the focus on ChatGPT due to its market dominance and performance in understanding scientific papers.</li><li><strong>3. LLM Parameter Settings:</strong> Provides specific details about the parameter settings used for the LLM during training data generation, including temperature, decoding length, Top P, and penalties.</li><li><strong>4. Nature Portfolio Journals:</strong> Lists the 15 Nature portfolio journals included in the study.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Detailed Data Collection Information</strong>
+        <p>The section provides comprehensive information about the data collection process, including sources, sampling strategy, and timeframe, enhancing transparency and reproducibility.</p>
+        <div class="quote">"We collected data for this study from three publicly accessible sources: official APIs provided by arXiv and bioRxiv, and web pages from the Nature portfolio. For each of the five major arXiv categories (Computer Science, Electrical Engineering and Systems Science, Mathematics, Physics, Statistics), we randomly sampled 2,000 papers per month from January 2020 to February 2024." (Page 18)</div>
+    </li>
+    
+    <li>
+        <strong>Justification for LLM Choice</strong>
+        <p>The section clearly explains the rationale for choosing ChatGPT, citing its market share and performance in understanding scientific papers, which strengthens the study&#39;s methodology.</p>
+        <div class="quote">"We chose to focus on ChatGPT due to its dominant position in the generative AI market. According to a comprehensive analysis conducted by FlexOS in early 2024, ChatGPT accounts for an overwhelming 76% of global internet traffic in the category..." (Page 18)</div>
+    </li>
+    
+    <li>
+        <strong>Specific LLM Parameter Settings</strong>
+        <p>Providing the specific parameter settings used for the LLM ensures reproducibility and allows other researchers to replicate the study&#39;s data generation process.</p>
+        <div class="quote">"Regarding the parameter settings for the LLM, we set the decoding temperature to 1.0 and the maximum decoding length to 2048 tokens during our experiments." (Page 18)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Clarify AI Corpus Generation Timing</strong>
+        <p>While Section 3 is referenced for the AI corpus generation procedure, specifying whether this data was generated for each month or for the entire period would enhance clarity.</p>
+        <div class="quote">"The procedure for generating the AI corpus data for a given time period is described in aforementioned Section § 3." (Page 18)</div>
+        <p><strong>Rationale:</strong> Clarifying the timing of AI data generation would provide a more precise understanding of the data generation process and its alignment with the paper sampling.</p>
+        <p><strong>Implementation:</strong> Specify whether the AI corpus data was generated for each month independently or for the entire period at once. Explain the rationale behind the chosen approach.</p>
+    </li>
+    
+    <li>
+        <strong>Explain Handling of Insufficient Papers</strong>
+        <p>The section mentions including all available papers when the 2,000 target wasn&#39;t met, but it doesn&#39;t explain how this might affect the analysis. Discussing the potential impact of varying sample sizes would enhance the discussion.</p>
+        <div class="quote">"When there were not enough papers to reach our target of 2,000 per month, we included all available papers." (Page 18)</div>
+        <p><strong>Rationale:</strong> Addressing the potential impact of varying sample sizes would strengthen the analysis and acknowledge any potential limitations arising from this practice.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two discussing the potential impact of varying sample sizes across different months or venues. Consider whether this might introduce bias or affect the reliability of the results. If possible, quantify the variation in sample sizes and discuss its potential influence on the findings.</p>
+    </li>
+    
+    <li>
+        <strong>Justify Specific Parameter Choices</strong>
+        <p>While the parameter settings are listed, providing justifications for these specific choices would strengthen the methodology. For example, explain why a temperature of 1.0 was chosen or the rationale behind the penalty settings.</p>
+        <div class="quote">"Regarding the parameter settings for the LLM, we set the decoding temperature to 1.0 and the maximum decoding length to 2048 tokens during our experiments...Both the frequency penalty and presence penalty...were set to 0.0." (Page 18)</div>
+        <p><strong>Rationale:</strong> Justifying the parameter choices would provide a more robust methodological foundation and allow other researchers to understand the reasoning behind the specific LLM configuration.</p>
+        <p><strong>Implementation:</strong> For each parameter setting, provide a brief explanation of the rationale behind the chosen value. Refer to relevant literature or best practices for LLM parameter tuning if applicable. Discuss how different parameter values might affect the generated text and the overall analysis.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-11" class="section">
+            <h3>Word Frequency Shift in arXiv Computer Science introductions</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section presents a figure (Figure 11) showing the shift in word frequency within the introductions of arXiv Computer Science papers over the past two years. The figure focuses on the same four words highlighted in Figure 2: &quot;realm,&quot; &quot;intricate,&quot; &quot;showcasing,&quot; and &quot;pivotal.&quot; The analysis reveals a similar trend to Figure 2, where these words, after being relatively infrequent for over a decade, experienced a sudden increase in usage starting in 2023. The section notes that data from 2010-2020 is omitted due to the computational cost of processing a large volume of arXiv papers.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Focus on Specific Words:</strong> The analysis concentrates on four specific words: &quot;realm,&quot; &quot;intricate,&quot; &quot;showcasing,&quot; and &quot;pivotal,&quot; which were previously identified as disproportionately used by LLMs compared to humans.</li><li><strong>2. Trend Similarity with Abstracts:</strong> The observed trend in introductions mirrors the trend seen in abstracts (Figure 2), where these four words saw a surge in usage after 2022.</li><li><strong>3. Time Frame Limitation:</strong> The analysis focuses on the past two years (2021-2024) due to the computational challenges of parsing older arXiv papers.</li><li><strong>4. Implied LLM Influence:</strong> The increased frequency of these words in introductions, similar to abstracts, suggests the growing influence of LLMs on scientific writing.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Consistent Methodology</strong>
+        <p>Using the same words as in the abstract analysis (Figure 2) ensures consistency and allows for direct comparison between different sections of the papers.</p>
+        <div class="quote">"The plot shows the frequency over time for the same 4 words as demonstrated in Figure 2." (Page 19)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Visual Representation</strong>
+        <p>The figure (Figure 11, referenced but not included in the text content analysis) provides a clear visual representation of the word frequency shift, making the trend easily discernible.</p>
+        <div class="quote">"Figure 11: Word Frequency Shift in sampled arXiv Computer Science introductions in the past two years." (Page 19)</div>
+    </li>
+    
+    <li>
+        <strong>Transparent Justification for Time Frame</strong>
+        <p>Openly acknowledging the limitation of the time frame due to computational constraints enhances transparency and sets realistic expectations for the scope of the analysis.</p>
+        <div class="quote">"Data from 2010-2020 is not included in this analysis due to the computational complexity of parsing the full text from a large number of arXiv papers." (Page 19)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand Time Frame if Possible</strong>
+        <p>While computational constraints are understandable, exploring ways to extend the analysis to include data from 2010-2020 would provide a more complete picture of the long-term word frequency trends.</p>
+        <div class="quote">"Data from 2010-2020 is not included in this analysis due to the computational complexity of parsing the full text from a large number of arXiv papers." (Page 19)</div>
+        <p><strong>Rationale:</strong> A longer time frame would allow for a more comprehensive analysis of the word usage trends and provide a stronger baseline for comparison with the post-2020 period.</p>
+        <p><strong>Implementation:</strong> Explore strategies for optimizing the parsing process or using more efficient computational resources to enable the inclusion of older arXiv papers in the analysis. If extending the timeframe is not feasible, discuss the potential impact of this limitation on the interpretation of the results.</p>
+    </li>
+    
+    <li>
+        <strong>Provide Quantitative Comparison with Abstracts</strong>
+        <p>While the section mentions a similar trend to Figure 2, providing a quantitative comparison (e.g., correlation coefficients, statistical tests) between the word frequency shifts in abstracts and introductions would strengthen the analysis.</p>
+        <div class="quote">"The trend is similar for two figures." (Page 19)</div>
+        <p><strong>Rationale:</strong> A quantitative comparison would provide more compelling evidence for the similarity of the trends and allow for a more nuanced understanding of any differences between the two sections.</p>
+        <p><strong>Implementation:</strong> Calculate and report correlation coefficients or perform statistical tests to compare the word frequency shifts observed in abstracts and introductions. Discuss the statistical significance of the findings and any potential differences in the magnitude or timing of the shifts.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Significance of the Chosen Words</strong>
+        <p>The section could benefit from a discussion of why these specific four words are significant and what their increased usage might indicate about the influence of LLMs on scientific writing.</p>
+        <div class="quote">"The plot shows the frequency over time for the same 4 words as demonstrated in Figure 2. The words are: realm, intricate, showcasing, pivotal." (Page 19)</div>
+        <p><strong>Rationale:</strong> Explaining the significance of the chosen words would provide a deeper understanding of the implications of the observed frequency shifts and their connection to LLM usage.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing the potential reasons why these specific words might be more common in LLM-generated text. Explore linguistic characteristics, stylistic patterns, or semantic connotations associated with these words that might explain their increased usage. Consider whether these words reflect specific writing conventions or biases present in LLM training data.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 11</summary>
+        <p>This figure shows how often certain words appeared in the introductions of arXiv Computer Science papers over the past two years. The words &#39;realm,&#39; &#39;intricate,&#39; &#39;showcasing,&#39; and &#39;pivotal&#39; are tracked. These words were used infrequently before 2023 but saw a sudden increase in 2023, suggesting a potential shift in language use, possibly related to the rise of LLMs. It&#39;s like noticing that certain ingredients started showing up more often in recipes after a new cooking gadget became popular.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 11: Word Frequency Shift in sampled arXiv Computer Science introductions in the past two years."</p>
+            <p><strong>Context:</strong> Appendix D, showing word frequency shifts in introductions, is on page 19 and provides additional results.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure provides additional evidence supporting the main finding of increased LLM usage in Computer Science. The sudden increase in the frequency of specific words after the release of ChatGPT suggests a potential link between LLM use and changes in writing style.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could benefit from a more descriptive title, such as &#39;Increased Frequency of Specific Words in arXiv CS Introductions After ChatGPT&#39;.</li><li>Adding the actual word frequencies (per million words) as data labels on the lines would improve readability and allow for precise comparisons.</li><li>Extending the time axis back to 2020, or even earlier if data is available, would provide a clearer picture of the long-term trend and the impact of ChatGPT.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the figure shows a correlation between the increase in word frequency and the release of ChatGPT, it doesn&#39;t establish causation. Other factors could be contributing to this shift in language use.</li><li>The figure only focuses on four words. Analyzing a larger set of words or using different selection criteria (e.g., words disproportionately used by LLMs) would provide a more comprehensive view of language changes.</li><li>The figure focuses on introductions. Comparing these trends with similar analyses of abstracts or other sections would be informative.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-12" class="section">
+            <h3>Fine-grained Main Findings</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section provides further details about the main findings by presenting supporting figures. Figure 12 shows that the relationship between first-author preprint posting frequency and LLM usage holds across different Computer Science sub-categories (cs.CV, cs.LG, cs.CL). Figure 13 demonstrates that the relationship between paper similarity and LLM usage also holds across these sub-categories. Figure 14 examines the relationship between paper length and LLM usage, showing it holds for cs.CV and cs.LG but not for cs.CL, possibly due to limited sample size in cs.CL.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Sub-category Analysis:</strong> The findings regarding preprint frequency, paper similarity, and paper length are broken down by Computer Science sub-categories (cs.CV, cs.LG, cs.CL) to provide a more granular view.</li><li><strong>2. Preprint Frequency and LLM Usage:</strong> The positive correlation between first-author preprint posting frequency and LLM usage is consistent across all three sub-categories.</li><li><strong>3. Paper Similarity and LLM Usage:</strong> The positive correlation between paper similarity (measured by embedding distance) and LLM usage is also consistent across all three sub-categories.</li><li><strong>4. Paper Length and LLM Usage:</strong> The positive correlation between shorter papers and higher LLM usage holds for cs.CV and cs.LG, but not for cs.CL, potentially due to a limited sample size in the latter.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Granular Analysis</strong>
+        <p>Breaking down the findings by sub-category provides a more detailed and nuanced understanding of the relationships between LLM usage and paper characteristics.</p>
+        <div class="quote">"Papers in each arXiv Computer Science sub-category (cs.CV, cs.LG, and cs.CL) are stratified into two groups based on the preprint posting frequency of their first author..." (Page 20)</div>
+    </li>
+    
+    <li>
+        <strong>Consistent Findings Across Sub-categories</strong>
+        <p>The consistent findings across sub-categories for preprint frequency and paper similarity strengthen the overall conclusions of the study.</p>
+        <div class="quote">"The relationship between first-author preprint posting frequency and LLM usage holds across arXiv Computer Science sub-categories." (Page 20)</div>
+    </li>
+    
+    <li>
+        <strong>Transparency about Limitations</strong>
+        <p>Acknowledging the potential limitation of sample size for cs.CL in the paper length analysis demonstrates transparency and careful interpretation of the results.</p>
+        <div class="quote">"For cs.CL, no significant difference in LLM usage was found between shorter and longer papers, possibly due to the limited sample size..." (Page 22)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide Statistical Significance</strong>
+        <p>While the figures visually suggest trends, reporting statistical significance (e.g., p-values, confidence intervals) would strengthen the findings.</p>
+        
+        <p><strong>Rationale:</strong> Adding statistical significance would provide a more rigorous evaluation of the observed relationships and allow readers to assess the strength of the evidence.</p>
+        <p><strong>Implementation:</strong> Calculate and report p-values or confidence intervals for the observed correlations in each sub-category. Discuss the statistical significance of the findings and any potential variations in significance across sub-categories.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Potential Reasons for Inconsistent Finding in cs.CL</strong>
+        <p>While limited sample size is suggested as a possible reason for the inconsistent finding in cs.CL regarding paper length, exploring other potential explanations would enhance the analysis.</p>
+        <div class="quote">"For cs.CL, no significant difference in LLM usage was found between shorter and longer papers, possibly due to the limited sample size..." (Page 22)</div>
+        <p><strong>Rationale:</strong> Exploring alternative explanations would demonstrate a thorough consideration of the findings and provide a more nuanced understanding of the relationship between paper length and LLM usage in different sub-categories.</p>
+        <p><strong>Implementation:</strong> Discuss other potential factors that might explain the inconsistent finding in cs.CL, such as differences in writing practices, research topics, or the types of papers typically submitted to this sub-category. Consider whether the use of LLMs in cs.CL might differ from other sub-categories in terms of the specific tasks or purposes for which they are employed.</p>
+    </li>
+    
+    <li>
+        <strong>Integrate with Main Findings</strong>
+        <p>The section could benefit from a clearer explanation of how these fine-grained findings contribute to the overall conclusions of the study. Explicitly connecting these results to the main findings presented earlier would enhance the coherence of the paper.</p>
+        
+        <p><strong>Rationale:</strong> Connecting the fine-grained findings to the main findings would strengthen the overall narrative of the paper and demonstrate the value of the sub-category analysis.</p>
+        <p><strong>Implementation:</strong> Add a concluding paragraph summarizing the key takeaways from the fine-grained analysis and explicitly linking them to the main findings presented in Section 5. Explain how these detailed results support or refine the broader conclusions of the study.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 12</summary>
+        <p>This figure investigates the relationship between how often a paper&#39;s first author posts preprints on arXiv and the use of LLMs in their Computer Science papers. The papers are divided into two groups: those whose first authors posted two or fewer preprints in a year, and those who posted three or more. It then shows the estimated fraction of LLM-modified sentences over time for three different Computer Science subcategories (cs.CV, cs.LG, and cs.CL). Think of it like checking if students who submit more draft essays also use grammar-checking software more often, but specifically within different areas of study like literature, history, or science.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 12: The relationship between first-author preprint posting frequency and LLM usage holds across arXiv Computer Science sub-categories."</p>
+            <p><strong>Context:</strong> Papers in each arXiv Computer Science sub-category (cs.CV, cs.LG, and cs.CL) are stratified into two groups based on the preprint posting frequency of their first author, as measured by the number of first-authored preprints in the year: those with ≤ 2 preprints and those with ≥ 3 preprints.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure supports the broader finding that researchers who post more preprints tend to use LLMs more, showing this trend holds across different areas within Computer Science. This suggests that the relationship isn&#39;t specific to just one type of Computer Science research.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could have a more informative title, like &#39;LLM Use and Preprint Frequency Across CS Subcategories&#39;.</li><li>Shortening the x-axis labels (e.g., &#39;22.1-3&#39; for &#39;2022.1-3&#39;) would improve readability.</li><li>Adding a legend directly onto each subgraph would make it easier to interpret the bars.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure shows correlation, not causation. It doesn&#39;t prove that posting more preprints *causes* more LLM use.</li><li>Other factors, like the researcher&#39;s career stage or institutional pressures, could influence both preprint frequency and LLM use.</li><li>It would be helpful to explain why the 2023 author grouping was used for the 2024.1-2 data.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 13</summary>
+        <p>This figure explores whether papers in more &#39;crowded&#39; research areas (those with abstracts more similar to other abstracts within the same subcategory) have more LLM-modified content. Similarity is measured by converting abstracts into numerical vectors and calculating the distance between them. Papers are grouped into &#39;more similar&#39; (closer vectors) and &#39;less similar&#39; (further vectors). The figure shows how LLM use changes over time for these two groups across three Computer Science subcategories (cs.CV, cs.LG, and cs.CL). Imagine research papers as points on a map, with closer points representing similar research. This figure checks if points clustered together in different academic neighborhoods show more LLM use.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 13: The relationship between paper similarity and LLM usage holds across arXiv Computer Science sub-categories."</p>
+            <p><strong>Context:</strong> Papers in each arXiv Computer Science sub-category (cs.CV, cs.LG, and cs.CL) are divided into two groups based on their abstract&#39;s embedding distance to their closest peer within the respective sub-category: papers more similar to their closest peer (below median distance) and papers less similar to their closest peer (above median distance).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure further investigates the relationship between research area &#39;crowdedness&#39; and LLM use, showing that the trend observed in the main analysis holds across different Computer Science subcategories. This suggests the relationship isn&#39;t limited to a specific area of Computer Science.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>A more descriptive title like &#39;LLM Use and Research Area Crowdedness Across CS Subcategories&#39; would be better.</li><li>Shortening the x-axis labels and adding a legend directly on the graphs would improve readability.</li><li>Using different colors or patterns for the bars representing &#39;more similar&#39; and &#39;less similar&#39; papers would make the graphs easier to understand.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure shows correlation, not causation. It&#39;s unclear whether LLM use causes similarity or if similar research areas are simply more likely to use LLMs.</li><li>The explanation of how similarity is measured could be clearer for a non-technical audience.</li><li>The potential implications of these findings, such as the homogenization of scientific writing, could be discussed more thoroughly.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 14</summary>
+        <p>This figure explores if shorter papers have more LLM-modified content within different Computer Science subcategories (cs.CV, cs.LG, and cs.CL). Papers are divided into two groups: shorter than 5,000 words and longer than 5,000 words. It then shows the estimated LLM use for both groups over time. It&#39;s like seeing if shorter student essays use grammar-checking tools more than longer essays, but specifically for essays on different scientific topics.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 14: The relationship between paper length and LLM usage holds for cs.CV and cs.LG, but not for cs.CL."</p>
+            <p><strong>Context:</strong> Papers in each arXiv Computer Science sub-category (cs.CV, cs.LG, and cs.CL) are stratified by their full text word count, including appendices, into two bins: below or above 5,000 words (the rounded median).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure provides a more detailed look at the relationship between paper length and LLM use by examining it across different Computer Science subcategories. It also highlights an exception in cs.CL, where the relationship doesn&#39;t hold, suggesting other factors might be at play.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>A title like &#39;LLM Use and Paper Length Across CS Subcategories&#39; would be more informative.</li><li>Shortening x-axis labels would improve readability.</li><li>Adding a legend directly on each subgraph would make interpretation easier.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure shows correlation, not causation. It doesn&#39;t explain *why* shorter papers might have more LLM use.</li><li>Other factors, like the paper&#39;s topic or the author&#39;s resources, could influence both length and LLM use.</li><li>The caption mentions a limited sample size for cs.CL. Quantifying this limitation (e.g., stating the actual sample size) and discussing its potential impact on the results would be helpful.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-13" class="section">
+            <h3>Proofreading Results on arXiv data</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section investigates the impact of using LLMs for proofreading on the detection of LLM-generated text. It presents a figure (Figure 15) showing a slight increase in the estimated fraction of LLM-modified content after proofreading across various arXiv categories. This suggests that the method used in the study is robust to minor edits introduced by proofreading, as it can still detect the underlying LLM-generated content.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Proofreading Impact:</strong> The analysis focuses on how proofreading with LLMs affects the detection of LLM-generated text.</li><li><strong>2. Slight Increase in Estimated LLM Content:</strong> The results show a small but noticeable increase in the estimated fraction of LLM-modified content after proofreading.</li><li><strong>3. Robustness of the Method:</strong> This slight increase indicates that the detection method is robust to minor LLM-generated edits introduced during proofreading.</li><li><strong>4. arXiv Categories:</strong> The analysis is conducted across different arXiv main categories (Computer Science, Electrical Engineering &amp; Systems Science, Mathematics, Physics, and Statistics).</li><li><strong>5. Data and Methodology:</strong> The analysis uses 1,000 abstracts from each category, randomly sampled from the period before ChatGPT&#39;s release (January 1, 2022, to November 29, 2022).</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Focus</strong>
+        <p>The section clearly focuses on a specific aspect of LLM detection: the impact of proofreading. This focused approach allows for a detailed investigation of this particular challenge.</p>
+        <div class="quote">"Robustness of estimations to proofreading." (Page 23)</div>
+    </li>
+    
+    <li>
+        <strong>Direct Relevance to Main Findings</strong>
+        <p>The section directly addresses a potential challenge to the main findings of the study: the possibility that LLM-generated text could be masked by proofreading. Demonstrating robustness to proofreading strengthens the validity of the overall results.</p>
+        <div class="quote">"This observation validates our method’s robustness to minor LLM-generated text edits, such as those introduced by simple proofreading." (Page 23)</div>
+    </li>
+    
+    <li>
+        <strong>Appropriate Methodology</strong>
+        <p>The use of a pre-ChatGPT dataset for this analysis is appropriate, as it isolates the impact of proofreading without the confounding effect of widespread ChatGPT usage.</p>
+        <div class="quote">"The analysis was conducted on 1,000 abstracts from each arXiv main category, randomly sampled from the period between January 1, 2022, and November 29, 2022." (Page 23)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify the Increase</strong>
+        <p>While the section mentions a &quot;slight increase,&quot; quantifying this increase with specific percentage points or effect sizes would strengthen the analysis.</p>
+        <div class="quote">"The plot demonstrates a slight increase in the fraction of LLM-modified content after using Large Language Models (LLMs) for “proofreading” across different arXiv main categories." (Page 23)</div>
+        <p><strong>Rationale:</strong> Quantifying the increase would provide a more precise understanding of the impact of proofreading and allow for a more objective assessment of the method&#39;s robustness.</p>
+        <p><strong>Implementation:</strong> Report the specific percentage point increase or effect size observed in each arXiv category after proofreading. Consider including a table or adding numerical labels to Figure 15 to display these values directly.</p>
+    </li>
+    
+    <li>
+        <strong>Explore Different Proofreading Intensities</strong>
+        <p>The section focuses on &quot;simple proofreading.&quot; Exploring different levels of proofreading intensity (e.g., light, moderate, heavy editing) would provide a more comprehensive understanding of the method&#39;s robustness.</p>
+        <div class="quote">"This observation validates our method’s robustness to minor LLM-generated text edits, such as those introduced by simple proofreading." (Page 23)</div>
+        <p><strong>Rationale:</strong> Analyzing different proofreading intensities would reveal whether the method&#39;s robustness holds across a range of editing scenarios, from minor corrections to more substantial revisions.</p>
+        <p><strong>Implementation:</strong> Design experiments with varying levels of proofreading intensity. This could involve using different prompts that instruct the LLM to perform more extensive edits or manually editing the text to simulate different levels of proofreading. Compare the estimated LLM content before and after each level of proofreading to assess the method&#39;s robustness.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Implications for Real-World Scenarios</strong>
+        <p>The section could discuss the implications of these findings for real-world scenarios where proofreading is common practice. This would connect the analysis to the broader context of LLM detection in academic publishing.</p>
+        
+        <p><strong>Rationale:</strong> Discussing real-world implications would enhance the relevance of the findings and provide insights into the challenges and opportunities of LLM detection in practical settings.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing how these findings might affect the detection of LLM-generated text in submitted manuscripts or published papers. Consider the challenges of distinguishing between legitimate proofreading and attempts to mask LLM usage. Discuss the potential need for more sophisticated detection methods or guidelines for authors regarding the use of LLMs and proofreading tools.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 15</summary>
+        <p>This figure investigates how proofreading with Large Language Models (LLMs) affects the estimation of LLM-generated content in scientific papers. It takes abstracts from different arXiv categories (Computer Science, Electrical Engineering, Mathematics, Physics, Statistics) and measures the estimated fraction of LLM-modified content (alpha) before and after using LLMs for proofreading. The slight increase in alpha after proofreading suggests that the method can detect even small edits made by LLMs, demonstrating its robustness. It&#39;s like checking if a tool that measures how much of a cake was made by a machine can still work even if the machine only added the frosting.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 15: Robustness of estimations to proofreading."</p>
+            <p><strong>Context:</strong> Appendix F, showing proofreading results, is presented on page 23 and is relevant for assessing the method&#39;s robustness.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it addresses a potential weakness of the method: its sensitivity to minor edits. By showing that the method can still detect LLM use even after proofreading, it strengthens the validity of the overall findings.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>A more descriptive title like &#39;Impact of Proofreading on LLM Detection&#39; would be clearer.</li><li>Adding the numerical values of the estimated alpha before and after proofreading on top of the bars would improve readability.</li><li>The y-axis could be labeled &#39;Estimated Fraction of LLM-Modified Content&#39; instead of just &#39;Estimated Alpha&#39; for better understanding by a broader audience.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure only uses abstracts. Showing similar results for other sections of papers (e.g., introductions) would provide a more complete picture.</li><li>The choice of arXiv categories could be explained. Are these representative of all scientific fields?</li><li>The specific proofreading prompt used should be described in more detail. What instructions were given to the LLM?</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-14" class="section">
+            <h3>Extended Related Work</h3>
+            
+            <h4>Overview</h4>
+            <p>This section provides a detailed overview of existing methods for detecting LLM-generated text. It covers zero-shot detection methods, training-based detection methods, and LLM watermarking. The section highlights the limitations of each approach, emphasizing challenges like access to LLM internals, overfitting, bias, and the need for model owner involvement in watermarking. It concludes by contrasting these methods with the distributional GPT quantification framework used in the paper, which offers advantages in stability, accuracy, and independence from model owners.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>1. Zero-Shot Detection:</strong> These methods use statistical signatures of machine-generated text, but require access to LLM internals and are vulnerable to issues like proxy LLM usage.</li><li><strong>2. Training-Based Detection:</strong> These methods train classifiers on human and AI-generated text, but face challenges such as overfitting, bias against non-dominant language varieties, and questions about their real-world effectiveness.</li><li><strong>3. LLM Watermarking:</strong> This technique embeds signals in generated text for detection, but relies on the cooperation of model owners, limiting its applicability.</li><li><strong>4. Distributional GPT Quantification Framework:</strong> This framework, used in the study, estimates the fraction of LLM-modified content at the population level, offering advantages in stability, accuracy, and computational efficiency while avoiding the limitations of other methods.</li><li><strong>5. Implications for Pretraining Data:</strong> The increasing use of LLMs in scientific writing, and the potential inclusion of this LLM-generated text in training data, raises concerns about reinforcing biases, reducing language diversity, and potentially leading to model collapse.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Coverage</strong>
+        <p>The section thoroughly covers various LLM detection methods, providing a comprehensive overview of the current landscape and demonstrating a strong understanding of the field.</p>
+        <div class="quote">"A major category of LLM text detection uses statistical signatures that are characteristic of machine-generated text...Another category is training-based detection...LLM watermarking introduces a method..." (Page 24)</div>
+    </li>
+    
+    <li>
+        <strong>Detailed Explanation of Limitations</strong>
+        <p>The section clearly explains the limitations of each method, providing specific examples and referencing relevant studies, which strengthens the justification for the chosen framework.</p>
+        <div class="quote">"However, zero-shot detection requires direct access to LLM internals...Training-based detection methods face challenges such as overfitting...one major concern with watermarking is that it requires the involvement of the model or service owner..." (Page 24)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Contrast with Chosen Framework</strong>
+        <p>The section effectively contrasts the limitations of existing methods with the advantages of the distributional GPT quantification framework, highlighting its independence from model owners and its focus on population-level analysis.</p>
+        <div class="quote">"In contrast, the framework by Liang et al. (2024) operates independently of the model or service owner’s intervention, allowing for the monitoring of AI-modified content without requiring their active participation or adoption." (Page 25)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide More Concrete Examples of Watermarking</strong>
+        <p>While various watermarking techniques are mentioned, providing more concrete examples of how these techniques work would enhance understanding for a broader audience.</p>
+        <div class="quote">"Modern watermarking strategies involve integrating watermarks into the decoding process of language models..." (Page 24)</div>
+        <p><strong>Rationale:</strong> Concrete examples would make the concept of watermarking more accessible and easier to grasp for readers unfamiliar with the technical details.</p>
+        <p><strong>Implementation:</strong> Include brief examples illustrating how specific watermarking techniques, such as the Gumbel watermark or the red-green list approach, work in practice. Consider using simple illustrations or analogies to explain the underlying mechanisms.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Potential Countermeasures to Watermarking</strong>
+        <p>The section could briefly discuss potential countermeasures that could be used to circumvent watermarking techniques, providing a more balanced perspective on the effectiveness of this approach.</p>
+        
+        <p><strong>Rationale:</strong> Discussing potential countermeasures would acknowledge the limitations of watermarking and provide a more realistic assessment of its long-term viability as a detection method.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two discussing potential ways to remove or obscure watermarks, such as paraphrasing, text manipulation, or adversarial attacks. Consider the ongoing arms race between watermarking techniques and countermeasures.</p>
+    </li>
+    
+    <li>
+        <strong>Expand on the Implications for LLM Pretraining</strong>
+        <p>While the section mentions implications for pretraining data quality, expanding on the potential consequences of using LLM-generated text for training would strengthen the discussion.</p>
+        <div class="quote">"Our findings suggest that a growing proportion of this pretraining data may contain LLM-modified content. Preliminary research indicates that the inclusion of LLM-modified content...can lead to several pitfalls..." (Page 25)</div>
+        <p><strong>Rationale:</strong> A more detailed discussion of the potential consequences would highlight the importance of addressing this issue and motivate further research on data curation and filtering strategies.</p>
+        <p><strong>Implementation:</strong> Elaborate on the potential pitfalls of using LLM-generated text for training, such as the reinforcement of biases, the homogenization of language, and the potential for model collapse. Discuss the long-term implications for the development and deployment of LLMs, and the potential impact on the quality and reliability of future models.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        // Show/hide back-to-top button
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
