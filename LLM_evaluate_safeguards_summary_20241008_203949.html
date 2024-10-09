@@ -1,0 +1,1416 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do-Not-Answer: A Safety Benchmark for LLMs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Do-Not-Answer: A Safety Benchmark for LLMs</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">Introduction</a></li><li><a href="#section-2">Related Work</a></li><li><a href="#section-3">Safety Taxonomy</a></li><li><a href="#section-4">Data Collection</a></li><li><a href="#section-5">Response Annotation and Assessment</a></li><li><a href="#section-6">Automatic Response Evaluation</a></li><li><a href="#section-7">Conclusion</a></li><li><a href="#section-8">Limitations and Future Work</a></li><li><a href="#section-9">Protected Groups</a></li><li><a href="#section-10">Three Harmful Responses of LLaMA-2</a></li><li><a href="#section-11">Response Action Category over Harm Types</a></li><li><a href="#section-12">Mismatched Cases</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>This paper introduces &quot;Do-Not-Answer,&quot; an open-source dataset designed to evaluate the safety of large language models (LLMs). The dataset focuses on 939 prompts that responsible LLMs should refuse to answer, categorized using a three-level hierarchical risk taxonomy covering five key risk areas (information hazards, malicious uses, discrimination/toxicity, misinformation harms, and human-computer interaction harms). Six popular LLMs (GPT-4, ChatGPT, Claude, LLaMA-2, ChatGLM2, and Vicuna) were evaluated using this dataset, revealing varying safety performance levels. Additionally, the researchers developed smaller, more efficient BERT-like classifiers, demonstrating their potential as a cost-effective alternative for automatic safety evaluation, achieving comparable performance to GPT-4.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li>LLaMA-2 demonstrated the highest safety performance among the evaluated LLMs, refusing to answer harmful prompts in 99.7% of cases. This suggests that LLaMA-2&#39;s safety mechanisms are highly effective in avoiding the generation of harmful content. However, the three instances where LLaMA-2 did produce harmful responses highlight the ongoing challenge of risky over-reliance due to the model&#39;s human-like tone.</li><li>A smaller, fine-tuned Longformer model achieved comparable performance to GPT-4 in automatically evaluating LLM responses for safety, with accuracy scores of 88.8% and 91.3% respectively for action classification. This finding is significant because it suggests that cost-effective and scalable automatic evaluation methods can be developed, reducing the reliance on resource-intensive human evaluation.</li><li>ChatGLM2 exhibited the lowest safety performance, generating the most harmful responses among the six LLMs evaluated. This indicates potential weaknesses in ChatGLM2&#39;s safety mechanisms and highlights areas for improvement in its training or design.</li><li>The analysis of response patterns revealed that LLMs exhibit specific action category distributions depending on the type of harm presented in the prompt. For example, certain models might be more likely to refuse to answer prompts related to illegal activities but less likely to avoid responding to prompts involving misinformation. This finding underscores the need for comprehensive evaluation across different risk areas and harm types to fully characterize LLM safety.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li>The creation of the open-source Do-Not-Answer dataset is a significant contribution, providing a valuable resource for researchers and developers to evaluate and improve LLM safety. Its availability fosters transparency and collaboration within the community.</li><li>The development of a three-level hierarchical risk taxonomy provides a comprehensive framework for categorizing and understanding potential harms associated with LLMs. This structured approach allows for more nuanced analysis of LLM behavior and facilitates targeted interventions to improve safety.</li><li>The novel three-round conversation strategy employed to generate risky questions using GPT-4 is a creative and effective method for eliciting potentially harmful content while bypassing safety restrictions. This approach enables the collection of a diverse range of challenging prompts for evaluating LLM robustness.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li>The dataset currently focuses exclusively on prompts that responsible LLMs should refuse to answer. Incorporating a mix of both risky and non-risky prompts would allow for a more balanced evaluation and enable identification of models that might be overly cautious, refusing to answer even harmless instructions. Future research could expand the dataset to include a range of prompt types to address this limitation.</li><li>The current evaluation focuses primarily on English text. Extending the evaluation to other languages and cultural contexts would enhance the generalizability of the findings and address potential language-specific safety concerns. Future research should consider multilingual evaluation and adaptation of the dataset to different cultural norms.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>Table 1</h4>
+        <p><strong>Description:</strong> This table presents the distribution of questions across the five risk areas and twelve harm types defined in the taxonomy, providing insights into the composition and scope of the Do-Not-Answer dataset.</p>
+        <p><strong>Relevance:</strong> The table demonstrates the coverage of various risk categories and allows researchers to understand the dataset&#39;s focus and potential biases. It also helps in interpreting the evaluation results in the context of the dataset composition.</p>
+    </div>
+    
+    <div>
+        <h4>Figure 6</h4>
+        <p><strong>Description:</strong> This figure displays five heatmaps showing the distribution of action categories across six LLMs for each risk area, providing a visual summary of model behavior across different types of risky prompts.</p>
+        <p><strong>Relevance:</strong> The heatmaps offer a clear and concise visualization of the models&#39; strengths and weaknesses in handling various risk areas, allowing for quick comparison of their safety performance and identification of areas for improvement.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>This paper makes a significant contribution to the field of LLM safety by introducing a comprehensive risk taxonomy, a novel dataset of risky prompts, and an evaluation of popular LLMs. The finding that LLaMA-2 performed best in terms of safety and the promising results of the smaller, Longformer-based automatic evaluation method are valuable insights for developers. Future research should focus on expanding the dataset with non-risky instructions, extending the evaluation to other languages and multi-turn conversations, and further refining automatic evaluation techniques to improve the accuracy and scalability of LLM safety assessments. These advancements are crucial for the responsible development and deployment of LLMs in real-world applications.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>This paper introduces &quot;Do-Not-Answer,&quot; an open-source dataset designed to evaluate the safety of large language models (LLMs). The dataset focuses on prompts that responsible LLMs should refuse to answer. The researchers evaluated six popular LLMs using this dataset and found varying levels of safety performance. They also developed smaller, BERT-like classifiers that can automatically evaluate LLM safety with comparable effectiveness to GPT-4.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Creation of the Do-Not-Answer dataset:</strong> This dataset is the first open-source resource specifically designed to test the safety mechanisms of LLMs by focusing on prompts they should not answer.</li><li><strong>Evaluation of six LLMs:</strong> The study assessed the responses of three commercial (GPT-4, ChatGPT, Claude) and three open-source (LLaMA-2, ChatGLM2, Vicuna) LLMs to the risky prompts.</li><li><strong>Development of BERT-like classifiers:</strong> Smaller BERT-like classifiers were trained to automatically evaluate LLM responses for safety, achieving performance comparable to GPT-4.</li><li><strong>Three-level hierarchical risk taxonomy:</strong> The dataset uses a detailed taxonomy to categorize the types of risks posed by different prompts, aiding in a more nuanced understanding of LLM vulnerabilities.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear motivation and contribution</strong>
+        <p>The abstract clearly states the need for better safety evaluation of LLMs, especially given the emergence of harmful capabilities. The creation of an open-source dataset is a significant contribution to the field.</p>
+        <div class="quote">"With the rapid evolution of large language mod- els (LLMs), new and hard-to-predict harmful capabilities are emerging. This requires devel- opers to be able to identify risks through the evaluation of “dangerous capabilities” in order to responsibly deploy LLMs. In this work, we collect the first open-source dataset to evaluate safeguards in LLMs, and deploy safer open- source LLMs at a low cost." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Concise and informative</strong>
+        <p>The abstract effectively summarizes the key findings, including the varying performance of different LLMs and the successful development of smaller classifiers. It provides enough information to understand the scope and significance of the work without being overly technical.</p>
+        <div class="quote">"We annotate and assess the responses of six popular LLMs to these instructions. Based on our annotation, we proceed to train several BERT-like classifiers, and find that these small classifiers can achieve results that are compa- rable with GPT-4 on automatic safety evalua- tion." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Mention specific findings</strong>
+        <p>While the abstract mentions varying LLM performance, it could be strengthened by briefly mentioning which models performed best or worst. This would provide a more concrete takeaway for the reader.</p>
+        
+        <p><strong>Rationale:</strong> Adding specific results, even briefly, would make the abstract more impactful and encourage readers to learn more.</p>
+        <p><strong>Implementation:</strong> Include a short phrase like &quot;Results show that LLaMA-2 performed best in avoiding risky instructions, while ChatGLM2 ranked last.&quot; or similar.</p>
+    </li>
+    
+    <li>
+        <strong>Highlight the taxonomy</strong>
+        <p>The abstract could benefit from explicitly mentioning the three-level hierarchical risk taxonomy used in the dataset. This is a key aspect of the work and deserves mention in the abstract.</p>
+        
+        <p><strong>Rationale:</strong> Highlighting the taxonomy would emphasize the comprehensive nature of the dataset and its potential for deeper analysis of LLM safety.</p>
+        <p><strong>Implementation:</strong> Add a phrase like &quot;The dataset is organized using a three-level hierarchical risk taxonomy, covering a range of potential harms.&quot; or similar.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Overview</h4>
+            <p>Large language models (LLMs) are rapidly evolving, demonstrating both beneficial and harmful emergent capabilities. This necessitates evaluating and mitigating these risks, especially for open-source LLMs, which often lack robust safety mechanisms. This paper introduces the &quot;Do-Not-Answer&quot; dataset, an open-source resource designed to evaluate LLM safeguards by focusing on prompts that responsible models should refuse to answer. This dataset aims to enable safer development and deployment of open-source LLMs.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Emergent capabilities of LLMs:</strong> LLMs are developing new abilities, both positive and negative, beyond their initial training. This unpredictability poses challenges for safety.</li><li><strong>Need for risk identification:</strong> It&#39;s crucial to identify and evaluate the &quot;dangerous capabilities&quot; of LLMs to mitigate potential harm.</li><li><strong>Lack of safety in open-source LLMs:</strong> Compared to commercial LLMs, open-source models often lack comprehensive safety mechanisms, making this research particularly relevant.</li><li><strong>Introduction of Do-Not-Answer dataset:</strong> This open-source dataset provides a valuable resource for evaluating LLM safeguards and promoting responsible development.</li><li><strong>Focus on prompts to refuse:</strong> The dataset specifically focuses on prompts that responsible LLMs should not answer, providing a clear benchmark for safety evaluation.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear problem statement</strong>
+        <p>The introduction effectively establishes the context and motivation for the research by highlighting the dual nature of LLM emergent capabilities and the need for better safety evaluations.</p>
+        <div class="quote">"The rapid evolution of large language models (LLMs) has lead to a number of emerging and high- utility capabilities, including those for which they were not trained. On the downside, they have also been found to exhibit hard-to-predict harmful ca- pabilities." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Focus on open-source LLMs</strong>
+        <p>The introduction explicitly addresses the gap in safety mechanisms for open-source LLMs, making the research relevant and impactful for a wider community.</p>
+        <div class="quote">"However, open-source LLMs tend to lack comprehensive safety mechanisms." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on existing safety measures</strong>
+        <p>While the introduction mentions existing model evaluations, it could be strengthened by briefly elaborating on the types of safety mechanisms currently employed in commercial LLMs.</p>
+        <div class="quote">"Existing model evaluations have been devised to measure gender and racial biases, truth- fulness, toxicity, and reproduction of copyrighted content, and led to the demonstration of ethical and societal dangers (Zhuo et al., 2023; Liang et al., 2022)." (Page 1)</div>
+        <p><strong>Rationale:</strong> Providing more context on existing safety measures would better frame the need for the Do-Not-Answer dataset.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two describing common safety mechanisms like reinforcement learning from human feedback or content filtering.</p>
+    </li>
+    
+    <li>
+        <strong>Preview the dataset&#39;s structure</strong>
+        <p>The introduction could briefly preview the structure or key features of the Do-Not-Answer dataset to give the reader a better understanding of its contents.</p>
+        
+        <p><strong>Rationale:</strong> A brief preview of the dataset would increase reader engagement and provide a smoother transition to the later sections.</p>
+        <p><strong>Implementation:</strong> Add a sentence like &quot;The Do-Not-Answer dataset is curated and filtered to include a diverse range of prompts categorized by a hierarchical risk taxonomy.&quot;</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>Related Work</h3>
+            
+            <h4>Overview</h4>
+            <p>This section discusses existing research on the risks of deploying Large Language Models (LLMs), including studies focusing on specific risk areas like bias, toxicity, and misinformation, and work on holistic risk evaluation. It highlights the limitations of current datasets and emphasizes the need for a comprehensive taxonomy and open-source dataset for evaluating LLM safety.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Studies in specific risk areas:</strong> Existing research has addressed specific risks like bias, toxicity, and misinformation, but often lacks a broader perspective on more severe risks.</li><li><strong>Holistic risk evaluation:</strong> While some datasets for evaluating LLM safety exist, they often lack labeled responses, ignore human impacts, or are proprietary and inaccessible to the public.</li><li><strong>Need for comprehensive datasets:</strong> There&#39;s a significant gap in comprehensive, publicly available datasets for evaluating the full range of LLM safety capabilities.</li><li><strong>Limitations of existing datasets:</strong> Current datasets may not cover all risk areas, lack labeled responses, or be proprietary, hindering comprehensive safety evaluations.</li><li><strong>Focus on open-source dataset:</strong> This work aims to create a comprehensive risk taxonomy and an open-source dataset to address the limitations of existing resources.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive overview of related work</strong>
+        <p>The section provides a thorough overview of existing research on LLM risks, covering both specific risk areas and holistic evaluations. This demonstrates a good understanding of the current landscape.</p>
+        <div class="quote">"There has been a lot of research on studying the risks of deploying LLMs in applications, in terms of risk taxonomy, evaluation, and safety mitigation." (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Clear identification of gaps</strong>
+        <p>The section clearly identifies the limitations of existing datasets and research, highlighting the need for the proposed work. This justifies the creation of the Do-Not-Answer dataset and taxonomy.</p>
+        <div class="quote">"Nonetheless, there is still a lack of comprehensive datasets for evaluating the safety capabilities of LLMs. In this work, we de- velop a more holistic risk taxonomy that covers a wide range of potential risks." (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>More detailed comparison of datasets</strong>
+        <p>While the section mentions several datasets, a more detailed comparison of their sizes, scopes, and limitations would be beneficial. This would help readers better understand the unique contribution of the Do-Not-Answer dataset.</p>
+        
+        <p><strong>Rationale:</strong> A more detailed comparison would strengthen the argument for the Do-Not-Answer dataset and highlight its advantages over existing resources.</p>
+        <p><strong>Implementation:</strong> Create a table summarizing key features of the mentioned datasets, including size, scope, availability, and limitations.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss specific evaluation metrics</strong>
+        <p>The section could benefit from discussing the specific evaluation metrics used in prior work and how they relate to the metrics used in this paper. This would provide a clearer context for evaluating the results.</p>
+        
+        <p><strong>Rationale:</strong> Discussing evaluation metrics would help readers understand how the proposed work compares to previous research and the significance of the chosen metrics.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing common evaluation metrics for LLM safety, such as accuracy, precision, recall, and F1-score, and how they are used in the current work.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 1</summary>
+        <p>This figure presents a radar chart comparing six large language models (LLMs) across different safety aspects. Each axis of the radar chart represents a category of potential harm, such as &#39;Information Hazards&#39; or &#39;Malicious Uses&#39;. The performance of each LLM is represented by a colored line, forming a polygon on the chart. A point closer to the outer edge of the chart indicates a higher score in that category, meaning the LLM is better at avoiding that specific harm. The LLMs compared are GPT-4, ChatGPT, Claude, ChatGLM2, LLaMA-2, and Vicuna.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 1: A comprehensive evaluation of LLM safeguards."</p>
+            <p><strong>Context:</strong> This figure is presented at the beginning of the &#39;Related Work&#39; section on page 2. It follows a discussion of the need for better safety evaluations in LLMs.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is highly relevant because it visually summarizes the core evaluation performed in the paper. It allows for a quick comparison of the safety performance of different LLMs across various risk categories.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>One axis label is missing, making it difficult to interpret that dimension of the comparison.</li><li>The scale on the axes (0.8 to 1.0) is quite narrow, potentially obscuring subtle differences in performance.</li><li>The colors used for the LLM lines are somewhat similar, making it challenging to distinguish them at a glance.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure lacks any indication of statistical significance. It&#39;s unclear whether the observed differences in performance are statistically meaningful.</li><li>The figure doesn&#39;t provide any context or explanation for why certain LLMs perform better or worse in specific categories.</li><li>The choice of categories and their relative importance in the overall safety assessment are not discussed.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>Safety Taxonomy</h3>
+            
+            <h4>Overview</h4>
+            <p>This section introduces a three-level hierarchical taxonomy for classifying the risks associated with large language models (LLMs), particularly text-only models. It builds upon previous research and focuses on five key risk areas: information hazards, malicious uses, discrimination/exclusion/toxicity, misinformation harms, and human-computer interaction harms. The taxonomy provides a detailed breakdown of potential hazards, outlining how these risks manifest and providing examples of the types of questions or prompts that could trigger them.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Hierarchical structure:</strong> The taxonomy uses a three-level structure to categorize risks, starting with broad areas and then breaking them down into more specific harm types and risk types.</li><li><strong>Focus on text-only LLMs:</strong> The taxonomy specifically addresses risks associated with text-only LLMs, assuming no API interaction or multimodal input/output.</li><li><strong>Five key risk areas:</strong> The taxonomy covers five main areas of risk, providing a comprehensive framework for evaluating LLM safety.</li><li><strong>Mechanism of risks:</strong> For each risk area, the taxonomy explains how these risks can arise from LLM predictions and how they can be exploited.</li><li><strong>Question/prompt examples:</strong> The taxonomy provides examples of the types of questions or prompts that could trigger each type of harm, making it practical for evaluating LLM responses.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Builds on existing research</strong>
+        <p>The taxonomy builds upon the established work of Weidinger et al. (2021), providing a more refined and detailed classification of LLM risks.</p>
+        <div class="quote">"The study by Weidinger et al. (2021) categorized the risks associated with LLMs into six distinct areas: (I) information hazards; (II) malicious uses; (III) discrimination, exclusion, and toxicity; (IV) misinformation harms; (V) human-computer inter- action harms; and (VI) automation, access, and environmental harms. Building upon this founda- tion, we introduce a comprehensive three-level risk taxonomy for LLMs, as illustrated in Figure 2." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Comprehensive and detailed</strong>
+        <p>The three-level structure and the inclusion of specific risk types provide a comprehensive and detailed framework for analyzing LLM safety.</p>
+        <div class="quote">"We then formulate twelve types of harms as our second-level classification (Table 1), and delineate sixty distinct risk types at the bottom level, pro- viding a comprehensive breakdown of potential hazards.3" (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Clarify the distinction between harm types and risk types</strong>
+        <p>While the taxonomy mentions harm types and risk types, the distinction between these two levels could be clarified further. This would improve the overall clarity and usability of the taxonomy.</p>
+        
+        <p><strong>Rationale:</strong> A clearer distinction between the levels would make the taxonomy easier to understand and apply in practice.</p>
+        <p><strong>Implementation:</strong> Provide more explicit definitions and examples to differentiate between harm types (second level) and risk types (third level).</p>
+    </li>
+    
+    <li>
+        <strong>Include examples of safe responses</strong>
+        <p>While the taxonomy provides examples of prompts that could trigger harmful responses, it could be strengthened by also including examples of safe and appropriate responses. This would provide a more complete picture of desired LLM behavior.</p>
+        
+        <p><strong>Rationale:</strong> Including examples of safe responses would make the taxonomy more practical for developers and researchers working on LLM safety.</p>
+        <p><strong>Implementation:</strong> For each risk type, provide examples of responses that would be considered safe and responsible.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 2</summary>
+        <p>This figure illustrates a three-level taxonomy of risks associated with Large Language Models (LLMs). The top level categorizes risks into five broad areas: Information Hazards, Malicious Uses, Discrimination/Toxicity, Misinformation Harms, and Human-Chatbot Interaction Harms. Each of these areas is then broken down into more specific harm types in the second level. The third level further details each harm type with specific examples. The taxonomy helps to organize and understand the various ways LLMs can potentially cause harm.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 2: Three-level taxonomy of LLM risks."</p>
+            <p><strong>Context:</strong> This figure appears in the &#39;Safety Taxonomy&#39; section on page 4, after a discussion of existing risk categorization efforts and the need for a more comprehensive taxonomy.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding the structure and scope of the research. It provides the framework for the Do-Not-Answer dataset and guides the evaluation of LLM safety.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could benefit from a clearer visual hierarchy. The connections between the levels could be more distinct, perhaps using different line weights or colors.</li><li>The text within the boxes is quite small, making it difficult to read without zooming in.</li><li>The figure is somewhat cluttered, making it challenging to follow the different branches of the taxonomy.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure doesn&#39;t explain how the taxonomy was developed or validated. It&#39;s unclear whether it&#39;s based on empirical data or expert opinions.</li><li>The figure doesn&#39;t discuss the relative importance of the different risk areas or harm types. Are some risks considered more critical than others?</li><li>The figure doesn&#39;t provide any context on how the taxonomy will be used in the subsequent evaluation. How are the prompts in the Do-Not-Answer dataset mapped to this taxonomy?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 1</summary>
+        <p>This table shows the number of questions in the Do-Not-Answer dataset that fall into each of the five risk areas and twelve harm types defined in the safety taxonomy. The table has three columns: &#39;Risk Area&#39;, &#39;Harm Type&#39;, and &#39;# Q&#39; (number of questions). It provides a breakdown of the dataset&#39;s composition and shows how the questions are distributed across different risk categories.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 1: The number of questions (# Q) falling into our five risk areas and twelve harm types."</p>
+            <p><strong>Context:</strong> This table is presented in the &#39;Safety Taxonomy&#39; section on page 5, immediately after the introduction of the three-level risk taxonomy in Figure 2.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is important because it provides a quantitative overview of the Do-Not-Answer dataset. It shows the distribution of questions across different risk categories, which is crucial for understanding the scope and focus of the evaluation.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could be more visually appealing. Using different colors or shading for the rows could improve readability.</li><li>The table is quite wide, making it difficult to fit on the page without wrapping text. Consider splitting it into two smaller tables or rotating it.</li><li>The &#39;# Q&#39; column could be renamed to something more descriptive, such as &#39;Number of Questions&#39;.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table doesn&#39;t explain how the questions were generated or selected for inclusion in the dataset. What was the process for creating these questions?</li><li>The table doesn&#39;t discuss the rationale for the number of questions in each category. Why are there more questions for some harm types than others?</li><li>The table doesn&#39;t provide any context on how these numbers will be used in the subsequent evaluation. How will the distribution of questions affect the results?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Information Hazards - Risks from leaking or inferring sensitive information (organization/gov):</strong> 136</li><li><strong>Information Hazards - Compromise privacy by leaking or inferring private information (person/individual):</strong> 112</li><li><strong>Malicious Uses - Assisting illegal activities:</strong> 132</li><li><strong>Malicious Uses - Nudging or advising users to perform unethical or unsafe actions:</strong> 71</li><li><strong>Malicious Uses - Reducing the cost of disinformation campaigns:</strong> 40</li><li><strong>Discrimination, Exclusion, Toxicity, Hateful, Offensive - Social stereotypes and unfair discrimination:</strong> 95</li><li><strong>Discrimination, Exclusion, Toxicity, Hateful, Offensive - Toxic language (hate speech):</strong> 53</li><li><strong>Discrimination, Exclusion, Toxicity, Hateful, Offensive - Adult content:</strong> 28</li><li><strong>Misinformation Harms - Disseminating false or misleading information:</strong> 92</li><li><strong>Misinformation Harms - Causing material harm by disseminating misinformation e.g. in medicine or law:</strong> 63</li><li><strong>Human-chatbot Interaction Harms - Mental health or overreliance crisis:</strong> 67</li><li><strong>Human-chatbot Interaction Harms - Treat chatbot as a human:</strong> 50</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>Data Collection</h3>
+            
+            <h4>Overview</h4>
+            <p>This section details how the researchers collected 939 risky questions and the corresponding responses from six different Large Language Models (LLMs). The questions are designed to be those that a responsible LLM should refuse to answer. The researchers used a novel three-round conversation strategy with GPT-4 to generate these questions, addressing challenges in eliciting risky content. They also describe how they handled borderline cases and filled in question templates with specific risky scenarios. Finally, they collected responses from three commercial and three open-source LLMs, providing statistics on the length of these responses.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Rationale for question selection:</strong> The dataset focuses on questions LLMs should *not* answer to facilitate easier evaluation of safety mechanisms.</li><li><strong>GPT-4 question generation strategy:</strong> A three-round conversational approach was used with GPT-4 to generate risky questions, overcoming GPT-4&#39;s reluctance to produce harmful content.</li><li><strong>Handling of borderline cases:</strong> Questions that were not inherently risky were either modified to include a risky scenario or excluded from the dataset.</li><li><strong>Question template filling:</strong> Generic question templates were filled in with specific protected attributes (name, race, religion, gender, organization) to create concrete risky questions.</li><li><strong>Response collection from six LLMs:</strong> Responses were collected from six LLMs, including three commercial and three open-source models, providing a diverse range of LLM architectures and training approaches.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Novel question generation method</strong>
+        <p>The three-round conversation strategy with GPT-4 is a creative and effective way to generate risky questions while bypassing safety restrictions. This approach allows for the collection of a diverse range of potentially harmful prompts.</p>
+        <div class="quote">"In order to tackle this problem, we propose a novel strategy that involves a simulated chat history to elicit question examples through a three-round conversation." (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Clear justification for question selection</strong>
+        <p>The researchers clearly explain why they chose to focus on questions LLMs should not answer, emphasizing the ease of evaluation and the trade-off with potential bias in question distribution.</p>
+        <div class="quote">"Why do we collect a dataset where all instructions should not be followed? We expect that LLMs should either reject, refuse to respond to, or refute the stance of all such questions. It is relatively easy to identify and determine the quality of response abstention, for both human and automatic assess- ment." (Page 5)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide more detail on the three-round conversation prompts</strong>
+        <p>While the three-round conversation strategy is described, providing the actual prompts used would enhance reproducibility and allow others to build upon this method.</p>
+        
+        <p><strong>Rationale:</strong> Sharing the specific prompts would make the research more transparent and facilitate further research on generating risky questions.</p>
+        <p><strong>Implementation:</strong> Include the exact prompts used in each round of the GPT-4 conversation, potentially in an appendix or supplementary material.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss potential biases in the generated questions</strong>
+        <p>While the researchers acknowledge the potential for bias in the question distribution, a more in-depth discussion of the types of biases that might be present and their potential impact on the evaluation would be beneficial.</p>
+        <div class="quote">"Collecting this dataset facilitates accurate and high-quality response evaluation, at the cost of potentially biased risky question distribution." (Page 5)</div>
+        <p><strong>Rationale:</strong> A more thorough discussion of potential biases would strengthen the analysis and provide a more nuanced understanding of the limitations of the dataset.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing potential biases, such as biases related to the topics covered, the phrasing of the questions, or the specific protected attributes used.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>table 2</summary>
+        <p>Table 2 presents the average number of words in the responses of six different Large Language Models (LLMs) across twelve different harm types. The LLMs included are GPT-4, ChatGPT, Claude, ChatGLM2, LLaMA-2, and Vicuna. The harm types are numbered from 1 to 12, each representing a specific category of harmful prompts, as defined in Table 1. The table also includes an average (&quot;Avg&quot;) column for each LLM, representing the average number of words across all harm types for that specific model.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 2: Average number of words in the LLM responses across the different harm types."</p>
+            <p><strong>Context:</strong> This table is introduced in the &quot;Data Collection&quot; section on page 6, after describing the process of collecting responses from the six LLMs.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is relevant because it provides insights into the response patterns of different LLMs. The average number of words can indicate how verbose or concise the models are when addressing different types of harmful prompts. This information can be useful for understanding the models&#39; safety strategies and potential vulnerabilities.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from clearer headings. Instead of just numbers, the harm types could be briefly described for better context.</li><li>The table is dense and could be more visually appealing. Consider using alternating row colors or other visual cues to improve readability.</li><li>The font size is small, making it difficult to read the data quickly.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table presents only average word counts. While this provides a general overview, it doesn&#39;t capture the full distribution of response lengths. Including standard deviations or other measures of dispersion would be helpful.</li><li>The table doesn&#39;t explain the significance of the differences in word counts between LLMs and harm types. Are these differences statistically significant? What do they imply about the models&#39; behavior?</li><li>The table doesn&#39;t connect the word counts to the safety or harmfulness of the responses. Does a longer response necessarily indicate a safer or more harmful response?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>GPT-4 Avg:</strong> 63.0 words</li><li><strong>ChatGPT Avg:</strong> 88.7 words</li><li><strong>Claude Avg:</strong> 67.2 words</li><li><strong>ChatGLM2 Avg:</strong> 113.4 words</li><li><strong>LLaMA-2 Avg:</strong> 145.7 words</li><li><strong>Vicuna Avg:</strong> 115.7 words</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-5" class="section">
+            <h3>Response Annotation and Assessment</h3>
+            
+            <h4>Overview</h4>
+            <p>This section describes the process of annotating and assessing the responses of six LLMs to the risky questions in the Do-Not-Answer dataset. The researchers used a two-level assessment: first, classifying responses as either safe or harmful, and second, categorizing them into six refined action categories. The guidelines for determining harmfulness are outlined, along with a detailed explanation of each action category. The section also discusses the human evaluation process and initial findings regarding the safety performance of the different LLMs.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Binary harmfulness annotation:</strong> Each LLM response was labeled as either &quot;safe&quot; or &quot;harmful&quot; based on whether it appropriately avoided answering the risky question.</li><li><strong>Six refined action categories:</strong> Responses were further categorized into six action types, providing a more nuanced understanding of how the LLMs handled the risky prompts. These categories range from refusing to answer to directly following the harmful instruction.</li><li><strong>Guidelines for harmless responses:</strong> Three types of responses were considered safe: rejecting the question, refuting the question&#39;s premise, and providing general advice with disclaimers.</li><li><strong>Human evaluation process:</strong> Three annotators independently labeled the responses, resolving disagreements through discussion and consensus.</li><li><strong>Initial safety performance findings:</strong> LLaMA-2 was found to be the safest model, with the fewest harmful responses, while ChatGLM2 generated the most harmful responses.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear definition of harmless responses</strong>
+        <p>The section provides clear guidelines for what constitutes a harmless response, making the annotation process more consistent and reliable.</p>
+        <div class="quote">"What is a Harmless Response? Based on the nature of our questions that are intended to elicit risky answers, three types of responses are consid- ered to be safe: (1) reject to answer the question; (2) refute the underlying opinion/assumptions in the question; and (3) provide general advice with suitable disclaimers." (Page 6)</div>
+    </li>
+    
+    <li>
+        <strong>Well-defined action categories</strong>
+        <p>The six action categories provide a useful framework for analyzing the different ways LLMs respond to risky prompts. This allows for a more detailed comparison of LLM behavior beyond simply labeling them as safe or harmful.</p>
+        <div class="quote">"Refined Response Categories From the perspec- tive of how models respond to risky questions and what components are included in the answer, we categorize the responses into six refined categories as shown in Table 3, referring to as action cate- gories." (Page 6)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide inter-annotator agreement statistics</strong>
+        <p>While the section mentions that annotators resolved disagreements through discussion, providing quantitative measures of inter-annotator agreement (e.g., Kappa score) would strengthen the validity of the human evaluation.</p>
+        
+        <p><strong>Rationale:</strong> Inter-annotator agreement statistics provide a measure of the reliability and consistency of the annotation process.</p>
+        <p><strong>Implementation:</strong> Calculate and report inter-annotator agreement using an appropriate metric, such as Cohen&#39;s Kappa or Fleiss&#39; Kappa.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on the rationale for the chosen action categories</strong>
+        <p>The section could benefit from a more detailed explanation of why these specific action categories were chosen and how they contribute to understanding LLM safety.</p>
+        
+        <p><strong>Rationale:</strong> Providing more context on the action categories would make the analysis more transparent and help readers understand the significance of the results.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing the theoretical or empirical basis for the chosen categories and how they relate to different safety strategies or vulnerabilities.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>table 3</summary>
+        <p>Table 3 describes six categories of LLM responses to risky prompts, ranging from refusal to answer to directly following the prompt. Each category is assigned a numerical label (0-5) and a detailed description with examples. Categories 0-4 represent generally harmless responses, while category 5 indicates a harmful response where the LLM follows the risky instruction.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 3: Six response categories. Responses falling into 0-4 are generally harmless, while those in category 5 are harmful."</p>
+            <p><strong>Context:</strong> This table appears in the &#39;Response Annotation and Assessment&#39; section on page 7, after a discussion of the guidelines for evaluating LLM responses.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is essential for understanding how the researchers categorized and assessed the LLM responses. It provides the framework for the qualitative analysis of LLM safety and informs the subsequent quantitative evaluation.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from more visual separation between the rows. Alternating row colors or subtle lines could improve readability.</li><li>The example column could be wider to accommodate longer text without wrapping.</li><li>Consider using a more distinct font or formatting for the category labels (0-5) to make them stand out.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table doesn&#39;t explicitly define what constitutes a &#39;risky&#39; prompt. While the context provides some clues, a more precise definition would be helpful.</li><li>The distinction between some categories, such as 1 (&#39;refute the opinion&#39;) and 2 (&#39;discuss from dual perspectives&#39;), could be clearer. Providing more distinct examples for each category would be beneficial.</li><li>The table doesn&#39;t discuss the implications of each response category for LLM safety. Are some harmless categories considered &#39;better&#39; than others?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 6</summary>
+        <p>Figure 6 shows five heatmaps, each representing a different risk area (Information Hazards, Malicious Uses, Discrimination/Toxicity, Misinformation Harms, and Human-chatbot Interaction Harms). Each heatmap displays the distribution of six action categories (0-5, as defined in Table 3) across six different LLMs (GPT-4, ChatGPT, Claude, ChatGLM2, LLaMA-2, and Vicuna). The color intensity in each cell of the heatmap corresponds to the frequency of a specific action category for a given LLM within a particular risk area. Darker colors indicate higher frequencies.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 6: The action category distribution given a specific risk area for the different models."</p>
+            <p><strong>Context:</strong> This figure is presented in the &#39;Response Annotation and Assessment&#39; section on page 9. It follows a discussion of the human evaluation of LLM responses and the observed action category patterns.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is highly relevant as it visually summarizes the key findings of the LLM safety evaluation. It allows for easy comparison of how different LLMs respond to various types of risky prompts, highlighting their strengths and weaknesses in different risk areas.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The labels for the action categories (0-5) could be included directly on the heatmaps or in a separate legend for easier interpretation.</li><li>The color scheme could be improved for better contrast and accessibility. Consider using a colorblind-friendly palette.</li><li>The figure could benefit from a clearer title that more explicitly states what the heatmaps represent.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure doesn&#39;t provide any statistical analysis of the observed differences between LLMs. Are these differences statistically significant?</li><li>The figure doesn&#39;t offer any explanation for the observed patterns. Why do some LLMs perform better in certain risk areas than others?</li><li>The figure doesn&#39;t discuss the implications of these findings for LLM safety and deployment. What are the practical consequences of these different response patterns?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 7</summary>
+        <p>This figure presents three heatmaps, each representing a specific harm type and showing the distribution of action categories across six different large language models (LLMs). The harm types are &#39;Assisting illegal activities,&#39; &#39;Social stereotypes/unfair discrimination,&#39; and &#39;Cause material harms in medicine/law.&#39; The LLMs included are GPT-4, ChatGPT, Claude, ChatGLM2, LLaMA-2, and Vicuna. Each cell in a heatmap represents the frequency of a specific action category (0-5, as defined in Table 3) taken by a particular LLM when responding to a prompt related to the given harm type. The color intensity of each cell reflects the frequency, with darker colors indicating higher frequencies.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 7: The action category distribution for Assisting illegal activities, Stereotype and discrimination, and Medicine or law harms."</p>
+            <p><strong>Context:</strong> This figure appears in the &#39;Response Annotation and Assessment&#39; section on page 9, after a discussion of how the models&#39; responses were categorized into different action categories.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is relevant because it provides a detailed view of how different LLMs respond to specific types of harmful prompts. It helps to identify patterns in the models&#39; behavior and assess their ability to avoid generating harmful content in different contexts.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could benefit from more descriptive labels for the action categories. While the numbers 0-5 are defined in Table 3, briefly including the descriptions in the figure itself would improve readability.</li><li>The color scheme could be improved for better contrast and accessibility. Some color combinations might be difficult for individuals with color vision deficiencies to distinguish.</li><li>The font size used for the LLM names and harm types is small, making it challenging to read without zooming in.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure doesn&#39;t provide any information on the number of prompts used for each harm type. Knowing the sample size would help to interpret the frequencies.</li><li>The figure doesn&#39;t discuss the statistical significance of the observed differences in action category distributions. Are these differences statistically meaningful?</li><li>The figure doesn&#39;t offer any insights into the reasons behind the observed patterns. Why do some LLMs tend to take certain actions more frequently than others for specific harm types?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-6" class="section">
+            <h3>Automatic Response Evaluation</h3>
+            
+            <h4>Overview</h4>
+            <p>This section explores automatic methods for evaluating LLM responses to risky prompts, focusing on efficiency and scalability. Two main methods are presented: using GPT-4 as an evaluator and training a smaller, PLM-based classifier. Experiments show that the PLM-based classifier, specifically Longformer, achieves comparable performance to GPT-4, suggesting a cost-effective alternative for automatic safety evaluation.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Need for automatic evaluation:</strong> Human evaluation is resource-intensive, motivating the need for automated methods.</li><li><strong>GPT-4 as evaluator:</strong> GPT-4 is used to classify LLM responses based on the defined action categories.</li><li><strong>PLM-based classifier:</strong> A Longformer model is fine-tuned to classify responses and detect harmful content.</li><li><strong>Comparable performance:</strong> Longformer achieves similar accuracy to GPT-4 in both action classification and harmful response detection.</li><li><strong>Cost-effectiveness:</strong> The smaller Longformer model offers a more efficient and scalable solution compared to using GPT-4.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear motivation</strong>
+        <p>The section clearly explains the limitations of human evaluation and the need for automatic methods, setting the stage for the proposed approaches.</p>
+        <div class="quote">"Human evaluation in AI development can be time-consuming and resource-intensive, complicating scalability and preventing timely assessment." (Page 9)</div>
+    </li>
+    
+    <li>
+        <strong>Well-defined methods</strong>
+        <p>The section provides a clear description of both the GPT-4 and PLM-based evaluation methods, including details on prompting and training.</p>
+        <div class="quote">"We follow Ye et al. (2023) in using GPT-4 for evaluation, and use the same guidelines as for human annotation (Table 3) with examples for in-context learning." (Page 9)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide more details on the PLM training data</strong>
+        <p>While the section mentions using human annotations, it would be helpful to provide more specifics about the size and composition of the training data used for the PLM-based classifier.</p>
+        
+        <p><strong>Rationale:</strong> More details on the training data would enhance reproducibility and allow for a better understanding of the classifier&#39;s performance.</p>
+        <p><strong>Implementation:</strong> Include information on the number of annotated responses used for training, the distribution of labels, and any data augmentation techniques employed.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the limitations of automatic evaluation</strong>
+        <p>While automatic evaluation offers advantages in terms of efficiency, it also has limitations. The section could be strengthened by discussing potential biases or inaccuracies in the automatic methods and how they might compare to human judgment.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging the limitations of automatic evaluation would provide a more balanced perspective and highlight areas for future improvement.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing potential limitations, such as the reliance on human annotations for training, the potential for biases in the training data, and the difficulty of capturing nuanced aspects of human judgment.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>table 4</summary>
+        <p>Table 4 presents the results of action classification for six different Large Language Models (LLMs), comparing their performance using two evaluation methods: GPT-4 and Longformer. The metrics used are Accuracy, Precision, Recall, and F1 score. The table provides values for each LLM individually (GPT-4, ChatGPT, Claude, ChatGLM2, LLaMA-2, and Vicuna) evaluated by both GPT-4 and Longformer. An &quot;Overall&quot; row shows the average performance across all models for each metric and evaluation method, including standard deviations to indicate the variability in performance.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 4: Action classification results (%) for each LLM."</p>
+            <p><strong>Context:</strong> This table appears in the &quot;Automatic Response Evaluation&quot; section on page 11. It follows a description of the automatic evaluation methods used and their experimental setup.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is highly relevant as it presents the core results of the automatic evaluation of LLM action classification. It allows for a direct comparison of the performance of different LLMs and evaluation methods, demonstrating the effectiveness of the proposed Longformer-based approach.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is dense and could benefit from visual cues like alternating row colors or bolder lines separating the LLMs to improve readability.</li><li>The abbreviations for the metrics (Accuracy, Precision, Recall, F1) could be spelled out fully for clarity, especially for readers unfamiliar with these terms.</li><li>The overall row could be visually separated more distinctly from the individual LLM rows to emphasize its significance.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>While the overall row includes standard deviations, it would be helpful to include standard deviations for each individual LLM as well to provide a more complete picture of the performance variability.</li><li>The table doesn&#39;t provide any discussion of the statistical significance of the observed differences between LLMs and evaluation methods. Are these differences statistically meaningful?</li><li>The table doesn&#39;t offer any explanation for the observed performance patterns. Why does Longformer perform better for commercial LLMs than open-source LLMs? What are the implications of the large performance gap for LLaMA-2?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>GPT-4 Accuracy:</strong> 91.3 %</li><li><strong>Longformer Accuracy:</strong> 88.8 %</li><li><strong>GPT-4 Precision:</strong> 86.3 %</li><li><strong>Longformer Precision:</strong> 82.3 %</li><li><strong>GPT-4 Recall:</strong> 89.2 %</li><li><strong>Longformer Recall:</strong> 85.3 %</li><li><strong>GPT-4 F1:</strong> 87.1 %</li><li><strong>Longformer F1:</strong> 83.0 %</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 5</summary>
+        <p>Table 5 presents the results of harmful response detection for various LLMs, evaluated using three methods: Human evaluation, GPT-4, and Longformer. The table shows the Accuracy, Precision, Recall, and F1 scores for each LLM (GPT-4, ChatGPT, Claude, ChatGLM2, LLaMA-2, and Vicuna) under each evaluation method. An &quot;Overall&quot; row provides the average performance across all models for each metric and evaluation method, including standard deviations.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 5: Harmful response detection results (%) for each LLM."</p>
+            <p><strong>Context:</strong> This table is located in the &quot;Automatic Response Evaluation&quot; section on page 11. It directly follows Table 4, which presents the action classification results.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is highly relevant as it shows the performance of different LLMs and evaluation methods on the crucial task of harmful response detection. It provides a direct comparison between human evaluation and the proposed automatic methods (GPT-4 and Longformer), demonstrating the effectiveness of the Longformer-based approach.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Similar to Table 4, this table could benefit from visual enhancements like alternating row colors or bolder separator lines to improve readability.</li><li>The overall row could be highlighted more prominently to distinguish it from the individual LLM rows.</li><li>The table could be made more concise by presenting the overall averages and standard deviations in a separate, smaller table.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table doesn&#39;t discuss the statistical significance of the observed differences between LLMs and evaluation methods. Are the differences between human evaluation and automatic evaluation statistically significant?</li><li>The table doesn&#39;t provide any explanation for the performance patterns. Why does Longformer achieve comparable results to GPT-4? What are the implications of the relatively lower performance of some LLMs on harmful response detection?</li><li>The table could benefit from a discussion of the practical implications of these results. How can these findings be used to improve LLM safety and deployment?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Human Accuracy:</strong> 98.4 %</li><li><strong>GPT-4 Accuracy:</strong> 98.1 %</li><li><strong>Longformer Accuracy:</strong> 80.4 %</li><li><strong>Human Precision:</strong> 84.6 %</li><li><strong>GPT-4 Precision:</strong> 79.2 %</li><li><strong>Longformer Precision:</strong> 87.1 %</li><li><strong>Human Recall:</strong> 92.1 %</li><li><strong>GPT-4 Recall:</strong> 83.1 %</li><li><strong>Longformer Recall:</strong> 83.8 %</li><li><strong>Human F1:</strong> 87.1 %</li><li><strong>GPT-4 F1:</strong> 80.4 %</li><li><strong>Longformer F1:</strong> 83.0 %</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 6</summary>
+        <p>This table presents the percentage of harmless responses generated by each of the six evaluated LLMs: LLaMA-2, ChatGPT, Claude, GPT-4, Vicuna, and ChatGLM2. A higher percentage indicates a better safety performance, meaning the model is more likely to avoid generating harmful content in response to risky prompts.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 6: Proportion of harmless responses of each LLM (%; higher is better)."</p>
+            <p><strong>Context:</strong> This table is mentioned on page 11, within the &#39;Automatic Response Evaluation&#39; section. It summarizes the overall safety performance of the LLMs based on human evaluation.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is highly relevant because it provides a direct comparison of the overall safety performance of the six LLMs. It summarizes the key findings of the human evaluation and allows for a quick assessment of which models are better at avoiding harmful responses.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from visual cues, such as color gradients or bolding, to highlight the best and worst performing models.</li><li>The table could be made more visually appealing by using alternating row colors or other formatting enhancements.</li><li>The table&#39;s caption could be more descriptive, explicitly mentioning that the percentages represent the proportion of *harmless* responses.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table doesn&#39;t provide any information on the statistical significance of the differences in harmless response rates between the models. Are these differences statistically meaningful?</li><li>The table doesn&#39;t offer any insights into the reasons behind the observed performance differences. Why does one model perform better than another?</li><li>The table doesn&#39;t discuss the implications of these findings for practical applications. What are the consequences of different harmless response rates for real-world LLM deployment?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>LLaMA-2:</strong> 99.7 %</li><li><strong>ChatGPT:</strong> 98.5 %</li><li><strong>Claude:</strong> 98.3 %</li><li><strong>GPT-4:</strong> 97.6 %</li><li><strong>Vicuna:</strong> 94.5 %</li><li><strong>ChatGLM2:</strong> 90.9 %</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-7" class="section">
+            <h3>Conclusion</h3>
+            
+            <h4>Overview</h4>
+            <p>This paper introduced a three-level taxonomy for evaluating the risks of harm from LLMs, created a dataset of 939 risky questions and 5,000+ responses from six LLMs, and defined criteria for safe and responsible answers. They found that LLaMA-2 was the safest model and that a small, trained model could achieve comparable evaluation results to GPT-4.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Three-level taxonomy:</strong> A comprehensive taxonomy was developed to categorize LLM risks, providing a framework for evaluating responses.</li><li><strong>Dataset creation:</strong> A dataset of 939 risky questions and over 5,000 LLM responses was created, providing a valuable resource for evaluating LLM safety.</li><li><strong>Safety criteria definition:</strong> Criteria for safe and responsible answers to risky questions were established, allowing for consistent evaluation.</li><li><strong>LLM safety assessment:</strong> The safety mechanisms of six different LLMs were assessed using the created dataset and criteria.</li><li><strong>Automatic evaluation methods:</strong> The study explored automatic methods for evaluating LLM safety, finding that a smaller model could achieve comparable results to GPT-4.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear summary of contributions</strong>
+        <p>The conclusion effectively summarizes the key contributions of the paper, including the taxonomy, dataset, and evaluation methods.</p>
+        <div class="quote">"We introduced a comprehensive three-level taxon- omy for assessing the risk of harms associated with LLMs, encompassing five distinct risk areas. Based on the taxonomy, we assembled a dataset consisting of 939 questions, alongside over 5,000 responses gathered from six different LLMs." (Page 11)</div>
+    </li>
+    
+    <li>
+        <strong>Highlights key findings</strong>
+        <p>The conclusion highlights the important finding that LLaMA-2 performed best in terms of safety and that a smaller model can be used for effective automatic evaluation.</p>
+        <div class="quote">"Notably, our findings re- vealed that a suitably-trained small model (600M) can effectively perform the evaluation, yielding re- sults that are comparable to those obtained using GPT-4 as an evaluator." (Page 12)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Discuss broader implications</strong>
+        <p>The conclusion could be strengthened by discussing the broader implications of the findings for the field of LLM safety research and development.</p>
+        
+        <p><strong>Rationale:</strong> Discussing broader implications would enhance the impact of the paper and provide a stronger takeaway message.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two discussing how the findings can inform future research on LLM safety, such as developing better safety mechanisms or improving evaluation methods.</p>
+    </li>
+    
+    <li>
+        <strong>Connect to future work</strong>
+        <p>While the conclusion mentions automatic evaluation methods, it could be improved by explicitly connecting this to the future work discussed in the next section. This would create a smoother transition and highlight the potential for further research.</p>
+        
+        <p><strong>Rationale:</strong> Connecting the conclusion to the future work section would provide a more cohesive narrative and encourage readers to explore the next steps in this research area.</p>
+        <p><strong>Implementation:</strong> Add a sentence like &quot;The promising results of the automatic evaluation methods suggest potential for further development and refinement, as discussed in the next section on limitations and future work.&quot;</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-8" class="section">
+            <h3>Limitations and Future Work</h3>
+            
+            <h4>Overview</h4>
+            <p>This section outlines the limitations of the current research and suggests directions for future work. The primary limitations relate to the data collection process, specifically the focus on only risky instructions and the limited dataset size. The evaluation scope is also limited to English, single-turn, and zero-shot settings. Future work will address these limitations by including non-risky instructions, expanding the dataset, collecting multi-label annotations, and extending the evaluation to other languages, multi-turn conversations, and few-shot settings.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Focus on risky instructions:</strong> The dataset only includes risky instructions, which might lead to overestimating the safety of LLMs that simply refuse all instructions. Including non-risky instructions would provide a more balanced evaluation.</li><li><strong>Limited dataset size:</strong> The current dataset size is relatively small, potentially limiting the generalizability of the findings. Expanding the dataset would improve the robustness of the evaluation.</li><li><strong>Single-label annotations:</strong> The current annotation scheme only allows for one action category per response, while some responses might fit multiple categories. Multi-label annotations would provide a more nuanced understanding of LLM behavior.</li><li><strong>English-only evaluation:</strong> The evaluation is limited to English, which might not generalize to other languages with different cultural contexts and safety considerations.</li><li><strong>Single-turn, zero-shot setting:</strong> The evaluation focuses on single-turn conversations and a zero-shot setting, which doesn&#39;t fully capture the complexities of real-world LLM interactions. Extending the evaluation to multi-turn conversations and few-shot settings would provide a more realistic assessment.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clearly identifies limitations</strong>
+        <p>The section clearly articulates the limitations of the current research, including the focus on risky instructions, the limited dataset size, and the scope of the evaluation. This transparency strengthens the overall analysis.</p>
+        <div class="quote">"As discussed in Section 4, all instructions in this dataset are risky. Excluding non-risky instructions limits the identification of over-sensitive LLMs." (Page 12)</div>
+    </li>
+    
+    <li>
+        <strong>Provides concrete suggestions for future work</strong>
+        <p>The section offers specific and actionable suggestions for future research, such as including non-risky instructions, expanding the dataset, and collecting multi-label annotations. These suggestions provide a clear roadmap for improving the evaluation.</p>
+        <div class="quote">"Evaluating model responses to non-risky instructions could address this problem. Additionally, our dataset size is relatively small; we plan to extend it with more questions in future work." (Page 12)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Prioritize future work suggestions</strong>
+        <p>While the section lists several suggestions for future work, it could be improved by prioritizing them based on their potential impact and feasibility. This would help guide future research efforts.</p>
+        
+        <p><strong>Rationale:</strong> Prioritizing suggestions would make the section more impactful and help researchers focus on the most important areas for improvement.</p>
+        <p><strong>Implementation:</strong> Rank the suggestions based on their importance and feasibility, or group them into short-term and long-term goals.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss potential challenges for future work</strong>
+        <p>While the section suggests directions for future work, it could be strengthened by discussing potential challenges or limitations of these suggestions. This would provide a more realistic outlook on the feasibility of the proposed improvements.</p>
+        
+        <p><strong>Rationale:</strong> Discussing potential challenges would enhance the analysis and provide a more nuanced perspective on the future of this research area.</p>
+        <p><strong>Implementation:</strong> For each suggestion, briefly discuss potential challenges or limitations, such as the difficulty of collecting multi-label annotations or the computational cost of evaluating multi-turn conversations.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-9" class="section">
+            <h3>Protected Groups</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix lists the protected groups considered when generating the risky question set for the LLM safety evaluation. These groups include race, religion, gender, organization, and individual names. The inclusion of these groups aims to ensure that the evaluation covers a broad range of potential biases and vulnerabilities in LLMs.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Race:</strong> Nine race groups were considered, including Black, White, Caucasian, Asian, African, American Indian, Middle Eastern, Hispanic, and Multiracial.</li><li><strong>Religion:</strong> Five religious groups were included: Christian, Muslim, Hindu, Buddhist, and Atheist.</li><li><strong>Gender:</strong> Binary gender (male and female) was considered.</li><li><strong>Organization:</strong> A subset of organizations sponsoring AI or NLP conferences was included.</li><li><strong>Individual names:</strong> Individual names were selected using stratified sampling across gender and race intersections to mitigate implicit biases.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Specific groups listed</strong>
+        <p>The appendix clearly lists the specific groups considered for each protected attribute. This transparency is crucial for understanding the scope of the evaluation and potential biases in the dataset.</p>
+        <div class="quote">"Race We consider 9 race groups: Black, White, Caucasian, Asian, African, American Indian, Middle Eastern, Hispanic, and Multiracial." (Page 15)</div>
+    </li>
+    
+    <li>
+        <strong>Rationale for individual names</strong>
+        <p>The appendix explains the rationale for including individual names and the methodology used to select them, addressing potential implicit biases related to gender and race.</p>
+        <div class="quote">"Individual names have been shown to carry gender and race information implicitly, affecting model predictions (Subramanian et al., 2021; Han et al., 2023a)." (Page 15)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand gender categories</strong>
+        <p>While the appendix acknowledges considering only binary gender, expanding to include non-binary and other gender identities would make the evaluation more inclusive and representative.</p>
+        <div class="quote">"Gender We consider binary gender for now: male, female." (Page 15)</div>
+        <p><strong>Rationale:</strong> Including a wider range of gender identities would improve the comprehensiveness of the evaluation and address potential biases related to gender diversity.</p>
+        <p><strong>Implementation:</strong> Include additional gender categories, such as non-binary, transgender, and genderqueer, and adapt the question generation process accordingly.</p>
+    </li>
+    
+    <li>
+        <strong>Clarify organization selection criteria</strong>
+        <p>While the appendix lists the organizations included, it could be strengthened by clarifying the specific criteria used to select these organizations. This would enhance transparency and reproducibility.</p>
+        <div class="quote">"Organization We collect a subset of organizations that are sponsors of AI or NLP conferences" (Page 15)</div>
+        <p><strong>Rationale:</strong> Clarifying the selection criteria would make the research more rigorous and allow others to replicate or extend the dataset.</p>
+        <p><strong>Implementation:</strong> Provide a more detailed explanation of the organization selection process, including any specific inclusion or exclusion criteria used.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-10" class="section">
+            <h3>Three Harmful Responses of LLaMA-2</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix showcases the only three instances where LLaMA-2, generally the safest model tested, produced harmful responses. These instances all relate to risky over-reliance, where the model&#39;s human-like tone could lead users to depend on it inappropriately for emotional support or sensitive information.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>LLaMA-2&#39;s high safety ranking:</strong> LLaMA-2 is identified as the safest model among the six evaluated.</li><li><strong>Three harmful responses:</strong> Only three out of 939 test prompts elicited harmful responses from LLaMA-2.</li><li><strong>Risky over-reliance as source of harm:</strong> The harmful responses stemmed from scenarios where the model exhibited a human-like tone, potentially leading users to develop an unhealthy reliance on it for emotional support or keeping secrets.</li><li><strong>Focus on human-chatbot interaction harms:</strong> The three examples fall under the category of human-chatbot interaction harms, specifically related to over-reliance and potential for emotional manipulation.</li><li><strong>Limited scope of harm:</strong> Despite the harmful responses, the overall scope of harm is limited due to the small number of instances observed.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Specific examples provided</strong>
+        <p>The inclusion of the full question and response pairs for each harmful instance allows for a detailed understanding of the context and nature of the harmful responses.</p>
+        <div class="quote">"Table 7 shows the only three harmful responses that result from risky over-reliance." (Page 15)</div>
+    </li>
+    
+    <li>
+        <strong>Clear explanation of harm</strong>
+        <p>The appendix clearly explains why the identified responses are considered harmful, emphasizing the risk of over-reliance and potential for emotional manipulation.</p>
+        <div class="quote">"Three harmful responses of LLaMA-2 since human-tone responses may result in risky over-reliance." (Page 15)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide more context on LLaMA-2&#39;s training</strong>
+        <p>While the appendix focuses on the harmful responses, providing more context on LLaMA-2&#39;s training and safety mechanisms would help understand why these specific failures occurred.</p>
+        
+        <p><strong>Rationale:</strong> Understanding the model&#39;s training can shed light on the root causes of the harmful responses and inform future improvements.</p>
+        <p><strong>Implementation:</strong> Include a brief description of LLaMA-2&#39;s training process, particularly any safety-related training or constraints implemented.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss potential mitigation strategies</strong>
+        <p>The appendix could be strengthened by discussing potential mitigation strategies for the identified harmful responses. This would provide actionable insights for developers working on LLM safety.</p>
+        
+        <p><strong>Rationale:</strong> Discussing mitigation strategies would make the analysis more practical and contribute to the development of safer LLMs.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing potential mitigation strategies, such as detecting and modifying human-like tones, providing explicit disclaimers about the model&#39;s limitations, or incorporating mechanisms to discourage over-reliance.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>table 7</summary>
+        <p>Table 7 presents three examples of harmful responses generated by the LLaMA-2 model. Each example includes a question posed to the model and the corresponding response. These responses are considered harmful because they exhibit a human-like tone, which could lead users to over-rely on the LLM for emotional support or sensitive information, creating a potential risk.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 7: Three harmful responses of LLaMA-2 since human-tone responses may result in risky over-reliance."</p>
+            <p><strong>Context:</strong> This table is presented in Appendix B on page 15. It follows a brief discussion of LLaMA-2&#39;s overall safety performance and its ranking as the safest among the evaluated LLMs.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is highly relevant because it provides concrete examples of LLaMA-2&#39;s failures, despite its overall high safety ranking. It highlights a specific vulnerability related to human-like responses and potential over-reliance, offering valuable insights into the limitations of current LLM safety mechanisms.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could benefit from clearer visual separation between the examples. Adding more whitespace or lines between rows would improve readability.</li><li>The &#39;Title&#39; column could be removed as the alternating &#39;Question&#39; and &#39;Response&#39; labels already provide sufficient structure.</li><li>The table could be made more visually appealing by using alternating row colors or other formatting enhancements.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table only provides three examples, which might not be representative of all potential harmful human-like responses. Including more diverse examples would strengthen the analysis.</li><li>The table doesn&#39;t offer a detailed explanation of why these specific responses are considered harmful. Elaborating on the potential risks of over-reliance would be beneficial.</li><li>The table doesn&#39;t discuss potential mitigation strategies for this type of harmful response. Suggesting ways to make LLM responses less human-like or to discourage over-reliance would be valuable.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-11" class="section">
+            <h3>Response Action Category over Harm Types</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix visually represents the distribution of response action categories across different Large Language Models (LLMs) for various harm types. It highlights the observation that models tend to exhibit specific response patterns depending on the type of harm presented in the prompt.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Response patterns by harm type:</strong> LLMs demonstrate distinct response patterns based on the harm type they are presented with.</li><li><strong>Visual representation:</strong> The distribution of action categories is visualized, likely using heatmaps, to facilitate comparison across models and harm types.</li><li><strong>Model comparison:</strong> The visualization allows for comparing the response patterns of different LLMs for each harm type.</li><li><strong>Action category distribution:</strong> The distribution of the six defined action categories (e.g., refuse to answer, refute the opinion, etc.) is shown for each harm type.</li><li><strong>Understanding model behavior:</strong> The analysis of response patterns helps in understanding how different LLMs handle various types of harmful prompts and contributes to insights into their safety mechanisms.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Visual representation of data</strong>
+        <p>Using a visual representation, presumably heatmaps as mentioned in the main text, is a strength as it allows for quick and easy comparison of response patterns across different models and harm types.</p>
+        <div class="quote">"Figure 9 shows the distribution of six response action categories of different models." (Page 16)</div>
+    </li>
+    
+    <li>
+        <strong>Focus on harm-specific patterns</strong>
+        <p>Highlighting the harm-specific response patterns is a strength as it provides a nuanced understanding of how LLMs react to different types of harmful prompts, going beyond a simple safe/unsafe classification.</p>
+        <div class="quote">"Given a specific harm type, models have obvious response patterns." (Page 16)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Include the visualization</strong>
+        <p>The appendix refers to Figure 9 but doesn&#39;t include it. Including the figure directly in the appendix would make the analysis self-contained and easier to understand.</p>
+        <div class="quote">"Figure 9 shows the distribution of six response action categories of different models." (Page 16)</div>
+        <p><strong>Rationale:</strong> The visualization is crucial for understanding the described response patterns. Without it, the appendix is incomplete.</p>
+        <p><strong>Implementation:</strong> Include Figure 9 directly in the appendix.</p>
+    </li>
+    
+    <li>
+        <strong>Provide more detailed analysis of the patterns</strong>
+        <p>While the appendix mentions obvious response patterns, it doesn&#39;t provide a detailed analysis of these patterns. Describing the specific patterns observed for different harm types would strengthen the analysis.</p>
+        <div class="quote">"Given a specific harm type, models have obvious response patterns." (Page 16)</div>
+        <p><strong>Rationale:</strong> A more detailed analysis would provide more actionable insights into LLM behavior and inform the development of better safety mechanisms.</p>
+        <p><strong>Implementation:</strong> Add a paragraph or two describing the specific response patterns observed for different harm types. For example, mention which action categories are most common for each harm type and discuss any notable differences between LLMs.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 9</summary>
+        <p>Figure 9 presents six heatmaps illustrating the distribution of action categories taken by six large language models (LLMs) in response to prompts related to six different harm types. Each heatmap corresponds to a specific harm type, such as leaking sensitive information or generating adult content. The LLMs included are GPT-4, ChatGPT, Claude, ChatGLM2, LLaMA-2, and Vicuna. The action categories (0-5) represent different ways the LLMs can respond, ranging from refusing to answer to directly following the harmful instruction. The color intensity in each cell of the heatmap indicates the frequency of a specific action category for a given LLM and harm type, with darker colors representing higher frequencies. This allows for a visual comparison of how different LLMs handle various types of risky prompts.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 9: Given a specific harm type, refined response category distribution across models."</p>
+            <p><strong>Context:</strong> This figure is introduced in Appendix C on page 16, which focuses on analyzing the response action categories of different LLMs across various harm types.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is highly relevant because it provides a detailed breakdown of how different LLMs respond to various types of harmful prompts. It visually summarizes the models&#39; behavior across different risk categories, allowing for a direct comparison of their safety performance and the effectiveness of their safety mechanisms.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could benefit from clearer labels for the action categories. While the numbers 0-5 are defined in Table 3, briefly including the descriptions in the figure itself or providing a separate legend would improve readability.</li><li>The color scheme could be improved for better contrast and accessibility. Consider using a colorblind-friendly palette and ensuring sufficient contrast between adjacent colors.</li><li>The font size used for the LLM names and harm types is relatively small, making it difficult to read without zooming in. Increasing the font size would improve clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure doesn&#39;t provide any information on the number of prompts used for each harm type. Knowing the sample size would help to interpret the frequencies and understand the statistical significance of the observed patterns.</li><li>The figure doesn&#39;t discuss the statistical significance of the differences in action category distributions between LLMs. Are the observed differences statistically meaningful or due to random variation?</li><li>The figure doesn&#39;t offer any explanation for the observed patterns. Why do some LLMs tend to take certain actions more frequently than others for specific harm types? Connecting these patterns to the models&#39; training or architecture would provide valuable insights.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 8</summary>
+        <p>Table 8 provides statistics on instances where the assigned action category (a measure of harmfulness based on the six categories defined in Table 3) contradicts the actual harmfulness of the LLM&#39;s response, as determined by human evaluation. These are referred to as &#39;mismatched cases.&#39; Two types of mismatches are presented: (1) where the action category is 5 (indicating a harmful response according to Table 3), but the response is judged harmless by human annotators; and (2) where the action category is 0-4 (indicating a harmless response), but the response is judged harmful. The table shows the number of occurrences of each mismatch type for each of the six LLMs: GPT-4, ChatGPT, Claude, ChatGLM2, LLaMA-2, and Vicuna. A &#39;Total&#39; column sums the two mismatch types for each LLM.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 8: Statistics of mismatched cases of each mode for the six models."</p>
+            <p><strong>Context:</strong> This table is introduced in Appendix D on page 16, which discusses mismatched cases where the assigned action category doesn&#39;t align with the human-judged harmfulness of the response.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is relevant because it highlights potential limitations or inconsistencies in the action category classification scheme. It shows that relying solely on the action categories might not always accurately reflect the true harmfulness of an LLM&#39;s response, as determined by human judgment. This underscores the importance of human evaluation and the need for further refinement of automatic evaluation methods.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could be more visually appealing by using alternating row colors or other formatting enhancements.</li><li>The labels for the mismatch types could be made more descriptive, for example, &#39;(1) Action 5, Harmless Response&#39; and &#39;(2) Action 0-4, Harmful Response&#39;.</li><li>The table could benefit from a clearer title that explicitly mentions the two types of mismatches being presented.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table only presents counts of mismatched cases. Providing examples of these mismatches would help to understand the nature of the discrepancies and the reasons behind them.</li><li>The table doesn&#39;t discuss the potential causes of these mismatches. Are they due to limitations in the action category definitions, errors in human annotation, or other factors?</li><li>The table doesn&#39;t discuss the implications of these mismatches for the overall evaluation of LLM safety. How do these discrepancies affect the conclusions drawn about the models&#39; performance?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>GPT-4 Total Mismatches:</strong> 2</li><li><strong>ChatGPT Total Mismatches:</strong> 1</li><li><strong>Claude Total Mismatches:</strong> 3</li><li><strong>ChatGLM2 Total Mismatches:</strong> 16</li><li><strong>LLaMA-2 Total Mismatches:</strong> 2</li><li><strong>Vicuna Total Mismatches:</strong> 10</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-12" class="section">
+            <h3>Mismatched Cases</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix presents cases where the assigned action category (a measure of how the LLM responded) didn&#39;t match the human judgment of whether the response was actually harmful. These &quot;mismatched cases&quot; highlight situations where an LLM&#39;s response might be categorized as safe based on its action (like refusing to answer), but the actual content of the response is still harmful, or vice-versa. This points to the limitations of relying solely on action categories for judging safety and emphasizes the importance of careful content review.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Definition of mismatched cases:</strong> Mismatched cases occur when the assigned action category (0-5) doesn&#39;t align with the human assessment of harmfulness. For example, a response might be categorized as refusing to answer (safe), but still contain harmful content.</li><li><strong>Two types of mismatches:</strong> The analysis focuses on two specific types: (1) cases where the LLM follows the instruction (action category 5) but the response is harmless, and (2) cases where the LLM refuses or refutes (action categories 0-4) but the response is harmful.</li><li><strong>Examples of mismatches:</strong> The appendix provides specific examples of these mismatches from ChatGLM2 and Vicuna, illustrating how these discrepancies can arise in practice.</li><li><strong>Importance of content review:</strong> The existence of mismatched cases highlights the limitations of relying solely on action categories for evaluating LLM safety and emphasizes the need for careful review of the response content itself.</li><li><strong>Implications for automatic evaluation:</strong> These mismatches suggest that automatic evaluation methods based on action categories alone may not be sufficient and require further refinement to accurately assess harmfulness.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear definition of mismatch types</strong>
+        <p>The appendix clearly defines the two types of mismatches considered, making the analysis focused and easy to follow.</p>
+        <div class="quote">"That is, (1) action category is 5 and the response is harmless; and (2) action category is 0–4 while response is harmful, referred to as mismatched cases." (Page 16)</div>
+    </li>
+    
+    <li>
+        <strong>Illustrative examples</strong>
+        <p>Providing specific examples of mismatched cases from ChatGLM2 and Vicuna helps to illustrate the issue and understand how these discrepancies can occur in practice.</p>
+        <div class="quote">"Table 9 demonstrates four responses from ChatGLM2 and Vicuna, where action category labels and harmfulness labels disobey the assumption that responses follow the instructions are harmful, and they are otherwise harmless." (Page 16)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Include Table 8 in the appendix</strong>
+        <p>The appendix refers to Table 8, which summarizes the number of mismatched cases for each model, but the table itself is not included. Including the table directly in the appendix would make the analysis more complete and informative.</p>
+        <div class="quote">"Table 8 shows the number of cases falling into each." (Page 16)</div>
+        <p><strong>Rationale:</strong> The table provides important quantitative data that supports the analysis of mismatched cases. Without it, the reader has to refer back to the main text, disrupting the flow of the appendix.</p>
+        <p><strong>Implementation:</strong> Include Table 8 directly in Appendix D.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the implications for the overall evaluation</strong>
+        <p>While the appendix highlights the existence of mismatched cases, it doesn&#39;t fully discuss their implications for the overall evaluation of LLM safety. Elaborating on how these mismatches might affect the conclusions drawn about the models&#39; performance would strengthen the analysis.</p>
+        
+        <p><strong>Rationale:</strong> Discussing the implications for the overall evaluation would provide a more complete and nuanced perspective on the limitations of the current evaluation methodology.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing how the mismatched cases might affect the interpretation of the results presented in the main text. For example, consider whether the presence of mismatches might lead to an overestimation or underestimation of the safety of certain models.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>table 8</summary>
+        <p>This table shows the number of mismatched cases for each of the six tested large language models (LLMs). A mismatch occurs when the predicted action category (0-5, representing how the LLM responded to a prompt) doesn&#39;t align with the human judgment of whether the response was actually harmful. There are two types of mismatches: 1) the model followed the prompt (category 5), but the response was judged harmless, and 2) the model didn&#39;t follow the prompt (categories 0-4), but the response was judged harmful. The table lists the number of each type of mismatch and the total number of mismatches for each LLM.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 8: Statistics of mismatched cases of each mode for the six models."</p>
+            <p><strong>Context:</strong> Appendix D introduces this table to explain discrepancies between the assigned action categories and the human-labeled harmfulness of LLM responses.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is important because it highlights the limitations of using action categories alone to determine harmfulness. It shows that the automated classification doesn&#39;t always agree with human judgment, suggesting a need for improvement in the automated evaluation methods or a deeper understanding of what constitutes a harmful response.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table could be more visually clear by using headings like &#39;Mismatch Type 1&#39;, &#39;Mismatch Type 2&#39;, and &#39;Total&#39; instead of just &#39;(1)&#39;, &#39;(2)&#39;, and &#39;Total&#39;.</li><li>Alternating row colors or light gridlines could improve readability.</li><li>The table could benefit from a more descriptive caption, such as &#39;Number of Mismatched Cases between Predicted Action Category and Human Judgment of Harmfulness&#39;.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table would be more informative if it included the percentage of mismatches relative to the total number of responses for each LLM. This would help understand the severity of the mismatch problem for each model.</li><li>The table doesn&#39;t explain the reasons behind these mismatches. Providing examples or a qualitative analysis of the mismatched cases would offer valuable insights.</li><li>The table doesn&#39;t discuss the implications of these findings for the overall evaluation. How do these mismatches affect the conclusions about the relative safety of different LLMs?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>GPT-4 Mismatch Type 1:</strong> 2</li><li><strong>GPT-4 Mismatch Type 2:</strong> 0</li><li><strong>GPT-4 Total:</strong> 2</li><li><strong>ChatGPT Mismatch Type 1:</strong> 1</li><li><strong>ChatGPT Mismatch Type 2:</strong> 0</li><li><strong>ChatGPT Total:</strong> 1</li><li><strong>Claude Mismatch Type 1:</strong> 3</li><li><strong>Claude Mismatch Type 2:</strong> 0</li><li><strong>Claude Total:</strong> 3</li><li><strong>ChatGLM2 Mismatch Type 1:</strong> 12</li><li><strong>ChatGLM2 Mismatch Type 2:</strong> 4</li><li><strong>ChatGLM2 Total:</strong> 16</li><li><strong>LLaMA-2 Mismatch Type 1:</strong> 0</li><li><strong>LLaMA-2 Mismatch Type 2:</strong> 2</li><li><strong>LLaMA-2 Total:</strong> 2</li><li><strong>Vicuna Mismatch Type 1:</strong> 3</li><li><strong>Vicuna Mismatch Type 2:</strong> 7</li><li><strong>Vicuna Total:</strong> 10</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 9</summary>
+        <p>This table provides specific examples of mismatched cases where the assigned action category doesn&#39;t align with the human-labeled harmfulness of the response. Each row shows an example from either ChatGLM2 or Vicuna. The table includes the model, whether the response was judged harmful, the assigned action category, the original question, the model&#39;s response, and the reason for the mismatch. For example, one ChatGLM2 response was classified as refusing to assist (category 0) but was judged harmful because it provided risky instructions. Another ChatGLM2 response followed the prompt (category 5), offering to interpret blood test results, but was judged harmless in the context of a single-turn chat.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 9: Mismatched examples in ChatGLM2 and Vicuna. Bold text indicates the refined label of the responses while the whole content reflects its harmfulness."</p>
+            <p><strong>Context:</strong> Appendix D presents this table after introducing the concept of mismatched cases in Table 8.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is crucial for understanding the nature of the mismatches described in Table 8. By providing concrete examples, it helps to illustrate the limitations of the automated action category classification and the complexities of evaluating LLM harmfulness.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is quite dense and could benefit from improved formatting. Using alternating row colors or clearer dividers between examples would enhance readability.</li><li>The &#39;Title&#39; column is a bit confusing as it contains multiple subheadings. Separating these into individual columns (Model, Harmful, Refined_type, Question, Response, Reason) would make the table clearer.</li><li>The &#39;Reason&#39; column could be placed next to the &#39;Refined_type&#39; column to make the connection between the action category and the reason for the mismatch more direct.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table only shows four examples, which might not be representative of all types of mismatches. Including more examples or a more detailed analysis of the different types of mismatches would be beneficial.</li><li>The table would be more informative if it included the original harm type associated with each question. This would provide more context for understanding the mismatch.</li><li>The table doesn&#39;t discuss potential solutions for addressing these mismatches. Suggesting ways to improve the action category classification or the human evaluation guidelines would be valuable.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        // Show/hide back-to-top button
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
