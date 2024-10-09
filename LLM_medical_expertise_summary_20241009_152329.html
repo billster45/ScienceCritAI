@@ -1,0 +1,1800 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Democratizing Subspecialty Expertise in Cardiology with AMIE: An AI-Assisted Approach to Diagnosing Inherited Cardiovascular Diseases</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Democratizing Subspecialty Expertise in Cardiology with AMIE: An AI-Assisted Approach to Diagnosing Inherited Cardiovascular Diseases</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Towards Democratization of Subspeciality Medical Expertise</a></li><li><a href="#section-1">Abstract</a></li><li><a href="#section-2">Introduction</a></li><li><a href="#section-3">Methods</a></li><li><a href="#section-4">Results</a></li><li><a href="#section-5">Discussion</a></li><li><a href="#section-6">Conclusions</a></li><li><a href="#section-7">Appendix</a></li><li><a href="#section-8">Example model response</a></li><li><a href="#section-9">Additional evaluation information</a></li><li><a href="#section-10">Summary of subspecialist free-text comments for individual assessments</a></li><li><a href="#section-11">Summary of Clinically Significant Errors</a></li><li><a href="#section-12">Additional dialogue examples</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>This research explores the potential of AMIE (Articulate Medical Intelligence Explorer), an AI system, to address the global shortage of subspecialist medical expertise, particularly in complex cardiology cases like hypertrophic cardiomyopathy (HCM). Using a real-world dataset of 204 complex cases from a subspecialist cardiology practice at Stanford, the study compares AMIE&#39;s performance to that of three general cardiologists in diagnosing and managing rare cardiac diseases. The study employs a blinded, counterbalanced reader study design, where both AMIE and cardiologists independently assess cases, followed by cardiologists revising their assessments after reviewing AMIE&#39;s output. Four subspecialist cardiologists then evaluate all responses using a ten-domain rubric, comparing AMIE&#39;s performance with general cardiologists and assessing the impact of AMIE assistance on cardiologist responses. The study aims to evaluate AMIE&#39;s diagnostic capabilities, its potential as an assistive tool, and its implications for democratizing access to specialized medical knowledge.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li><strong>AMIE demonstrated superior performance to general cardiologists in five out of ten domains:</strong> explaining the rationale for suspecting a genetic heart condition, providing additional patient information, providing additional test information, suggesting management plans, and explaining genetic test results. This suggests AMIE&#39;s ability to provide comprehensive explanations and integrate genetic information effectively. This finding implies that AI systems can excel in specific areas of complex medical reasoning, potentially augmenting human expertise in those areas.</li><li>Access to AMIE&#39;s responses significantly improved general cardiologists&#39; overall response quality in 63.7% of cases and across all individual assessment domains. Cardiologists were more likely to revise their initial assessments after reviewing AMIE&#39;s responses, adopting the AI&#39;s suggestions for diagnosis and management, which further supports AMIE&#39;s potential as an effective assistive tool. This improvement in cardiologist performance suggests that AI can assist general practitioners in handling complex cases, potentially bridging the expertise gap and improving patient care.</li><li>AMIE exhibited a higher rate of clinically significant errors (21.6%) compared to general cardiologists (10.8%), primarily related to suggesting unnecessary further investigations (over-testing) and premature treatment. These errors highlight the risk of over-reliance on AI and emphasize the need for human oversight in clinical decision-making. This high error rate is a critical consideration for the implementation of AI in healthcare and necessitates further development to reduce unnecessary interventions and improve diagnostic accuracy.</li><li>General cardiologists were more concise in their responses but tended to omit crucial information or exhibit biases related to demographic factors more often than AMIE. This omission of information highlights the value of AMIE&#39;s thoroughness in considering a broader range of possibilities and suggests a complementary approach where AI assists in ensuring comprehensive assessment. The observation that general cardiologists made more errors of omission indicates that they may benefit from an assistive tool like AMIE to provide more comprehensive care, especially in rare and complex cases.</li><li>AMIE proved to be data-efficient, requiring clinical data from only nine patients for adaptation to the subspecialist domain of inherited cardiomyopathies. This data efficiency highlights the potential of AI to rapidly acquire specialized knowledge and suggests its applicability in resource-limited settings. This efficiency implies that AI can be trained effectively with relatively small datasets, making it a promising solution for specialized medical domains where data acquisition is challenging.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li>The study used a real-world dataset of complex cardiology cases, increasing the relevance and applicability of the findings to clinical practice. The rigorous evaluation process, involving blinded assessments by both general and subspecialist cardiologists, and a detailed ten-domain rubric, ensures the objectivity and validity of the results.</li><li>The study design, incorporating a blinded, counterbalanced approach and a two-month washout period for cardiologists before revising their assessments, minimizes bias and strengthens the methodological rigor. The inclusion of both direct comparison and individual assessments provides a comprehensive evaluation of AMIE&#39;s performance.</li><li>The study clearly explains the development and adaptation of AMIE to the subspecialist domain, using a few-shot learning approach with self-critique and search retrieval augmentation. This detailed description enhances the reproducibility of the study and allows for a better understanding of AMIE&#39;s capabilities.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li>The study relies solely on text-based reports, excluding patient history, physical examination data, and image data. Future research should incorporate multimodal data, including images and patient-reported outcomes, to provide a more holistic assessment and better reflect real-world clinical practice. This inclusion of multimodal data would improve the clinical relevance and applicability of the findings.</li><li>The study focuses on a single center and uses only English text, potentially limiting the generalizability of the findings. Future research should include data from diverse populations and languages to assess AMIE&#39;s performance across different healthcare settings and patient demographics. This would address potential biases related to language and healthcare access and improve the generalizability of the AI system.</li><li>The study lacks a discussion of the ethical implications of using AI in clinical decision-making, particularly regarding patient autonomy, informed consent, and data privacy. Future research should address these ethical considerations to ensure responsible and equitable implementation of AI in healthcare. This would promote trust and address potential concerns about the use of AI in sensitive medical contexts.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>Figure 6</h4>
+        <p><strong>Description:</strong> Figure 6 compares AMIE&#39;s performance to general cardiologists across ten domains and five individual assessment questions. It visually represents AMIE&#39;s superiority in certain domains, equivalence in others, and the different error profiles of AMIE (more extra content and errors) and cardiologists (more omissions and inapplicability).</p>
+        <p><strong>Relevance:</strong> This figure directly visualizes the key findings of the study, allowing for a quick and clear understanding of AMIE&#39;s performance compared to human clinicians.</p>
+    </div>
+    
+    <div>
+        <h4>Table A.3</h4>
+        <p><strong>Description:</strong> Table A.3 quantifies the improvement in cardiologist responses after accessing AMIE&#39;s output, showing a substantial increase in preference for assisted responses across all domains, notably a 60.3% increase for the entire response. This table demonstrates the significant positive impact of AMIE assistance on clinical decision-making.</p>
+        <p><strong>Relevance:</strong> This table provides crucial quantitative evidence supporting AMIE&#39;s effectiveness as an assistive tool, demonstrating its potential to improve the quality of care provided by general cardiologists.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>This study demonstrates the potential of AMIE, an LLM-based AI system, to assist general cardiologists in diagnosing and managing complex inherited cardiovascular diseases. AMIE performed comparably to general cardiologists in overall assessments and even outperformed them in certain domains, particularly those involving genetic information. Importantly, access to AMIE&#39;s responses significantly improved cardiologist performance across all evaluated areas, by 60.3% for the overall response and by varying degrees for other domains. However, AMIE also exhibited a higher rate of clinically significant errors, primarily related to over-testing, which necessitates careful consideration and further refinement before clinical implementation. Future research should focus on incorporating multimodal data, including images and patient-reported outcomes, expanding the dataset to diverse populations and languages, addressing ethical implications, and developing strategies to mitigate AMIE&#39;s tendency toward over-testing while preserving its strengths in comprehensive assessment and genetic information integration. These advancements could pave the way for democratizing access to subspecialist expertise, improving the quality of care for patients with rare and complex cardiac conditions, especially in underserved areas with limited access to specialists.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Towards Democratization of Subspeciality Medical Expertise</h3>
+            
+            <h4>Overview</h4>
+            <p>This section introduces the title of the research paper, &quot;Towards Democratization of Subspeciality Medical Expertise,&quot; and lists the authors and their affiliations. It focuses on the problem of limited access to subspecialist medical expertise, particularly in rare and complex diseases like hypertrophic cardiomyopathy (HCM), and proposes exploring the potential of AMIE, an AI system, to improve clinical decision-making in cardiology.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Title and Authors:</strong> The title clearly states the paper&#39;s focus on democratizing subspecialty expertise. The authors are listed with their affiliations, indicating a collaboration between Google Research, Google DeepMind, and Stanford University.</li><li><strong>Problem Statement:</strong> The section highlights the scarcity of subspecialist expertise, especially in rare and complex diseases, and its impact on healthcare delivery, using cardiology and HCM as a specific example.</li><li><strong>Proposed Solution:</strong> The section introduces AMIE, an LLM-based AI system, as a potential tool to augment clinical decision-making and address the expertise gap.</li><li><strong>Dataset and Evaluation:</strong> The section mentions the use of a real-world dataset of complex cardiology cases and a ten-domain evaluation rubric to assess the performance of AMIE and general cardiologists.</li><li><strong>Main Findings:</strong> The section briefly states that AMIE performed better than general cardiologists in 5 out of 10 domains and improved cardiologists&#39; overall response quality when they had access to AMIE&#39;s responses.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Problem Statement</strong>
+        <p>The section effectively establishes the context and significance of the research by highlighting the global shortage of subspecialist expertise and its impact on patient care.</p>
+        <div class="quote">"The scarcity of subspecialist medical expertise, particularly in rare, complex and life-threatening diseases, poses a significant challenge for healthcare delivery." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Concise Introduction of AMIE</strong>
+        <p>The section briefly but clearly introduces AMIE and its potential role in addressing the problem of limited expertise.</p>
+        <div class="quote">"We explored the potential of AMIE (Articulate Medical Intelligence Explorer), a large language model (LLM)-based experimental AI system optimized for diagnostic dialogue, to potentially augment and support clinical decision-making in this challenging context." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Focus on Real-World Data and Rigorous Evaluation</strong>
+        <p>The mention of a real-world dataset and a specific evaluation rubric strengthens the credibility of the research.</p>
+        <div class="quote">"We curated a real-world dataset of 204 complex cases from a subspecialist cardiology practice, including results for electrocardiograms, echocardiograms, cardiac MRI, genetic tests, and cardiopulmonary stress tests. We developed a ten-domain evaluation rubric used by subspecialists to evaluate the quality of diagnosis and clinical management plans." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on the Significance of Cardiology Context</strong>
+        <p>While cardiology is mentioned as an example, further elaborating on its specific challenges and the potential impact of AMIE in this field would strengthen the introduction.</p>
+        <div class="quote">"This issue is particularly acute in cardiology where timely, accurate management determines outcomes." (Page 1)</div>
+        <p><strong>Rationale:</strong> Providing more context would make the research more relevant to readers interested in cardiology and AI applications in this field.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two explaining the specific challenges in cardiology, such as the high stakes of misdiagnosis or the rapid advancements in treatment options.</p>
+    </li>
+    
+    <li>
+        <strong>Briefly Mention the Evaluation Results</strong>
+        <p>While the full results are presented later, briefly mentioning the key findings in the introduction would provide a better overview of the study&#39;s achievements.</p>
+        
+        <p><strong>Rationale:</strong> This would give readers a glimpse of the potential impact of AMIE and encourage them to read further.</p>
+        <p><strong>Implementation:</strong> Add a concise sentence summarizing the overall performance of AMIE compared to general cardiologists.</p>
+    </li>
+    
+    <li>
+        <strong>Clarify the &quot;Democratization&quot; Aspect</strong>
+        <p>The title mentions &quot;democratization,&quot; but the section doesn&#39;t fully explain how AMIE contributes to making subspecialty expertise more accessible. Elaborating on this aspect would strengthen the paper&#39;s central theme.</p>
+        
+        <p><strong>Rationale:</strong> This would clarify the societal impact of the research and connect it to the broader goal of improving healthcare access.</p>
+        <p><strong>Implementation:</strong> Add a sentence explaining how AMIE could potentially bridge the gap between subspecialists and general practitioners, making specialized knowledge more widely available.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>This research investigates the use of AMIE, an AI system, to address the shortage of subspecialist medical expertise, particularly in complex cardiology cases. Using a real-world dataset and a ten-domain evaluation rubric, the study compares AMIE&#39;s performance to general cardiologists in diagnosing and managing rare cardiac diseases. The findings suggest that AMIE outperforms general cardiologists in certain areas and can significantly improve their diagnostic abilities when used as an assistive tool.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Shortage of Subspecialist Expertise:</strong> The abstract highlights the challenge posed by the limited availability of subspecialist doctors, especially for rare and complex medical conditions.</li><li><strong>AMIE as a Potential Solution:</strong> The abstract introduces AMIE, an AI system designed to potentially bridge this expertise gap and improve clinical decision-making.</li><li><strong>Real-World Data and Evaluation:</strong> The study uses a dataset of 204 complex cardiology cases and a ten-domain rubric for a rigorous evaluation of AMIE&#39;s performance.</li><li><strong>Comparison with General Cardiologists:</strong> AMIE&#39;s diagnostic and management plans are directly compared to those of general cardiologists, providing a benchmark for its effectiveness.</li><li><strong>AMIE&#39;s Superiority and Assistive Role:</strong> The abstract reveals that AMIE outperformed general cardiologists in 5 out of 10 domains and significantly enhanced their performance when used as an assistive tool.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear and Concise Summary</strong>
+        <p>The abstract effectively summarizes the key aspects of the research, including the problem, the proposed solution, the methodology, and the main findings.</p>
+        <div class="quote">"The abstract summarizes the research and is found on the first page below the title." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Emphasis on Real-World Application</strong>
+        <p>The use of a real-world dataset and the focus on a specific medical specialty (cardiology) make the research highly relevant and impactful.</p>
+        <div class="quote">"We curated a real-world dataset of 204 complex cases from a subspecialist cardiology practice..." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Quantifiable Results</strong>
+        <p>The abstract provides specific numbers regarding AMIE&#39;s performance, such as its superiority in 5 out of 10 domains and its positive impact on cardiologists&#39; responses in 63.7% of cases.</p>
+        <div class="quote">"AMIE was rated superior to general cardiologists for 5 of the 10 domains...and equivalent for the rest. Access to AMIE’s response improved cardiologists’ overall response quality in 63.7% of cases..." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Mention the Specific Domains of Superiority</strong>
+        <p>While the abstract states that AMIE outperformed in 5 domains, it doesn&#39;t specify which ones. Listing these domains would provide a more complete picture of AMIE&#39;s strengths.</p>
+        <div class="quote">"AMIE was rated superior to general cardiologists for 5 of the 10 domains..." (Page 1)</div>
+        <p><strong>Rationale:</strong> Knowing the specific domains where AMIE excels would help readers understand its capabilities and potential applications.</p>
+        <p><strong>Implementation:</strong> Briefly list the 5 domains where AMIE showed superior performance.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on the Types of Errors</strong>
+        <p>The abstract mentions that further research is needed for wider clinical utility, implying potential limitations or errors. Briefly mentioning the types of errors observed would enhance the abstract&#39;s transparency.</p>
+        <div class="quote">"...though further research and validation are essential for wide clinical utility." (Page 1)</div>
+        <p><strong>Rationale:</strong> Acknowledging limitations upfront would strengthen the research&#39;s credibility and provide a more balanced perspective.</p>
+        <p><strong>Implementation:</strong> Add a short phrase indicating the general nature of the errors observed, such as &#39;while also exhibiting a higher rate of clinically significant errors.&#39;</p>
+    </li>
+    
+    <li>
+        <strong>Clarify the &quot;Democratization&quot; Aspect</strong>
+        <p>The paper&#39;s title emphasizes democratization, but the abstract doesn&#39;t explicitly explain how AMIE contributes to making subspecialty expertise more accessible. Briefly addressing this aspect would strengthen the abstract&#39;s connection to the paper&#39;s central theme.</p>
+        
+        <p><strong>Rationale:</strong> This would clarify the potential societal impact of the research and its relevance to broader healthcare access issues.</p>
+        <p><strong>Implementation:</strong> Add a concise phrase explaining how AMIE could potentially make specialized knowledge more widely available, such as &#39;...with the potential to democratize access to subspecialist-level care...&#39; or similar.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Overview</h4>
+            <p>This section introduces the global shortage of specialized medical expertise, particularly in rare and complex diseases, using hypertrophic cardiomyopathy (HCM) as a key example in cardiology. It emphasizes the severe consequences of delayed or absent access to specialists, such as increased morbidity and mortality. The introduction then proposes large language models (LLMs) as a potential solution to improve access to specialized knowledge and highlights the need for rigorous assessment of their capabilities in specific medical fields.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Global Shortage of Specialists:</strong> The section emphasizes the significant worldwide deficit of specialized medical professionals, predicted to worsen by 2030, with the most severe shortages in resource-limited and rural areas.</li><li><strong>Impact on Rare and Complex Diseases:</strong> The section highlights how this shortage disproportionately affects patients with rare and complex conditions like HCM, where timely diagnosis and treatment are crucial for preventing serious outcomes like sudden cardiac death.</li><li><strong>HCM as a Case Study:</strong> HCM is used as a specific example to illustrate the consequences of limited specialist access, including underdiagnosis and preventable mortality, emphasizing the urgent need for timely and widely available expertise.</li><li><strong>LLMs as a Potential Solution:</strong> The section introduces LLMs as potential tools to address the expertise gap, suggesting their ability to synthesize data, suggest diagnoses, and assist with management plans.</li><li><strong>Need for Rigorous Assessment:</strong> The section acknowledges the potential of LLMs but stresses the importance of thorough evaluation and validation of their performance in specialized medical fields to ensure their effectiveness and safety.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Compelling Problem Statement</strong>
+        <p>The section effectively establishes the urgency and significance of the problem by highlighting the global shortage of specialists and its impact on patient outcomes, particularly in rare diseases.</p>
+        <div class="quote">"Globally, there is a significant shortage of speciality medical expertise [1]. The World Health Organization (WHO) predicts a deficit of 18 million providers by 2030, with shortages being most acute in resource-limited and rural areas [2]." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Effective Use of HCM Example</strong>
+        <p>The specific example of HCM provides a concrete illustration of the problem and its consequences, making the issue more relatable and impactful for the reader.</p>
+        <div class="quote">"For instance, Hypertrophic Cardiomyopathy (HCM) is one of the leading causes of sudden cardiac death in young adults [3], yet, more than half of US states do not have a HCM subspecialist center [4]." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Focus on LLMs</strong>
+        <p>The section clearly introduces LLMs as the focus of the research and their potential role in addressing the specialist shortage.</p>
+        <div class="quote">"Large language models (LLMs) have emerged as potential assistive tools for an array of healthcare issues [7, 8]." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on the Potential of LLMs</strong>
+        <p>While the introduction mentions LLMs as potential tools, it could briefly elaborate on their specific capabilities that make them suitable for this application.</p>
+        <div class="quote">"LLMs can rapidly synthesize data from multiple sources and suggest differential diagnoses and management plans" (Page 2)</div>
+        <p><strong>Rationale:</strong> This would provide a stronger rationale for the research and highlight the unique advantages of LLMs in this context.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two explaining how LLMs can process and analyze medical information, potentially mentioning their ability to learn from large datasets and identify patterns.</p>
+    </li>
+    
+    <li>
+        <strong>Connect LLMs to Democratization</strong>
+        <p>The section could more explicitly link the use of LLMs to the concept of democratizing subspecialty expertise, clarifying how LLMs can make specialized knowledge more accessible.</p>
+        
+        <p><strong>Rationale:</strong> This would strengthen the paper&#39;s central theme and highlight the potential societal impact of the research.</p>
+        <p><strong>Implementation:</strong> Add a sentence explaining how LLMs can bridge the gap between specialists and general practitioners, potentially by providing access to specialized knowledge in remote areas or resource-limited settings.</p>
+    </li>
+    
+    <li>
+        <strong>Provide a Roadmap for the Paper</strong>
+        <p>The introduction could benefit from a brief overview of the paper&#39;s structure and the key questions it addresses.</p>
+        
+        <p><strong>Rationale:</strong> This would help readers navigate the paper and understand the flow of information.</p>
+        <p><strong>Implementation:</strong> Add a concise sentence outlining the main sections of the paper and their respective focus, such as &#39;This paper will first describe the development and evaluation of AMIE, then present the results of its comparison with general cardiologists, and finally discuss the implications for democratizing subspecialty expertise.&#39; or similar.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>Methods</h3>
+            
+            <h4>Overview</h4>
+            <p>This section details the study&#39;s methodology, which involved a blinded, counterbalanced reader study to evaluate AMIE&#39;s ability to diagnose, triage, and manage patients with suspected inherited cardiovascular disease. The study used data from 204 real-world patients at the Stanford Center for Inherited Cardiovascular Disease (SCICD), including various cardiac test results and genetic information. Three general cardiologists and AMIE independently assessed the cases, with the cardiologists later revising their assessments after reviewing AMIE&#39;s output. Subspecialist cardiologists then evaluated all responses using a rubric.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Clinical Data Acquisition:</strong> Data from 204 real-world patients at SCICD, including ECGs, TTEs, genetic testing, CMRs, Holter monitors, and CPX tests, were used. This data was made publicly available.</li><li><strong>AMIE Development and Adaptation:</strong> AMIE, an LLM-based AI system optimized for diagnostic dialogue, was used. It was adapted to the subspecialist domain using 9 patient cases and a few-shot learning approach with self-critique and search retrieval augmentation.</li><li><strong>Study Design:</strong> The study involved a blinded, counterbalanced design where general cardiologists and AMIE independently assessed the cases. Cardiologists then revised their assessments after reviewing AMIE&#39;s responses.</li><li><strong>Subspecialist Evaluation:</strong> Four subspecialist cardiologists, blinded to the source of the responses, evaluated the assessments of both AMIE and the general cardiologists, as well as the cardiologists&#39; revised assessments.</li><li><strong>Evaluation Rubric:</strong> A ten-domain rubric was developed for subspecialists to evaluate the responses, including direct A/B preference comparisons and individual assessments of specific response qualities.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Detailed Description of Data Acquisition</strong>
+        <p>The section clearly explains the source and types of clinical data used, including the specific tests and the number of patients, which enhances the study&#39;s reproducibility.</p>
+        <div class="quote">"This data was obtained from patients referred to the Stanford Center for Inherited Cardiovascular Disease, encompassing patients with both suspected and confirmed inherited cardiovascular diseases, and general cardiology patients." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Explanation of AMIE&#39;s Adaptation</strong>
+        <p>The section provides a concise yet informative description of how AMIE was adapted to the subspecialist domain, including the prompting strategy and the use of few-shot learning.</p>
+        <div class="quote">"Adaptation of AMIE to this subspecialist domain required clinical data from just nine patients. Five cases, chosen at random, were used to design an optimal approach to model prompting through iterative review and expert feedback." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Well-Defined Study Design</strong>
+        <p>The section clearly outlines the study design, including the blinding process, the use of a counterbalanced approach, and the different stages of assessment and evaluation.</p>
+        <div class="quote">"The study comprised four main phases: 1. Acquisition of clinical data: Recruitment and de-identification of clinical data from a subspecialized inherited cardiovascular center, 2. Domain Adaptation of AMIE (Articulate Medical Intelligence Explorer), 3. General cardiologist and AMIE assessment of each case, followed by revised assessment of the cases by general cardiologists when given access to the AMIE assessment outputs, and 4. Subspecialist evaluation and analysis." (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Clarify the Washout Period Rationale</strong>
+        <p>The section mentions a 2-month washout period for cardiologists before revising their assessments, but doesn&#39;t explain its purpose. Clarifying this would strengthen the methodological rigor.</p>
+        <div class="quote">"After AMIE and the general cardiologists completed their assessments individually, the cardiologists underwent a washout period of 2 months." (Page 5)</div>
+        <p><strong>Rationale:</strong> Explaining the rationale for the washout period, such as minimizing recall bias, would improve the transparency and validity of the study design.</p>
+        <p><strong>Implementation:</strong> Add a brief explanation for the washout period, such as &#39;to minimize recall bias&#39;.</p>
+    </li>
+    
+    <li>
+        <strong>Provide More Detail on the Assessment Form</strong>
+        <p>While Figure 3 is referenced, the section could briefly describe the specific questions or tasks included in the assessment form to provide a better understanding of the evaluation process.</p>
+        <div class="quote">"Both AMIE and general cardiologists completed the same standardized assessment form shown in Figure 3." (Page 5)</div>
+        <p><strong>Rationale:</strong> This would give readers a clearer picture of what was being assessed and how the responses were evaluated.</p>
+        <p><strong>Implementation:</strong> Add a concise summary of the key sections and questions in the assessment form, such as &#39;The assessment form included questions on overall impression, consult question, triage assessment, diagnosis, management, and the impact of genetic test results.&#39;</p>
+    </li>
+    
+    <li>
+        <strong>Explain the Choice of General Cardiologists</strong>
+        <p>The section mentions the recruitment of general cardiologists but doesn&#39;t explain the criteria for their selection or their level of experience. Providing more detail would strengthen the study&#39;s validity.</p>
+        <div class="quote">"We recruited three board-certified general cardiologists not affiliated with Stanford, who have not had dedicated training in cardiovascular genetics and had not cared for any of the studied patients." (Page 3)</div>
+        <p><strong>Rationale:</strong> This would help readers understand the generalizability of the findings and the potential impact of AMIE on different levels of expertise.</p>
+        <p><strong>Implementation:</strong> Add a brief description of the selection criteria for the general cardiologists, such as their years of experience or their specific areas of practice.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 1</summary>
+        <p>Figure 1 illustrates the study design using a flow diagram. It shows how patient data from various sources (genetic tests, ECGs, ambulatory cardiac monitors) is used by both the AI system, AMIE, and general cardiologists to make assessments. These assessments are then evaluated by subspecialist cardiologists using a 10-criteria rubric. The flow diagram clarifies the process of data collection, assessment, and evaluation, highlighting the role of AMIE in assisting diagnosis and management of cardiovascular disease.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 1 | Study design."</p>
+            <p><strong>Context:</strong> This study probes the potential of LLMs to democratize subspecialist-level expertise by focusing on an indicative example, the domain of genetic cardiomyopathies like HCM. Our key contributions are as follows: [List of contributions] Figure 1 | Study design.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding how the study was conducted and how AMIE&#39;s performance was compared to that of human cardiologists. It visually represents the flow of information and the different stages of evaluation.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could benefit from clearer labeling of the arrows to indicate the direction of information flow.</li><li>Using different colors or shapes for the &#39;AMIE&#39; and &#39;Cardiologist&#39; boxes could improve visual distinction.</li><li>Adding a legend explaining the different data sources (e.g., ECG, genetic test) would enhance clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could include a brief explanation of the 10-domain evaluation rubric used by the subspecialists.</li><li>The figure could visually represent the two stages of cardiologist assessment: initial and AMIE-assisted.</li><li>The figure could highlight the blinding process to emphasize the objectivity of the evaluation.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 2</summary>
+        <p>Figure 2 visually represents the architecture of the AMIE system. It shows a cyclical process involving four key components: Clinical History, Medical Reasoning, Medical Knowledge, and Diagnostic Dialogue. These components interact in a loop, where clinical history informs medical reasoning, which draws upon medical knowledge to generate a diagnostic dialogue. This dialogue then feeds back into the clinical history, allowing for iterative refinement of the diagnosis.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 2 | AMIE architecture."</p>
+            <p><strong>Context:</strong> The assessment of patients involves review of the patient’s history and review of tests such as cardiac MRIs, rest and stress echocardiograms, cardiopulmonary stress tests, ECGs, ambulatory Holter monitors, and genetic testing. [...description of data and model...] (see Figure 2).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is essential for understanding how AMIE works and how it processes information to arrive at a diagnosis. It explains the system&#39;s core components and their interaction, providing insight into its diagnostic process.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could use more descriptive labels within each component box to explain their function in more detail.</li><li>The arrows could be labeled to indicate the specific type of information being exchanged between components.</li><li>Using different colors or visual cues for each component could enhance visual clarity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could include a brief explanation of the underlying technology used in each component, such as the type of LLM or knowledge base.</li><li>The figure could illustrate how external tools like web search are integrated into the process.</li><li>The figure could show how the self-critique mechanism works within the system.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 2</summary>
+        <p>Figure 2 illustrates the development and specialization of AMIE, an AI model for medical diagnosis. Part (a) shows how AMIE was initially trained using a simulated environment where it learned through conversations between simulated patients and doctors. Think of it like a student doctor practicing with actors playing patients. This training helps AMIE learn how to ask questions, understand symptoms, and make diagnoses. Part (b) shows how AMIE was then tested using real patient data. Out of 213 cases, 9 were used to figure out the best way to give information to AMIE and get answers from it. The remaining cases were used to compare AMIE&#39;s performance to that of human cardiologists. The cardiologists first diagnosed the cases on their own, then they got to see AMIE&#39;s diagnoses and could change their own answers if they wanted. Finally, specialist cardiologists compared the diagnoses from AMIE and the human cardiologists.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 2 | a) Development of AMIE. AMIE was trained with a self-play based simulated learning environment (see [9] for details)."</p>
+            <p><strong>Context:</strong> Describes the development and evaluation of AMIE using real patient data and comparison with cardiologists.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding how AMIE was developed and evaluated, showing the progression from simulated training to real-world application and comparison with human experts. It highlights the methodology used to assess AMIE&#39;s performance in a specialized medical domain.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is complex and could be simplified for better clarity. Part (a) could use clearer icons or visuals to represent the different components of the training environment.</li><li>The connection between parts (a) and (b) could be made more explicit visually.</li><li>The text within the figure is small and difficult to read.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could benefit from a clearer explanation of the &#39;prompting and inference strategy&#39; mentioned in the caption.</li><li>The caption could specify the types of ratings and preferences provided by the subspecialist cardiologists.</li><li>The figure doesn&#39;t explain how the 9 cases used for iteration were different from the 204 test cases.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Total Cases:</strong> 213</li><li><strong>Iteration Cases:</strong> 9</li><li><strong>Test Cases:</strong> 204</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 3</summary>
+        <p>Figure 3 shows the assessment form used by both the AI (AMIE) and the cardiologists in the study. It&#39;s like a quiz they both had to take about each patient case. The form has sections for their overall impression of the case, whether they think the patient has a genetic heart condition, and whether the patient should see a specialist. It also asks for their diagnosis, how they would manage the patient, and how genetic test results (if available) would change their answers. Imagine it as a structured way to get everyone&#39;s medical opinion on the same set of information.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 3 | Assessment Form for AMIE/cardiologist responses to cases."</p>
+            <p><strong>Context:</strong> Describes the assessment form used by AMIE and cardiologists to evaluate patient cases.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is essential for understanding how the AI and cardiologists&#39; performance was evaluated. It provides a detailed breakdown of the criteria used to assess their diagnostic abilities and management plans. It ensures a fair comparison by providing a standardized format for their responses.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure could be more visually engaging, perhaps by using different colors or fonts to highlight the different sections.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The form could include a section for the rationale behind the diagnosis and management plan, providing insights into the reasoning process.</li><li>The form could specify the types of genetic tests considered and how their results are interpreted.</li><li>The form could be made more interactive for online use, allowing for direct input and automated analysis.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 4</summary>
+        <p>This figure presents the evaluation form used by subspecialist cardiologists to compare responses from AMIE and general cardiologists. It lists ten criteria for comparison, including overall impression, consult question, triage assessment, diagnosis, management, and the impact of genetic test results. For each criterion, the subspecialists had to choose which response they preferred (Response 1, Tie, or Response 2). This form allows for a direct, pairwise comparison across different aspects of the responses, enabling a detailed assessment of the strengths and weaknesses of each.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Subspecialist cardiologists from the Stanford Center for Inherited Cardiovascular Disease provided individual ratings (Figure 5) and direct preferences (Figure 4) between AMIE and cardiologists, and between the cardiologist responses with and without assistance from AMIE."</p>
+            <p><strong>Context:</strong> This sentence, found in the &#39;Model Development&#39; subsection, introduces the two evaluation forms used by subspecialist cardiologists. It mentions Figure 4, the preference evaluation form, and Figure 5, the individual evaluation form, highlighting their role in the study&#39;s evaluation process.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding how the researchers compared the performance of AMIE and general cardiologists. It provides a structured framework for evaluating different aspects of their responses, allowing for a detailed and nuanced comparison. By focusing on specific domains, the form helps pinpoint the areas where AMIE excels or falls short compared to human experts.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The form is clear and easy to read, with distinct sections for each criterion.</li><li>The use of a simple &#39;Response 1, Tie, Response 2&#39; format makes the comparison straightforward.</li><li>The numbering of the criteria ensures a systematic evaluation.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The criteria cover a broad range of relevant clinical aspects, from overall impression to the impact of genetic test results.</li><li>The direct comparison format allows for clear differentiation between the two sets of responses.</li><li>The inclusion of a &#39;Tie&#39; option acknowledges the possibility of equivalent performance.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 5</summary>
+        <p>This figure shows the individual evaluation form used by subspecialist cardiologists to assess the responses from both AMIE and general cardiologists independently. The form consists of five yes/no questions focusing on clinically significant errors, the presence of unnecessary content, the omission of important content, evidence of correct reasoning, and the applicability of the response to specific medical demographics. This individual evaluation complements the direct comparison in Figure 4, providing a more granular assessment of the quality and potential biases in each response.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Subspecialist cardiologists from the Stanford Center for Inherited Cardiovascular Disease provided individual ratings (Figure 5) and direct preferences (Figure 4) between AMIE and cardiologists, and between the cardiologist responses with and without assistance from AMIE."</p>
+            <p><strong>Context:</strong> This sentence, found in the &#39;Model Development&#39; subsection, introduces the two evaluation forms used by subspecialist cardiologists. It mentions Figure 5, the individual evaluation form, and Figure 4, the preference evaluation form, highlighting their role in the study&#39;s evaluation process.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is essential for understanding the detailed evaluation process used in the study. It provides insights into the specific criteria used to assess the quality and potential biases of both AMIE and general cardiologist responses. By examining these individual assessments, the researchers could identify specific strengths and weaknesses of each, going beyond the simple preference comparison in Figure 4.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The form is concise and easy to understand, with clear yes/no questions.</li><li>The numbering of the questions ensures a systematic evaluation.</li><li>The layout is simple and uncluttered.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The questions address important aspects of response quality, including errors, omissions, reasoning, and potential biases.</li><li>The yes/no format allows for a quick and efficient evaluation.</li><li>The focus on individual assessment complements the pairwise comparison in Figure 4.</li>
+                </ul>
+            </div>
+            </div>
+        
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>Results</h3>
+            
+            <h4>Overview</h4>
+            <p>This section presents the findings of the study comparing the performance of AMIE, an AI system, with general cardiologists in assessing patients with suspected inherited cardiovascular disease. AMIE was found to be superior to general cardiologists in five out of ten domains, including explaining the rationale for suspecting a genetic heart condition, providing additional patient and test information, suggesting management plans, and explaining genetic test results. When cardiologists had access to AMIE&#39;s responses, they significantly improved their assessments in almost all cases. While AMIE was more thorough and sensitive, it also had a higher rate of clinically significant errors, often related to suggesting unnecessary tests. General cardiologists, on the other hand, were more concise but sometimes missed crucial information.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>AMIE&#39;s Superiority in Specific Domains:</strong> AMIE outperformed general cardiologists in five domains, demonstrating its strength in providing comprehensive explanations and management suggestions, especially regarding genetic information.</li><li><strong>Improved Cardiologist Performance with AMIE Assistance:</strong> Access to AMIE&#39;s responses significantly enhanced the quality of cardiologists&#39; assessments, suggesting AMIE&#39;s potential as a valuable assistive tool.</li><li><strong>AMIE&#39;s Thoroughness and Sensitivity:</strong> AMIE&#39;s responses were generally more thorough and considered a broader range of possibilities, leading to more comprehensive evaluations.</li><li><strong>Higher Error Rate for AMIE:</strong> Despite its strengths, AMIE exhibited a higher rate of clinically significant errors, often related to over-testing or suggesting unnecessary interventions.</li><li><strong>Complementary Strengths of AMIE and Cardiologists:</strong> AMIE&#39;s thoroughness and sensitivity complemented the conciseness and specificity of general cardiologists, suggesting a potential synergistic approach to patient care.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Presentation of Results</strong>
+        <p>The section presents the results in a clear and organized manner, using figures and tables to effectively communicate the key findings.</p>
+        <div class="quote">"For the 204 patients, across the 10 evaluation domain considered, AMIE was rated superior to general cardiologists across five domains while being equivalent for the remaining domains (Figure 6a and Table A.1)." (Page 8)</div>
+    </li>
+    
+    <li>
+        <strong>Detailed Analysis of Preferences</strong>
+        <p>The section provides a detailed analysis of the subspecialist preferences, including both direct comparisons and individual assessments, which allows for a nuanced understanding of AMIE&#39;s performance.</p>
+        <div class="quote">"The subspecialist evaluators first directly compared AMIE’s assessment to the general cardiologists’ assessments using the evaluation form in Figure 4." (Page 8)</div>
+    </li>
+    
+    <li>
+        <strong>Emphasis on Clinical Significance</strong>
+        <p>The section highlights the clinical significance of the findings, such as the types of errors made by AMIE and cardiologists, which is crucial for understanding the real-world implications of the research.</p>
+        <div class="quote">"While AMIE provided more thorough assessments and exhibited fewer content omissions or biases, its increased comprehensiveness did come at the expense of a modest increase in clinically-significant errors." (Page 9)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide More Context for Table 1</strong>
+        <p>Table 1 lists the availability of clinical data but lacks context regarding its relevance to the results. Explaining how this data influenced the assessments would be beneficial.</p>
+        <div class="quote">"204 consecutive patients were assessed by both general cardiologists and AMIE. The median age of patients was 59 years (range: 18-96 years). The number and percentage of patients with available clinical text data for each test was as follows: CMR: 121 (59.3%), CPX: 115 (56.4%), resting TTE: 172 (84.3%), exercise TTE: 131 (64.2%), ECG: 188 (92.2%), ambulatory holter monitor: 151 (74.0%), and genetic testing: 147 (72.0%) (see Table 1)." (Page 6)</div>
+        <p><strong>Rationale:</strong> This would help readers understand the potential impact of data availability on the performance of both AMIE and cardiologists.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two explaining how the availability of different types of clinical data might have influenced the assessments, or if any missing data posed challenges.</p>
+    </li>
+    
+    <li>
+        <strong>Quantify the Impact of AMIE Assistance on Specific Domains</strong>
+        <p>While the section mentions overall improvement in cardiologist responses with AMIE assistance, quantifying this impact on each of the 10 domains would provide a more granular understanding.</p>
+        <div class="quote">"Across the remaining 9 specific domains, the AMIE-assisted responses were preferred for all domains when directly compared to the general cardiologists alone, though ‘Tie’ was the most common evaluation for 8 of the 10 domains (see Figure 7 and Table A.3)." (Page 9)</div>
+        <p><strong>Rationale:</strong> This would allow for a more detailed analysis of AMIE&#39;s contribution to improving cardiologist performance in specific areas.</p>
+        <p><strong>Implementation:</strong> Provide specific percentages or statistics showing the improvement in each domain, potentially referencing Table A.3 or adding a new table with this information.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Implications of the Error Types</strong>
+        <p>The section identifies the types of errors made by AMIE and cardiologists but doesn&#39;t fully discuss their implications for clinical practice. Elaborating on this would enhance the section&#39;s impact.</p>
+        <div class="quote">"AMIE’s errors were generally additive, such as suggesting further investigations (i.e., such as regular monitoring with a cardiac MRI), whereas general cardiologist’s errors tended to be omission." (Page 13)</div>
+        <p><strong>Rationale:</strong> This would provide a more comprehensive analysis of the potential benefits and risks of using AMIE in real-world settings.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing the potential consequences of each type of error, such as the cost and burden of unnecessary tests or the potential harm of missed diagnoses. Consider framing this discussion in terms of the trade-off between thoroughness and potential over-testing.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>table 1</summary>
+        <p>Table 1 presents an overview of the patient demographics and data availability for different clinical tests. The average age of the 204 patients was 59, with the youngest being 18 and the oldest 96. The table then lists various cardiac tests, like Cardiac MRI (CMR) and electrocardiogram (ECG), and shows how many patients had data available for each test. For example, 121 patients (59.3%) had CMR data, while 188 (92.2%) had ECG data. This information is important because it shows the types and amount of data used to evaluate AMIE and the cardiologists, giving us an idea of how complete the information was for each patient.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 1 | Clinical text data availability across patients."</p>
+            <p><strong>Context:</strong> The number and percentage of patients with available clinical text data for each test was as follows: CMR: 121 (59.3%), CPX: 115 (56.4%), resting TTE: 172 (84.3%), exercise TTE: 131 (64.2%), ECG: 188 (92.2%), ambulatory holter monitor: 151 (74.0%), and genetic testing: 147 (72.0%) (see Table 1).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is important because it provides context for the study&#39;s results. It tells us about the patients included in the study, their ages, and what kind of medical test data was available for analysis. This helps us understand the scope of the study and the limitations of the data.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clearly organized and easy to read.</li><li>The use of percentages alongside raw numbers makes it easy to understand the data distribution.</li><li>The table could benefit from a clearer title, perhaps specifying that it represents &#39;Patient Demographics and Data Availability&#39;.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table could include the standard deviation for the age to provide a better understanding of the age distribution.</li><li>The table could be split into two separate tables: one for demographics and one for data availability, for better organization.</li><li>The table could include a brief explanation of why certain tests might have more missing data than others.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Mean Age:</strong> 59.0 years</li><li><strong>Age Range:</strong> 18 years</li><li><strong>Age Range:</strong> 96 years</li><li><strong>CMR Data Available:</strong> 121</li><li><strong>CPX Data Available:</strong> 115</li><li><strong>Resting TTE Data Available:</strong> 172</li><li><strong>Exercise TTE Data Available:</strong> 131</li><li><strong>ECG Data Available:</strong> 188</li><li><strong>Holter Monitor Data Available:</strong> 151</li><li><strong>Genetic Testing Data Available:</strong> 147</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 6</summary>
+        <p>Figure 6 compares AMIE&#39;s performance to that of general cardiologists. Part (a) shows which one was preferred by subspecialist cardiologists across 10 different areas, like explaining the consult question or the management plan. Think of it as a head-to-head matchup where AMIE wins in 5 areas, ties in the rest, and never loses. Part (b) looks at how AMIE and the cardiologists did on 5 individual questions, such as whether they made any errors or missed important information. It shows, for example, that AMIE was more likely to include extra information and make errors, while cardiologists were more likely to give answers that didn&#39;t apply to certain patients.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 6 | a) Preference between AMIE and cardiologist responses."</p>
+            <p><strong>Context:</strong> The domains in which AMIE responses were preferred were: ‘consult question explanation’, ‘additional patient information’, ‘additional test information’, ‘management’, and ‘genetic explanation’. Figure 6 |</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is central to the study&#39;s results, directly comparing AMIE&#39;s performance to human cardiologists. It visually represents the key findings, showing where AMIE excels and where it needs improvement. This information is crucial for understanding the potential of AMIE as a clinical tool and for identifying areas for future development.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Part (a) could use clearer labels for the 10 domains to make them easier to understand.</li><li>Part (b) could use different colors for the bars representing AMIE and cardiologists to improve visual distinction.</li><li>The figure could benefit from a more descriptive caption, explaining the meaning of &#39;preferred&#39; and the individual assessment questions.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could include error bars or confidence intervals to show the statistical significance of the differences.</li><li>Part (a) could show the magnitude of the preference, not just which one was preferred.</li><li>Part (b) could provide more context for the individual assessment questions, explaining what each question measures.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 7</summary>
+        <p>Figure 7 is a bar chart comparing cardiologists&#39; responses with and without the help of AMIE, an AI assistant. Imagine a doctor trying to diagnose a patient, first on their own and then after getting a second opinion from AMIE. The chart shows how often specialists preferred each type of response across 10 different areas, like the overall diagnosis, management plan, and explanation of genetic test results. Each area has three bars: one for when the cardiologist used AMIE&#39;s help (Cardiologist + AMIE), one for the cardiologist&#39;s initial response (Cardiologist Alone), and one for when the specialists couldn&#39;t decide which was better (Tie). The taller the &#39;Cardiologist + AMIE&#39; bar, the more often specialists preferred the response where the cardiologist had AMIE&#39;s help. The chart also has little lines (error bars) on top of each bar, which show how much the results might vary.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 7 | Preference between cardiologist responses with and without access to AMIE’s response."</p>
+            <p><strong>Context:</strong> Of the 204 patient assessments, 195 of the assessments (95.6%) were changed by the general cardiologists after seeing AMIE’s response. [...] Across the remaining 9 specific domains, the AMIE-assisted responses were preferred for all domains when directly compared to the general cardiologists alone, though ‘Tie’ was the most common evaluation for 8 of the 10 domains (see Figure 7 and Table A.3).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it shows how much AMIE can help cardiologists improve their diagnoses and treatment plans. It directly addresses the question of whether using AI can improve the quality of care provided by general cardiologists, especially in complex cases where specialist expertise is limited.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The colors used for the bars could be more distinct to improve readability.</li><li>Labeling the y-axis with the full domain names instead of abbreviations would enhance clarity.</li><li>Adding a clear title that summarizes the main finding (e.g., &#39;AMIE Assistance Improves Cardiologist Responses&#39;) would make the chart more impactful.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The caption could explain what the error bars represent (e.g., 90% confidence intervals).</li><li>The figure could include the p-values for each comparison to show the statistical significance of the differences.</li><li>The figure could benefit from a brief explanation of why &#39;Tie&#39; was the most common outcome for many domains.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 8</summary>
+        <p>Figure 8 summarizes what specialist cardiologists thought about the responses from AMIE and the general cardiologists. Instead of a chart or graph, it uses text generated by another AI, Gemini 1.5 Flash, to explain the main reasons why specialists preferred one response over the other. Think of it like getting a summary of expert opinions. The specialists gave feedback on about 78% of the cases. The summary highlights that AMIE was generally praised for being thorough and considering many possible diagnoses, while the general cardiologists were seen as more concise but sometimes missed important details or jumped to conclusions too quickly. The summary also lists specific reasons why specialists preferred AMIE or the cardiologists, like AMIE&#39;s broader differential diagnosis or the cardiologists&#39; conciseness.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 8 | LLM-generated summary of subspecialist comments for preference rating between AMIE and the cardiologists."</p>
+            <p><strong>Context:</strong> While AMIE and cardiologists had similar overall preferences (see Figure 6), the types of feedback they each received were quite different; [...] In this way, AMIE’s assistive value could be in thorough sensitive assessments, which then can be refined by cardiologists, who tend to be more specific. [...] (see Figure 8).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure provides valuable qualitative insights into the strengths and weaknesses of AMIE and general cardiologists, as perceived by specialist cardiologists. It helps explain the &#39;why&#39; behind the preferences observed in the quantitative analysis, offering a deeper understanding of the AI&#39;s performance and its potential role in clinical practice.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>While the text summary is clear, adding a visual component, such as a word cloud or a simple bar chart summarizing the frequency of different feedback themes, could make the information more engaging and easier to grasp.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The summary could be more specific about the types of errors made by AMIE and the cardiologists.</li><li>The summary could discuss the implications of these findings for the future development and deployment of AI in cardiology.</li><li>The summary could explore the potential for combining the strengths of both AMIE and human cardiologists to improve diagnostic accuracy and patient care.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Feedback Received:</strong> 159 assessment pairs</li><li><strong>Total Assessments:</strong> 204 assessment pairs</li><li><strong>Percentage Feedback:</strong> 77.9 %</li><li><strong>General Cardiologist Omission Errors:</strong> 92 %</li><li><strong>AMIE Omission Errors:</strong> 35.5 %</li><li><strong>General Cardiologist Unnecessary Care Errors:</strong> 8 %</li><li><strong>AMIE Unnecessary Care Errors:</strong> 64.9 %</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 9</summary>
+        <p>Figure 9 illustrates a hypothetical dialogue between AMIE and a general cardiologist, showcasing how AMIE could assist in real-world clinical scenarios. The figure is divided into four parts. Part (a) summarizes the clinical data from an echocardiogram and a Holter monitor for a patient suspected of having hypertrophic cardiomyopathy (HCM). Part (b) presents the independent assessments of the general cardiologist and AMIE based on this data. Notice how the cardiologist initially downplays the likelihood of genetic heart disease, while AMIE suggests a higher suspicion of HCM. Part (c) shows a simulated conversation where AMIE explains its reasoning to the cardiologist, highlighting key findings like left ventricular outflow tract obstruction and the possibility of asymptomatic HCM. Part (d) provides feedback from a subspecialist cardiologist, confirming AMIE&#39;s assessment and emphasizing the importance of referral to a specialized center. This figure demonstrates AMIE&#39;s potential to provide valuable insights and guide clinical decision-making, especially in cases with subtle or complex presentations.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 9 | Dialogue between AMIE and a general cardiologist."</p>
+            <p><strong>Context:</strong> To explore potential future clinical uses of technology such as AMIE, we present four qualitative examples of how capabilities in dialogue could be utilized to communicate with patients or up-level generalists. The first hypothetical scenario in Figure 9 shows AMIE assisting a general cardiologist in the assessment of real-world clinical ECG and ambulatory Holter monitor text data (Figure 9a).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure demonstrates AMIE&#39;s potential to augment the diagnostic capabilities of general cardiologists by providing a more comprehensive and nuanced assessment of complex cases. It highlights AMIE&#39;s ability to consider a broader range of possibilities, identify subtle findings, and provide clear explanations to support its recommendations. This is particularly important in cases like HCM, where early and accurate diagnosis is crucial for effective management and prevention of serious complications.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is well-organized and easy to follow, with clear sections for the clinical data, individual assessments, dialogue, and subspecialist feedback.</li><li>The use of different colors or fonts for the cardiologist and AMIE&#39;s text could further enhance readability and distinguish their contributions.</li><li>The clinical data summary could be presented in a more visually appealing format, such as a table or a simplified graphical representation.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The dialogue in part (c) could be expanded to include more detailed explanations of the medical terms and concepts, making it more accessible to a wider audience.</li><li>The subspecialist feedback could include specific examples of how AMIE&#39;s insights influenced the cardiologist&#39;s understanding and decision-making.</li><li>The figure could be accompanied by a brief discussion of the limitations of this hypothetical scenario and the need for further validation in real-world clinical settings.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-5" class="section">
+            <h3>Discussion</h3>
+            
+            <h4>Overview</h4>
+            <p>This section discusses the study&#39;s findings on the ability of Large Language Models (LLMs), specifically AMIE, to assist generalists in assessing rare cardiac diseases. The study used a real-world dataset of patients with suspected inherited cardiomyopathies and a specialized evaluation rubric. Key findings include AMIE&#39;s comparable performance to general cardiologists in standalone assessments, its potential to significantly improve general cardiologists&#39; diagnostic and management abilities when used as an assistive tool, and the different error profiles of AMIE (over-testing) and general cardiologists (omission). The discussion also highlights the limitations of the study, such as the use of text-based reports only and the lack of patient history and physical examination data, and emphasizes the need for further prospective research before clinical implementation.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>AMIE&#39;s Performance:</strong> AMIE demonstrated comparable performance to general cardiologists in assessing patients with rare cardiac conditions, showing potential as a valuable tool in subspecialty care.</li><li><strong>Assistive Capabilities:</strong> When used as an assistive tool, AMIE significantly improved general cardiologists&#39; diagnostic and management skills, enhancing the quality of care.</li><li><strong>Error Profiles:</strong> AMIE&#39;s errors tended to be additive, often suggesting unnecessary tests, while general cardiologists&#39; errors were primarily omissions, such as missing diagnoses or necessary tests.</li><li><strong>Data Efficiency and Adaptation:</strong> AMIE&#39;s adaptation to the subspecialist domain was highly data-efficient, requiring only a small number of cases for refinement.</li><li><strong>Limitations and Future Research:</strong> The study acknowledges limitations, including the use of text-based reports only and the exclusion of patient history and physical examination, emphasizing the need for further prospective research and validation.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Discussion of Findings</strong>
+        <p>The section thoroughly discusses the key findings of the study, relating them to the research question and providing context for their interpretation.</p>
+        <div class="quote">"Our results demonstrate the feasibility of utilizing LLMs, specifically AMIE, an experimental research LLM optimized for diagnostic dialogue, to assess patients with rare and life-threatening cardiac conditions." (Page 11)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Explanation of AMIE&#39;s Strengths and Weaknesses</strong>
+        <p>The section clearly articulates both the advantages and limitations of AMIE, providing a balanced perspective on its potential role in clinical practice.</p>
+        <div class="quote">"While AMIE provided more thorough assessments and exhibited fewer content omissions or biases, its increased comprehensiveness did come at the expense of a modest increase in clinically-significant errors." (Page 11)</div>
+    </li>
+    
+    <li>
+        <strong>Emphasis on Future Research Directions</strong>
+        <p>The section identifies important areas for future research, such as prospective studies and the inclusion of multimodal data, which is crucial for advancing the field and ensuring the safe and effective implementation of LLMs in healthcare.</p>
+        <div class="quote">"Prior to assessing safety for clinical implementation, prospective research is necessary." (Page 14)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Elaborate on the Clinical Implications of the Error Differences</strong>
+        <p>While the discussion mentions the different error profiles of AMIE and cardiologists, it could further explore the clinical implications of these differences. For example, how might the tendency towards over-testing by AMIE impact patient care and healthcare costs?</p>
+        <div class="quote">"AMIE’s errors were generally additive, such as suggesting further investigations (i.e., such as regular monitoring with a cardiac MRI), whereas general cardiologist’s errors tended to be omission." (Page 13)</div>
+        <p><strong>Rationale:</strong> This would provide a more nuanced understanding of the potential benefits and risks of using AMIE in real-world settings.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing the potential consequences of each error type, considering factors such as patient burden, cost-effectiveness, and the potential for delayed or missed diagnoses.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Potential for Bias in the Dataset</strong>
+        <p>The discussion mentions limitations related to the dataset, such as its single-center origin and the use of English text. However, it could also address the potential for bias within the dataset itself. For example, were the patients included in the study representative of the broader population of patients with suspected inherited cardiomyopathies?</p>
+        <div class="quote">"Further limitations of our work include a biased sample of patients - patients were selected from one US center, using only English text." (Page 14)</div>
+        <p><strong>Rationale:</strong> Acknowledging and discussing potential biases in the data would strengthen the study&#39;s rigor and transparency.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two discussing the potential for selection bias or other biases within the dataset and how these biases might have influenced the results.</p>
+    </li>
+    
+    <li>
+        <strong>Strengthen the Connection to &quot;Democratization&quot;</strong>
+        <p>While the paper&#39;s title emphasizes democratization, the discussion could more explicitly connect the findings to this theme. How does AMIE&#39;s potential to assist general cardiologists contribute to making subspecialty expertise more accessible?</p>
+        <div class="quote">"If further prospective research validates our findings, LLMs may have the potential to assist generalist in providing subspecialist care." (Page 13)</div>
+        <p><strong>Rationale:</strong> This would reinforce the paper&#39;s central argument and highlight the potential societal impact of the research.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two explaining how AMIE could facilitate access to specialized knowledge in underserved areas or for patients who lack access to subspecialists.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-6" class="section">
+            <h3>Conclusions</h3>
+            
+            <h4>Overview</h4>
+            <p>This section concludes that the research LLM-based AI system, AMIE, demonstrates potential in assisting general cardiologists with complex cases of inherited cardiomyopathies. AMIE performed comparably to general cardiologists in assessments, and even outperformed them in some areas. Importantly, access to AMIE&#39;s insights significantly improved the cardiologists&#39; responses. However, AMIE also showed a higher rate of errors, primarily related to over-testing, highlighting the need for further research before clinical implementation.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>AMIE&#39;s Comparable Performance:</strong> AMIE demonstrated performance comparable to general cardiologists in assessing inherited cardiomyopathies, indicating its potential as a clinical tool.</li><li><strong>Enhanced Cardiologist Performance:</strong> When general cardiologists used AMIE&#39;s responses, their performance significantly improved across all evaluated domains, showcasing AMIE&#39;s value as an assistive technology.</li><li><strong>Focus on Inherited Cardiomyopathies:</strong> The conclusion emphasizes the specific application of AMIE in the context of rare and life-threatening inherited cardiomyopathies, highlighting the clinical relevance of the research.</li><li><strong>Error Profile and Need for Further Research:</strong> The conclusion acknowledges AMIE&#39;s higher error rate, primarily related to over-testing, and stresses the need for further research and validation before clinical use.</li><li><strong>Potential for Clinical Aid:</strong> The conclusion reinforces the potential of LLMs like AMIE to serve as valuable clinical aids, assisting generalists in providing more comprehensive and accurate care for complex cardiac conditions.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Concise Summary of Key Findings</strong>
+        <p>The conclusion effectively summarizes the main findings of the study in a clear and concise manner, highlighting both AMIE&#39;s strengths and limitations.</p>
+        <div class="quote">"In conclusion, AMIE, a research LLM-based AI system optimised for clinical and diagnostic dialogue, showed equivalence with general cardiologists in the assessment of patients with rare, life-threatening inherited cardiomyopathies." (Page 14)</div>
+    </li>
+    
+    <li>
+        <strong>Emphasis on Clinical Relevance</strong>
+        <p>The conclusion emphasizes the clinical implications of the research, focusing on the potential of AMIE to improve the diagnosis and management of inherited cardiomyopathies.</p>
+        <div class="quote">"AMIE had was seen as less demographically biased, showed equivalent clinical reasoning, and was more thorough than general cardiologists, though this was at the expense of more errors." (Page 14)</div>
+    </li>
+    
+    <li>
+        <strong>Balanced Perspective</strong>
+        <p>The conclusion provides a balanced perspective on AMIE&#39;s performance, acknowledging both its potential benefits and the need for further research to address its limitations.</p>
+        <div class="quote">"The most encouraging result was the potential for LLMs to be a useful clinical aid; when general cardiologists leveraged AMIE to refine their own responses, all domains of their assisted responses were preferred over their unassisted responses." (Page 14)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify the Improvement in Cardiologist Performance</strong>
+        <p>While the conclusion mentions significant improvement, providing specific numbers or percentages would strengthen the impact of this finding.</p>
+        <div class="quote">"...when general cardiologists leveraged AMIE to refine their own responses, all domains of their assisted responses were preferred over their unassisted responses." (Page 14)</div>
+        <p><strong>Rationale:</strong> Quantifying the improvement would provide a more concrete measure of AMIE&#39;s assistive value.</p>
+        <p><strong>Implementation:</strong> Include specific percentages or statistics showing the extent of improvement in cardiologist performance, potentially referencing the results section or relevant tables.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on the Types of Errors</strong>
+        <p>The conclusion mentions AMIE&#39;s higher error rate but could briefly elaborate on the specific types of errors observed. This would provide a more complete picture of AMIE&#39;s limitations.</p>
+        <div class="quote">"...though this was at the expense of more errors." (Page 14)</div>
+        <p><strong>Rationale:</strong> Understanding the nature of the errors would be helpful for future research and development efforts.</p>
+        <p><strong>Implementation:</strong> Add a short phrase describing the types of errors, such as &#39;primarily related to over-testing or suggesting unnecessary interventions.&#39;</p>
+    </li>
+    
+    <li>
+        <strong>Strengthen the Link to Democratization</strong>
+        <p>The conclusion could more explicitly connect the findings to the paper&#39;s overarching theme of democratizing subspecialty expertise. How does AMIE&#39;s potential as a clinical aid contribute to making specialized knowledge more accessible?</p>
+        
+        <p><strong>Rationale:</strong> This would reinforce the paper&#39;s central argument and highlight the potential societal impact of the research.</p>
+        <p><strong>Implementation:</strong> Add a sentence explaining how AMIE could help bridge the gap between subspecialists and general practitioners, potentially making specialized knowledge more readily available in underserved areas or for patients with limited access to specialists.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-7" class="section">
+            <h3>Appendix</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix provides supplementary information to support the main findings of the paper. It includes an example of AMIE&#39;s response to a patient case, further details on the subspecialist evaluations, summaries of their comments, an analysis of the types of errors made by AMIE and cardiologists, and additional dialogue examples illustrating potential clinical applications of AMIE.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Example AMIE Response:</strong> The appendix includes a complete example of AMIE&#39;s response to a patient case, allowing readers to see the AI&#39;s output firsthand.</li><li><strong>Detailed Evaluation Information:</strong> The appendix provides more detailed results from the subspecialist evaluations, including preference ratings and individual assessments.</li><li><strong>Subspecialist Comments:</strong> Summaries of the subspecialists&#39; free-text comments offer qualitative insights into their preferences and evaluations.</li><li><strong>Error Analysis:</strong> The appendix includes an analysis comparing the types of clinically significant errors made by AMIE and the general cardiologists.</li><li><strong>Additional Dialogue Examples:</strong> The appendix presents three additional dialogue scenarios showcasing potential clinical applications of AMIE, such as communicating with patients and assisting general cardiologists.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Supplementary Information</strong>
+        <p>The appendix provides a wealth of supplementary information that enhances the transparency and completeness of the study.</p>
+        <div class="quote">"In the following sections, we provide: [List of provided information]" (Page 18)</div>
+    </li>
+    
+    <li>
+        <strong>Example AMIE Response</strong>
+        <p>Including a full example of AMIE&#39;s response allows readers to directly assess the AI&#39;s output and understand its capabilities.</p>
+        <div class="quote">"An example case response from AMIE (Section A.1)." (Page 18)</div>
+    </li>
+    
+    <li>
+        <strong>Detailed Evaluation Data</strong>
+        <p>Providing the detailed evaluation results allows for a more in-depth analysis of AMIE&#39;s performance and the subspecialists&#39; preferences.</p>
+        <div class="quote">"Additional information of subspecialists’ evaluation on AMIE and the general cardiologist’s responses (Section A.2)." (Page 18)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Organize the Appendix by Section</strong>
+        <p>While the appendix lists the included information, organizing it into clearly labeled subsections would improve readability and navigation.</p>
+        
+        <p><strong>Rationale:</strong> This would make it easier for readers to find specific information within the appendix.</p>
+        <p><strong>Implementation:</strong> Divide the appendix into separate subsections with clear headings corresponding to the listed items, such as &quot;A.1 Example AMIE Response,&quot; &quot;A.2 Detailed Evaluation Information,&quot; etc.</p>
+    </li>
+    
+    <li>
+        <strong>Provide Context for the Dialogue Examples</strong>
+        <p>The appendix mentions additional dialogue examples but doesn&#39;t provide context for the scenarios or their clinical relevance. Briefly explaining the purpose of each example would be helpful.</p>
+        <div class="quote">"Three scenarios and dialogue examples to illustrate potential applications of medical LLMs like AMIE in this domain (Section A.5)." (Page 18)</div>
+        <p><strong>Rationale:</strong> This would help readers understand the practical applications of AMIE and the potential benefits of using it in different clinical situations.</p>
+        <p><strong>Implementation:</strong> Add a short description of the clinical context for each dialogue example, explaining the patient&#39;s presentation, the clinical question being addressed, and the role of AMIE in the interaction.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Limitations of the Additional Analyses</strong>
+        <p>The appendix presents additional analyses, such as the error analysis and the summaries of subspecialist comments. Briefly discussing the limitations of these analyses, such as potential biases or the subjective nature of qualitative comments, would strengthen the appendix.</p>
+        
+        <p><strong>Rationale:</strong> This would enhance the transparency and rigor of the appendix by acknowledging the limitations of the presented information.</p>
+        <p><strong>Implementation:</strong> Add a paragraph or a few sentences at the end of each analysis discussing its limitations and potential biases. For example, for the error analysis, mention the potential for subjective interpretation of errors or the limited sample size. For the subspecialist comments, acknowledge the potential for bias in which assessments received comments.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure A.2</summary>
+        <p>Figure A.2 summarizes the feedback from subspecialist cardiologists on the individual assessments of both AMIE and general cardiologists. The figure uses text summaries generated by an LLM (Gemini 1.5 Flash) to present the feedback for each of the five individual assessment questions (Figure 5). These questions cover topics like extra content, omitted content, correct reasoning, applicability to specific demographics, and clinically significant errors. The summaries are presented in separate boxes, with blue boxes for cardiologist feedback and red boxes for AMIE feedback. The figure also notes the proportion of responses that received comments for each category, indicating that not all assessments received feedback for every question.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure A.2 | LLM-generated summaries of subspecialist comments to AMIE and cardiologist assessments."</p>
+            <p><strong>Context:</strong> To understand the rationale behind the preferences and individual ratings provided by subspecialists, we analyzed the free-text comments left by subspecialists for AMIE’s and the general cardiologists’ responses. [...] We also performed a similar analysis on the 5 individual assessment criteria, finding that the subspecialists described very different and often complementary strengths and weaknesses of AMIE and cardiologists for each criteria (see Figure A.2).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure provides valuable qualitative insights into the specific strengths and weaknesses of AMIE and general cardiologists, as perceived by subspecialist cardiologists. It helps explain the quantitative results by providing context and detailed feedback on different aspects of their assessments. This information is crucial for understanding the types of errors made by each and for identifying areas for improvement in both AMIE and clinical practice.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is well-organized, with clear separation between cardiologist and AMIE feedback.</li><li>The use of different colors for the boxes effectively distinguishes the two sets of summaries.</li><li>The text within the boxes is concise and easy to read.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could benefit from a more detailed explanation of the five individual assessment questions (Figure 5) to provide context for the summaries.</li><li>The figure could include the actual subspecialist comments alongside the summaries to allow for a more in-depth analysis.</li><li>The figure could discuss the implications of the feedback for the future development and application of AMIE in clinical practice.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure A.3</summary>
+        <p>Figure A.3 summarizes the key themes of clinically significant errors made by both AMIE and general cardiologists, as identified by subspecialist reviewers. The summary, generated by an LLM (Gemini 1.5 Flash), highlights AMIE&#39;s tendency towards over-testing, over-treatment, and misinterpretation of genetic information. On the other hand, general cardiologists were more likely to miss rarer diagnoses, perform incomplete workups, and inadequately integrate genetic information into management plans. The summary provides a concise comparison of the error profiles, suggesting that AMIE&#39;s errors are often related to excessive reliance on technology, while cardiologists&#39; errors stem from a more conservative approach and potential unfamiliarity with rarer conditions or guidelines.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure A.3 | LLM-generated summary of AMIE and the cardiologists clinically significant errors."</p>
+            <p><strong>Context:</strong> Both AMIE and general cardiologists’ clinically significant errors are described in Figure A.3. We also performed a similar analysis on the 5 individual assessment criteria, finding that the subspecialists described very different and often complementary strengths and weaknesses of AMIE and cardiologists for each criteria (see Figure A.2).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding the limitations and potential risks associated with both AMIE and current clinical practice. By highlighting the specific types of errors made by each, it informs strategies for improvement and emphasizes the need for careful consideration before implementing AI tools in real-world settings. The comparison of error profiles also sheds light on the complementary nature of AI and human expertise, suggesting potential for synergistic approaches to patient care.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>While the text summary is informative, adding a visual component, such as a table or a chart comparing the frequency of different error types, could enhance clarity and engagement.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The summary could provide more specific examples of the errors made by AMIE and cardiologists, illustrating the clinical implications of each error type.</li><li>The summary could discuss the potential underlying causes of these errors, such as limitations in AMIE&#39;s training data or biases in clinical practice.</li><li>The summary could explore strategies for mitigating these errors, such as incorporating human oversight or developing more robust AI models.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table A.4</summary>
+        <p>Table A.4 outlines the prompts given to AMIE, the AI system, in three simulated dialogue scenarios. These scenarios explore different potential clinical applications of AMIE: 1) explaining test results and diagnosis to a patient, 2) assisting a general cardiologist in deciding about specialist referral, and 3) presenting a comprehensive assessment as a specialist cardiologist. Each prompt describes a patient case and specifies the information AMIE should use and the role it should play in the conversation. For example, in the first scenario, AMIE is given echocardiogram and Holter monitor results for a 63-year-old female whose brother died from sudden cardiac death and is asked to explain these results to the patient. In the second scenario, AMIE is asked to help a general cardiologist decide whether a 54-year-old male with shortness of breath and dizziness should be referred to a specialist. In the third scenario, AMIE acts as the specialist cardiologist for a 64-year-old male and presents a complete assessment based on various test results.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table A.4 | Prompts for AMIE&#39;s simulated dialogue across three scenarios: (1) AMIE reaches a diagnosis and then explains it to a patient. (2) AMIE provides assistive dialogue for a general cardiologist. (3) AMIE assumes the role of the specialist cardiologist and presents an assessment."</p>
+            <p><strong>Context:</strong> For the remaining three hypothetical scenarios, AMIE was given a prompt, akin to a &#39;one-line&#39; summary of a patient (Table A.4) along with clinical data for the corresponding patient and asked to produce dialogues mirroring various potential use cases for AMIE: 1. AMIE reaches a diagnosis and then explains it to a patient (Figure A.4); 2. AMIE providing assistive dialogue for a general cardiologist (Figure A.5); 3. AMIE assumes the role of the specialist cardiologist and presents an assessment (Figure A.6).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is important because it shows how AMIE&#39;s conversational abilities were tested in different clinically relevant situations. The prompts represent potential real-world applications of the AI, such as patient education, assisting general practitioners, and providing specialist consultations. By evaluating AMIE&#39;s performance in these scenarios, the researchers can assess its potential to improve communication, enhance decision-making, and increase access to specialized knowledge.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clear and easy to understand, with distinct rows for each scenario and a clear explanation of AMIE&#39;s role.</li><li>The table could benefit from a more concise title, perhaps focusing on the key element: &#39;AMIE Dialogue Prompts&#39;.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table could include a brief explanation of the clinical data provided to AMIE for each scenario.</li><li>The table could mention the specific goals or objectives of each dialogue scenario, such as providing accurate information to the patient or assisting the cardiologist in making a referral decision.</li><li>The table could link each scenario to the corresponding figure showing the actual dialogue (e.g., Scenario 1 - Figure A.4).</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-8" class="section">
+            <h3>Example model response</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section provides a sample of AMIE&#39;s response to a clinical case, including the clinical data summary provided to AMIE and AMIE&#39;s response to the assessment form questions.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Clinical Data Summary:</strong> The section presents a summary of the clinical data given to AMIE, including an echocardiogram and a Holter monitor report. This data serves as the basis for AMIE&#39;s assessment.</li><li><strong>AMIE&#39;s Response:</strong> The section showcases AMIE&#39;s response to the assessment form questions, covering areas like overall impression, consult question, triage assessment, diagnosis, management, and the impact of genetic test results.</li><li><strong>Illustrative Example:</strong> This example response allows readers to understand how AMIE processes clinical data and formulates its assessment, providing a concrete illustration of its capabilities.</li><li><strong>Contextual Reference:</strong> The section refers to Figure 3, which contains the assessment form questions, and Figure A.1, which visually presents the clinical data summary and AMIE&#39;s response.</li><li><strong>Focus on Practical Application:</strong> The example response demonstrates AMIE&#39;s practical application in a real-world clinical scenario, showcasing its potential as a diagnostic tool.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Presentation of AMIE&#39;s Response</strong>
+        <p>The section clearly presents AMIE&#39;s response to the assessment form questions, making it easy for readers to understand how the AI analyzes clinical data and formulates its assessment.</p>
+        <div class="quote">"Figure A.1 | Example model response. a) Summaries of the clinical data provided to AMIE. b) The response provided by AMIE to the questions in Figure 3." (Page 19)</div>
+    </li>
+    
+    <li>
+        <strong>Inclusion of Clinical Data Summary</strong>
+        <p>Providing the clinical data summary alongside AMIE&#39;s response allows readers to see the basis for the AI&#39;s assessment and understand its reasoning.</p>
+        <div class="quote">"a) Summaries of the clinical data provided to AMIE." (Page 19)</div>
+    </li>
+    
+    <li>
+        <strong>Visual Presentation in Figure A.1</strong>
+        <p>The visual presentation of the clinical data summary and AMIE&#39;s response in Figure A.1 enhances clarity and makes it easier to compare the input and output.</p>
+        <div class="quote">"Figure A.1 | Example model response." (Page 19)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide Multiple Example Responses</strong>
+        <p>Including only one example response might not fully represent the range of AMIE&#39;s capabilities and potential variations in its assessments. Providing multiple examples with different clinical scenarios would be more informative.</p>
+        
+        <p><strong>Rationale:</strong> Multiple examples would offer a more comprehensive view of AMIE&#39;s performance and allow readers to assess its consistency and adaptability.</p>
+        <p><strong>Implementation:</strong> Include 2-3 additional example responses with varying clinical presentations and complexities.</p>
+    </li>
+    
+    <li>
+        <strong>Compare AMIE&#39;s Response to a Gold Standard</strong>
+        <p>While the example shows AMIE&#39;s response, it doesn&#39;t provide a comparison to a gold standard or expert assessment. Including an expert&#39;s assessment of the same case would allow readers to evaluate AMIE&#39;s accuracy and identify any discrepancies.</p>
+        
+        <p><strong>Rationale:</strong> Comparing AMIE&#39;s response to a gold standard would provide a benchmark for its performance and highlight areas where it aligns with or deviates from expert opinion.</p>
+        <p><strong>Implementation:</strong> Include an expert&#39;s assessment of the same clinical case, highlighting any differences between the expert&#39;s and AMIE&#39;s assessments.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Reasoning Behind AMIE&#39;s Response</strong>
+        <p>The section presents AMIE&#39;s response but doesn&#39;t explain the reasoning behind it. Providing insights into AMIE&#39;s decision-making process would enhance understanding and transparency.</p>
+        
+        <p><strong>Rationale:</strong> Understanding the AI&#39;s reasoning process is crucial for building trust and evaluating the validity of its assessments.</p>
+        <p><strong>Implementation:</strong> Add a paragraph or a few sentences explaining the key factors that influenced AMIE&#39;s assessment, such as specific findings in the clinical data or relevant medical knowledge.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure A.1</summary>
+        <p>Figure A.1 shows an example of AMIE&#39;s response to a clinical case. It&#39;s split into two parts: (a) Clinical Data Summary and (b) Example AMIE Response. Part (a) summarizes the important information from the patient&#39;s echocardiogram (an ultrasound of the heart) and Holter monitor (a portable device that records heart rhythm). This summary is like a cheat sheet for the AI, giving it the key facts about the patient&#39;s heart structure and rhythm. Part (b) shows AMIE&#39;s answers to the questions on the assessment form (Figure 3). This is where AMIE gives its overall impression of the case, whether it thinks the patient has a genetic heart problem, what the diagnosis is, and how the patient should be managed. It&#39;s like AMIE&#39;s version of a doctor&#39;s report.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure A.1 | Example model response. a) Summaries of the clinical data provided to AMIE. b) The response provided by AMIE to the questions in Figure 3."</p>
+            <p><strong>Context:</strong> This appendix section provides a sample of AMIE&#39;s response and is crucial for understanding its capabilities.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial because it gives a concrete example of how AMIE analyzes patient data and generates a clinical assessment. It allows readers to see the actual output of the AI and understand how it applies its knowledge to a real-world case. This helps to illustrate AMIE&#39;s capabilities and evaluate its potential for clinical use.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure is clear and well-organized, with distinct sections for the clinical data and AMIE&#39;s response.</li><li>Using different colors or fonts for the clinical data and AMIE&#39;s response could improve visual distinction.</li><li>Highlighting key findings within the text summaries could make them easier to scan and understand.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could include a brief explanation of the medical terms used in the clinical data summary, making it more accessible to a wider audience.</li><li>The figure could compare AMIE&#39;s response to a gold-standard response from a subspecialist, providing a benchmark for its performance.</li><li>The figure could discuss the limitations of this specific example and its generalizability to other cases.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-9" class="section">
+            <h3>Additional evaluation information</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section provides detailed results from the subspecialist evaluations, offering further insights into the evaluation process. It includes tables showing the preference ratings between AMIE and cardiologist responses, individual assessments of both, and the preference between cardiologist responses before and after accessing AMIE&#39;s responses.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Preference Rating between AMIE and Cardiologist Responses (Table A.1):</strong> This table shows the percentage of subspecialist preferences for AMIE, cardiologists, and ties across 10 domains, along with confidence intervals and the difference in preference percentages.</li><li><strong>Individual Assessment of AMIE and Cardiologist Responses (Table A.2):</strong> This table presents the proportion of &quot;yes&quot; responses for five individual assessment questions, comparing AMIE and cardiologist performance with confidence intervals and the difference in proportions.</li><li><strong>Preference between Cardiologist Responses With and Without AMIE Assistance (Table A.3):</strong> This table compares cardiologist responses before and after accessing AMIE&#39;s output, showing preferences for unassisted, assisted, and tie responses across 10 domains, with confidence intervals and the difference in preference percentages.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Detailed Breakdown of Results</strong>
+        <p>The section provides a comprehensive breakdown of the subspecialist evaluations, including preference ratings, individual assessments, and the impact of AMIE assistance on cardiologist responses.</p>
+        <div class="quote">"Here we present detailed results from subspecialist evaluators including: the preference between AMIE and cardiologist responses, the individual assessment of AMIE and cardiologist responses, and the preference between cardiologist responses with and without access to AMIE’s response." (Page 20)</div>
+    </li>
+    
+    <li>
+        <strong>Use of Confidence Intervals</strong>
+        <p>The inclusion of confidence intervals in the tables provides a measure of uncertainty around the estimates, strengthening the statistical validity of the results.</p>
+        <div class="quote">"(90% CI)" (Page 20)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Table Structure</strong>
+        <p>The tables are well-structured and easy to read, with clear headings and labels that make it easy to understand the presented data.</p>
+        <div class="quote">"Domain AMIE % Cardiologist % (90% CI) (90% CI) Tie % (90% CI) AMIE - Cardiologist (90% CI)" (Page 20)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide Summary Statements for Each Table</strong>
+        <p>While the tables present the data, adding a brief summary statement below each table would help readers quickly grasp the key findings and their significance.</p>
+        
+        <p><strong>Rationale:</strong> This would improve the readability and accessibility of the results, making it easier for readers to interpret the data.</p>
+        <p><strong>Implementation:</strong> Add a concise summary sentence or two below each table highlighting the main findings and their implications.</p>
+    </li>
+    
+    <li>
+        <strong>Explain the Statistical Significance</strong>
+        <p>While confidence intervals are provided, the section doesn&#39;t explicitly state the criteria for statistical significance. Clarifying this would enhance the interpretation of the results.</p>
+        
+        <p><strong>Rationale:</strong> This would help readers understand which differences between AMIE and cardiologists, or between assisted and unassisted responses, are statistically significant.</p>
+        <p><strong>Implementation:</strong> Add a sentence explaining the significance level used (e.g., alpha = 0.05 or 0.10) and how it was applied to the confidence intervals.</p>
+    </li>
+    
+    <li>
+        <strong>Connect the Results to the Main Text</strong>
+        <p>The appendix could benefit from more explicit connections to the main text. For example, how do the detailed results presented here support or refute the claims made in the Results and Discussion sections?</p>
+        
+        <p><strong>Rationale:</strong> This would strengthen the integration of the appendix with the rest of the paper and help readers understand the significance of the detailed results in the broader context of the study.</p>
+        <p><strong>Implementation:</strong> Add a few sentences at the beginning or end of the section linking the presented data to specific findings or arguments in the main text.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>Table A.1</summary>
+        <p>Table A.1 shows how often subspecialist cardiologists preferred AMIE&#39;s responses compared to general cardiologists&#39; responses across 10 different areas of assessment. Each area, like &#39;Overall Impression&#39; or &#39;Management,&#39; has percentages showing how often AMIE was preferred, how often the general cardiologist was preferred, and how often it was a tie. For example, for &#39;Overall Impression,&#39; AMIE was preferred 39.7% of the time, the cardiologist 32.4% of the time, and it was a tie 27.9% of the time. The table also shows the difference between AMIE and the cardiologist&#39;s preference percentages and a confidence interval (CI), which tells us how much these percentages might vary. If the difference is positive and the CI doesn&#39;t include zero, it means AMIE was significantly preferred in that area.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table A.1 | Preference rating between cardiologist and AMIE responses."</p>
+            <p><strong>Context:</strong> Here we present detailed results from subspecialist evaluators including: the preference between AMIE and cardiologist responses, the individual assessment of AMIE and cardiologist responses, and the preference between cardiologist responses with and without access to AMIE’s response.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is important because it shows a direct comparison between AMIE and general cardiologists, highlighting the areas where AMIE performs better, worse, or similarly. This helps evaluate AMIE&#39;s potential to assist or even replace general cardiologists in certain aspects of cardiovascular disease assessment.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is well-organized and easy to read, with clear headings and labels.</li><li>Using bold font for statistically significant differences helps highlight key findings.</li><li>The table could benefit from a clearer explanation of the confidence interval in the caption.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table could include a brief explanation of the clinical significance of each domain, making it easier for non-specialists to understand the results.</li><li>The table could discuss the potential reasons for AMIE&#39;s superior performance in certain domains and the areas where it needs improvement.</li><li>The table could explore the implications of these findings for the future development and application of AI in cardiology.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Table A.2</summary>
+        <p>Table A.2 shows how AMIE and general cardiologists performed on five individual assessment questions. These questions ask things like, &#39;Does the response have extra content?&#39;, &#39;Does it omit important content?&#39;, and &#39;Does it have a clinically significant error?&#39;. The table shows the percentage of &#39;yes&#39; answers for each question, for both AMIE and the cardiologists. It also shows the difference between these percentages and a confidence interval. For example, AMIE was more likely to have extra content (29.4% vs. 16.7%) and clinically significant errors (21.6% vs. 10.8%), while cardiologists were more likely to give responses that were inapplicable to certain patients (15.2% vs. 10.8%).</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table A.2 | Individual assessment of cardiologist and AMIE responses."</p>
+            <p><strong>Context:</strong> Here we present detailed results from subspecialist evaluators including: the preference between AMIE and cardiologist responses, the individual assessment of AMIE and cardiologist responses, and the preference between cardiologist responses with and without access to AMIE’s response.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table provides a more detailed look at the specific strengths and weaknesses of AMIE and general cardiologists. It goes beyond simple preference ratings and examines individual aspects of their responses, such as the presence of errors or omissions. This information is valuable for understanding the types of mistakes each makes and for identifying areas for improvement.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clear and concise, with easy-to-understand headings and labels.</li><li>Using bold font for statistically significant differences helps draw attention to key findings.</li><li>The table could benefit from a more descriptive caption, explaining the five assessment questions in more detail.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table could include a discussion of the clinical implications of each assessment question. For example, what are the potential consequences of having extra content or omitting important information?</li><li>The table could explore the potential reasons for the observed differences between AMIE and cardiologists.</li><li>The table could discuss how these findings could inform the development of more effective AI tools for clinical use.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table A.3</summary>
+        <p>Table A.3 compares cardiologists&#39; responses before and after they had access to AMIE&#39;s assessment. For each of the 10 domains (like &#39;Entire Response&#39; or &#39;Diagnosis&#39;), it shows the percentage of times the cardiologists&#39; initial responses (Unassisted), their revised responses after seeing AMIE&#39;s assessment (Assisted), and &#39;Tie&#39; (no clear preference) were chosen by subspecialist evaluators. It also shows the difference between the &#39;Assisted&#39; and &#39;Unassisted&#39; percentages. The table uses confidence intervals (CI) to show the range within which the true percentages likely fall. The key takeaway is that for all 10 domains, the &#39;Assisted&#39; responses were preferred more often than the &#39;Unassisted&#39; responses, showing that AMIE&#39;s input generally helped the cardiologists improve their assessments. In fact, for &#39;Entire Response&#39;, the assisted response was preferred a whopping 60.3% more often than the unassisted one!</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 7 and Table A.3"</p>
+            <p><strong>Context:</strong> Across the remaining 9 specific domains, the AMIE-assisted responses were preferred for all domains when directly compared to the general cardiologists alone, though ‘Tie’ was the most common evaluation for 8 of the 10 domains (see Figure 7 and Table A.3).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is crucial because it directly shows how much AMIE&#39;s input improved the cardiologists&#39; assessments. It quantifies the benefit of using AMIE as an assistive tool, demonstrating its potential to enhance clinical decision-making in complex cardiology cases. By comparing preferences across different domains, the table highlights the specific areas where AMIE&#39;s assistance was most impactful.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clear and well-organized, with distinct columns for each category and confidence intervals.</li><li>Using bolder font or highlighting for the &#39;Assisted - Unassisted&#39; column could emphasize the key finding of improvement.</li><li>Adding a clearer title that directly states the main takeaway (e.g., &#39;AMIE Assistance Improves Cardiologist Responses Across All Domains&#39;) would make the table more impactful.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table could include p-values for each comparison to show the statistical significance of the differences.</li><li>The table could provide a brief explanation of how the confidence intervals were calculated.</li><li>The table could discuss the clinical implications of the observed improvements, such as the potential for better patient outcomes or more efficient use of resources.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Entire Response - Assisted Preference:</strong> 63.7 %</li><li><strong>Entire Response - Unassisted Preference:</strong> 3.4 %</li><li><strong>Entire Response - Tie:</strong> 32.8 %</li><li><strong>Entire Response - Improvement (Assisted - Unassisted):</strong> 60.3 %</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-10" class="section">
+            <h3>Summary of subspecialist free-text comments for individual assessments</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section summarizes the free-text comments provided by subspecialist cardiologists on the individual assessments of both AMIE and general cardiologists. These comments offer qualitative insights into the strengths and weaknesses of each, complementing the quantitative preference ratings. The comments were summarized using an LLM (Gemini 1.5 Flash) and are presented in Figure A.2, separated into blue boxes for cardiologist feedback and red boxes for AMIE feedback. The figure also includes the proportion of responses that received comments for each of the five assessment criteria: Extra Content, Omits Content, Correct Reasoning, Inapplicability for particular demographics, and Clinically Significant Errors.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Qualitative Insights:</strong> The free-text comments provide valuable qualitative insights into the subspecialists&#39; reasoning behind their preferences and evaluations, adding depth to the quantitative data.</li><li><strong>Comparison of AMIE and Cardiologists:</strong> The comments highlight the different strengths and weaknesses of AMIE and general cardiologists, such as AMIE&#39;s thoroughness versus the cardiologists&#39; conciseness.</li><li><strong>Focus on Individual Assessments:</strong> The comments specifically address the five individual assessment criteria, allowing for a granular analysis of different aspects of the responses.</li><li><strong>LLM-Generated Summaries:</strong> The use of Gemini 1.5 Flash to summarize the comments ensures conciseness and facilitates comparison between AMIE and cardiologists.</li><li><strong>Proportion of Responses with Comments:</strong> The inclusion of the proportion of responses with comments for each criterion provides context and transparency, acknowledging potential biases in the feedback.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Qualitative Enrichment</strong>
+        <p>The inclusion of qualitative comments enriches the analysis by providing context and insights beyond the quantitative data.</p>
+        <div class="quote">"LLM-generated summaries of the comments left by subspecialists for the AMIE and cardiologist individual assessments (Section A.3)." (Page 18)</div>
+    </li>
+    
+    <li>
+        <strong>Focus on Individual Criteria</strong>
+        <p>Focusing on the individual assessment criteria allows for a more granular understanding of the strengths and weaknesses of AMIE and cardiologists.</p>
+        <div class="quote">"We took all free-text comments from subspecialists for each of the 5 questions in the individual assessment (Figure 5) and asked Gemini 1.5 Flash to summarize the feedback for the cardiologists (left, blue boxes) and for AMIE (right, red boxes)." (Page 22)</div>
+    </li>
+    
+    <li>
+        <strong>Transparency Regarding Comment Proportion</strong>
+        <p>Providing the proportion of responses with comments for each criterion enhances transparency and acknowledges potential biases in the feedback.</p>
+        <div class="quote">"Note that not every assessment received a comment from the subspecialists, and there is likely bias in which assessments they chose to comment on. Proportion of general cardiologist responses with comments: Extra Content: 15.7%, Omits Content: 20.6%, Correct Reasoning: 36.8%, Inapplicability for particular demographics: 9.3%, Clinically Significant Errors: 7.4%. Proportion of AMIE responses with comments: Extra Content: 29.4%, Omits Content: 16.2%, Correct Reasoning: 29.4%, Inapplicability for particular demographics: 5.9%, Clinically Significant Errors: 18.1%." (Page 22)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Include Actual Comments</strong>
+        <p>While summaries are helpful, including a selection of actual comments would provide richer context and allow readers to draw their own conclusions.</p>
+        
+        <p><strong>Rationale:</strong> This would enhance the transparency and depth of the qualitative analysis.</p>
+        <p><strong>Implementation:</strong> Include a representative sample of actual comments from subspecialists for each criterion, potentially in a supplementary table or as an online appendix.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Inter-rater Reliability</strong>
+        <p>The section doesn&#39;t mention how agreement between subspecialists was assessed. Discussing inter-rater reliability would strengthen the validity of the qualitative analysis.</p>
+        
+        <p><strong>Rationale:</strong> This would address potential concerns about the subjectivity of qualitative feedback and provide a measure of the consistency of the evaluations.</p>
+        <p><strong>Implementation:</strong> Calculate and report a measure of inter-rater reliability, such as Cohen&#39;s kappa or Fleiss&#39; kappa, to assess the agreement between subspecialists on the individual assessment criteria.</p>
+    </li>
+    
+    <li>
+        <strong>Connect Qualitative Feedback to Quantitative Results</strong>
+        <p>The section could more explicitly connect the qualitative feedback to the quantitative results presented in the main text. For example, how do the comments explain the observed differences in preference ratings between AMIE and cardiologists?</p>
+        
+        <p><strong>Rationale:</strong> This would strengthen the integration of the qualitative and quantitative analyses and provide a more comprehensive understanding of AMIE&#39;s performance.</p>
+        <p><strong>Implementation:</strong> Add a paragraph or a few sentences discussing how the qualitative feedback aligns with or contradicts the quantitative results, highlighting any key insights or discrepancies.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-11" class="section">
+            <h3>Summary of Clinically Significant Errors</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section summarizes the clinically significant errors made by both AMIE and general cardiologists, as identified by subspecialist reviewers. AMIE&#39;s errors tended to be related to over-testing and over-treatment, potentially due to an over-reliance on advanced technology. General cardiologists, on the other hand, were more prone to missing rarer diagnoses, conducting incomplete workups, and inadequately integrating genetic information into management plans, possibly reflecting a more conservative approach and less familiarity with rare conditions and guidelines.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Over-testing and Over-treatment by AMIE:</strong> AMIE frequently recommended unnecessary advanced tests and interventions, even when not clinically warranted, and prematurely suggested treatments before a definitive diagnosis.</li><li><strong>Misinterpretation of Genetic Information by AMIE:</strong> AMIE often misinterpreted genetic findings, such as mistaking carrier status for disease or misinterpreting variants of uncertain significance.</li><li><strong>Inaccurate Diagnoses and Management by AMIE:</strong> AMIE sometimes made incorrect diagnoses, especially in differentiating cardiomyopathies, and formulated inappropriate management plans.</li><li><strong>Limited Differential Diagnosis by Cardiologists:</strong> General cardiologists often failed to consider a broad range of diagnoses, particularly missing rarer conditions.</li><li><strong>Incomplete Workup and Follow-up by Cardiologists:</strong> Cardiologists tended to omit crucial investigations and inadequate follow-up, including genetic counseling and family screening.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Concise Summary of Errors</strong>
+        <p>The section provides a clear and concise summary of the key error themes for both AMIE and cardiologists, making it easy to understand the main differences in their error profiles.</p>
+        <div class="quote">"AMIE’s errors tended to be more related to over-testing, over-treatment, and misinterpretation of complex data, potentially reflecting a tendency to prioritize advanced technology over clinical judgment. The general cardiologist’s errors were more focused on incomplete workup, limited differential diagnosis, and inadequate follow-up, possibly suggesting a more conservative approach and a lack of familiarity with rarer conditions and the latest guidelines for genetic testing and management." (Page 23)</div>
+    </li>
+    
+    <li>
+        <strong>Use of LLM for Summarization</strong>
+        <p>Using Gemini 1.5 Flash to summarize the subspecialist comments ensures conciseness and objectivity, avoiding potential biases in interpretation.</p>
+        <div class="quote">"LLM-generated summary of AMIE and the cardiologists clinically significant errors." (Page 23)</div>
+    </li>
+    
+    <li>
+        <strong>Comparison of Error Profiles</strong>
+        <p>The section effectively compares and contrasts the error profiles of AMIE and cardiologists, highlighting the distinct nature of their mistakes and potential underlying causes.</p>
+        <div class="quote">"In Summary: AMIE’s errors tended to be more related to over-testing, over-treatment, and misinterpretation of complex data... The general cardiologist’s errors were more focused on incomplete workup, limited differential diagnosis, and inadequate follow-up..." (Page 23)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide Specific Examples</strong>
+        <p>While the summary identifies key error themes, providing specific examples of these errors would enhance clarity and illustrate their clinical implications.</p>
+        
+        <p><strong>Rationale:</strong> Concrete examples would make the error descriptions more impactful and help readers understand the potential consequences of these mistakes.</p>
+        <p><strong>Implementation:</strong> Include 1-2 specific examples for each error theme, illustrating the types of tests or treatments unnecessarily recommended by AMIE or the specific diagnoses missed by cardiologists.</p>
+    </li>
+    
+    <li>
+        <strong>Quantify Error Frequency</strong>
+        <p>The summary describes the types of errors but doesn&#39;t quantify their frequency. Providing the number or percentage of each error type would provide a more complete picture of the error profiles.</p>
+        
+        <p><strong>Rationale:</strong> Quantifying error frequency would allow for a more precise comparison between AMIE and cardiologists and help assess the relative importance of different error types.</p>
+        <p><strong>Implementation:</strong> Add information on the number or percentage of each error type made by AMIE and cardiologists, potentially in a table or within the summary text.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss Potential Mitigation Strategies</strong>
+        <p>The section could benefit from a brief discussion of potential strategies for mitigating these errors. For example, how could AMIE&#39;s tendency towards over-testing be addressed, or how could cardiologists be supported in considering a broader range of diagnoses?</p>
+        
+        <p><strong>Rationale:</strong> Discussing mitigation strategies would make the section more actionable and forward-looking, highlighting potential solutions for improving the performance of both AMIE and cardiologists.</p>
+        <p><strong>Implementation:</strong> Add a paragraph or a few sentences discussing potential mitigation strategies, such as incorporating human oversight in AMIE&#39;s recommendations or providing cardiologists with access to decision support tools.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-12" class="section">
+            <h3>Additional dialogue examples</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix section presents additional dialogue examples to illustrate AMIE&#39;s potential clinical applications in communicating with patients and assisting general cardiologists. It includes three scenarios: AMIE explaining test results and diagnosis to a patient, AMIE assisting a general cardiologist with a referral decision, and AMIE acting as a specialist cardiologist presenting an assessment. These scenarios are described in Table A.4, and the dialogues, along with clinical data summaries and subspecialist feedback, are presented in Figures A.4, A.5, and A.6.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Illustrative Scenarios:</strong> The section uses three distinct scenarios to demonstrate AMIE&#39;s potential in various clinical contexts, including patient communication, general cardiologist assistance, and specialist assessment.</li><li><strong>Dialogue Examples:</strong> The section provides concrete dialogue examples for each scenario, showcasing AMIE&#39;s conversational abilities and its capacity to explain complex medical information.</li><li><strong>Clinical Data Summaries:</strong> Each scenario includes a summary of the clinical data provided to AMIE, allowing readers to understand the basis for AMIE&#39;s responses.</li><li><strong>Subspecialist Feedback:</strong> The inclusion of feedback from subspecialist cardiologists provides an evaluation of AMIE&#39;s performance in each scenario.</li><li><strong>Table and Figures:</strong> The section uses Table A.4 to describe the scenarios and Figures A.4, A.5, and A.6 to present the dialogues, clinical data, and feedback, enhancing clarity and readability.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Variety of Scenarios</strong>
+        <p>The use of three different scenarios effectively demonstrates AMIE&#39;s versatility and potential application in diverse clinical situations.</p>
+        <div class="quote">"Here we present dialogue examples to illustrate potential clinical applications of AMIE in conveying information to patients and assisting general cardiologists in their assessment." (Page 24)</div>
+    </li>
+    
+    <li>
+        <strong>Concrete Dialogue Examples</strong>
+        <p>The inclusion of actual dialogue examples makes the section more engaging and allows readers to directly assess AMIE&#39;s conversational abilities.</p>
+        <div class="quote">"The example scenarios used to generate these dialogues are described in Table A.4, with summaries of the provided clinical data, resulting dialogues, and sub-specialist commentary for each scenario presented in Figure A.4, Figure A.5, and Figure A.6." (Page 24)</div>
+    </li>
+    
+    <li>
+        <strong>Subspecialist Feedback</strong>
+        <p>The inclusion of subspecialist feedback provides valuable external evaluation of AMIE&#39;s performance in each scenario.</p>
+        <div class="quote">"...resulting dialogues, and sub-specialist commentary for each scenario presented in Figure A.4, Figure A.5, and Figure A.6." (Page 24)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Include the Full Dialogues</strong>
+        <p>While the section refers to figures containing the dialogues, including the full dialogues within the text would improve readability and accessibility.</p>
+        <div class="quote">"Here we present dialogue examples..." (Page 24)</div>
+        <p><strong>Rationale:</strong> This would allow readers to assess AMIE&#39;s responses without having to constantly refer to separate figures.</p>
+        <p><strong>Implementation:</strong> Incorporate the full text of the dialogues from Figures A.4, A.5, and A.6 into the section, potentially using a different font or formatting to distinguish them from the surrounding text.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Limitations of Simulated Dialogues</strong>
+        <p>The section could benefit from a brief discussion of the limitations of using simulated dialogues to evaluate AMIE&#39;s performance. How might these simulated interactions differ from real-world clinical conversations?</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging the limitations of simulated dialogues would strengthen the analysis and provide a more balanced perspective.</p>
+        <p><strong>Implementation:</strong> Add a paragraph or a few sentences discussing the limitations of simulated dialogues, such as the lack of real-time interaction and the potential for idealized scenarios.</p>
+    </li>
+    
+    <li>
+        <strong>Connect the Dialogue Examples to the Main Findings</strong>
+        <p>The section could more explicitly connect the dialogue examples to the main findings of the study. How do these examples illustrate the strengths and weaknesses of AMIE identified in the Results and Discussion sections?</p>
+        
+        <p><strong>Rationale:</strong> This would strengthen the integration of the appendix with the rest of the paper and help readers understand the practical implications of the research.</p>
+        <p><strong>Implementation:</strong> Add a few sentences at the end of the section linking the dialogue examples to specific findings or arguments in the main text, such as AMIE&#39;s tendency towards over-testing or its ability to provide comprehensive explanations.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure A.4</summary>
+        <p>Figure A.4 illustrates a simulated conversation between AMIE and a patient, demonstrating how AMIE can explain medical results and diagnoses in a clear and accessible way. The scenario involves a 63-year-old female patient whose brother died from sudden cardiac death. She has undergone an echocardiogram and a Holter monitor test. AMIE explains the results of these tests, using simple language and analogies to clarify complex medical terms like &#39;asymmetric left ventricular hypertrophy&#39; and &#39;LVOT gradient&#39;. AMIE also discusses the possibility of hypertrophic obstructive cardiomyopathy (HOCM) and explains the condition, its potential seriousness, and possible treatment options. The figure includes the scenario and clinical data summary, the example dialogue, and feedback from a subspecialist cardiologist, who notes AMIE&#39;s clear explanations and appropriate recommendations but also points out areas for improvement, such as discussing genetic testing and family screening.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure A.4 | AMIE communicates with a patient about her diagnosis."</p>
+            <p><strong>Context:</strong> Here we present dialogue examples to illustrate potential clinical applications of AMIE in conveying information to patients and assisting general cardiologists in their assessment. The example scenarios used to generate these dialogues are described in Table A.4, with summaries of the provided clinical data, resulting dialogues, and sub-specialist commentary for each scenario presented in Figure A.4, Figure A.5, and Figure A.6.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure demonstrates AMIE&#39;s potential to enhance patient understanding and engagement by providing clear and accessible explanations of medical information. This is particularly important in complex cases like potential inherited cardiomyopathies, where patients may be anxious and overwhelmed by medical jargon. AMIE&#39;s ability to communicate effectively with patients could improve their adherence to treatment plans and overall satisfaction with care.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The dialogue format is effective in presenting the conversation between AMIE and the patient.</li><li>Using different colors or fonts for AMIE and the patient&#39;s text could improve readability.</li><li>The clinical data summary could be presented more visually, perhaps using icons or a simplified diagram.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The dialogue could include more explicit discussion of the uncertainty associated with medical diagnoses and the need for further testing.</li><li>The subspecialist feedback could be more specific, providing examples of how AMIE&#39;s communication could be improved.</li><li>The figure could discuss the limitations of this simulated scenario and the need for validation in real-world patient interactions.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure A.5</summary>
+        <p>Figure A.5 shows a simulated dialogue between AMIE and a general cardiologist, illustrating how AMIE can assist in clinical decision-making. The scenario involves a 54-year-old male patient with shortness of breath and dizziness. The cardiologist has ordered several tests, including an echocardiogram, stress test, Holter monitor, and cardiac MRI. AMIE discusses the results of these tests with the cardiologist, explaining the possibility of rare genetic conditions like arrhythmogenic right ventricular cardiomyopathy (ARVC) and left ventricular noncompaction (LVNC). AMIE provides brief explanations of these conditions and recommends referral to a specialized center. The figure includes the scenario and clinical data summary, the example dialogue, and feedback from a subspecialist, who notes AMIE&#39;s helpful explanations and appropriate referral recommendation but also suggests areas for improvement, such as providing more detailed information about the genetic basis of these conditions.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure A.5 | AMIE assists a general cardiologist."</p>
+            <p><strong>Context:</strong> Here we present dialogue examples to illustrate potential clinical applications of AMIE in conveying information to patients and assisting general cardiologists in their assessment. The example scenarios used to generate these dialogues are described in Table A.4, with summaries of the provided clinical data, resulting dialogues, and sub-specialist commentary for each scenario presented in Figure A.4, Figure A.5, and Figure A.6.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure demonstrates AMIE&#39;s potential to support general cardiologists in managing complex cases by providing access to specialized knowledge and facilitating informed decision-making. This is particularly relevant in situations where access to subspecialists is limited or delayed. AMIE&#39;s ability to explain rare conditions and recommend appropriate referrals could improve the quality and timeliness of care for patients with complex cardiac conditions.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The dialogue format effectively presents the interaction between AMIE and the cardiologist.</li><li>Using different colors or fonts for AMIE and the cardiologist&#39;s text could improve readability.</li><li>The clinical data summary could be presented in a more visually engaging format, such as a table or a timeline.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The dialogue could include more detailed explanations of the diagnostic criteria and management guidelines for ARVC and LVNC.</li><li>The subspecialist feedback could be more specific, providing examples of how AMIE&#39;s assistance could be further improved.</li><li>The figure could discuss the limitations of this simulated scenario and the need for prospective studies to evaluate AMIE&#39;s impact on real-world clinical practice.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure A.6</summary>
+        <p>Figure A.6 presents a simulated dialogue between AMIE, acting as a subspecialist cardiologist, and a patient. AMIE explains the patient&#39;s test results, diagnoses noncompaction cardiomyopathy (a heart muscle condition), discusses treatment options (like medications to help the heart pump better and remove excess fluid), and addresses the patient&#39;s concerns about a fluttering feeling in their chest, identifying it as a potential heart rhythm problem (arrhythmia) detected by tests. The figure also includes a summary of the clinical data used in the simulation and feedback from a real subspecialist cardiologist on AMIE&#39;s performance.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "AMIE assumes the role of the specialist cardiologist and presents an assessment (Figure A.6)."</p>
+            <p><strong>Context:</strong> For the remaining three hypothetical scenarios, AMIE was given a prompt, akin to a “one-line” summary of a patient (Table A.4) along with clinical data for the corresponding patient and asked to produce dialogues mirroring various potential use cases for AMIE: 1. AMIE reaches a diagnosis and then explains it to a patient (Figure A.4); 2. AMIE providing assistive dialogue for a general cardiologist (Figure A.5); 3. AMIE assumes the role of the specialist cardiologist and presents an assessment (Figure A.6).</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure demonstrates AMIE&#39;s potential to communicate complex medical information directly to patients in an understandable way. It also showcases AMIE&#39;s ability to synthesize information from multiple tests and provide a comprehensive assessment, mimicking the role of a subspecialist. This is relevant to the broader goal of democratizing access to specialized medical expertise.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The dialogue format is effective in presenting the information clearly and accessibly.</li><li>Using different colors or fonts for the patient and AMIE&#39;s text could improve readability.</li><li>The clinical data summary could be presented more visually, perhaps using icons or a timeline of tests.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The subspecialist feedback is valuable but could be more specific, providing examples of what AMIE did well and where it could improve.</li><li>The dialogue could include more details about the uncertainties or limitations of the diagnosis and treatment options.</li><li>The figure could discuss the ethical implications of using AI to communicate directly with patients, such as the potential for misinterpretation or over-reliance on the AI&#39;s advice.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        // Show/hide back-to-top button
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
