@@ -1,0 +1,1199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluating Mathematical Reasoning in Large Language Models: The GSM-Symbolic Benchmark</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Evaluating Mathematical Reasoning in Large Language Models: The GSM-Symbolic Benchmark</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">Introduction</a></li><li><a href="#section-2">Related Work: Reasoning &amp; Language Models</a></li><li><a href="#section-3">GSM-Symbolic</a></li><li><a href="#section-4">Experiments &amp; Results</a></li><li><a href="#section-5">Conclusion</a></li><li><a href="#section-6">Appendix</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>This study examines the mathematical reasoning capabilities of Large Language Models (LLMs) by introducing a new benchmark, GSM-Symbolic, derived from the GSM8K dataset. The research highlights the limitations of current LLMs, particularly their dependency on pattern matching rather than genuine logical reasoning. By using symbolic templates, the GSM-Symbolic benchmark allows for the generation of diverse math problems, facilitating a more nuanced evaluation of LLM performance. Additionally, the study explores GSM-NoOp, a dataset with irrelevant information to test LLMs&#39; ability to discern relevant details, ultimately finding that LLMs often incorporate irrelevant information into their calculations.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li><strong>GSM-Symbolic Benchmark:</strong> The GSM-Symbolic benchmark generates diverse problem variations using symbolic templates, providing a more detailed evaluation of LLM reasoning than GSM8K. This benchmark enables controlled experiments by manipulating numerical values and problem complexity.</li><li><strong>Performance Variability:</strong> LLMs show significant performance variability on similar questions, especially with numerical changes, questioning the reliability of single-point metrics like those from GSM8K.</li><li><strong>Effect of Problem Complexity:</strong> As the number of clauses and thus the complexity of problems increases, LLM performance decreases and performance variability increases, indicating challenges in handling multi-step reasoning.</li><li><strong>GSM-NoOp Findings:</strong> When presented with irrelevant information, LLMs often fail to ignore it, leading to substantial performance drops, which suggests a lack of true understanding of mathematical concepts.</li><li><strong>Pattern Matching vs. Reasoning:</strong> The results highlight that LLMs largely rely on pattern matching rather than true logical reasoning, underscoring a fundamental challenge in their application to mathematical tasks.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li><strong>Clear Motivation:</strong> The study effectively identifies the need for more robust evaluation methods for LLM mathematical reasoning, beyond the simplified metrics of GSM8K.</li><li><strong>Comprehensive Analysis:</strong> The research provides a thorough analysis of LLM performance across different problem variations and complexities, offering significant insights into their reasoning capabilities.</li><li><strong>Innovative Benchmark:</strong> The introduction of GSM-Symbolic, with its novel use of symbolic templates, represents an important advancement in evaluating LLM reasoning.</li><li><strong>Well-Supported Claims:</strong> The study&#39;s conclusions are supported by detailed experimental results and analyses, reinforcing the validity of the findings.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li><strong>Quantify Study Scope:</strong> Including specific numbers of models and examples evaluated would enhance the scope&#39;s clarity and provide more context for the study&#39;s scale.</li><li><strong>Broader Implications:</strong> The study could benefit from a more explicit discussion of the broader implications of its findings for the development of future LLMs.</li><li><strong>Explain Complex Terms:</strong> Definitions for key terms like &#39;clauses&#39; should be included to improve accessibility for readers unfamiliar with such terminology.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>figure</h4>
+        <p><strong>Description:</strong> Figure 1 illustrates the creation of symbolic templates used in GSM-Symbolic, showing how generic placeholders replace specific elements in math problems.</p>
+        <p><strong>Relevance:</strong> This figure is crucial for understanding how GSM-Symbolic enables diverse problem generation and controlled evaluation.</p>
+    </div>
+    
+    <div>
+        <h4>figure</h4>
+        <p><strong>Description:</strong> Figure 2 displays the distribution of LLM performance on GSM-Symbolic, highlighting significant variability compared to GSM8K.</p>
+        <p><strong>Relevance:</strong> It demonstrates the inconsistency in LLM performance and questions the reliability of single-point metrics.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>The research sheds light on the limitations of current LLMs in mathematical reasoning, emphasizing their reliance on pattern matching rather than true understanding. By introducing GSM-Symbolic and GSM-NoOp, the study offers a more comprehensive framework for evaluating LLM capabilities. The findings underscore the need for models capable of formal reasoning, which is crucial for advancing AI applications in complex domains. Future research should focus on developing LLMs with improved logical reasoning skills and exploring alternative evaluation methods to better capture these abilities in real-world contexts.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>This paper investigates the mathematical reasoning abilities of Large Language Models (LLMs) using a new benchmark called GSM-Symbolic, derived from the GSM8K dataset. The authors find that LLMs struggle with variations in numerical values within the same problem structure, and their performance degrades as problem complexity increases. They also introduce GSM-NoOp, a dataset with irrelevant information added to problems, revealing that LLMs often incorporate this irrelevant information into their calculations, suggesting a lack of true understanding of mathematical concepts. The study concludes that current LLMs rely more on pattern matching than genuine logical reasoning, especially in mathematics.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Introduction of GSM-Symbolic:</strong> A new benchmark created from symbolic templates allows for generating diverse math questions, enabling more controlled evaluations of LLMs.</li><li><strong>LLM Performance Variance:</strong> LLMs show significant performance differences when answering variations of the same question, especially when numerical values are changed.</li><li><strong>Impact of Problem Complexity:</strong> LLM performance degrades as the number of clauses (and thus, complexity) in a question increases.</li><li><strong>GSM-NoOp and Irrelevant Information:</strong> LLMs struggle to discern relevant information, often incorporating irrelevant clauses into their calculations, highlighting a reliance on pattern matching.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear motivation and problem statement.</strong>
+        <p>The abstract effectively establishes the need for a more robust evaluation of LLM mathematical reasoning beyond the existing GSM8K benchmark.</p>
+        <div class="quote">"While the performance of LLMs on GSM8K has significantly improved in recent years, it remains unclear whether their mathematical reasoning capabilities have genuinely advanced, raising questions about the reliability of the reported metrics." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Concisely summarizes key findings.</strong>
+        <p>The abstract clearly presents the main findings of the study, including the performance variance, the impact of complexity, and the effect of irrelevant information.</p>
+        <div class="quote">"Our findings reveal that LLMs exhibit noticeable variance when responding to different instantiations of the same question...Furthermore, we investigate the fragility of mathematical reasoning in these models and demonstrate that their performance significantly deteriorates as the number of clauses in a question increases...We observe significant performance drops (up to 65%) across all state-of-the-art models, even though the added clause does not contribute to the reasoning chain." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Well-defined scope and contribution.</strong>
+        <p>The abstract clearly outlines the scope of the study and its contributions, including the introduction of GSM-Symbolic and GSM-NoOp.</p>
+        <div class="quote">"To address these concerns, we conduct a large-scale study on several state-of-the-art open and closed models...we introduce GSM-Symbolic, an improved benchmark created from symbolic templates." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify the scale of the study.</strong>
+        <p>Mentioning the number of models and examples used would strengthen the abstract.</p>
+        <div class="quote">"a large-scale study" (Page 1)</div>
+        <p><strong>Rationale:</strong> Providing specific numbers adds weight to the claims and allows readers to better assess the scope of the study.</p>
+        <p><strong>Implementation:</strong> Include phrases like &quot;We evaluated X LLMs on Y examples&quot; or similar quantifications.</p>
+    </li>
+    
+    <li>
+        <strong>Briefly mention the broader implications.</strong>
+        <p>Adding a sentence about the implications of these findings for the development of future LLMs would enhance the abstract&#39;s impact.</p>
+        
+        <p><strong>Rationale:</strong> Highlighting the broader significance of the work makes it more appealing to a wider audience.</p>
+        <p><strong>Implementation:</strong> Add a concluding sentence like, &quot;These findings highlight the need for new approaches to improve the genuine reasoning capabilities of LLMs.&quot;</p>
+    </li>
+    
+    <li>
+        <strong>Clarify the meaning of &quot;clauses.&quot;</strong>
+        <p>While the term &quot;clauses&quot; is used to indicate complexity, briefly explaining its meaning in this context would improve clarity for readers unfamiliar with the terminology.</p>
+        <div class="quote">"the number of clauses in a question increases" (Page 1)</div>
+        <p><strong>Rationale:</strong> Ensuring all readers understand key terms enhances accessibility and comprehension.</p>
+        <p><strong>Implementation:</strong> Briefly define &quot;clauses&quot; as parts or components of the problem statement.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Overview</h4>
+            <p>Large Language Models (LLMs) have shown impressive abilities in various areas like language processing and creative tasks. However, whether they can truly reason logically, especially in fields like math and coding, is still a big question. While LLMs seem good at some tasks, they have limitations. Existing research suggests that LLMs might rely more on recognizing patterns from their training data than actual understanding, making them sensitive to small changes in how questions are phrased. The GSM8K dataset is commonly used to test LLMs&#39; math skills, but it has drawbacks. It only provides a single score, might have been accidentally included in training data (contamination), and doesn&#39;t allow for flexible testing to see how LLMs handle different types of questions or difficulty levels.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>LLM Capabilities and Limitations:</strong> LLMs excel in various tasks but their logical reasoning abilities are still under investigation.</li><li><strong>Focus on Mathematical Reasoning:</strong> The ability of LLMs to perform mathematical reasoning is crucial for real-world AI applications.</li><li><strong>Limitations of GSM8K:</strong> The popular GSM8K benchmark has limitations, including a single metric, potential data contamination, and lack of flexibility for controlled experiments.</li><li><strong>Need for a More Versatile Framework:</strong> A more adaptable evaluation framework is needed to assess LLM robustness and reasoning abilities.</li><li><strong>Contributions of the Paper:</strong> The paper introduces GSM-Symbolic, a new benchmark, investigates the reliability of GSM8K results, studies the fragility of LLM reasoning, and explores the impact of question complexity and irrelevant information.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clearly stated motivation.</strong>
+        <p>The introduction effectively highlights the importance of studying LLM reasoning abilities and the limitations of current benchmarks.</p>
+        <div class="quote">"However, the question of whether current LLMs are genuinely capable of true logical reasoning remains an important research focus." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Comprehensive background information.</strong>
+        <p>The introduction provides a good overview of existing research on LLM reasoning and the limitations of the GSM8K dataset.</p>
+        <div class="quote">"While some studies highlight impressive capabilities, a closer examination reveals substantial limitations. Literature suggests that the reasoning process in LLMs is probabilistic pattern-matching rather than formal reasoning." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Well-defined scope and contributions.</strong>
+        <p>The introduction clearly outlines the paper&#39;s contributions and sets the stage for the subsequent sections.</p>
+        <div class="quote">"We make the following contributions: • We introduce GSM-Symbolic..." (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide more specific examples of LLM limitations.</strong>
+        <p>While the introduction mentions limitations, adding specific examples would make the argument stronger.</p>
+        <div class="quote">"a closer examination reveals substantial limitations" (Page 1)</div>
+        <p><strong>Rationale:</strong> Concrete examples would better illustrate the challenges in LLM reasoning and make the motivation for the paper&#39;s contributions clearer.</p>
+        <p><strong>Implementation:</strong> Include specific examples of how LLMs fail in reasoning tasks or are sensitive to input changes.</p>
+    </li>
+    
+    <li>
+        <strong>Expand on the potential impact of data contamination.</strong>
+        <p>The introduction briefly mentions data contamination but could elaborate on its potential consequences for evaluating LLM performance.</p>
+        <div class="quote">"Moreover, the popularity and prevalence of GSM8K can increase the risk of inadvertent data contamination." (Page 2)</div>
+        <p><strong>Rationale:</strong> Explaining the implications of data contamination would highlight the importance of the proposed GSM-Symbolic benchmark.</p>
+        <p><strong>Implementation:</strong> Discuss how data contamination could lead to inflated performance estimates and hinder accurate assessment of LLM capabilities.</p>
+    </li>
+    
+    <li>
+        <strong>Strengthen the connection between the introduction and the research questions.</strong>
+        <p>While the introduction provides context, explicitly stating the research questions would improve the flow and focus of the paper.</p>
+        
+        <p><strong>Rationale:</strong> Clearly articulated research questions would guide the reader and provide a framework for understanding the subsequent experiments and results.</p>
+        <p><strong>Implementation:</strong> Formulate specific research questions related to the reliability of GSM8K, the fragility of LLM reasoning, and the impact of question complexity and irrelevant information.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>Related Work: Reasoning &amp; Language Models</h3>
+            
+            <h4>Overview</h4>
+            <p>This section discusses existing research on the reasoning abilities of Large Language Models (LLMs). It highlights that while LLMs have shown potential in various domains, their reasoning capabilities are still uncertain. Studies exploring the computational aspects of transformers suggest that these models might have limitations in handling complex tasks and may benefit from additional memory mechanisms like scratchpads. However, it remains unclear whether LLMs can perform true logical reasoning. Several studies suggest that LLMs rely more on probabilistic pattern-matching than formal reasoning, making them sensitive to small changes in input and prone to errors in complex scenarios. This pattern-matching approach, while more advanced than simple memorization, still falls short of genuine logical reasoning.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Computational Modeling of Transformers:</strong> Research suggests that transformers may have limitations in expressiveness for complex tasks but can be enhanced with additional memory.</li><li><strong>Limitations of Transformer Architecture:</strong> The architecture itself might lack the necessary components for true logical reasoning.</li><li><strong>Probabilistic Pattern-Matching:</strong> LLMs likely rely on probabilistic pattern-matching, searching for similar patterns seen during training.</li><li><strong>Sensitivity to Input Changes:</strong> LLMs are highly sensitive to input variations, indicating a strong token bias and fragility in reasoning.</li><li><strong>Pattern Matching vs. Formal Reasoning:</strong> While LLMs can match abstract reasoning patterns, they fall short of true formal reasoning, potentially explaining their limitations in complex problem-solving.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive overview of related work.</strong>
+        <p>The section provides a good overview of different perspectives on LLM reasoning, including computational modeling and the pattern-matching hypothesis.</p>
+        <div class="quote">"Logical reasoning is a critical trait of intelligent systems. Recent advancements in Large Language Models (LLMs) have demonstrated significant potential across various domains, yet their reasoning abilities remain uncertain and inconsistent. Many works have investigated whether LLMs are truly capable of reasoning by examining how these models solve tasks requiring logical reasoning." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Clear explanation of key concepts.</strong>
+        <p>The section clearly explains complex concepts like probabilistic pattern-matching and token bias in an accessible way.</p>
+        <div class="quote">"Instead, LLMs likely perform a form of probabilistic pattern-matching and searching to find closest seen data during training without proper understanding of concepts." (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Relevant citations.</strong>
+        <p>The section includes relevant citations to support the claims and provides a good starting point for further reading.</p>
+        <div class="quote">"For example, parallels have been drawn between components such as attention and feed-forward modules and simple computational primitives (Weiss et al., 2021; Zhou et al., 2024)." (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide a more structured organization.</strong>
+        <p>While the section covers relevant topics, a more structured organization would improve readability and clarity.</p>
+        
+        <p><strong>Rationale:</strong> A clear structure would make it easier for readers to follow the different arguments and understand the connections between them.</p>
+        <p><strong>Implementation:</strong> Organize the section into subsections or use headings to separate different aspects of LLM reasoning, such as computational limitations, pattern-matching, and sensitivity to input changes.</p>
+    </li>
+    
+    <li>
+        <strong>Connect the related work to the paper&#39;s contributions more explicitly.</strong>
+        <p>While the section mentions related work, it could more explicitly connect these findings to the paper&#39;s specific contributions, particularly the introduction of GSM-Symbolic.</p>
+        
+        <p><strong>Rationale:</strong> A stronger connection would highlight the novelty and relevance of the paper&#39;s contributions in the context of existing research.</p>
+        <p><strong>Implementation:</strong> Add a paragraph or sentences explicitly linking the limitations of current LLMs and evaluation methods to the motivation for developing GSM-Symbolic and the research questions addressed in the paper.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss potential future research directions.</strong>
+        <p>Concluding the section with a brief discussion of potential future research directions would provide a broader perspective and stimulate further investigation.</p>
+        
+        <p><strong>Rationale:</strong> Highlighting open questions and future research directions would contribute to the overall impact and value of the paper.</p>
+        <p><strong>Implementation:</strong> Add a concluding paragraph discussing potential avenues for future research, such as developing new architectures or training methods to improve LLM reasoning abilities.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>GSM-Symbolic</h3>
+            
+            <h4>Overview</h4>
+            <p>This section introduces GSM-Symbolic, a new benchmark for evaluating the mathematical reasoning of Large Language Models (LLMs). It addresses the limitations of existing benchmarks like GSM8K by using symbolic templates to generate diverse question variations. This approach allows for more controlled experiments and provides more reliable metrics for assessing LLM performance. The section also describes the template generation process, which involves identifying variables, their domains, and conditions to ensure question and answer correctness. Finally, it outlines the experimental setup used in the paper, including the models evaluated, the evaluation process, and the dataset size.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>GSM-Symbolic Benchmark:</strong> A new benchmark using symbolic templates to generate diverse question variants, enabling more nuanced evaluation of LLMs.</li><li><strong>Template Generation Process:</strong> A detailed process for creating templates, involving identifying variables, domains, and conditions to ensure correctness.</li><li><strong>Controlled Experiments:</strong> GSM-Symbolic allows for more controlled experiments by manipulating variables and difficulty levels.</li><li><strong>Reliable Metrics:</strong> The benchmark provides more reliable metrics for assessing LLM performance in mathematical reasoning.</li><li><strong>Experimental Setup:</strong> The section describes the models used, the evaluation setup with Chain-of-Thought prompting, and the dataset size used in the experiments.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear explanation of GSM-Symbolic.</strong>
+        <p>The section clearly explains the purpose and design of GSM-Symbolic, making it easy to understand the novelty and value of the benchmark.</p>
+        <div class="quote">"While the mentioned benchmarks offer a single performance metric on a fixed number of questions, we argue that viewing LLM performance as a distribution across various problem instances provides deeper insights." (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Detailed description of template generation.</strong>
+        <p>The section provides a step-by-step explanation of how templates are created, including the identification of variables, domains, and conditions.</p>
+        <div class="quote">"The annotation process involves identifying variables, their domains, and necessary conditions to ensure the correctness of both the question and the answer." (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Well-defined experimental setup.</strong>
+        <p>The section clearly outlines the experimental setup, including the models used, the evaluation process, and the dataset size.</p>
+        <div class="quote">"Overall, for this work, we conducted nearly 500 total evaluations on various setups. To this end, we maintained a manageable dataset size by using 100 templates and generating 50 samples per template, resulting in 5000 total examples for each benchmark." (Page 5)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide more examples of symbolic templates.</strong>
+        <p>While Figure 1 shows one example, including more examples of symbolic templates would further clarify the process and its flexibility.</p>
+        
+        <p><strong>Rationale:</strong> More examples would help readers understand the different types of questions that can be generated and the range of complexity that can be captured.</p>
+        <p><strong>Implementation:</strong> Include a few more examples of symbolic templates in the section or in the appendix, showcasing different problem structures and variable types.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the limitations of GSM-Symbolic.</strong>
+        <p>While the section highlights the advantages of GSM-Symbolic, it would be beneficial to also discuss its limitations or potential biases.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging limitations would provide a more balanced perspective and encourage further research to address these limitations.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing potential limitations, such as the scope of mathematical concepts covered or the potential for biases in the template generation process.</p>
+    </li>
+    
+    <li>
+        <strong>Justify the choice of 100 templates and 50 samples.</strong>
+        <p>The section mentions the dataset size but doesn&#39;t explain why these specific numbers were chosen.</p>
+        <div class="quote">"we maintained a manageable dataset size by using 100 templates and generating 50 samples per template" (Page 5)</div>
+        <p><strong>Rationale:</strong> Justifying the dataset size would strengthen the methodology and ensure the results are statistically significant.</p>
+        <p><strong>Implementation:</strong> Explain the rationale behind choosing 100 templates and 50 samples, perhaps by referring to computational constraints or the desired level of statistical power.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 1</summary>
+        <p>Figure 1 illustrates how the GSM-Symbolic template is created. It shows an example from the original GSM8K dataset alongside a corresponding template. The GSM8K example is a word problem about a person named Sophie and the number of toys she has for her nephew. The template generalizes this problem by replacing specific names and numbers with placeholders like {name}, {family}, {x}, {y}, {z}, and {total}. This allows for generating many similar problems with different names, numbers, and relationships between them, while keeping the underlying structure the same. The figure also shows the solution to both the original problem and the templated version.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 1: Illustration of the GSM-Symbolic template creation process."</p>
+            <p><strong>Context:</strong> This dataset serves as a tool to investigate the presumed reasoning capabilities of LLMs, enabling the design of controllable mathematical reasoning evaluations with more reliable metrics. Our results reveal that all state-of-the-art LLMs exhibit significant performance variations, suggesting the fragility or lack of reasoning.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding how GSM-Symbolic is constructed and how it enables more controlled experiments compared to GSM8K. It visually demonstrates the concept of templates and their use in generating diverse problem instances.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Use a more visually distinct style for the placeholders (e.g., a different font, color, or background) to make them stand out from the rest of the text.</li><li>Consider adding arrows or other visual cues to connect the placeholders in the template to the corresponding elements in the GSM8K example.</li><li>Use a larger font size for the text within the figure to improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Provide a brief explanation of the symbols used in the template, such as the meaning of &#39;sample&#39; and the &#39;#variables&#39; and &#39;#conditions&#39; sections.</li><li>Explain why certain elements are chosen to be variables (e.g., why &#39;name&#39; and &#39;family&#39; are variable, but the type of toys is not).</li><li>Explain how the conditions ensure the generated problems are solvable and at the appropriate difficulty level.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>Experiments &amp; Results</h3>
+            
+            <h4>Overview</h4>
+            <p>This section presents the main findings of the study on LLM mathematical reasoning. First, it examines the reliability of current GSM8K results by analyzing the performance distribution on GSM-Symbolic, revealing significant variations. It then investigates the fragility of LLM reasoning by comparing performance when changing names versus numbers in problems, finding LLMs more sensitive to numerical changes. The section also explores the impact of question difficulty (number of clauses) on performance, showing that accuracy decreases and variance increases with higher difficulty. Finally, it introduces GSM-NoOp, a dataset with irrelevant information added to problems, demonstrating that LLMs often incorporate this irrelevant information, leading to significant performance drops and suggesting a lack of true understanding of mathematical concepts.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Reliability of GSM8K Results:</strong> Performance on GSM-Symbolic shows significant variance, questioning the reliability of single-point metrics on GSM8K.</li><li><strong>Fragility of LLM Reasoning:</strong> LLMs are more sensitive to changes in numerical values than changes in names, indicating fragility in reasoning.</li><li><strong>Impact of Question Difficulty:</strong> Performance degrades and variance increases as the number of clauses in a question increases.</li><li><strong>GSM-NoOp and Irrelevant Information:</strong> LLMs struggle to ignore irrelevant information in GSM-NoOp, leading to substantial performance drops.</li><li><strong>Pattern Matching vs. Reasoning:</strong> The findings suggest LLMs rely more on pattern matching than true understanding of mathematical concepts.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear presentation of results.</strong>
+        <p>The section presents the results in a clear and organized manner, using figures and tables to illustrate the key findings.</p>
+        <div class="quote">"Fig. 2 shows the empirical distribution of the performance of models on GSM-Symbolic computed on these 50 datasets." (Page 6)</div>
+    </li>
+    
+    <li>
+        <strong>Comprehensive analysis.</strong>
+        <p>The section provides a comprehensive analysis of the results, exploring different factors that contribute to LLM performance variations.</p>
+        <div class="quote">"First, we investigate the impact of the type of change to understand the difference between changing names (e.g., person names, places, foods, currencies, etc.) versus changing numbers (i.e., the values of variables)." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Well-supported claims.</strong>
+        <p>The claims made in the section are well-supported by the presented results and figures.</p>
+        <div class="quote">"As shown in Fig. 6, the trend of the evolution of the performance distribution is very consistent across all models: as the difficulty increases, the performance decreases and the variance increases." (Page 9)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide more details on the statistical analysis.</strong>
+        <p>While the section mentions variance and standard deviations, providing more details on the statistical tests used would strengthen the analysis.</p>
+        
+        <p><strong>Rationale:</strong> More detailed statistical analysis would provide stronger evidence for the claims made in the section.</p>
+        <p><strong>Implementation:</strong> Include p-values or other statistical measures to quantify the significance of the observed differences in performance.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the limitations of the experimental setup.</strong>
+        <p>The section could benefit from a discussion of the limitations of the experimental setup, such as the choice of models or the use of greedy decoding.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging limitations would provide a more balanced perspective and encourage further research to address these limitations.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing potential limitations of the experimental setup and their potential impact on the results.</p>
+    </li>
+    
+    <li>
+        <strong>Connect the findings to the broader context of LLM research.</strong>
+        <p>While the section focuses on mathematical reasoning, connecting the findings to the broader context of LLM research would enhance the paper&#39;s impact.</p>
+        
+        <p><strong>Rationale:</strong> Connecting the findings to broader research questions would highlight the significance of the study and its implications for the development of future LLMs.</p>
+        <p><strong>Implementation:</strong> Discuss how the findings relate to other research on LLM reasoning, such as studies on logical reasoning or common sense reasoning.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 2</summary>
+        <p>Figure 2 shows the distribution of performance for several large language models (LLMs) on the GSM-Symbolic benchmark. Each histogram represents a different model and shows how often the model achieved certain accuracy levels across 50 different sets of GSM-Symbolic problems. The x-axis represents the accuracy achieved (as a percentage), and the y-axis represents the frequency (how many times that accuracy level was observed). A dashed vertical line marks the model&#39;s performance on the original GSM8K dataset. The average performance on GSM-Symbolic and its standard deviation are also shown for each model.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 2: The distribution of 8-shot Chain-of-Thought (CoT) performance across 50 sets generated from GSM-Symbolic templates shows significant variability in accuracy among all state-of-the-art models."</p>
+            <p><strong>Context:</strong> Furthermore, for most models, the average performance on GSM-Symbolic is lower than on GSM8K (indicated by the dashed line). Interestingly, the performance of GSM8K falls on the right side of the distribution, which, statistically speaking, should have a very low likelihood, given that GSM8K is basically a single draw from GSM-Symbolic.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it shows how consistent (or inconsistent) the models are when answering slightly different versions of the same math problems. The spread of the histograms indicates the variability in performance, and the comparison to GSM8K performance suggests potential issues like data contamination.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Use a consistent color scheme for the histograms and the GSM8K lines across all subplots to improve visual coherence.</li><li>Label the axes clearly with &#39;Accuracy (%)&#39; and &#39;Frequency&#39; to avoid ambiguity.</li><li>Increase the spacing between the subplots to reduce clutter and improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain why 50 sets were chosen and how they were generated. Was it a random sampling? What parameters were varied?</li><li>Provide a clearer explanation of what the standard deviation represents in this context. A high school student might not be familiar with this concept.</li><li>Discuss the implications of the GSM8K performance often falling outside the typical range of GSM-Symbolic performance. Why is this surprising and what does it suggest?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 3</summary>
+        <p>Figure 3 is a bar chart showing how much the performance of different LLMs drops when tested on GSM-Symbolic compared to their performance on the original GSM8K. Each bar represents a different model, and its length corresponds to the percentage drop in accuracy. A downward bar means performance decreased on GSM-Symbolic. The labels on each bar provide the exact percentage drop for each model.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 3: The performance of all state-of-the-art models on GSM-Symbolic drops compared to GSM8K."</p>
+            <p><strong>Context:</strong> Later, we investigate the factors that impact the performance drops in more depth.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure directly visualizes the performance degradation discussed in the text. It highlights the impact of using the more diverse and challenging GSM-Symbolic benchmark compared to the static GSM8K.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Order the bars from largest to smallest drop for easier comparison.</li><li>Add a horizontal line at 0% to clearly separate performance gains from drops.</li><li>Use a color gradient or different shades to visually represent the magnitude of the drop.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain the implications of this performance drop. Does it suggest overfitting to GSM8K? Does it indicate a lack of generalization?</li><li>Connect this figure back to Figure 2 and discuss how the drop relates to the distribution of performance.</li><li>Discuss why some models show a larger drop than others. Are there architectural differences or training differences that might explain this?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 4</summary>
+        <p>Figure 4 illustrates the sensitivity of Large Language Models (LLMs) to changes in names, numbers, or both within math word problems. It presents histograms showing the distribution of accuracy scores for six different LLMs across three conditions: changing only the names in the problem, changing only the numbers, and changing both names and numbers. Each histogram shows the frequency of different accuracy levels, allowing for a comparison of performance variability across the three conditions. The figure aims to demonstrate how these changes, while not affecting the underlying mathematical logic, can significantly impact the LLMs&#39; ability to solve the problems.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 4: How sensitive are LLMs when we change only names, only proper numbers, or both names and numbers?"</p>
+            <p><strong>Context:</strong> Overall, models have noticeable performance variation even if we only change names, but even more when we change numbers or combine these changes.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is highly relevant as it directly addresses the research question of how fragile LLMs are to superficial changes (names) versus core changes (numbers) in mathematical reasoning problems. It provides evidence for the argument that LLMs are more sensitive to changes in numerical values than to changes in names, suggesting a potential over-reliance on pattern matching.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Use distinct colors or patterns for the histograms representing different change conditions to improve visual clarity and comparison.</li><li>Add a clear legend explaining the meaning of each color/pattern used for the change conditions.</li><li>Label the axes clearly with appropriate units (Accuracy (%) and Frequency).</li><li>Increase the font size of labels and legends to improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Provide the average accuracy and standard deviation for each condition in the figure or caption to allow for a more quantitative comparison.</li><li>Discuss the implications of the observed differences in variance between name changes and number changes in more detail.</li><li>Connect the findings to the hypothesis that LLMs rely on in-distribution pattern matching, explaining how this hypothesis is supported by the observed sensitivity to numerical changes.</li><li>Consider adding a statistical test to quantify the significance of the observed differences in performance between the conditions.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 5</summary>
+        <p>Figure 5 demonstrates how the difficulty of the GSM-Symbolic math problems is modified by changing the number of clauses. It shows four example problems, each representing a different difficulty level: GSM-Symbolic-M1 (minus one clause), GSM-Symbolic (original), GSM-Symbolic-P1 (plus one clause), and GSM-Symbolic-P2 (plus two clauses). Each problem is a word problem involving calculations, and the increasing difficulty is reflected in the addition of more conditions or steps required to solve the problem. This figure provides a concrete illustration of how the benchmark allows for controlled manipulation of problem complexity.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 5: Modifying the difficulty level of GSM-Symbolic by modifying the number of clauses."</p>
+            <p><strong>Context:</strong> </p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is essential for understanding how the authors operationalize &#39;difficulty&#39; in their experiments. By showing examples of problems with varying numbers of clauses, it clarifies the manipulation used to test the impact of complexity on LLM performance. This directly relates to the research question of how difficulty affects the performance distribution.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Use a consistent format and font size for all the example problems.</li><li>Highlight the added clauses in the P1 and P2 examples using bold text, color, or underlining to make them easily noticeable.</li><li>Consider adding a brief explanation of what constitutes a &#39;clause&#39; in this context, as it might not be immediately clear to all readers.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Provide a more detailed explanation of how the added clauses increase the difficulty of the problem. For example, explain the additional reasoning steps required or the increased cognitive load.</li><li>Explain why this method of manipulating difficulty (adding clauses) is appropriate for studying mathematical reasoning in LLMs.</li><li>Discuss any potential limitations of this approach. For example, does adding a clause always increase the difficulty linearly, or are there other factors that might influence the perceived difficulty level?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 6</summary>
+        <p>This figure illustrates how increasing the complexity of a math problem, represented by the number of clauses, affects the performance of Large Language Models (LLMs). It uses histograms to show the distribution of accuracy scores for four different models across four difficulty levels: GSM-M1 (one clause removed), GSM-Symb (original complexity), GSM-P1 (one clause added), and GSM-P2 (two clauses added). As the problems become more complex (moving from M1 to P2), the histograms generally shift to the left, indicating lower accuracy. The spread of the histograms also tends to increase with complexity, suggesting greater variability in performance. Think of it like stacking blocks: it&#39;s easier to balance a small tower (M1) than a tall one (P2). The taller the tower gets, the more likely it is to wobble and fall (more variance).</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 6: The impact of increasing the number of clauses on performance: As the difficulty increases from GSM-M1 → GSM-Symb→ GSM-P1 → GSM-P2, the distribution of performance shifts to the left (i.e., accuracy decreases), and the variance increases."</p>
+            <p><strong>Context:</strong> As shown in Fig. 6, the trend of the evolution of the performance distribution is very consistent across all models: as the difficulty increases, the performance decreases and the variance increases. Note that overall, the rate of accuracy drop also increases as the difficulty increases. This is in line with the hypothesis that models are not performing formal reasoning, as the number of required reasoning steps increases linearly, but the rate of drop seems to be faster. Moreover, considering the pattern-matching hypothesis, the increase in variance suggests that searching and pattern-matching become significantly harder for models as the difficulty increases.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is central to the paper&#39;s argument that LLMs struggle with more complex reasoning tasks. It provides visual evidence of the performance degradation and increased variability as problem difficulty increases.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Use consistent colors for the same difficulty level across all model histograms to facilitate comparison.</li><li>Label the axes clearly with &#39;Accuracy (%)&#39; and &#39;Frequency&#39; or &#39;Number of Samples&#39;.</li><li>Add a brief explanation within the figure of what GSM-M1, GSM-Symb, GSM-P1, and GSM-P2 represent.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Provide the exact number of clauses used in each difficulty level to quantify the complexity increase.</li><li>Discuss potential reasons why the variance increases with complexity, such as the accumulation of errors in multi-step reasoning.</li><li>Consider adding a statistical measure of variance (e.g., standard deviation) to each histogram or in a separate table.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 7</summary>
+        <p>Figure 7 shows an example of how LLMs can be misled by irrelevant information. It presents a word problem from the GSM-NoOp dataset, where a seemingly relevant but ultimately unimportant detail is added (some kiwis being smaller). Two LLM responses are shown, both incorrectly incorporating the size of the kiwis into their calculations. This is like asking &#39;If you have 5 apples and 2 are green, how many apples do you have?&#39; A person would understand that the color doesn&#39;t change the number of apples, but the LLMs seem to get confused by the extra detail.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 7: An example from the GSM-NoOp dataset: We add seemingly relevant statements to the questions that are, in fact, irrelevant to the reasoning and conclusion. However, the majority of models fail to ignore these statements and blindly convert them into operations, leading to mistakes."</p>
+            <p><strong>Context:</strong> Fig. 7 illustrates an example from GSM-NoOp. An interesting observation is that models tend to blindly subtract the number of smaller fruits, potentially because their training datasets included similar examples that required conversion to subtraction operations. In the Appendix, we include additional failure cases from GSM-NoOp. Overall, we find that models tend to convert statements to operations without truly understanding their meaning. For instance, a common case we observe is that models interpret statements about “discount” as “multiplication”, regardless of the context. This raises the question of whether these models have truly understood the mathematical concepts well enough. Consequently, as shown in Fig. 8a, there is a catastrophic performance decline across all tested models, with the Phi-3-mini model experiencing over a 65% drop, and even stronger models such as o1-preview showing significant declines.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure supports the paper&#39;s argument that LLMs rely on pattern matching and struggle with true understanding. It demonstrates how irrelevant information can significantly impact their performance, suggesting a lack of genuine comprehension of the problem.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Highlight the irrelevant part of the problem text in a different color or style to emphasize its misleading nature.</li><li>Clearly label each LLM response with the model name.</li><li>Consider adding a correct solution alongside the incorrect ones to provide a clear contrast.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain why the LLMs might have made the specific mistakes shown, relating it back to the pattern-matching hypothesis.</li><li>Provide some statistics on how often LLMs make similar errors on GSM-NoOp problems.</li><li>Discuss the implications of these findings for the reliability of LLMs in real-world applications where irrelevant information might be present.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 8</summary>
+        <p>Figure 8 is a collection of bar charts demonstrating the performance drop of various large language models (LLMs) on the GSM-NoOp dataset, a modified version of GSM8K designed to assess how LLMs handle irrelevant information within math problems. (a) shows the general performance drop on GSM-NoOp across different models. (b) compares performance on GSM8K, GSM-Symbolic, and GSM-NoOp when using different &#39;shots&#39; or examples during testing. &#39;NoOp-Symb&#39; uses examples from GSM-Symbolic, while &#39;NoOp-NoOp&#39; uses examples from GSM-NoOp. (c) highlights specific models that, while generally performing worse on GSM8K and GSM-Symbolic, show better performance on NoOp-Symb.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 8: (a) The performance of models drops significantly on GSM-NoOp, with more recent models experiencing a greater decline than older ones."</p>
+            <p><strong>Context:</strong> (b) As previously demonstrated, performance on GSM-Symbolic is very close to that on GSM8K. However, on GSM-Noop, the significant drop in performance cannot be recovered, even when using the exact same question&#39;s variation as shots (NoOp-Symb) or when using different questions with different GSM-Noopthat contain No-Op operations (NoOp-Noop) as shots. (c) Notably, some models that perform significantly worse than those in (b) on GSM8K and GSM-Symbolic show much better performance on NoOp-Symb.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is central to the paper&#39;s argument about the limitations of LLMs in mathematical reasoning. It visually demonstrates how LLMs struggle with irrelevant information, even when provided with relevant examples. It supports the idea that LLMs rely on pattern matching and struggle with true understanding.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>In (a), consider ordering the models by performance drop or by model size for easier comparison.</li><li>In (b) and (c), use consistent colors for the same datasets (GSM8K, GSM-Symbolic, GSM-NoOp) across all bar charts.</li><li>Label the y-axes clearly with &#39;Accuracy (%)&#39; to avoid ambiguity.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain why more recent models might experience a greater decline in (a). Is it related to their size, training data, or architecture?</li><li>In (b), discuss the implications of the finding that performance doesn&#39;t improve even with relevant examples (NoOp-Symb). Does this suggest a fundamental limitation in how LLMs process information?</li><li>In (c), analyze why certain models might perform better on NoOp-Symb despite being generally weaker. Could it be due to specific training data or architectural differences?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-5" class="section">
+            <h3>Conclusion</h3>
+            
+            <h4>Overview</h4>
+            <p>This research explored the reasoning abilities of Large Language Models (LLMs) in mathematics, particularly focusing on limitations of current evaluations using the GSM8K dataset. They introduced GSM-Symbolic, a new benchmark offering varied mathematical problems. The study showed significant inconsistencies in LLM performance on similar questions, especially with changes in numerical values. Performance also decreased with increasing problem complexity. The GSM-NoOp dataset, which includes irrelevant information in problems, revealed a major weakness: LLMs often use this irrelevant information, leading to significant errors. This suggests LLMs rely on pattern matching rather than true logical reasoning, even for simple math problems.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Limitations of GSM8K Evaluations:</strong> Current evaluations using GSM8K may not accurately reflect LLM mathematical reasoning abilities due to its limitations in problem diversity and complexity.</li><li><strong>GSM-Symbolic Benchmark:</strong> The introduction of GSM-Symbolic provides a more robust and nuanced evaluation of LLM mathematical reasoning by offering diverse problem variations.</li><li><strong>Performance Variability and Fragility:</strong> LLMs exhibit significant performance variations on similar questions, particularly with changes in numerical values, highlighting the fragility of their reasoning process.</li><li><strong>Impact of Complexity:</strong> LLM performance degrades with increasing problem complexity, suggesting limitations in handling multi-step reasoning.</li><li><strong>Lack of True Understanding:</strong> The GSM-NoOp results indicate that LLMs often fail to discern relevant information, suggesting a lack of genuine understanding of mathematical concepts and a reliance on pattern matching.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Concise summary of key findings.</strong>
+        <p>The conclusion effectively summarizes the main findings of the study, including the limitations of GSM8K, the benefits of GSM-Symbolic, and the observed performance variations and limitations of LLMs.</p>
+        <div class="quote">"Our extensive study reveals significant performance variability across different instantiations of the same question, challenging the reliability of current GSM8K results that rely on single-point accuracy metrics." (Page 12)</div>
+    </li>
+    
+    <li>
+        <strong>Clear implications for future research.</strong>
+        <p>The conclusion clearly articulates the implications of the findings for future research, emphasizing the need for models capable of formal reasoning.</p>
+        <div class="quote">"We believe further research is essential to develop AI models capable of formal reasoning, moving beyond pattern recognition to achieve more robust and generalizable problem-solving skills." (Page 12)</div>
+    </li>
+    
+    <li>
+        <strong>Strong concluding statement.</strong>
+        <p>The conclusion ends with a strong statement that reinforces the importance of the research and its contribution to the field of AI.</p>
+        <div class="quote">"This remains a critical challenge for the field as we strive to create systems with human-like cognitive abilities or general intelligence." (Page 12)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify the performance drops observed with GSM-NoOp.</strong>
+        <p>While the conclusion mentions &quot;substantial performance drops of up to 65%&quot;, providing more specific numbers for different models would strengthen the claim.</p>
+        <div class="quote">"substantial performance drops of up to 65%" (Page 12)</div>
+        <p><strong>Rationale:</strong> Quantifying the drops would provide a more concrete understanding of the impact of irrelevant information on LLM performance.</p>
+        <p><strong>Implementation:</strong> Include specific performance drop percentages for a few representative models, or refer to a table or figure with detailed results.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss potential alternative evaluation methods.</strong>
+        <p>The conclusion focuses on the limitations of current methods but could briefly mention potential alternative approaches for evaluating LLM reasoning.</p>
+        
+        <p><strong>Rationale:</strong> Suggesting alternative evaluation methods would provide a more constructive outlook and stimulate further research in this direction.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two discussing alternative approaches, such as incorporating more complex reasoning tasks or using human evaluation to assess understanding.</p>
+    </li>
+    
+    <li>
+        <strong>Connect the findings to real-world applications.</strong>
+        <p>While the conclusion mentions general intelligence, connecting the findings to specific real-world applications of LLMs would enhance the paper&#39;s relevance.</p>
+        
+        <p><strong>Rationale:</strong> Discussing the implications for real-world applications would highlight the practical significance of the research and its potential impact.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two discussing the implications of the findings for applications like automated theorem proving, problem-solving in scientific domains, or other areas where robust mathematical reasoning is crucial.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-6" class="section">
+            <h3>Appendix</h3>
+            
+            <h4>Overview</h4>
+            <p>This appendix provides supplementary information to the main paper. It includes detailed experimental setups, complete results on GSM8K and GSM-Symbolic benchmarks and their variants, additional results on performance distribution, further analysis of the impact of question difficulty (including the effects of fine-tuning), and a comprehensive discussion of the OpenAI o1-mini and o1-preview models.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Detailed Experimental Setups:</strong> Description of the prompt template and other experimental details like decoding strategy.</li><li><strong>Full Results on Benchmarks:</strong> Comprehensive results of various models on GSM8K, GSM-Symbolic, and their variants, providing a complete picture of the models&#39; performance.</li><li><strong>Additional Results on Performance Distribution:</strong> More results demonstrating the performance variations of different models on GSM-Symbolic, complementing the findings in the main paper.</li><li><strong>Impact of Question Difficulty and Fine-tuning:</strong> Further investigation into the effects of question difficulty and whether fine-tuning on easier tasks improves performance on harder ones.</li><li><strong>Analysis of o1-preview and o1-mini:</strong> A detailed discussion and analysis of the performance of OpenAI&#39;s o1-mini and o1-preview models, including their strengths and limitations.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive supplementary information.</strong>
+        <p>The appendix provides a wealth of supplementary information that enhances the understanding of the main paper&#39;s findings.</p>
+        <div class="quote">"In this appendix, we provide additional details to the main text, including: • A.1: Detailed experimental setups, including the prompt template." (Page 17)</div>
+    </li>
+    
+    <li>
+        <strong>Detailed experimental setup description.</strong>
+        <p>The detailed description of the experimental setup, including the prompt template, allows for reproducibility and facilitates further research.</p>
+        <div class="quote">"In this work, all reported evaluations results use 8-shots with chain-of-thought prompting. We use the following prompt format:" (Page 17)</div>
+    </li>
+    
+    <li>
+        <strong>Full results table.</strong>
+        <p>The inclusion of the full results table allows for a more complete analysis and comparison of different models.</p>
+        <div class="quote">"In Tab. 1, we present the comprehensive performance results of various models, including Gemma (Mesnard et al., 2024), Gemma2 (Rivière et al., 2024), Phi (Abdin et al., 2024), Mistral (Jiang et al., 2023), Llama3 (Dubey et al., 2024), GPT-4o (OpenAI, 2023), and the o1 (OpenAI, 2024) series, on GSM8K and its different variants, GSM-Symbolic." (Page 18)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Organize the appendix into clearer subsections.</strong>
+        <p>While the appendix provides a lot of information, organizing it into clearer subsections with more descriptive headings would improve readability.</p>
+        
+        <p><strong>Rationale:</strong> Clearer organization would make it easier for readers to navigate the appendix and find the specific information they are looking for.</p>
+        <p><strong>Implementation:</strong> Use more descriptive subheadings that clearly indicate the content of each section, such as &quot;A.1 Experimental Setup: Prompting and Decoding&quot; or &quot;A.2 Full Results: GSM8K and GSM-Symbolic Performance&quot;.</p>
+    </li>
+    
+    <li>
+        <strong>Provide more context for the additional results.</strong>
+        <p>The additional results presented in the appendix could benefit from more context and explanation. For example, the connection between the additional results and the main paper&#39;s findings could be made more explicit.</p>
+        
+        <p><strong>Rationale:</strong> Providing more context would help readers understand the significance of the additional results and how they relate to the overall research question.</p>
+        <p><strong>Implementation:</strong> Add introductory paragraphs or sentences to each subsection explaining the purpose of the additional results and how they complement the findings in the main paper.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the limitations of the presented results.</strong>
+        <p>The appendix could benefit from a discussion of the limitations of the presented results. For example, the limitations of using greedy decoding or the potential biases in the datasets could be discussed.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging limitations would provide a more balanced perspective and encourage further research to address these limitations.</p>
+        <p><strong>Implementation:</strong> Add a section or paragraphs discussing the limitations of the presented results and their potential impact on the conclusions of the study.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 9</summary>
+        <p>Figure 9 shows the prompt format used for evaluating the Large Language Models (LLMs). It consists of a preamble (or system instruction), eight example question-answer pairs (referred to as &#39;shots&#39;), and the target question. The preamble sets the context for the LLM, instructing it to solve mathematical questions step-by-step like an expert. Each shot includes a question (Q:) and an answer (A:) that demonstrates the desired chain-of-thought reasoning process. The target question is presented without an answer, and the LLM is expected to generate a step-by-step solution and provide the final answer. Placeholders like {{question}}, {{solution}}, and {{final answer}} are used to represent the actual content that would be inserted during evaluation. Think of it like a recipe: the preamble is the general instruction (e.g., &#39;bake at 350 degrees&#39;), the shots are examples of how to make specific dishes (e.g., &#39;chocolate chip cookies&#39;), and the target question is a new dish the LLM needs to &#39;cook&#39; (e.g., &#39;oatmeal raisin cookies&#39;) using the same general instructions and the examples provided.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 9: The prompt format used for evaluations."</p>
+            <p><strong>Context:</strong> </p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding the experimental setup and how the LLMs were evaluated. It provides a clear picture of the input provided to the models, including the context setting, the examples used for few-shot learning, and the format of the target questions. This helps in interpreting the results and understanding the LLMs&#39; behavior.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Use a different font or color for the placeholders ({{question}}, {{solution}}, {{final answer}}) to make them stand out more clearly.</li><li>Add visual separators (e.g., lines or spacing) between the preamble, each shot, and the target question to improve readability.</li><li>Consider using a more visually appealing layout, such as a table format, to present the prompt elements more clearly.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain the purpose of providing 8 shots and whether different numbers of shots were tested.</li><li>Discuss the rationale behind the specific wording of the preamble and how it might influence the LLMs&#39; responses.</li><li>Explain how the &#39;final answer&#39; is extracted from the LLM&#39;s generated text and how correctness is evaluated.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 1</summary>
+        <p>Table 1 presents the performance of various Large Language Models (LLMs) on different versions of the GSM8K math problem dataset. It shows the accuracy (percentage of correctly answered questions) for each model on the full GSM8K test set, a smaller 100-question subset of GSM8K, and several variations of GSM-Symbolic (M1, standard, P1, P2, and NoOp). Each variation represents a different level of difficulty or type of change applied to the original problems. The table also includes standard deviations, which show how much the accuracy scores vary across different runs or subsets of the data. Think of it like testing different students (LLMs) on different sets of math problems (datasets). The table shows each student&#39;s average score on each problem set and how consistent their scores are.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Table 1: Full 8-shot results of all models on GSM8Kand different variants of GSM-Symbolic."</p>
+            <p><strong>Context:</strong> </p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table summarizes the main quantitative results of the paper. It allows for a direct comparison of different LLMs and their performance across different benchmarks, providing evidence for the claims made about performance variations, the impact of difficulty, and the effect of irrelevant information.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Highlight the best-performing model for each dataset using bold text or a different color.</li><li>Consider using a heatmap or color scale to visually represent the accuracy scores, making it easier to identify patterns and trends.</li><li>Add a caption that clearly explains the meaning of each column and the units used (accuracy percentage).</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain how the standard deviations were calculated and what they represent in this context. A high school student might not be familiar with this concept.</li><li>Discuss the statistical significance of the observed differences in performance between different models and datasets.</li><li>Analyze the trends observed in the table. For example, which models are most robust to changes in difficulty or irrelevant information? Are there any correlations between model size and performance?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 10</summary>
+        <p>Figure 10 presents additional results on the performance variation of Large Language Models (LLMs) on the GSM-Symbolic dataset. It shows histograms of accuracy distributions for three different models: Phi-2, Mistral-7b-instruct-v0.1, and Gemma2-2b-it. Each histogram shows how often each model achieved a particular accuracy level across multiple runs or variations of the GSM-Symbolic problems. The x-axis represents the accuracy percentage, and the y-axis represents the frequency. The average accuracy on the original GSM8K dataset is also provided for comparison, along with the average accuracy and standard deviation on GSM-Symbolic.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 10: Additional results on performance variation on GSM-Symbolic."</p>
+            <p><strong>Context:</strong> </p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure supplements the earlier analysis of performance variation on GSM-Symbolic (Figure 2) by providing results for additional models. It further supports the claim that LLMs exhibit significant performance variability even on slightly different versions of the same math problems, raising concerns about the reliability of single-point accuracy metrics.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Use consistent bin sizes for the histograms to facilitate comparison between models.</li><li>Label the axes clearly with &#39;Accuracy (%)&#39; and &#39;Frequency&#39; to avoid ambiguity.</li><li>Consider using a different color or pattern for the bars representing the average GSM8K accuracy to distinguish it from the GSM-Symbolic distribution.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain how many runs or variations of the GSM-Symbolic problems were used to generate the histograms. This would clarify the sample size and the basis for the distributions.</li><li>Provide a more detailed explanation of what the standard deviation represents in this context. How does it relate to the spread of the distribution?</li><li>Discuss the implications of the observed performance variations. Do they suggest overfitting to the specific wording or numerical values in the original GSM8K problems?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 11</summary>
+        <p>Figure 11 explores whether using examples (shots) from a slightly harder problem set (GSM-P1) or fine-tuning a model on that set improves performance on an even harder set (GSM-P2). Part (a) shows that including examples from GSM-P1 during testing doesn&#39;t help much on GSM-P2. It&#39;s like trying to learn advanced calculus by only looking at algebra examples – it won&#39;t give you the tools you need. Part (b) shows that even fine-tuning a model on GSM-P1, while improving performance on P1, doesn&#39;t translate to better performance on P2. This is like training a dog to fetch a specific ball; it might get really good at fetching *that* ball, but not necessarily other objects.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 11: Using in-context shots or finetuning on GSM-P1 does not improve performance on GSM-P2: (a) Compared to the case where 8 shots come from GSM8K, when we include shots from GSM-P1the performance on GSM-P2 does not improve."</p>
+            <p><strong>Context:</strong> (b) Finetuning on GSM-P1 can improve performance on GSM-P1 but not on GSM-P2.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it investigates whether exposure to slightly harder problems, either through examples or fine-tuning, can improve performance on significantly harder problems. The negative results suggest that simply increasing the difficulty of training data or examples might not be enough to improve the reasoning capabilities of LLMs.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>In (a), label the bars clearly with the model names and the source of the shots (GSM8K or P1).</li><li>In (b), use a different color or line style for the GSM-P1 and GSM-P2 accuracy curves to improve visual distinction.</li><li>Add a legend to (b) explaining which line represents which dataset.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>In (a), explain why 8 shots were chosen and whether different numbers of shots were tested.</li><li>In (b), explain what &#39;epochs&#39; represent in the context of fine-tuning. How does the number of epochs relate to the amount of training?</li><li>Discuss the implications of these findings for training and fine-tuning strategies for LLMs. What alternative approaches might be more effective in improving reasoning abilities?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 12</summary>
+        <p>Figure 12 presents the performance of two closed-source LLMs, ol-mini and ol-preview, on different versions of the GSM-Symbolic dataset. It uses histograms to show how often each model achieved a particular accuracy on GSM8K, GSM-Symbolic (the standard version), GSM-M1 (easier), GSM-P1 (harder), and GSM-P2 (hardest). The x-axis represents accuracy, and the y-axis represents frequency. The figure also provides the average accuracy and standard deviation for each model and dataset. The key observation is that ol-preview performs very well and consistently across all difficulty levels, while ol-mini&#39;s performance degrades as the difficulty increases, similar to the open-source models discussed earlier.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 12: Results on o1-mini and o1-preview: both models mostly follow the same trend we presented in the main text."</p>
+            <p><strong>Context:</strong> However, o1-preview shows very strong results on all levels of difficulty as all distributions are close to each other.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is relevant because it extends the analysis to closed-source models, showing that while some closed models like ol-preview demonstrate strong and consistent performance across different difficulty levels, others like ol-mini still struggle with increasing complexity, following similar trends as open-source models.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Use consistent colors for the same dataset across both ol-mini and ol-preview plots to facilitate comparison.</li><li>Clearly label the axes with &#39;Accuracy (%)&#39; and &#39;Frequency&#39;.</li><li>Consider using box plots instead of histograms to more clearly show the median, quartiles, and outliers of the accuracy distributions.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain why ol-preview performs so consistently across different difficulty levels. Is it due to its architecture, training data, or other factors?</li><li>Compare the performance of ol-mini and ol-preview to the open-source models discussed earlier in the paper. Are there any significant differences or similarities?</li><li>Discuss the implications of these findings for the development of more robust and generalizable LLMs.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 13</summary>
+        <p>Figure 13 shows an example of how the ol-preview model fails to understand the context of a word problem from the GSM-NoOp dataset. The problem asks for the current cost of school supplies, given current prices and mentioning that prices were lower last year due to inflation. However, the model incorrectly calculates the cost based on the lower, past prices, even though the question explicitly asks for the current cost. This demonstrates the model&#39;s tendency to blindly apply numerical operations without fully grasping the context or relevance of the information provided. It&#39;s like a student who sees the word &#39;discount&#39; and automatically subtracts, regardless of whether a discount is actually being applied in the problem.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 13: Sample response from o1-preview on an example from GSM-NoOp: the model blindly applies the inflation rate, even though the inflation amount is irrelevant as the question clearly indicates the given prices are for &quot;now&quot; and not last year."</p>
+            <p><strong>Context:</strong> </p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is relevant because it provides a specific example of how even high-performing closed-source models like ol-preview can fail on GSM-NoOp problems due to their inability to filter out irrelevant information. It reinforces the paper&#39;s argument that LLMs struggle with true understanding and rely on pattern matching, leading to errors when presented with irrelevant information.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Highlight the part of the problem text that indicates the prices are current (&#39;now&#39;) to emphasize the model&#39;s misunderstanding.</li><li>Clearly separate the problem statement, the model&#39;s response, and the explanation of the error to improve readability.</li><li>Consider adding a visual representation of the correct solution alongside the model&#39;s incorrect response to highlight the discrepancy.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain why the model might have made this specific mistake. Does it relate to the model&#39;s training data or its internal representation of the problem?</li><li>Discuss the implications of this finding for the reliability of LLMs in real-world applications where understanding context and relevance is crucial.</li><li>Connect this example to the broader discussion of pattern matching versus true understanding in LLMs.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>figure 14</summary>
+        <p>Figure 14 presents a word problem from the GSM-NoOp dataset, which involves calculating the price difference between sourdough loaves and muffins after a donation. The figure includes responses from two models, &#39;ol-preview&#39; and &#39;ol-mini&#39;. Both models provide step-by-step solutions, but they incorrectly account for the donated items by subtracting their value from the total cost, even though the donation doesn&#39;t affect the price difference between the two items. The &#39;ol-preview&#39; model calculates the cost of the remaining items after donation and then finds the difference. The &#39;ol-mini&#39; model calculates the initial cost, the value of the donated items, the net costs after donation, and finally, the difference. Both models arrive at the same incorrect answer due to the erroneous subtraction of the donation value.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 14: Sample response from ol-preview and ol-mini on an example from GSM-NoOp: while the donation amount is irrelevant to the price difference, the models subtract the amount we donate."</p>
+            <p><strong>Context:</strong> </p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure further illustrates the point that LLMs struggle with irrelevant information and often misinterpret the problem, even when provided with seemingly straightforward scenarios. It reinforces the paper&#39;s argument that LLMs rely on pattern matching and lack true understanding of the underlying mathematical concepts. It shows that even advanced models like ol-preview and ol-mini are susceptible to this issue.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Highlight the irrelevant part of the problem (the donation) in a different color or with a different font style to emphasize its misleading nature.</li><li>Clearly separate and label the responses from the two models (&#39;ol-preview&#39; and &#39;ol-mini&#39;) to improve readability.</li><li>Consider adding a correct solution alongside the model responses to highlight the error and provide a clear contrast.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>Explain in simpler terms why the donation is irrelevant to the price difference. Use an analogy or a simpler example to illustrate the concept.</li><li>Discuss the specific pattern-matching behavior that might have led the models to incorporate the donation into their calculations. For example, do they frequently encounter problems where subtraction is required after an initial calculation?</li><li>Explain the broader implications of this type of error. If LLMs can&#39;t handle such simple irrelevant information, how can they be trusted with more complex real-world problems?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        // Show/hide back-to-top button
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
