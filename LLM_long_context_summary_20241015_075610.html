@@ -1,0 +1,1596 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhancing Trustworthiness in Long-Context Large Language Models through Citation Generation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Enhancing Trustworthiness in Long-Context Large Language Models through Citation Generation</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">Introduction</a></li><li><a href="#section-2">LongBench-Cite: Benchmark Long-Context QA with Citations</a></li><li><a href="#section-3">CoF: Automatic SFT Data Construction for LQAC</a></li><li><a href="#section-4">LongCite: Teach Long-Context LLMs to Generate Citations</a></li><li><a href="#section-5">Related Works</a></li><li><a href="#section-6">Conclusion</a></li><li><a href="#section-7">Model Cards</a></li><li><a href="#section-8">Case Study</a></li><li><a href="#section-9">Prompts</a></li><li><a href="#section-10">Evaluation Cost</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>The study addresses the challenge of trustworthiness in long-context large language models (LLMs) by enabling them to generate specific citations for their answers, thus improving verification and reducing hallucinations. The authors introduce a novel method called CoF (Coarse to Fine) for automatically generating training data with sentence-level citations, which is used to train two new models, LongCite-8B and LongCite-9B. These models outperform advanced proprietary models in citation accuracy and overall correctness. The research emphasizes the importance of citations for enhancing the reliability of LLM outputs in various applications.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li><strong>Improved Citation Accuracy:</strong> LongCite models demonstrated superior citation accuracy, achieving up to a 6.4% higher citation F1 score compared to proprietary models such as GPT-4o, indicating their enhanced ability to generate precise citations.</li><li><strong>Reduction in Hallucinations:</strong> Training with citation information effectively reduced hallucinations, as evidenced by a manual analysis of model responses, showcasing improved factual grounding in generated answers.</li><li><strong>Enhanced Answer Correctness:</strong> The LongCite models not only excelled in citation generation but also in answer correctness, with correctness ratios exceeding 100%, demonstrating that citation training benefits overall model performance.</li><li><strong>Comprehensive Context Utilization:</strong> The models trained with citations exhibited better utilization of the given context, generating more detailed and comprehensive responses, as shown in multiple case studies.</li><li><strong>Mutual Promotion of Correctness and Citation Quality:</strong> A positive correlation was observed between answer correctness and citation quality, as higher correctness responses typically had better citation F1 scores, indicating a mutually reinforcing relationship.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li><strong>Innovative Data Generation:</strong> The CoF pipeline represents a novel approach to creating training data with fine-grained citations, addressing the scarcity of suitable datasets for training LLMs in citation generation.</li><li><strong>Comprehensive Evaluation:</strong> The study employs a robust evaluation methodology, using LongBench-Cite and multiple assessment metrics, including correctness and citation quality, to provide a thorough analysis of model performance.</li><li><strong>Transparent Methodology:</strong> By providing detailed prompts and evaluation criteria, the research ensures transparency and reproducibility, allowing other researchers to replicate and build upon the work.</li><li><strong>Significant Performance Gains:</strong> The LongCite models&#39; performance gains over both open-source and proprietary models highlight the effectiveness of citation-based training, showcasing its potential for practical applications.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li><strong>Quantify Improvements:</strong> Provide specific quantitative improvements over baseline models in the abstract and throughout the paper to strengthen the impact and clarity of the results.</li><li><strong>Discuss Limitations and Costs:</strong> Acknowledge potential limitations, such as computational costs and dependencies on existing LLMs, and provide strategies for mitigating these challenges in future research.</li><li><strong>Expand Future Directions:</strong> Offer more specific future research directions, such as exploring alternative citation generation techniques and applying LQAC in other domains beyond the current benchmark.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>figure</h4>
+        <p><strong>Description:</strong> Figure 1 visually compares chunk-level and sentence-level citations, highlighting the user experience benefits of the latter.</p>
+        <p><strong>Relevance:</strong> The figure effectively demonstrates the need for fine-grained citations, setting the stage for the research&#39;s focus on improving citation precision and user verification.</p>
+    </div>
+    
+    <div>
+        <h4>table</h4>
+        <p><strong>Description:</strong> Table 2 showcases the performance of various models on citation quality metrics, highlighting the superiority of the LongCite models.</p>
+        <p><strong>Relevance:</strong> This table is crucial for understanding the competitive advantage of LongCite models in generating accurate citations, supporting the study&#39;s claims of improved trustworthiness.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>The research successfully enhances the trustworthiness of long-context LLMs by developing a novel citation generation approach through the CoF pipeline and LongCite models. These advancements demonstrate significant improvements in citation accuracy and answer correctness, laying a foundation for future research in long-context question answering with citations (LQAC). The study&#39;s findings underscore the potential for citation-based training to improve the reliability and verifiability of LLM outputs, with implications for various applications that require accurate information and transparent verification. Future work should explore diverse citation generation techniques and address current limitations to further advance the field.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>This abstract introduces a research project focused on improving the trustworthiness of long-context large language models (LLMs) by enabling them to provide specific citations for their answers. The authors highlight the issue of LLMs sometimes generating inaccurate information (hallucinations) and the difficulty in verifying their outputs due to the lack of citations. They propose a new method called CoF (Coarse to Fine) to automatically generate training data with sentence-level citations, which they use to train new models (LongCite-8B and LongCite-9B). These models demonstrate improved citation accuracy and a reduction in hallucinations, surpassing even advanced proprietary models like GPT-4o.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Problem of Trustworthiness in LLMs:</strong> Long-context LLMs are powerful but can generate inaccurate information, and their lack of citations makes it hard to verify their answers.</li><li><strong>Long-Context Question Answering with Citations (LQAC):</strong> The authors introduce this task, where LLMs are required to provide specific citations from the context to support their answers.</li><li><strong>CoF Pipeline for Data Generation:</strong> This novel pipeline uses existing LLMs to automatically create training data with precise sentence-level citations, addressing the lack of suitable datasets for LQAC.</li><li><strong>LongCite Models and Improved Performance:</strong> The authors train new models (LongCite-8B and LongCite-9B) using the CoF-generated data, achieving state-of-the-art citation accuracy and reducing hallucinations.</li><li><strong>Benefits of Citation-Based Training:</strong> The research shows that training with citation information not only improves citation quality but also enhances the overall correctness and context utilization of LLMs.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Problem Statement</strong>
+        <p>The abstract effectively establishes the problem of trustworthiness in long-context LLMs, highlighting both the issue of hallucinations and the lack of citations for verification.</p>
+        <div class="quote">"Though current long-context large language models (LLMs) have demonstrated impressive capacities in answering user questions based on extensive text, the lack of citations in their responses makes user verification difficult, leading to concerns about their trustworthiness due to their potential hallucinations." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Novel Approach and Strong Results</strong>
+        <p>The abstract clearly presents the CoF pipeline as a novel solution for generating citation-rich training data and highlights the impressive performance of the LongCite models, surpassing even proprietary models.</p>
+        <div class="quote">"We train LongCite-8B and LongCite-9B using the LongCite-45k dataset, successfully enabling their generation of accurate responses and fine-grained sentence-level citations in a single output. The evaluation results on LongBench-Cite show that our trained models achieve state-of-the-art citation quality, surpassing advanced proprietary models including GPT-4o." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Concise and Informative</strong>
+        <p>The abstract effectively summarizes the key contributions of the research within a reasonable length, providing sufficient detail to understand the problem, approach, and results.</p>
+        
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify the Improvement</strong>
+        <p>While the abstract mentions that LongCite models surpass GPT-4o, providing specific numbers (e.g., percentage improvement in citation F1 score) would strengthen the claims.</p>
+        <div class="quote">"The evaluation results on LongBench-Cite show that our trained models achieve state-of-the-art citation quality, surpassing advanced proprietary models including GPT-4o." (Page 1)</div>
+        <p><strong>Rationale:</strong> Quantifying the improvement would make the results more impactful and convincing for readers.</p>
+        <p><strong>Implementation:</strong> Include a specific metric and the percentage improvement achieved by LongCite models compared to GPT-4o.</p>
+    </li>
+    
+    <li>
+        <strong>Elaborate on the Impact</strong>
+        <p>The abstract could briefly mention the broader implications of this research, such as its potential to enhance the reliability of LLMs in various applications.</p>
+        <div class="quote">"We believe that this work lays a solid foundation for further research on LQAC and contributes to the development of more reliable and trustworthy LLMs." (Page 1)</div>
+        <p><strong>Rationale:</strong> Highlighting the potential impact would make the research more appealing to a wider audience.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two about the potential applications or benefits of this research in fields where LLM reliability is crucial.</p>
+    </li>
+    
+    <li>
+        <strong>Clarify the Limitations</strong>
+        <p>While the abstract focuses on the positive results, briefly acknowledging any limitations of the approach or the models would enhance the transparency of the research.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging limitations demonstrates scientific rigor and provides a more balanced perspective.</p>
+        <p><strong>Implementation:</strong> Add a sentence mentioning any limitations, such as the computational cost of the CoF pipeline or the dependence on existing LLMs for data generation.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Overview</h4>
+            <p>This introduction sets the stage for a research paper focused on enabling long-context large language models (LLMs) to generate citations, thereby enhancing their trustworthiness and verifiability. It begins by acknowledging the impressive capabilities of these LLMs in handling vast amounts of text but points out a critical limitation: the absence of citations in their responses. This lack of traceability makes it difficult for users to verify the information provided by LLMs, especially considering their susceptibility to generating inaccurate or fabricated content (hallucinations). The authors then discuss existing methods for generating citations in other domains, such as web browsing and open-domain question answering, but highlight their shortcomings in the context of long-context scenarios. These limitations include compromised answer quality due to incomplete context information in retrieval-based methods and increased user waiting time in post-hoc approaches. Moreover, the citations generated by these methods often lack granularity, referring to entire web pages or large text chunks, making it challenging for users to pinpoint the specific supporting evidence. The introduction concludes by emphasizing the need for a more effective approach that allows long-context LLMs to directly generate accurate responses with fine-grained, sentence-level citations, setting the stage for the research presented in the paper.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Lack of Citations in Long-Context LLMs:</strong> The authors identify the absence of citations in LLM responses as a major obstacle to user verification and trust, especially given the potential for hallucinations.</li><li><strong>Challenges of Existing Citation Generation Methods:</strong> The introduction discusses existing methods but points out their limitations in long-context scenarios, including compromised answer quality, increased latency, and coarse citation granularity.</li><li><strong>Need for Fine-Grained Citations:</strong> The authors emphasize the importance of generating precise, sentence-level citations to improve the verifiability and user-friendliness of LLM outputs.</li><li><strong>Focus on Long-Context Question Answering with Citations (LQAC):</strong> The introduction explicitly states the paper&#39;s focus on enabling long-context LLMs to perform question answering with accurate and fine-grained citations.</li><li><strong>Motivation for Improved Trustworthiness:</strong> The authors highlight the need for more reliable and trustworthy LLMs, particularly in sensitive domains where accurate information and verification are crucial.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Identification of the Problem</strong>
+        <p>The introduction effectively establishes the problem of missing citations in long-context LLMs and clearly articulates its impact on user trust and the difficulty of verifying LLM-generated information.</p>
+        <div class="quote">"Though current long-context large language models (LLMs) have demonstrated impressive capacities in answering user questions based on extensive text, the lack of citations in their responses makes user verification difficult, leading to concerns about their trustworthiness due to their potential hallucinations." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Comprehensive Literature Review</strong>
+        <p>The introduction provides a concise but thorough overview of existing methods for citation generation, acknowledging their strengths while clearly outlining their limitations in the context of long-context scenarios.</p>
+        <div class="quote">"On the other hand, recent works in web browsing and open-domain QA have allowed LLMs to generate responses with in-line citations through retrieval-based generation (RAG) or post-hoc methods (Nakano et al., 2021; Gao et al., 2023a;b; Menick et al., 2022). Nevertheless, these approaches still expose notable limitations in long-context scenarios: RAG often leads to compromised answer quality due to incomplete context information, while post-hoc methods prolong the user waiting time due to the more complicated pipeline." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Well-Defined Research Scope</strong>
+        <p>The introduction clearly defines the scope of the research, focusing specifically on long-context question answering with citations (LQAC) and emphasizing the goal of generating fine-grained, sentence-level citations.</p>
+        <div class="quote">"To overcome the above limitations, this work explores directly employing long-context LLMs to generate accurate responses with fine-grained sentence-level in-line citations." (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide Concrete Examples</strong>
+        <p>While the introduction effectively describes the problem and limitations of existing methods, including specific examples of how these limitations manifest in real-world scenarios would enhance clarity and reader engagement.</p>
+        <div class="quote">"In addition, their generated citations typically refer to entire web pages Nakano et al. (2021); Bohnet et al. (2022) or coarsely chunked snippets Gao et al. (2023b), thereby requiring users to further pinpoint the specific support evidence for the final verification." (Page 1)</div>
+        <p><strong>Rationale:</strong> Concrete examples would make the challenges more tangible and relatable for readers, strengthening the motivation for the proposed research.</p>
+        <p><strong>Implementation:</strong> Include a brief example illustrating how a coarse citation (e.g., referring to a large chunk of text) makes it difficult for a user to verify the LLM&#39;s answer, contrasting it with a fine-grained citation that directly points to the specific supporting sentence.</p>
+    </li>
+    
+    <li>
+        <strong>Highlight the Novelty of the Approach</strong>
+        <p>The introduction could more explicitly emphasize the unique aspects of the proposed research compared to existing methods, showcasing its potential to overcome the identified limitations.</p>
+        <div class="quote">"To overcome the above limitations, this work explores directly employing long-context LLMs to generate accurate responses with fine-grained sentence-level in-line citations." (Page 2)</div>
+        <p><strong>Rationale:</strong> Highlighting the novelty would make the research more compelling and attract readers&#39; attention to its potential contributions.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two explicitly stating how the proposed approach differs from existing methods and why it is expected to be more effective in addressing the challenges of LQAC, such as by leveraging the inherent capabilities of long-context LLMs or by introducing a novel training methodology.</p>
+    </li>
+    
+    <li>
+        <strong>Expand on the Potential Impact</strong>
+        <p>The introduction briefly mentions the importance of trustworthy LLMs but could expand on the potential impact of this research in specific domains or applications where accurate information and verification are crucial.</p>
+        <div class="quote">"This significantly impacts the reliability and trustworthiness of long-context LLMs, especially considering that they still struggle with hallucinations (Ji et al., 2023; Huang et al., 2023) and are prone to generate unfaithful content." (Page 1)</div>
+        <p><strong>Rationale:</strong> Elaborating on the potential impact would broaden the appeal of the research and highlight its relevance to a wider audience.</p>
+        <p><strong>Implementation:</strong> Include a brief discussion of how improved citation generation in long-context LLMs could benefit specific fields, such as legal research, scientific writing, or fact-checking, where the ability to trace information back to its source is essential.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>LongBench-Cite: Benchmark Long-Context QA with Citations</h3>
+            
+            <h4>Overview</h4>
+            <p>This section describes the creation and evaluation of LongBench-Cite, a benchmark designed to test how well long-context language models (LLMs) can answer questions and provide specific citations from a large body of text. It explains the challenge of making sure LLMs don&#39;t just give accurate answers but also back them up with precise references to the source material. The section details how the benchmark was built using existing datasets, covering various tasks like question answering and summarization. It also outlines the metrics used to assess both the accuracy of the answers and the quality of the citations, including how well they support the answer and how specific they are.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Long-Context Question Answering with Citations (LQAC):</strong> This is the core task being evaluated, where LLMs must answer questions and provide specific citations from a long text to support their answers.</li><li><strong>Sentence-Level Citations:</strong> The benchmark focuses on fine-grained citations at the sentence level, ensuring that the cited text directly supports the answer and is easy for users to verify.</li><li><strong>Data Collection and Benchmark Construction:</strong> LongBench-Cite is built using existing datasets covering diverse tasks and languages, ensuring a comprehensive evaluation of LLM capabilities.</li><li><strong>Evaluation Metrics for Correctness:</strong> The benchmark uses GPT-4o, a powerful language model, to assess the accuracy and comprehensiveness of the LLM-generated answers.</li><li><strong>Evaluation Metrics for Citation Quality:</strong> Multiple metrics are used to evaluate citations, including recall (whether all necessary citations are provided), precision (whether all citations are relevant), F1 score (a combined measure of recall and precision), and citation length (indicating the granularity of citations).</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Benchmark Design</strong>
+        <p>The authors have carefully designed LongBench-Cite to cover a wide range of tasks and languages, using existing datasets to ensure a robust and representative evaluation of LQAC capabilities.</p>
+        <div class="quote">"To evaluate LLMs’ performance on LQAC task, we curate a new benchmark LongBench-Cite by collecting data from existing bilingual long-context benchmarks LongBench (Bai et al., 2023) and LongBench-Chat (Bai et al., 2024), covering multiple key user-intensive tasks in both English and Chinese." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Focus on Sentence-Level Citations</strong>
+        <p>The emphasis on sentence-level citations is a significant strength, as it promotes fine-grained traceability and enhances the user&#39;s ability to verify the LLM&#39;s answers.</p>
+        <div class="quote">"In this work, we mainly focus on sentence-level citations because they ensure semantic integrity better, allow for finer-grained citation, and are thus more user-friendly." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Robust Evaluation Metrics</strong>
+        <p>The use of GPT-4o for evaluating both correctness and citation quality is a strength, as it leverages the capabilities of a powerful language model to provide a more nuanced and reliable assessment.</p>
+        <div class="quote">"Specifically, we first remove citation-relevant tokens from LLM response, then ask GPT-4o to rate the response based on the query and groundtruth answers via few-shot (for LongBench-Chat) or zero-shot prompting (for other datasets)." (Page 4)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Clarify the Rationale for Chunk Size</strong>
+        <p>The section mentions using 128-token chunks for initial citation generation but doesn&#39;t explain why this specific size was chosen.</p>
+        <div class="quote">"Chunk-level citations, where the context D is divided into indexed chunks with a fix length of 128 tokens, and each citation ci,j is in the form of [k], referring to the k-th chunk;" (Page 3)</div>
+        <p><strong>Rationale:</strong> Providing a rationale for the chunk size would enhance the transparency of the methodology and allow readers to better understand the design choices.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two explaining the reasoning behind the 128-token chunk size, considering factors such as computational efficiency, the typical length of sentences, or the desired level of granularity for initial citation generation.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Limitations of Automatic Evaluation</strong>
+        <p>While using GPT-4o for evaluation is a strength, the section could acknowledge the inherent limitations of relying on an automated system for assessing complex aspects like correctness and citation quality.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging limitations demonstrates scientific rigor and provides a more balanced perspective on the evaluation methodology.</p>
+        <p><strong>Implementation:</strong> Add a brief discussion of the potential limitations of using GPT-4o for evaluation, such as its susceptibility to biases or its inability to fully capture the nuances of human judgment. Consider mentioning the need for human evaluation to complement the automated assessment, especially for tasks involving subjective interpretation or complex reasoning.</p>
+    </li>
+    
+    <li>
+        <strong>Provide More Details on the Prompting Strategy</strong>
+        <p>The section mentions using prompts for GPT-4o evaluation but doesn&#39;t provide specific examples or details about the prompting strategy.</p>
+        <div class="quote">"Specifically, we first remove citation-relevant tokens from LLM response, then ask GPT-4o to rate the response based on the query and groundtruth answers via few-shot (for LongBench-Chat) or zero-shot prompting (for other datasets)." (Page 4)</div>
+        <p><strong>Rationale:</strong> Providing more details on the prompting strategy would enhance the reproducibility of the evaluation methodology and allow readers to better understand how GPT-4o was used for assessment.</p>
+        <p><strong>Implementation:</strong> Include examples of the prompts used for evaluating correctness and citation quality, highlighting the specific instructions and the expected format of GPT-4o&#39;s responses. Discuss any challenges or considerations in designing effective prompts for these tasks.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 1</summary>
+        <p>Figure 1 visually compares two methods of citing sources in long-context question answering: chunk-level citations and sentence-level citations. It uses two panels, each showing a question, a context, and an answer with citations. Panel (a) illustrates chunk-level citations, where the context is divided into fixed-size chunks, and citations refer to these chunks. However, this can lead to incomplete sentences in the answer, as the chunk boundaries might cut off sentences. Panel (b) shows sentence-level citations, where citations refer to specific sentences in the context, ensuring that the cited text is complete and grammatically correct. The figure uses emoticons to emphasize the user experience: a sad face for the less user-friendly chunk-level citations and a happy face for the more user-friendly sentence-level citations.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "As illustrated in Figure 1, we consider two types of citations:"</p>
+            <p><strong>Context:</strong> The authors are introducing the concept of chunk-level and sentence-level citations and using Figure 1 to visually represent these concepts.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is crucial for understanding the motivation behind the research. It clearly demonstrates the problem with existing chunk-level citations and highlights the advantage of using sentence-level citations for a better user experience. It sets the stage for the paper&#39;s focus on developing methods to generate fine-grained, sentence-level citations.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure effectively uses a simple visual representation to convey the difference between the two citation methods.</li><li>The use of emoticons adds a touch of humor and makes the figure more engaging.</li><li>The font size is a bit small, making it slightly difficult to read the text in the panels.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure could benefit from a more detailed caption that explicitly explains the connection between incomplete sentences and user experience.</li><li>Including an example where a chunk-level citation leads to a factually incorrect or misleading answer would further strengthen the argument for sentence-level citations.</li><li>The figure focuses on the user experience aspect but could also briefly mention the implications for accuracy and verifiability.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 1</summary>
+        <p>Table 1 provides statistics about the datasets used in LongBench-Cite, a benchmark for evaluating long-context question answering with citations. It lists six datasets, each with its corresponding task (e.g., single-document question answering, multi-document question answering, summarization), the source of the context (e.g., Wikipedia, government reports), the average length of the contexts in words or characters, the language of the dataset (English or Chinese), and the number of data points in each dataset.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The detailed data statistics are listed in Table 1."</p>
+            <p><strong>Context:</strong> The authors are describing the datasets used in their benchmark and referring to Table 1 for detailed information about these datasets.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is essential for understanding the scope and diversity of the benchmark used to evaluate the models. It provides a clear overview of the datasets, their characteristics, and the tasks they cover, allowing readers to assess the generalizability of the results.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is well-organized and easy to read.</li><li>The column headings are clear and informative.</li><li>The use of different units for average length (words for English, characters for Chinese) could be confusing for some readers.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table could benefit from a brief explanation of why these specific datasets were chosen and how they represent different challenges in long-context question answering.</li><li>Including information about the average number of sentences per context would be helpful for understanding the granularity of the citation task.</li><li>The table focuses on quantitative data but could also include a brief qualitative description of each dataset, highlighting its unique characteristics or challenges.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Number of data points in MultiFieldQA-en:</strong> 4559</li><li><strong>Number of data points in MultiFieldQA-zh:</strong> 6701</li><li><strong>Number of data points in HotpotQA:</strong> 9151</li><li><strong>Number of data points in Dureader:</strong> 15768</li><li><strong>Number of data points in GovReport:</strong> 8734</li><li><strong>Number of data points in LongBench-Chat:</strong> 35571</li><li><strong>Average length of contexts in MultiFieldQA-en:</strong> 150 words</li><li><strong>Average length of contexts in MultiFieldQA-zh:</strong> 200 characters</li><li><strong>Average length of contexts in HotpotQA:</strong> 200 words</li><li><strong>Average length of contexts in Dureader:</strong> 200 characters</li><li><strong>Average length of contexts in GovReport:</strong> 200 words</li><li><strong>Average length of contexts in LongBench-Chat:</strong> 50 words</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Table 2</summary>
+        <p>Table 2 presents the performance of different language models on the LongBench-Cite benchmark, focusing on their ability to generate accurate and relevant citations. It compares various models, including both proprietary models (like GPT-4o) and open-source models, using metrics such as citation recall, precision, F1 score, and citation length. The table highlights the best and second-best performing models for each metric across different datasets.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The evaluation results of citation quality and correctness are presented in Table 2 and Table 3, respectively."</p>
+            <p><strong>Context:</strong> We select LAC-S strategy as the default setting due to its efficiency, losslessness of context information, and no reliance on additional retrieval systems. A further discussion about the pros and cons of different LQAC strategies can be found in Sec. 3.2. As illustrated in Figure 10, we number each sentence senti in the context by adding a prefix &#39;&lt;Ci&gt;&#39; and prompt the LLM with one demonstration. The evaluation results of citation quality and correctness are presented in Table 2 and Table 3, respectively. Our findings are as follows:</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is crucial for understanding the current state of long-context question answering with citations (LQAC). It provides a direct comparison of different language models&#39; abilities to generate accurate and relevant citations, highlighting the strengths and weaknesses of existing models and setting the stage for the authors&#39; proposed approach.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is well-organized and easy to read, with clear labels for each model, dataset, and metric.</li><li>The use of bold and underlined text effectively highlights the best and second-best performing models, making it easy to identify the top contenders.</li><li>The table could benefit from a brief caption explaining the meaning of each metric (recall, precision, F1 score, citation length) for readers unfamiliar with these concepts.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table clearly shows that open-source LLMs generally lag behind proprietary models in terms of citation quality, indicating a need for improvement in this area.</li><li>The results also reveal that even proprietary models have room for improvement, as their citation F1 scores are not particularly high, and their citation lengths suggest a coarse granularity.</li><li>The table provides valuable insights into the challenges of LQAC and motivates the need for more effective methods to enhance the citation generation capabilities of LLMs.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Citation F1 Score (GPT-4o on LongBench-Chat):</strong> 65.6 %</li><li><strong>Citation Length (GPT-4o on LongBench-Chat):</strong> 220 tokens</li><li><strong>Citation F1 Score (LongCite-8B on LongBench-Chat):</strong> 72.0 %</li><li><strong>Citation Length (LongCite-8B on LongBench-Chat):</strong> 85 tokens</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Table 3</summary>
+        <p>Table 3 compares the correctness of different language models in answering questions based on long contexts, both with and without the requirement to generate citations. It presents the correctness scores (C) for models in the LQAC setting, the correctness scores (CLQA) in the vanilla long-context QA setting (without citations), and the correctness ratio (CR), which indicates whether adding citations improves or hurts the model&#39;s ability to answer questions correctly. The table highlights cases where adding citations improves correctness in green and cases where it hurts correctness in red.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The evaluation results of citation quality and correctness are presented in Table 2 and Table 3, respectively."</p>
+            <p><strong>Context:</strong> We select LAC-S strategy as the default setting due to its efficiency, losslessness of context information, and no reliance on additional retrieval systems. A further discussion about the pros and cons of different LQAC strategies can be found in Sec. 3.2. As illustrated in Figure 10, we number each sentence senti in the context by adding a prefix &#39;&lt;Ci&gt;&#39; and prompt the LLM with one demonstration. The evaluation results of citation quality and correctness are presented in Table 2 and Table 3, respectively. Our findings are as follows:</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is essential for understanding the impact of citation generation on the overall correctness of long-context question answering. It directly addresses the concern that requiring models to generate citations might compromise their ability to answer questions accurately. The table helps to assess whether adding citations is beneficial or detrimental to the model&#39;s performance.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is well-structured and easy to navigate, with clear labels for each model, dataset, and metric.</li><li>The use of color-coding (green for improvement, red for degradation) effectively highlights the impact of citation generation on correctness, making it easy to identify trends.</li><li>The table could benefit from a brief caption explaining the meaning of the correctness ratio (CR) and how it is calculated for readers unfamiliar with this concept.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table shows that in many cases, generating responses and citations in one pass leads to a decrease in correctness (CR &lt; 100%), suggesting that this approach can be challenging for LLMs.</li><li>However, the authors&#39; trained models (LongCite-8B and LongCite-9B) consistently show improvement in correctness when trained with citation information (CR &gt; 100%), indicating the effectiveness of their approach.</li><li>The table provides valuable evidence that training LLMs with citation information not only enhances their citation generation capabilities but also improves their overall accuracy in answering questions based on long contexts.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Correctness Ratio (GPT-4o on LongBench-Chat):</strong> 88 %</li><li><strong>Correctness Ratio (LongCite-8B on LongBench-Chat):</strong> 107 %</li><li><strong>Correctness Ratio (LongCite-9B on LongBench-Chat):</strong> 109 %</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>CoF: Automatic SFT Data Construction for LQAC</h3>
+            
+            <h4>Overview</h4>
+            <p>This section introduces CoF, a method for automatically creating training data to teach long-context language models (LLMs) how to provide citations for their answers. It&#39;s like giving the LLM a set of practice questions with answers and showing it exactly where in a long text each part of the answer comes from. The method works in stages: first, it generates a question and answer from a long text. Then, it finds relevant sections of the text (chunks) related to the answer. Next, it pinpoints the specific sentences within those chunks that directly support the answer. Finally, it filters out any examples where the answer doesn&#39;t have enough supporting citations. The authors test this method and show that it helps LLMs generate more accurate citations without sacrificing the quality of the answers.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Post-Hoc Approach:</strong> CoF adds citations to existing question-answer pairs, ensuring that the answer quality is not compromised by the simultaneous generation of answers and citations.</li><li><strong>Retrieval and Extraction:</strong> CoF uses a combination of retrieval (finding relevant chunks) and extraction (pinpointing specific sentences) to generate precise citations.</li><li><strong>Coarse-to-Fine Citation Generation:</strong> The method starts with chunk-level citations and then refines them to sentence-level citations, ensuring both coverage and granularity.</li><li><strong>Data Filtering:</strong> CoF filters out instances with insufficient citations, ensuring that the training data is focused on factual grounding and reduces the risk of the LLM relying on its internal knowledge or hallucinating.</li><li><strong>Validation on LongBench-Cite:</strong> The authors test CoF on LongBench-Cite, a benchmark for long-context question answering with citations, demonstrating its effectiveness in generating accurate and fine-grained citations while preserving answer quality.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Explanation of the Pipeline</strong>
+        <p>The section provides a step-by-step explanation of the CoF pipeline, making it easy for readers to understand the process of generating citation-rich training data.</p>
+        <div class="quote">"As illustrated in Figure 2, CoF consists of four steps: (1) Given a long context material, CoF first employs the LLM to generate a query and corresponding answer through Self-Instruct Wang et al. (2023). (2) CoF then uses sentences in the answer to retrieve roughly k chunks from the context, which are subsequently input into the LLM to add coarse-grained chunk-level citations into the answer. (3) Next, the LLM generates fine-grained sentence-level citations for each statement by extracting supporting sentences from the corresponding chunk-level citations. (4) Finally, instances with too few citations are filtered out." (Page 6)</div>
+    </li>
+    
+    <li>
+        <strong>Justification for Design Choices</strong>
+        <p>The authors provide clear justifications for the design choices in CoF, such as the use of a post-hoc approach, the coarse-to-fine strategy, and the data filtering step.</p>
+        <div class="quote">"Considering that generating the answer and citations in one pass might affect answer correctness, we decide to first construct long-context QA pairs and then add citations into the answers in subsequent steps. The post-hoc characteristic also allows our pipeline to augment any long-context QA datasets with citations." (Page 6)</div>
+    </li>
+    
+    <li>
+        <strong>Thorough Validation</strong>
+        <p>The authors thoroughly validate CoF on LongBench-Cite, comparing it with various other LQAC strategies and demonstrating its superiority in terms of citation quality and answer correctness.</p>
+        <div class="quote">"We use GLM-4 as the backbone LLM and Zhipu Embedding-2 as the retriever for all strategies and set retrieval hyper-parameters lmax = 10 and k = 40. The results in Table 4 show that:" (Page 8)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Elaborate on the Retrieval Process</strong>
+        <p>The section mentions using sentences in the answer to retrieve chunks but doesn&#39;t provide details about the specific retrieval method or the criteria used for selecting relevant chunks.</p>
+        <div class="quote">"CoF then uses sentences in the answer to retrieve roughly k chunks from the context, which are subsequently input into the LLM to add coarse-grained chunk-level citations into the answer." (Page 6)</div>
+        <p><strong>Rationale:</strong> Providing more details about the retrieval process would enhance the transparency of the methodology and allow readers to better understand how relevant chunks are identified.</p>
+        <p><strong>Implementation:</strong> Include a brief description of the retrieval method used (e.g., keyword-based search, semantic similarity), the specific criteria for selecting relevant chunks (e.g., overlap with answer sentences, relevance score), and any thresholds or parameters involved in the retrieval process.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Impact of Retrieval Quality</strong>
+        <p>The section doesn&#39;t explicitly discuss how the quality of the retrieved chunks might affect the performance of CoF, particularly the accuracy of the generated citations.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging the potential impact of retrieval quality would provide a more comprehensive understanding of the limitations and potential challenges of the CoF pipeline.</p>
+        <p><strong>Implementation:</strong> Add a brief discussion of how the accuracy and relevance of the retrieved chunks might influence the citation generation process. Consider mentioning potential issues such as retrieving irrelevant chunks or missing relevant chunks, and how these issues might affect the citation recall and precision. Discuss any strategies used to mitigate these risks, such as using multiple retrieval methods or adjusting retrieval parameters.</p>
+    </li>
+    
+    <li>
+        <strong>Provide Examples of Generated Data</strong>
+        <p>While the section describes the CoF pipeline and its validation, it would be helpful to include examples of the actual training data generated by CoF, showcasing the format and quality of the question-answer pairs with sentence-level citations.</p>
+        
+        <p><strong>Rationale:</strong> Providing examples of generated data would give readers a more concrete understanding of the output of CoF and allow them to assess the quality and usefulness of the training data.</p>
+        <p><strong>Implementation:</strong> Include a few examples of question-answer pairs with sentence-level citations generated by CoF. Choose examples that illustrate different aspects of the data, such as single-sentence answers, multi-sentence answers, and answers with varying levels of citation complexity. Briefly explain the rationale for choosing these examples and highlight any interesting or challenging aspects of the citation generation process.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>flow diagram 2</summary>
+        <p>Figure 2 provides a visual overview of the CoF (Coarse to Fine) pipeline, a method for automatically creating training data for long-context question answering with citations (LQAC). The pipeline has four main steps, each represented by a panel in the diagram: **(a) QA Instance Generation:** This step starts with a long text document. The CoF pipeline uses an existing large language model (LLM) to generate a question and its corresponding answer from the document. Think of it like asking the LLM to come up with a quiz question and its answer based on a textbook chapter. **(b) Chunk-Level Citation Generation:** The document is divided into chunks of a fixed size (128 tokens). The answer generated in the previous step is used to retrieve relevant chunks from the document. The LLM then adds citations to the answer, referring to these chunks. It&#39;s like highlighting the sections in the textbook chapter that support the answer to the quiz question. **(c) Sentence-Level Citation Extraction:** This step refines the citations to be more precise. For each chunk cited in the previous step, the LLM identifies the specific sentences that support the answer. This ensures that the citations are accurate and point to the exact source of information. It&#39;s like narrowing down the highlighted sections in the textbook to the specific sentences that provide the answer. **(d) Data Filtering:** Finally, the pipeline filters out any instances where the answer has too few citations. This ensures that the training data only includes examples where the LLM has found sufficient evidence in the document to support its answer. It&#39;s like removing any quiz questions that don&#39;t have enough supporting information in the textbook.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "As illustrated in Figure 2, CoF consists of four steps:"</p>
+            <p><strong>Context:</strong> The authors are introducing the CoF pipeline and using Figure 2 to visually explain its four-step process.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 2 is essential for understanding how the CoF pipeline works. It provides a clear visual representation of the process, making it easier to grasp the complex steps involved in generating training data for LQAC. The figure helps readers understand how the pipeline leverages existing LLMs to automatically create high-quality training data with precise citations.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure effectively uses separate panels to illustrate each step of the pipeline, making the process easy to follow.</li><li>The use of arrows and text annotations clearly shows the flow of information and the actions performed at each step.</li><li>The figure could benefit from a more visually appealing design. Using different colors or shapes for each panel could make it more engaging.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure provides a good high-level overview of the CoF pipeline, but it could include more details about the specific techniques used at each step.</li><li>For example, the figure could mention the type of retriever used for chunk retrieval or the prompting strategy used for citation generation.</li><li>Adding a brief explanation of the rationale behind each step would further enhance the figure&#39;s value. For instance, why is it necessary to first generate chunk-level citations and then refine them to sentence-level citations?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>table 4</summary>
+        <p>Table 4 compares different strategies for generating answers and citations in long-context question answering, using the GLM-4 language model. It shows how well each strategy performs on various datasets, measuring both the quality of the citations and the correctness of the answers. The table is divided into two main categories: **One-Pass Methods:** These methods try to generate the answer and citations simultaneously in a single step. They include LAC-C/LAC-S (generating chunk-level/sentence-level citations while reading the entire context) and RAC-C/RAC-S (generating citations while reading only a few retrieved chunks/sentences). **Post-Hoc Methods:** These methods first generate the answer and then add citations in a separate step. They include post-LC-C/post-LC-S (adding citations after generating the answer by searching the entire context) and post-RC-C/post-RC-S (adding citations after generating the answer by searching only a few retrieved chunks/sentences). The table also includes CoF, the authors&#39; proposed pipeline. The table uses several metrics to evaluate the strategies: * **Citation F1:** This measures the overall quality of the citations, considering both recall (whether all necessary citations are provided) and precision (whether all citations are relevant). * **Correctness (C):** This measures how accurate and comprehensive the answer is. * **Correctness Ratio (CR):** This compares the correctness of the answer in the LQAC setting (with citations) to the correctness in the vanilla long-context QA setting (without citations). A CR greater than 100% means that adding citations improved the answer&#39;s correctness. * **Citation Length (CL):** This measures the average number of tokens in the cited snippets, indicating the granularity of the citations. Shorter citation lengths generally mean more precise citations. The table highlights the best performing method for each metric on each dataset.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The results in Table 4 show that:"</p>
+            <p><strong>Context:</strong> The authors are discussing the results of their experiments comparing different LQAC strategies and referring to Table 4 for the specific data.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Table 4 is crucial for understanding the strengths and weaknesses of different approaches to LQAC. It provides a direct comparison of various strategies, highlighting the trade-offs between citation quality, answer correctness, and efficiency. The table supports the authors&#39; claim that their proposed CoF pipeline achieves a good balance between these factors.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is well-organized, with clear headings and labels for each metric and dataset.</li><li>The use of bold text to highlight the best performing method for each metric makes it easy to identify the top contenders.</li><li>The table could benefit from a more visually appealing design. Using different colors or shading to distinguish the one-pass and post-hoc methods could improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table provides a comprehensive comparison of different LQAC strategies, but it could benefit from a more detailed explanation of the abbreviations used for each method.</li><li>Including a brief discussion of the computational cost of each strategy would be helpful for understanding the practical implications of the results.</li><li>The table focuses on quantitative metrics, but it could also include a qualitative analysis of the strengths and weaknesses of each strategy, based on manual inspection of the generated answers and citations.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Average Citation F1 (CoF):</strong> 65.8 %</li><li><strong>Average Correctness Ratio (CoF):</strong> 100 %</li><li><strong>Average Citation Length (CoF):</strong> 89 tokens</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>LongCite: Teach Long-Context LLMs to Generate Citations</h3>
+            
+            <h4>Overview</h4>
+            <p>This section details the experiments conducted to train long-context LLMs to generate citations alongside their answers, aiming to improve their trustworthiness and verifiability. The authors fine-tuned two open-source long-context models, GLM-4-9B and Llama-3.1-8B, using a combination of their newly created LongCite-45k dataset (specifically designed for long-context question answering with citations) and general SFT instances from ShareGPT. They trained separate models, LongSFT-9B and LongSFT-8B, using only the long-context question-answer pairs from LongCite-45k to compare the impact of citation-based training on answer correctness. The section presents the results of these experiments, highlighting the improved citation quality and answer correctness achieved by the LongCite models compared to various proprietary and open-source models.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Model Training:</strong> The authors fine-tuned two open-source long-context LLMs, GLM-4-9B and Llama-3.1-8B, using a combination of LongCite-45k and ShareGPT data. They also trained separate models using only the long-context question-answer pairs from LongCite-45k for comparison.</li><li><strong>Evaluation on LongBench-Cite:</strong> The trained models were evaluated on LongBench-Cite, a benchmark for long-context question answering with citations, using metrics like citation recall, precision, F1 score, citation length, and answer correctness.</li><li><strong>Superior Citation Quality:</strong> The LongCite models achieved the best citation quality among all evaluated models, surpassing even powerful proprietary models like GPT-4o, Claude-3-Sonnet, and GLM-4.</li><li><strong>Improved Answer Correctness:</strong> Training with citation information led to improved answer correctness compared to vanilla long-context SFT, indicating a mutually beneficial relationship between citation generation and answer accuracy.</li><li><strong>Analysis of Correctness Improvement:</strong> The authors manually analyzed the responses and attributed the correctness improvement to enhanced evidence locating ability, reduced hallucination, and more uniform context utilization by the LongCite models.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Comprehensive Model Training and Evaluation</strong>
+        <p>The authors conducted thorough experiments, training multiple models with different data configurations and evaluating them on a comprehensive benchmark, providing a robust assessment of their approach.</p>
+        <div class="quote">"We show the citation quality and correctness of our trained models on LongBench-Cite in Table 2 and 3, respectively." (Page 9)</div>
+    </li>
+    
+    <li>
+        <strong>Strong Empirical Results</strong>
+        <p>The LongCite models demonstrated significant improvements in both citation quality and answer correctness, surpassing even advanced proprietary models, providing strong evidence for the effectiveness of their approach.</p>
+        <div class="quote">"LongCite-8B and LongCite-9B achieve the best citation qualities among all models. Compared to three powerful proprietary models, i.e., GPT-4o, Claude-3-Sonnet, and GLM-4, LongCite-8B/9B improves the overall citation F1 by 6.4/3.6, 4.8/2.0, and 6.6/3.8, respectively." (Page 9)</div>
+    </li>
+    
+    <li>
+        <strong>Insightful Analysis of Correctness Improvement</strong>
+        <p>The authors went beyond simply reporting the improved correctness and provided a manual analysis of the responses, identifying specific factors contributing to the improvement, such as reduced hallucination and better context utilization.</p>
+        <div class="quote">"To further explore the reasons for the correctness improvement, we manually compared the responses generated by LongCite-9B and LongSFT-9B and found that the improvement mainly comes from two aspects (we present 3 cases in Table 9, 10, and 11 to illustrate our interpretation): (1) SFT with citation information enhances the evidence locating ability of the model and helps to prevent from hallucination; (2) LongCite models can utilize context information more uniformaly." (Page 9)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Discuss the Computational Cost of Training</strong>
+        <p>The section provides details about the training setup but doesn&#39;t mention the computational cost involved in training these long-context models.</p>
+        
+        <p><strong>Rationale:</strong> Understanding the computational cost is important for assessing the practicality and scalability of the approach, especially for researchers with limited resources.</p>
+        <p><strong>Implementation:</strong> Include a brief discussion of the computational resources used for training, such as the number of GPUs, training time, and estimated cost. Consider comparing the cost of training LongCite models with that of training vanilla long-context models or using other citation generation methods.</p>
+    </li>
+    
+    <li>
+        <strong>Explore the Impact of Different Retrieval Methods</strong>
+        <p>The section mentions using Zhipu Embedding-v2 for retrieval but doesn&#39;t explore the impact of using different retrieval methods on the performance of LongCite models.</p>
+        <div class="quote">"We select two latest open-source base models, namely GLM-4-9B (Zeng et al., 2024) and Llama-3.1-8B (Vavekanand &amp; Sam, 2024), for the training experiments." (Page 8)</div>
+        <p><strong>Rationale:</strong> The choice of retrieval method can significantly influence the quality of the retrieved chunks and, consequently, the accuracy of the generated citations. Exploring different retrieval methods would provide a more comprehensive understanding of the factors affecting LongCite performance.</p>
+        <p><strong>Implementation:</strong> Conduct experiments using different retrieval methods, such as BM25, TF-IDF, or other embedding-based methods. Compare the performance of LongCite models trained with different retrieval methods, analyzing the impact on citation quality, answer correctness, and computational cost.</p>
+    </li>
+    
+    <li>
+        <strong>Analyze the Generalizability of LongCite Models</strong>
+        <p>The section focuses on evaluating LongCite models on LongBench-Cite, but it would be beneficial to assess their generalizability to other datasets or tasks.</p>
+        
+        <p><strong>Rationale:</strong> Assessing generalizability is crucial for understanding the robustness and applicability of the approach beyond the specific benchmark used for evaluation.</p>
+        <p><strong>Implementation:</strong> Evaluate LongCite models on other long-context question answering datasets or tasks, such as document summarization with citations or evidence-based reasoning. Analyze the performance of the models on these new tasks, comparing them with other relevant baselines and discussing any limitations or challenges in generalizing the approach.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>Table 5</summary>
+        <p>Table 5 shows the results of an experiment where the authors tested different ways of training a language model called LongCite-9B to generate citations for its answers. They wanted to see if training the model with data that includes citations would make it better at providing those citations. They compared the model&#39;s performance when trained with different types of data: standard training data, data without filtering out examples with few citations, and data created using a different method (post-RAC-S). The table shows how well the model performed in each case, using metrics like recall (did it find all the relevant citations?), precision (were the citations it found actually relevant?), F1 score (a combined measure of recall and precision), citation length (how many words were in the citations on average), and correctness (how accurate was the answer itself?).</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The results in Table 5 indicate that LongSFT-9B performs poorly on LQAC task."</p>
+            <p><strong>Context:</strong> The authors are discussing the results of their experiments on training LongSFT-9B with different data and referring to Table 5 for the specific performance metrics.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is important because it shows that training with citation information is crucial for improving the model&#39;s ability to generate citations. It demonstrates that simply training the model on standard data or data without proper filtering doesn&#39;t lead to good citation generation. The table also highlights the challenges of using a different data creation method (post-RAC-S), suggesting that the authors&#39; proposed CoF method is more effective for generating suitable training data.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clear and easy to read, with well-defined headings and rows.</li><li>The use of abbreviations for the different training data types could be confusing for readers unfamiliar with the terminology. It would be helpful to include a brief explanation of each abbreviation in the table caption or a footnote.</li><li>The table could benefit from visual cues, such as bolding the best-performing model for each metric, to highlight the key findings.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table effectively shows that training with citation information is essential for good citation generation performance.</li><li>The table could benefit from a more detailed analysis of the results. For example, why does the model trained with post-RAC-S data perform so poorly? What specific challenges arise from using this data creation method?</li><li>The table focuses on quantitative metrics but could also include a qualitative analysis of the generated citations. For example, are the citations grammatically correct? Do they accurately reflect the content of the source text?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Citation F1 Score (LongCite-9B with standard SFT):</strong> 63.6 %</li><li><strong>Citation F1 Score (LongCite-9B without data filtering):</strong> 61.2 %</li><li><strong>Citation F1 Score (LongCite-9B with post-RAC-S data):</strong> 50.1 %</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Bar Graph 3</summary>
+        <p>Figure 3 is a bar graph that shows the relationship between the accuracy of a language model&#39;s answers and the quality of the citations it provides. The model being analyzed is LongCite-9B. The graph divides the model&#39;s answers into three groups based on how correct they are: not very correct (0-0.33), somewhat correct (0.33-0.67), and very correct (0.67-1). For each group, the graph shows the average citation F1 score, which is a measure of how good the citations are. The higher the F1 score, the better the citations. The graph also shows error bars, which represent the variation in citation F1 scores within each group.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "As illustrated in Figure 3, responses with higher correctness typically have higher citation qualities, demonstrating a mutually promoting relationship between these two attributes."</p>
+            <p><strong>Context:</strong> The authors are discussing the correlation between the correctness of the model&#39;s answers and the quality of its citations, using Figure 3 to visually represent this relationship.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it suggests that training a language model to generate accurate citations also helps it generate more accurate answers. This finding supports the authors&#39; argument that teaching LLMs to cite their sources not only improves the verifiability of their answers but also enhances their overall performance.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The graph is simple and easy to understand, with clear labels for the axes and the different correctness ranges.</li><li>The use of error bars is helpful for showing the variation in citation F1 scores within each group.</li><li>The graph could be more visually appealing. Using different colors for each bar or adding a title that summarizes the key finding would make it more engaging.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The graph clearly shows a positive correlation between answer correctness and citation quality, supporting the authors&#39; claim.</li><li>The graph could benefit from a more detailed explanation of the citation F1 score. What does a specific F1 score mean in terms of citation quality? How is it calculated?</li><li>The graph focuses on the average F1 score, but it would be interesting to see the distribution of F1 scores within each correctness group. Are there any outliers? How does the variation in citation quality change across different correctness levels?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-5" class="section">
+            <h3>Related Works</h3>
+            
+            <h4>Overview</h4>
+            <p>This section reviews previous research relevant to the paper&#39;s focus on enabling long-context LLMs to generate citations. It covers two main areas: advancements in long-context LLMs and research on question answering with citations. The authors first discuss the progress in developing LLMs capable of handling extensive text, but point out that these models often lack citations, making it difficult to verify their outputs and address potential inaccuracies (hallucinations). They then review existing methods for generating citations in other domains, like open-domain question answering, but highlight their limitations in long-context scenarios. These limitations include compromised answer quality due to incomplete context in retrieval-based methods and increased processing time in post-hoc approaches. The authors also note that existing citation evaluation methods often rely on limited NLI models, while their work uses GPT-4o for more nuanced assessment.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Limitations of Current Long-Context LLMs:</strong> While capable of processing vast text, these models often lack citations, hindering verification and potentially leading to the spread of misinformation.</li><li><strong>Existing Citation Generation Methods:</strong> The authors review methods like retrieval-augmented generation and post-hoc processing, but point out their shortcomings in long-context scenarios, such as reduced answer quality and increased latency.</li><li><strong>Importance of Fine-Grained Citations:</strong> The section emphasizes the need for precise, sentence-level citations to improve verifiability and user experience, contrasting it with the coarse granularity of existing methods.</li><li><strong>Focus on Long-Context Question Answering with Citations (LQAC):</strong> The authors reiterate the paper&#39;s focus on enabling long-context LLMs to generate both accurate answers and precise citations in a single output.</li><li><strong>Advanced Citation Evaluation:</strong> The section highlights the use of GPT-4o for evaluating citation quality, contrasting it with previous methods that rely on less capable NLI models.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear Connection to Research Focus</strong>
+        <p>The section effectively connects the reviewed research to the paper&#39;s core focus on long-context question answering with citations, highlighting the gaps that the current work aims to address.</p>
+        <div class="quote">"Our work explores how to enable long-text models to produce responses with fine-grained citations, thereby enhancing the verifiability and trustworthiness of the long-context LLMs." (Page 11)</div>
+    </li>
+    
+    <li>
+        <strong>Concise and Informative Overview</strong>
+        <p>The section provides a concise yet informative overview of relevant research areas, covering both the advancements in long-context LLMs and the challenges in citation generation.</p>
+        <div class="quote">"Recently, question answering with citations has been extensively studied in the fields of open-domain QA (Nakano et al., 2021; Bohnet et al., 2022; Gao et al., 2023a;b; Schimanski et al., 2024). Most of these methods rely on retrieval-augmented generation or post-hoc processing, which are not well-suited for long-context QA scenarios due to information loss or excessive latency." (Page 11)</div>
+    </li>
+    
+    <li>
+        <strong>Critical Analysis of Existing Methods</strong>
+        <p>The section doesn&#39;t just summarize previous research but also critically analyzes existing methods, highlighting their limitations and motivating the need for the proposed approach.</p>
+        <div class="quote">"Furthermore, the coarse granularity of their citations negatively impacts user experience (Huang et al., 2024). Our work, however, leverages long-context LLMs to generate responses and precise sentence-level citations in a single pass, providing advantages in terms of response correctness, efficiency, and user friendliness." (Page 11)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on the Discussion of Hallucinations</strong>
+        <p>While the section mentions hallucinations as a concern, it could provide a more detailed explanation of this phenomenon and its implications for LLM trustworthiness.</p>
+        <div class="quote">"This leads to potential hallucinations of the aligned LLMs, i.e., fabricating content not present in or consistent with the context." (Page 11)</div>
+        <p><strong>Rationale:</strong> A deeper discussion of hallucinations would highlight the importance of citation generation for addressing this issue and make the research more relevant to readers concerned about LLM reliability.</p>
+        <p><strong>Implementation:</strong> Include a brief explanation of what hallucinations are, how they arise in LLMs, and why they are a significant concern, especially in sensitive domains. Provide examples of hallucinations in long-context scenarios and discuss how citations can help to mitigate this problem by allowing users to verify the information provided by LLMs.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Ethical Implications of Citation Generation</strong>
+        <p>The section focuses on the technical aspects of citation generation but could also address the ethical implications of this technology.</p>
+        
+        <p><strong>Rationale:</strong> Considering the ethical implications is crucial for responsible development and deployment of LLMs, especially as they become more integrated into various aspects of society.</p>
+        <p><strong>Implementation:</strong> Include a brief discussion of the potential ethical implications of citation generation in LLMs, such as the risk of bias in citation selection, the potential for misuse of citations to spread misinformation, and the need for transparency and accountability in LLM-generated citations. Consider mentioning guidelines or best practices for ethical citation generation in LLMs.</p>
+    </li>
+    
+    <li>
+        <strong>Connect Citation Generation to Broader Research Trends</strong>
+        <p>The section could benefit from connecting the research on citation generation to broader trends in LLM research, such as explainability, transparency, and trustworthiness.</p>
+        <div class="quote">"Our work explores how to enable long-text models to produce responses with fine-grained citations, thereby enhancing the verifiability and trustworthiness of the long-context LLMs." (Page 11)</div>
+        <p><strong>Rationale:</strong> Connecting citation generation to these broader trends would highlight its significance beyond the specific task of LQAC and position the research within the larger context of LLM development.</p>
+        <p><strong>Implementation:</strong> Add a paragraph discussing how citation generation contributes to the broader goals of making LLMs more explainable, transparent, and trustworthy. Explain how citations can help users understand the reasoning behind LLM-generated answers, trace information back to its source, and assess the reliability of LLM outputs. Connect these points to the growing emphasis on responsible AI and the need for LLMs that are not only powerful but also accountable and trustworthy.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-6" class="section">
+            <h3>Conclusion</h3>
+            
+            <h4>Overview</h4>
+            <p>This conclusion summarizes the paper&#39;s key contributions in enhancing the trustworthiness and verifiability of long-context large language models (LLMs) by enabling them to generate citations. It reiterates the problem of LLMs lacking citations, making it difficult to verify their outputs, and highlights the limitations of existing citation generation methods. The authors emphasize the success of their proposed CoF pipeline in automatically constructing a large-scale dataset with fine-grained sentence-level citations (LongCite-45k) and the effectiveness of their trained models, LongCite-8B and LongCite-9B, in generating accurate responses with precise citations in a single output. The conclusion underscores the significance of this work in laying a foundation for future research on long-context question answering with citations (LQAC) and contributing to the development of more reliable and trustworthy LLMs.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Summary of the Problem:</strong> The conclusion briefly restates the challenge of LLMs lacking citations, hindering user verification and potentially leading to the spread of misinformation.</li><li><strong>CoF Pipeline and LongCite-45k Dataset:</strong> The authors highlight the success of their CoF pipeline in automatically generating a large-scale dataset with precise sentence-level citations, addressing the lack of suitable training data for LQAC.</li><li><strong>LongCite Models and Improved Performance:</strong> The conclusion emphasizes the effectiveness of their trained models, LongCite-8B and LongCite-9B, in generating both accurate answers and fine-grained citations in a single output, surpassing existing models.</li><li><strong>Contribution to LQAC Research:</strong> The authors position their work as a significant contribution to the field of long-context question answering with citations, providing a foundation for future research and development.</li><li><strong>Advancement of Trustworthy LLMs:</strong> The conclusion underscores the broader impact of this work in contributing to the development of more reliable and trustworthy LLMs, crucial for various applications where accurate information and verification are essential.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Concise and Comprehensive Summary</strong>
+        <p>The conclusion effectively summarizes the key contributions of the paper within a short paragraph, covering the problem, the proposed approach, the results, and the broader impact.</p>
+        <div class="quote">"In this work, we explore enhancing LLMs’ capacity to generate fine-grained citations from lengthy contexts. We first propose LongBench-Cite, an automatic benchmark to reveal current LLMs’ limited performance on long-context question answering with citations (LQAC). We then introduce CoF, a novel pipeline that uses off-the-shelf LLMs to automatically generate long-context QA instances with precise sentence-level citations, to construct LongCite-45k, a large-scale SFT dataset for LQAC. Finally, we successfully train LongCite-8B and LongCite-9B with LongCite-45k, allowing the generation of accurate responses and fine-grained citations in one pass. Extensive analyses and human evaluation further verify the effectiveness of our approach." (Page 11)</div>
+    </li>
+    
+    <li>
+        <strong>Emphasis on Key Findings</strong>
+        <p>The conclusion effectively highlights the most important findings of the research, such as the success of the CoF pipeline, the performance of the LongCite models, and the contribution to LQAC research.</p>
+        <div class="quote">"We believe that this work lays a solid foundation for further research on LQAC and contributes to the development of more reliable and trustworthy LLMs." (Page 11)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Statement of Broader Impact</strong>
+        <p>The conclusion clearly articulates the broader impact of the research, emphasizing its contribution to the development of more trustworthy and reliable LLMs, a crucial aspect for various applications.</p>
+        <div class="quote">"We believe that this work lays a solid foundation for further research on LQAC and contributes to the development of more reliable and trustworthy LLMs." (Page 11)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand on Future Research Directions</strong>
+        <p>While the conclusion mentions laying a foundation for future research, it could provide more specific directions for future work in LQAC.</p>
+        <div class="quote">"We believe that this work lays a solid foundation for further research on LQAC and contributes to the development of more reliable and trustworthy LLMs." (Page 11)</div>
+        <p><strong>Rationale:</strong> Providing specific research directions would guide future work in the field and stimulate further exploration of LQAC.</p>
+        <p><strong>Implementation:</strong> Include a few sentences outlining potential areas for future research, such as exploring different citation generation techniques, developing more robust evaluation metrics for LQAC, or investigating the application of LQAC in specific domains like legal research or scientific writing.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Limitations of the Current Work</strong>
+        <p>While the conclusion focuses on the positive contributions, briefly acknowledging any limitations of the proposed approach or the trained models would enhance the transparency and completeness of the research.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging limitations demonstrates scientific rigor and provides a more balanced perspective on the research findings.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two mentioning any limitations, such as the computational cost of the CoF pipeline, the dependence on existing LLMs for data generation, or the potential for bias in citation selection. Briefly discuss how these limitations could be addressed in future work.</p>
+    </li>
+    
+    <li>
+        <strong>Connect to Real-World Applications</strong>
+        <p>The conclusion could strengthen the connection between the research and its potential impact on real-world applications by providing specific examples.</p>
+        <div class="quote">"We believe that this work lays a solid foundation for further research on LQAC and contributes to the development of more reliable and trustworthy LLMs." (Page 11)</div>
+        <p><strong>Rationale:</strong> Connecting the research to real-world applications would make it more impactful and relevant to a wider audience.</p>
+        <p><strong>Implementation:</strong> Include a sentence or two illustrating how the ability of LLMs to generate citations could benefit specific applications, such as fact-checking, academic research, or legal analysis. Provide concrete examples of how citations could enhance the trustworthiness and verifiability of LLM-generated information in these contexts.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-7" class="section">
+            <h3>Model Cards</h3>
+            
+            <h4>Overview</h4>
+            <p>This section, presented as Appendix A, provides a concise overview of the large language models (LLMs) evaluated in the research paper. It presents a table listing the model name, specific version used, and the context window size (the amount of text the model can consider at once) for each LLM. This information allows readers to understand the capabilities and limitations of the models being compared in the study.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Model Identification:</strong> The table clearly identifies each LLM by its name and specific version, ensuring that readers can distinguish between different models and their variations.</li><li><strong>Context Window Size:</strong> The table provides the context window size for each model, a crucial factor in long-context question answering as it determines the amount of text the model can process simultaneously. This information helps readers understand the models&#39; capabilities in handling lengthy contexts.</li><li><strong>Comparison of Proprietary and Open-Source Models:</strong> The table includes both proprietary models (like GPT-4o and Claude-3-Sonnet) and open-source models (like GLM-4 and Llama-3.1), allowing readers to compare the performance of different types of LLMs in the context of the research.</li><li><strong>Focus on Long-Context Capabilities:</strong> The inclusion of context window size highlights the paper&#39;s emphasis on evaluating LLMs in long-context scenarios, where the ability to process extensive text is essential.</li><li><strong>Transparency and Reproducibility:</strong> By providing details about the specific model versions used, the authors enhance the transparency and reproducibility of their research, allowing others to replicate the experiments or compare their results with different model versions.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear and Concise Presentation</strong>
+        <p>The section effectively presents the model information in a clear and concise table, making it easy for readers to quickly grasp the key details about the evaluated LLMs.</p>
+        
+    </li>
+    
+    <li>
+        <strong>Relevant Information for Comparison</strong>
+        <p>The table includes the most relevant information for comparing the LLMs in the context of the research, namely the model name, version, and context window size, allowing readers to understand the key differences between the models.</p>
+        
+    </li>
+    
+    <li>
+        <strong>Transparency and Reproducibility</strong>
+        <p>By providing specific model versions, the authors enhance the transparency and reproducibility of their research, allowing others to use the same models or compare their results with different versions.</p>
+        
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Include Model Size</strong>
+        <p>While the context window size is important, including the model size (e.g., number of parameters) would provide a more complete picture of the models&#39; capabilities and computational requirements.</p>
+        
+        <p><strong>Rationale:</strong> Model size is a key factor influencing both the performance and the computational cost of LLMs. Including this information would allow readers to better understand the trade-offs between model size, performance, and resource requirements.</p>
+        <p><strong>Implementation:</strong> Add a column to the table indicating the model size for each LLM, either in terms of the number of parameters or a descriptive label (e.g., small, medium, large).</p>
+    </li>
+    
+    <li>
+        <strong>Provide Links to Model Information</strong>
+        <p>Including links to official documentation or model repositories would allow readers to easily access more detailed information about each LLM.</p>
+        
+        <p><strong>Rationale:</strong> Providing links would enhance the usefulness of the section by allowing readers to delve deeper into the specifics of each model, such as its architecture, training data, or available functionalities.</p>
+        <p><strong>Implementation:</strong> Add a column to the table with links to official documentation, model repositories, or other relevant resources for each LLM. Ensure that the links are active and point to the correct resources.</p>
+    </li>
+    
+    <li>
+        <strong>Briefly Discuss Model Selection Rationale</strong>
+        <p>While the table lists the evaluated models, it would be helpful to include a brief explanation of the rationale behind selecting these specific models.</p>
+        
+        <p><strong>Rationale:</strong> Understanding the model selection rationale would provide context for the comparison and allow readers to assess the representativeness of the chosen models.</p>
+        <p><strong>Implementation:</strong> Add a paragraph or a footnote briefly explaining the criteria used for selecting the LLMs included in the table. Consider factors such as model availability, context window size, performance on relevant benchmarks, or the balance between proprietary and open-source models.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>Table 8</summary>
+        <p>Table 8 provides a concise overview of the different large language models (LLMs) evaluated in the research paper. It lists the model name, the specific version used in the experiments, and the context window size for each model. The context window refers to the amount of text the model can consider at once when processing information or answering questions. Imagine it like the model&#39;s short-term memory: a larger context window means the model can &#39;remember&#39; more information from the text it&#39;s reading.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "We list the details of our evaluated models in Table 8."</p>
+            <p><strong>Context:</strong> The authors are referring to Table 8 to provide detailed information about the LLMs used in their experiments.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This table is essential for understanding the capabilities and limitations of the different LLMs being compared in the research. It provides a quick reference for readers to see which models were used, their specific versions, and how much text they can handle at once. This information is crucial for interpreting the results and understanding the relative performance of different models on the task of long-context question answering with citations.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table is clear and easy to read, with distinct columns for each piece of information.</li><li>The use of consistent formatting makes it easy to scan and compare different models.</li><li>The table could benefit from a brief caption that explains what a context window is and why it&#39;s important for LLMs, especially for readers unfamiliar with these concepts.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The table provides a good summary of the evaluated models, but it could include additional information that would be helpful for understanding their capabilities.</li><li>For example, the table could mention the number of parameters in each model, which is a common indicator of model complexity and capacity.</li><li>The table could also include a brief description of the training data used for each model, as this can significantly influence their performance on different tasks.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Context Window Size (Claude-3-Sonnet):</strong> 200000 tokens</li><li><strong>Context Window Size (GPT-4o):</strong> 128000 tokens</li><li><strong>Context Window Size (GLM-4):</strong> 128000 tokens</li><li><strong>Context Window Size (GLM-4-9B-chat):</strong> 128000 tokens</li><li><strong>Context Window Size (Llama-3.1-8B-Instruct):</strong> 128000 tokens</li><li><strong>Context Window Size (Llama-3.1-70B-Instruct):</strong> 128000 tokens</li><li><strong>Context Window Size (Mistral-Large-Instruct):</strong> 128000 tokens</li></ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-8" class="section">
+            <h3>Case Study</h3>
+            
+            <h4>Overview</h4>
+            <p>This section, presented as Appendix B, provides three specific examples to illustrate how training with citation information improves the performance of long-context language models (LLMs) in question answering. Each case study presents a user query and compares the responses generated by two models: one trained with citations (LongCite-9B) and one trained without citations (LongSFT-9B). The examples highlight how LongCite-9B, by learning to locate and cite supporting evidence, generates more accurate, detailed, and comprehensive answers compared to LongSFT-9B, which often hallucinates information or fails to utilize the full context effectively.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Hallucination Reduction:</strong> The first case study demonstrates how LongCite-9B, trained with citations, avoids hallucinating information about the location of Duke Energy&#39;s office, unlike LongSFT-9B, which incorrectly copies information from another company mentioned in the text.</li><li><strong>Improved Detail and Context Utilization:</strong> The second case study shows how LongCite-9B leverages citations to provide a more detailed and comprehensive summary of a government report, utilizing information from various parts of the text, while LongSFT-9B focuses only on the initial sections.</li><li><strong>Enhanced Comprehensiveness through Citation Awareness:</strong> The third case study illustrates how the presence of citations in LongCite-9B&#39;s response helps it track which parts of the document have been covered, leading to a more comprehensive summary that utilizes information from the entire text, unlike LongSFT-9B, which primarily focuses on the beginning and misses key points from later sections.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Illustrative Examples</strong>
+        <p>The chosen case studies effectively illustrate the benefits of training LLMs with citations, showcasing how LongCite-9B outperforms LongSFT-9B in terms of accuracy, detail, and context utilization.</p>
+        <div class="quote">"We present three cases in Table 9, 10, and 11 to help interpret the improvement of correctness (the detail interpretation is in Sec. 4.2.1)." (Page 15)</div>
+    </li>
+    
+    <li>
+        <strong>Clear Comparison</strong>
+        <p>The section provides a clear side-by-side comparison of the responses generated by the two models, making it easy to see the differences in their performance and the impact of citation-based training.</p>
+        
+    </li>
+    
+    <li>
+        <strong>Concise Analysis</strong>
+        <p>The section provides a concise analysis of each case study, explaining how the presence of citations contributes to the improved performance of LongCite-9B.</p>
+        <div class="quote">"LongSFT-9B hallucinates the office location of Duke Energy, directly copying that of Affiliated Managers Group, while LongCite-9B gets the correct answer due to SFT with citations." (Page 15)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantify the Improvements</strong>
+        <p>While the case studies qualitatively demonstrate the benefits of LongCite-9B, quantifying the improvements with metrics like ROUGE scores for summarization or accuracy scores for factual correctness would strengthen the analysis.</p>
+        
+        <p><strong>Rationale:</strong> Quantitative measures would provide a more objective and compelling assessment of the performance differences between the two models.</p>
+        <p><strong>Implementation:</strong> Calculate relevant metrics (e.g., ROUGE scores for summarization, accuracy scores for factual correctness) for the responses generated by both models in each case study. Include these metrics in the analysis to provide a quantitative comparison of their performance.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Limitations of Case Studies</strong>
+        <p>The section could acknowledge that case studies, while illustrative, are limited in their generalizability. A brief discussion of the limitations would enhance the scientific rigor of the analysis.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging limitations provides a more balanced perspective and encourages readers to consider the broader context of the findings.</p>
+        <p><strong>Implementation:</strong> Add a sentence or two acknowledging that case studies are based on specific examples and might not fully represent the models&#39; performance on a wider range of tasks or datasets. Emphasize the need for further evaluation on larger benchmarks to confirm the generalizability of the observed improvements.</p>
+    </li>
+    
+    <li>
+        <strong>Provide More Context for the Queries</strong>
+        <p>The section presents the queries without much context about the source documents or the specific challenges they pose. Providing more context would help readers better understand the tasks and appreciate the differences in the models&#39; responses.</p>
+        <div class="quote">"Query: Are both Duke Energy and Affiliated Managers Group based in Massachusetts?" (Page 15)</div>
+        <p><strong>Rationale:</strong> Understanding the context of the queries would allow readers to better assess the complexity of the tasks and the significance of the observed performance differences.</p>
+        <p><strong>Implementation:</strong> Include a brief description of the source documents used in each case study, highlighting their length, complexity, or any specific challenges they pose for question answering. Explain why these particular queries were chosen and how they represent different aspects of the LQAC task.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>Table 9</summary>
+        <p>Table 9 presents a case study comparing the responses of two language models, LongSFT-9B and LongCite-9B, to a question about the locations of Duke Energy and Affiliated Managers Group. It highlights how LongSFT-9B, trained without citation information, hallucinates by incorrectly stating that Duke Energy has an office in Massachusetts, mirroring the location of Affiliated Managers Group. In contrast, LongCite-9B, trained with citations, provides the correct answer, demonstrating the benefit of citation-based training in reducing hallucinations.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "We present three cases in Table 9, 10, and 11 to help interpret the improvement of correctness (the detail interpretation is in Sec. 4.2.1)."</p>
+            <p><strong>Context:</strong> This quote is from Appendix B, where the authors are introducing three case studies to illustrate how training with citations improves the correctness of language models.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This case study demonstrates the practical impact of training LLMs with citations. It shows how LongCite-9B, trained with citations, avoids making a factual error that LongSFT-9B, trained without citations, makes. This highlights the importance of citations in grounding the LLM&#39;s responses in factual information and reducing the likelihood of generating incorrect or misleading content.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The table effectively uses color-coding (red for incorrect, green for correct) to highlight the differences in the models&#39; responses, making it easy to see where LongSFT-9B goes wrong.</li><li>The table could benefit from a more visually distinct separation between the question, the models&#39; responses, and the citations. Using different font sizes, colors, or borders could improve readability.</li><li>Including a brief caption summarizing the key takeaway from the case study would make it more accessible to readers who might not read the entire text.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The case study provides a clear example of how hallucinations can occur in LLMs and how citation-based training can help to mitigate this problem.</li><li>The case study could be strengthened by providing more context about the source document from which the information is extracted. What type of document is it? How long is it? This would help readers understand the challenges involved in answering the question.</li><li>The case study focuses on a single example. Including additional examples of hallucinations and how LongCite-9B avoids them would further demonstrate the robustness of the approach.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Table 10</summary>
+        <p>Table 10 presents another case study comparing the responses of LongSFT-9B and LongCite-9B, this time focusing on a summarization task. It shows how LongCite-9B, trained with citations, generates a more detailed and comprehensive summary of a government report compared to LongSFT-9B, which produces a more superficial summary. The table highlights specific parts of the responses in red (coarse summary) and green (detailed summary) to illustrate the differences.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "We present three cases in Table 9, 10, and 11 to help interpret the improvement of correctness (the detail interpretation is in Sec. 4.2.1)."</p>
+            <p><strong>Context:</strong> This quote is from Appendix B, where the authors are introducing three case studies to illustrate how training with citations improves the correctness of language models.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This case study demonstrates how training with citations can lead to more comprehensive and informative responses from LLMs. It suggests that LongCite-9B, by learning to identify and cite specific evidence from the text, develops a better understanding of the content and can therefore generate more detailed and insightful summaries.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The use of color-coding (red for coarse, green for detailed) effectively highlights the differences in the summaries, making it easy to see how LongCite-9B provides more specific information.</li><li>The table could benefit from a clearer visual separation between the question, the models&#39; responses, and the citations. Using different font sizes, colors, or borders could improve readability.</li><li>The table is quite long and text-heavy. Breaking it down into smaller, more focused sections with clear headings could make it easier to digest.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The case study provides a good example of how LongCite-9B leverages citations to generate a more comprehensive summary.</li><li>The case study could be strengthened by providing more context about the government report being summarized. What is the report about? What are the key findings? This would help readers understand the significance of the differences in the summaries.</li><li>The case study could benefit from a more quantitative analysis of the summaries. For example, how many key points are mentioned in each summary? How much of the source text is covered by each summary? This would provide a more objective measure of the differences in comprehensiveness.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Table 11</summary>
+        <p>Table 11 presents a case study comparing the responses of two language models, LongSFT-9B and LongCite-9B, to a request for a one-page summary of a government report. The table highlights how LongCite-9B, trained with citation information, produces a more comprehensive and detailed summary by utilizing information from various parts of the document, while LongSFT-9B, trained without citations, focuses primarily on the beginning and misses key points from other sections.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "We present three cases in Table 9, 10, and 11 to help interpret the improvement of correctness (the detail interpretation is in Sec. 4.2.1)."</p>
+            <p><strong>Context:</strong> The authors are referring to Table 11 as part of a set of case studies to illustrate how training with citation information improves the correctness of LLM responses.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This case study demonstrates the practical benefits of training LLMs with citation information. It shows how LongCite-9B, by learning to locate and cite relevant evidence from different parts of a long document, can generate a more comprehensive and informative summary compared to a model trained without citations. This highlights the potential of citation-based training to improve the quality and usefulness of LLM outputs in real-world tasks like summarization.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>While referred to as a &#39;Table,&#39; the element is presented as a textual case study with example model outputs, not a traditional table with rows and columns.</li><li>The use of color-coding (red for coarse response, green for detailed response) effectively highlights the differences between the two models&#39; outputs, making it easy to see the impact of citation-based training.</li><li>The presentation could be improved by visually separating the two models&#39; responses, perhaps using side-by-side text boxes or different background colors, to enhance readability and comparison.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The case study provides a clear example of how LongCite-9B utilizes information from various parts of the document, but it could benefit from a more detailed explanation of how the citation numbers guide this process.</li><li>The analysis could be strengthened by quantifying the difference in comprehensiveness between the two summaries, perhaps by counting the number of key points covered by each model or comparing their coverage of different sections of the document.</li><li>The case study focuses on the positive impact of citation-based training, but it could also briefly discuss any potential limitations or challenges, such as the risk of generating irrelevant or inaccurate citations.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-9" class="section">
+            <h3>Prompts</h3>
+            
+            <h4>Overview</h4>
+            <p>This section, presented as Appendix C, showcases the specific prompts used throughout the research paper for various purposes, including evaluating the correctness of model-generated answers, assessing the quality of citations, and guiding the models in generating citations. It includes textual prompts designed to elicit responses from both humans and language models, providing instructions, examples, and the expected format for the output. These prompts are crucial for understanding how the authors evaluated their models and how they trained the models to generate citations.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>Correctness Evaluation Prompts:</strong> These prompts are used to assess the accuracy and comprehensiveness of the answers generated by different language models. They provide instructions for human evaluators or GPT-4o to rate the quality of the answers based on specific criteria, such as correctness, helpfulness, relevance, and coherence.</li><li><strong>Citation Quality Evaluation Prompts:</strong> These prompts are designed to evaluate the quality of citations generated by the models. They include prompts for assessing citation recall (whether all necessary citations are provided), citation precision (whether all citations are relevant), and the need for citations for specific statements.</li><li><strong>Citation Generation Prompts:</strong> These prompts guide the language models in generating citations. They include prompts for one-shot learning, where the model is given an example and asked to generate citations for a new question-answer pair, and prompts for chunk-level and sentence-level citation generation.</li><li><strong>Importance of Prompt Design:</strong> The section implicitly highlights the importance of carefully designing prompts to elicit the desired responses from both humans and language models. The prompts are structured to provide clear instructions, relevant examples, and the expected format for the output, ensuring that the evaluation and training processes are consistent and reliable.</li><li><strong>Transparency and Reproducibility:</strong> By presenting the specific prompts used in their research, the authors enhance the transparency and reproducibility of their work, allowing others to understand the evaluation and training procedures and potentially replicate the experiments.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Detailed and Clear Prompts</strong>
+        <p>The prompts are well-written and provide clear instructions, making it easy for both human evaluators and language models to understand the task and the expected output.</p>
+        <div class="quote">"You are asked to evaluate the quality of the AI assistant’s answers to user questions as an impartial judge, and your evaluation should take into account factors including correctness (high priority), helpfulness, accuracy, and relevance. The scoring principles are as follows: 1. Read the AI assistant’s answer and compare the assistant’s answer with the reference answer. 2. Identify all errors in the AI Assistant’s answers and consider how much they affect the answer to the question. 3. Evaluate how helpful the AI assistant’s answers are in directly answering the user’s questions and providing the information the user needs. 4. Examine any additional information in the AI assistant’s answer to ensure that it is correct and closely related to the question. If this information is incorrect or not relevant to the question, points should be deducted from the overall score. Please give an overall integer rating from 1 to 10 based on the above principles, strictly in the following format: “[[rating]]”, e.g. “[[5]]”." (Page 18)</div>
+    </li>
+    
+    <li>
+        <strong>Comprehensive Coverage of Evaluation and Training</strong>
+        <p>The section includes prompts for evaluating both answer correctness and citation quality, as well as prompts for guiding the models in generating citations, covering all key aspects of the research.</p>
+        
+    </li>
+    
+    <li>
+        <strong>Transparency and Reproducibility</strong>
+        <p>By presenting the specific prompts used, the authors enhance the transparency and reproducibility of their work, allowing others to understand and potentially replicate the experiments.</p>
+        
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Discuss Prompt Engineering Challenges</strong>
+        <p>While the section presents the final prompts, it would be helpful to include a brief discussion of the challenges encountered in designing effective prompts for these tasks.</p>
+        
+        <p><strong>Rationale:</strong> Prompt engineering is a crucial aspect of working with language models, and discussing the challenges would provide valuable insights for other researchers working on similar tasks.</p>
+        <p><strong>Implementation:</strong> Add a paragraph or a footnote discussing the challenges faced in designing the prompts, such as finding the right level of detail, avoiding bias, or ensuring that the prompts elicit the desired responses. Briefly mention any iterations or refinements made to the prompts during the research process.</p>
+    </li>
+    
+    <li>
+        <strong>Provide More Examples of Model Responses</strong>
+        <p>The section includes examples of prompts but would benefit from showing more examples of actual model responses to these prompts, illustrating how the models interpret and respond to the instructions.</p>
+        
+        <p><strong>Rationale:</strong> Showing model responses would provide a more concrete understanding of how the prompts work in practice and how the models generate citations based on the given instructions.</p>
+        <p><strong>Implementation:</strong> For each type of prompt, include one or two examples of actual model responses, highlighting how the models follow the instructions, generate citations, and format their output. Choose examples that illustrate different aspects of the task, such as single-sentence answers, multi-sentence answers, and answers with varying levels of citation complexity.</p>
+    </li>
+    
+    <li>
+        <strong>Connect Prompts to Evaluation Metrics</strong>
+        <p>The section could explicitly connect the prompts to the evaluation metrics used in the research, explaining how the prompts are designed to elicit responses that can be assessed using these metrics.</p>
+        
+        <p><strong>Rationale:</strong> Connecting prompts to evaluation metrics would strengthen the link between the evaluation methodology and the specific prompts used, providing a more comprehensive understanding of the evaluation process.</p>
+        <p><strong>Implementation:</strong> For each type of prompt, briefly explain how the elicited responses are used to calculate the relevant evaluation metrics. For example, for correctness evaluation prompts, explain how the ratings provided by human evaluators or GPT-4o are used to calculate the correctness score. For citation quality evaluation prompts, explain how the responses are used to assess citation recall, precision, and F1 score.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+    <details class="non-text-element">
+        <summary>figure 13</summary>
+        <p>Figure 13 shows an example of how the CoF pipeline teaches a language model to extract specific sentences that support a given statement. Imagine you have a long paragraph, and someone asks you a question about it. This figure shows how the model learns to pick out the exact sentences that answer the question. The figure includes a &#39;prompt,&#39; which is like the instructions given to the model, and an &#39;output,&#39; which is the model&#39;s response. The prompt gives the model a passage with numbered sentences and a statement. The model&#39;s task is to identify the sentence numbers that contain information supporting the statement. The output shows the model&#39;s response, which is a list of sentence numbers.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The prompt includes 3 examples and is shown in Figure 13."</p>
+            <p><strong>Context:</strong> This sentence describes the prompt used for sentence-level citation extraction and refers to Figure 13 for a visual representation.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it illustrates a crucial step in the CoF pipeline: teaching the model to pinpoint the exact sentences that provide evidence for a statement. This step ensures that the citations generated by the model are precise and directly support the answer, making it easier for users to verify the information.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure clearly presents the prompt and the output, making it easy to understand the task and the model&#39;s response.</li><li>The use of numbered sentences in the passage helps to visualize how the model identifies specific sentences.</li><li>The figure could benefit from a more visually appealing design. Using different colors or fonts to distinguish the prompt, the passage, the statement, and the output could improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The figure provides a good example of the sentence-level citation extraction task, but it could be strengthened by including multiple examples with varying levels of complexity.</li><li>The figure focuses on the &#39;what&#39; of the task but could also explain the &#39;why&#39; and &#39;how.&#39; For example, why is it important to extract sentence-level citations? How does the model learn to identify the relevant sentences?</li><li>The figure could benefit from a more detailed caption that explains the purpose of this step in the CoF pipeline and its significance for generating accurate and verifiable citations.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>textual prompt 4</summary>
+        <p>Figure 4 shows the instructions given to GPT-4o, a powerful language model, to evaluate the quality of answers generated by another language model. It&#39;s like setting up a test for a student and providing clear guidelines for grading their answers. The prompt includes detailed instructions on what factors to consider when evaluating the answers, such as correctness, helpfulness, accuracy, and relevance. It also provides examples of answers and their corresponding ratings to guide GPT-4o in its assessment. The prompt emphasizes that GPT-4o should be an impartial judge and base its rating on the provided guidelines and examples.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The detailed prompts can be found in Figure 4, 5, and 6."</p>
+            <p><strong>Context:</strong> This sentence refers to Figure 4, along with Figures 5 and 6, as examples of prompts used for evaluating the correctness of language model responses.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This figure is important because it shows how the authors ensure a fair and consistent evaluation of the language models&#39; answers. By providing clear instructions and examples to GPT-4o, they aim to minimize subjectivity and bias in the assessment process. This rigorous evaluation methodology is crucial for obtaining reliable results and comparing the performance of different models.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure effectively presents the prompt in a clear and structured format, making it easy to read and understand.</li><li>The use of bold text for key instructions and headings improves readability and highlights important information.</li><li>The figure could benefit from a more visually appealing presentation. Using different colors or fonts to distinguish the instructions, examples, and the rating scale could make it more engaging.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt provides a comprehensive set of guidelines for evaluating answer quality, but it could be more explicit about how to handle specific types of errors or inconsistencies.</li><li>The prompt could benefit from a more detailed explanation of the rating scale. What distinguishes a &#39;5&#39; from a &#39;6&#39; or a &#39;7&#39;? Providing more specific criteria for each rating level would enhance the consistency and objectivity of the evaluation.</li><li>The prompt focuses on evaluating the answers themselves but could also include instructions for assessing the citations provided by the language model. How should GPT-4o evaluate the relevance, accuracy, and completeness of the citations?</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Figure 5</summary>
+        <p>Figure 5 presents the prompt used to evaluate the correctness of AI assistant answers on the MultiFieldQA-zh/en, HotpotQA, and Dureader datasets. The prompt instructs an evaluator to rate the quality of an AI assistant&#39;s answer based on its correctness and comprehensiveness. The evaluator is asked to compare the AI&#39;s answer to a reference answer and provide an overall rating on a scale of 1 to 3. A rating of 1 indicates a wrong or irrelevant answer, 2 signifies a partially correct answer, and 3 represents a correct and comprehensive answer. The prompt emphasizes that correctness should be prioritized over comprehensiveness. The prompt also includes placeholders for the question, the reference answer, and the AI assistant&#39;s answer, which will be filled in with specific content during the evaluation process.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The detailed prompts can be found in Figure 4, 5, and 6."</p>
+            <p><strong>Context:</strong> This sentence, found on page 4, refers to the prompts used for evaluating the correctness of AI assistant answers on different datasets. The authors are directing the reader to Figures 4, 5, and 6 for the specific content of these prompts.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 5 is relevant because it provides transparency into the evaluation process for answer correctness. By presenting the exact prompt used, the authors allow readers to understand how the quality of the AI assistant&#39;s answers was assessed. This transparency is crucial for replicating the study and for understanding the basis of the reported correctness scores.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The figure presents the prompt as plain text within a text box, which is functional but not visually engaging.</li><li>Using a different font or background color for the prompt could make it stand out more from the surrounding text.</li><li>Adding a visual element, such as an icon representing evaluation or a checkmark for correctness, could make the figure more memorable.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt is clear and concise, providing specific instructions and a well-defined rating scale.</li><li>The prompt could benefit from a brief explanation of what constitutes &#39;correctness&#39; and &#39;comprehensiveness&#39; in the context of these datasets. Providing examples of answers that would receive different ratings could enhance clarity.</li><li>The prompt emphasizes prioritizing correctness over comprehensiveness, but it could also mention the importance of considering relevance and avoiding extraneous information in the AI&#39;s answer.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Minimum Rating:</strong> 1</li><li><strong>Maximum Rating:</strong> 3</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>Figure 6</summary>
+        <p>Figure 6 displays the prompt used to assess the correctness of AI-generated summaries on the GovReport dataset. The prompt instructs an evaluator to rate the quality of a summary generated by an AI assistant, considering its correctness, comprehensiveness, and coherence. The evaluator is asked to compare the AI&#39;s summary to a reference summary and provide an overall rating on a scale of 1 to 5, with 1 being the lowest and 5 being the highest. The prompt emphasizes that correctness should be the primary consideration. It also includes placeholders for the question, the reference summary, and the AI assistant&#39;s summary, which will be filled in with specific content during the evaluation process.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The detailed prompts can be found in Figure 4, 5, and 6."</p>
+            <p><strong>Context:</strong> This sentence, found on page 4, refers to the prompts used for evaluating the correctness of AI assistant answers on different datasets. The authors are directing the reader to Figures 4, 5, and 6 for the specific content of these prompts.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> Figure 6 is relevant because it provides transparency into the evaluation process for summary correctness on the GovReport dataset. By presenting the exact prompt used, the authors allow readers to understand how the quality of the AI-generated summaries was assessed. This transparency is crucial for replicating the study and for understanding the basis of the reported correctness scores for summaries.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>Similar to Figure 5, the prompt is presented as plain text within a text box, which is functional but not visually engaging.</li><li>Using a different font or background color for the prompt could make it stand out more from the surrounding text.</li><li>Adding a visual element, such as an icon representing summarization or a star rating, could make the figure more visually appealing.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt is clear and concise, providing specific instructions and a well-defined rating scale.</li><li>The prompt could benefit from a brief explanation of what constitutes &#39;correctness&#39;, &#39;comprehensiveness&#39;, and &#39;coherence&#39; in the context of summary evaluation. Providing examples of summaries that would receive different ratings could enhance clarity.</li><li>The prompt emphasizes prioritizing correctness, but it could also mention the importance of considering conciseness, relevance, and avoiding redundancy in the AI&#39;s summary.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        <li><strong>Minimum Rating:</strong> 1</li><li><strong>Maximum Rating:</strong> 5</li></ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>textual prompt 7</summary>
+        <p>Figure 7 presents the prompt used to evaluate whether a factual statement made by an AI assistant is supported by the cited snippet from a long document. The prompt instructs an expert evaluator to assess the level of support provided by the snippet, using a three-point scale: &#39;Fully supported,&#39; &#39;Partially supported,&#39; or &#39;No support.&#39; It emphasizes that the evaluation should be based solely on the provided snippet, without using any external information or knowledge. The prompt includes placeholders for the user&#39;s question, the AI assistant&#39;s statement, and the concatenated cited snippet.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "The prompts are shown in Figure 7 and 8."</p>
+            <p><strong>Context:</strong> This sentence, found in Section 2.3.2, &#39;Evaluation of Citation Quality,&#39; refers to Figures 7 and 8 as examples of prompts used for evaluating citation recall.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This prompt is crucial for understanding how the authors evaluate the accuracy of citations generated by LLMs. It provides a structured framework for human evaluators to assess whether the cited text actually supports the AI assistant&#39;s statement. This evaluation is essential for measuring the faithfulness and reliability of the LLM&#39;s responses, as it ensures that the citations are not just randomly selected but actually provide evidence for the claims made.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The prompt is presented as a text box, clearly separating it from the surrounding text.</li><li>The use of bold text for the rating options (&#39;Fully supported,&#39; &#39;Partially supported,&#39; &#39;No support&#39;) makes them stand out and easy to identify.</li><li>The prompt could benefit from a more visually appealing design. Using different colors or font styles to highlight key instructions or information could improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt provides clear instructions and a well-defined rating scale, making it easy for evaluators to understand the task and provide consistent assessments.</li><li>The prompt explicitly emphasizes the importance of relying solely on the provided snippet, which helps to minimize bias and ensure that the evaluation is focused on the cited text.</li><li>The prompt could be strengthened by providing examples of each rating category, illustrating what constitutes &#39;Fully supported,&#39; &#39;Partially supported,&#39; and &#39;No support.&#39; This would further enhance consistency and reduce ambiguity in the evaluation process.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>textual prompt 10</summary>
+        <p>Figure 10 presents a one-shot learning prompt used to teach a language model (LLM) the LAC-S strategy, which involves generating answers to user questions based on a long document and providing sentence-level citations. The prompt instructs the LLM to answer the question using information from the document and to include citations for any factual statements in its response. Citations are represented as a list of sentence numbers enclosed in square brackets and placed within &#39;&lt;cite&gt;&#39; tags. The prompt also specifies that sentences not requiring citations, such as introductory sentences or summaries, should still have empty &#39;&lt;cite&gt;&#39; tags to indicate that they don&#39;t need citations. The prompt includes an example to illustrate the desired format and content.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "As illustrated in Figure 10, we number each sentence senti in the context by adding a prefix &#39;&lt;Ci&gt;&#39; and prompt the LLM with one demonstration."</p>
+            <p><strong>Context:</strong> This sentence, found in Section 2.4, &#39;Benchmarking Results of Current Long-Context LLMs,&#39; describes how the authors prepare the context and use a one-shot learning prompt (shown in Figure 10) to evaluate the LAC-S strategy.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This prompt is crucial for understanding how the authors train LLMs to generate citations in the LAC-S strategy. It demonstrates the specific instructions and format used to teach the LLM how to identify factual statements, locate supporting sentences in the document, and include citations in its response. This prompt is essential for enabling the LLM to perform the LQAC task, where it needs to provide both accurate answers and precise citations to support its claims.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The prompt is presented as a text box, clearly distinguishing it from the surrounding text.</li><li>The use of different font styles (bold, italics) helps to highlight key instructions and information, making the prompt easier to read and understand.</li><li>The prompt could benefit from a more visually appealing design. Using different colors or highlighting to emphasize specific sections, such as the example or the citation format, could further improve readability.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt provides clear and detailed instructions, guiding the LLM on how to answer the question, identify factual statements, and include citations in the correct format.</li><li>The use of a one-shot learning approach, with a single example, is a common and effective technique for teaching LLMs new tasks.</li><li>The prompt could be strengthened by providing more diverse examples, covering different types of questions, answers, and citation scenarios. This would expose the LLM to a wider range of possibilities and potentially improve its ability to generalize to new situations.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    <details class="non-text-element">
+        <summary>textual prompt 12</summary>
+        <p>Figure 12 presents a prompt designed to guide a language model in adding citations to an existing answer. It instructs the model to identify factual statements within the answer and append the corresponding snippet numbers from the provided context. The prompt emphasizes preserving the original content and format of the answer while adding citations. It also includes an example to illustrate the desired output format, showing how to incorporate citations for factual statements and indicate the absence of citations for other types of sentences.</p>
+        
+        <div class="first-mention">
+            <h5>First Mention</h5>
+            <p><strong>Text:</strong> "Figure 12 shows the prompt we use."</p>
+            <p><strong>Context:</strong> The authors are describing the chunk-level citation generation step in their CoF pipeline and referring to Figure 12 for the specific prompt used in this step.</p>
+        </div>
+        
+        <p><strong>Relevance:</strong> This prompt is crucial for understanding how the CoF pipeline generates chunk-level citations. It provides a concrete example of the instructions given to the language model, highlighting the specific format and requirements for adding citations to an existing answer. This prompt is essential for the pipeline&#39;s ability to automatically create training data with accurate and consistent citations.</p>
+        
+        <div class="critique-section">
+            <div class="critique-title">Critique</div>
+        
+            <div class="critique-section">
+                <div class="critique-title">Visual Aspects</div>
+                <ul>
+                <li>The prompt is presented as a text box, which is appropriate for representing textual instructions.</li><li>The use of bold text for key phrases like &#39;Your task&#39; and &#39;Here is an example&#39; helps to visually structure the prompt and guide the reader&#39;s attention.</li><li>The prompt could benefit from a more visually appealing design. Using different colors or font styles for different parts of the prompt (e.g., instructions, example input, example output) could improve readability and make it more engaging.</li>
+                </ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Analytical Aspects</div>
+                <ul>
+                <li>The prompt is clear and well-structured, providing explicit instructions and a concrete example to guide the language model.</li><li>The prompt could be more explicit about the criteria for identifying factual statements. What types of sentences require citations? How should the model handle ambiguous cases?</li><li>The prompt focuses on adding citations to an existing answer, but it doesn&#39;t explain how the answer itself is generated. Providing more context about the answer generation process would enhance the understanding of the overall pipeline.</li>
+                </ul>
+            </div>
+            </div>
+        
+        <div class="numeric-data">
+            <h5>Numeric Data</h5>
+            <ul>
+        </ul></div>
+    </details>
+    
+    
+        </div>
+        
+        <div id="section-10" class="section">
+            <h3>Evaluation Cost</h3>
+            
+            <h4>Overview</h4>
+            <p>This brief section, found in Appendix D, states the approximate cost of evaluating model performance on the LongBench-Cite benchmark using GPT-4o. It indicates that evaluating correctness costs around $4 per run, while evaluating citation quality is more expensive, costing about $25 per run.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul><li><strong>GPT-4o as Evaluation Tool:</strong> The section highlights the use of GPT-4o, a powerful language model, for evaluating both the correctness and citation quality of other models.</li><li><strong>Cost of Correctness Evaluation:</strong> The section specifies that evaluating the correctness of model responses on LongBench-Cite using GPT-4o costs approximately $4 per run.</li><li><strong>Cost of Citation Quality Evaluation:</strong> The section states that evaluating the citation quality of model responses on LongBench-Cite using GPT-4o is more expensive, costing around $25 per run.</li><li><strong>Implication of Evaluation Cost:</strong> The section implicitly acknowledges the financial cost associated with using GPT-4o for evaluation, which can be a significant factor for researchers with limited budgets.</li></ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Transparency in Evaluation Cost</strong>
+        <p>The section provides transparency by explicitly stating the approximate cost of using GPT-4o for evaluation, allowing readers to understand the financial implications of the chosen methodology.</p>
+        <div class="quote">"On LongBench-Cite, a run of GPT-4o evaluation for correctness/citation quality costs about $4/$25." (Page 15)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Provide a Breakdown of Evaluation Costs</strong>
+        <p>While the section states the overall cost for correctness and citation quality evaluation, it would be more informative to provide a breakdown of these costs, explaining how they are calculated.</p>
+        <div class="quote">"On LongBench-Cite, a run of GPT-4o evaluation for correctness/citation quality costs about $4/$25." (Page 15)</div>
+        <p><strong>Rationale:</strong> A detailed breakdown would allow readers to understand the factors contributing to the evaluation cost and potentially explore ways to reduce these costs, such as by optimizing the evaluation process or using alternative evaluation methods.</p>
+        <p><strong>Implementation:</strong> Explain how the costs are calculated, considering factors such as the number of queries, the length of the responses, the pricing model of GPT-4o, and any additional processing steps involved in the evaluation. Provide a breakdown of the costs for different aspects of the evaluation, such as evaluating correctness, recall, precision, and citation length.</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the Trade-Off Between Cost and Evaluation Quality</strong>
+        <p>The section could discuss the trade-off between evaluation cost and the quality of the evaluation, considering whether alternative methods might provide a more cost-effective solution without compromising the reliability of the assessment.</p>
+        
+        <p><strong>Rationale:</strong> Acknowledging the trade-off between cost and quality would provide a more balanced perspective on the evaluation methodology and encourage readers to consider alternative approaches, especially if cost is a significant constraint.</p>
+        <p><strong>Implementation:</strong> Discuss the potential limitations of using less expensive evaluation methods, such as relying on smaller language models or using automated metrics that might not fully capture the nuances of human judgment. Explain the rationale for choosing GPT-4o despite its cost, emphasizing its advantages in terms of accuracy, reliability, and the ability to handle complex evaluation tasks.</p>
+    </li>
+    
+    <li>
+        <strong>Explore Strategies for Reducing Evaluation Costs</strong>
+        <p>The section could offer suggestions for reducing the cost of evaluation, such as using sampling techniques or exploring alternative evaluation methods.</p>
+        
+        <p><strong>Rationale:</strong> Providing strategies for cost reduction would be particularly helpful for researchers with limited budgets, allowing them to conduct evaluations without incurring prohibitive expenses.</p>
+        <p><strong>Implementation:</strong> Suggest specific strategies for reducing evaluation costs, such as evaluating a subset of the benchmark data using sampling techniques, exploring the use of smaller or fine-tuned language models for evaluation, or developing automated metrics that are less computationally expensive but still provide reliable assessments. Discuss the potential trade-offs associated with each strategy, considering the impact on evaluation quality and the feasibility of implementation.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        // Show/hide back-to-top button
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
