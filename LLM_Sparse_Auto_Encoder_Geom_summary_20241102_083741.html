@@ -1,0 +1,968 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploration of Sparse Autoencoder Feature Structure: Multi-Scale Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .aspect {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+        .strength {
+            border-left: 3px solid #2ecc71;
+        }
+        .suggestion {
+            border-left: 3px solid #e74c3c;
+        }
+        .aspect-type {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .non-text-description {
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .non-text-element {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .non-text-element ul {
+            padding-left: 30px;
+        }
+        .first-mention {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        .first-mention h5 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Exploration of Sparse Autoencoder Feature Structure: Multi-Scale Analysis</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">1 INTRODUCTION</a></li><li><a href="#section-2">2 RELATED WORK</a></li><li><a href="#section-3">3 ATOM SCALE: CRYSTAL STRUCTURE</a></li><li><a href="#section-4">4 BRAIN SCALE: MESO-SCALE MODULAR STRUCTURE</a></li><li><a href="#section-5">5 GALAXY SCALE: LARGE-SCALE POINT CLOUD STRUCTURE</a></li><li><a href="#section-6">6 CONCLUSION</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        <h3>Overview</h3>
+        <p>This study delves into how sparse autoencoders (SAEs), a type of neural network used to learn efficient data representations, organize concepts within large language models. By visualizing these concepts as a universe of points in a multi-scale framework, the research investigates atomic-level geometric patterns (crystals), brain-scale functional clustering (lobes), and galaxy-scale overall shape and anisotropy. The analysis aims to uncover the underlying structure of these concept representations and shed light on the interpretability of SAEs in language models, using data from the &#x27;Gemma Scope&#x27;.</p>
+        
+        <h3>Key Findings</h3>
+        <ul>
+        <li><strong>Atomic Scale:</strong> The study identifies &#x27;crystals,&#x27; geometric patterns (parallelograms and trapezoids), within SAE feature space, signifying conceptual relationships such as &#x27;man/woman&#x27; and &#x27;king/queen&#x27;. These structures become clearer after removing irrelevant features with Linear Discriminant Analysis (LDA).</li><li><strong>Brain Scale:</strong> Functional modularity is observed, where features that frequently activate together form spatial clusters or &#x27;lobes&#x27;, akin to functional areas in a brain. This was measured using various co-occurrence metrics and spectral clustering.</li><li><strong>Galaxy Scale:</strong> The overall shape of the SAE feature cloud is anisotropic, meaning it exhibits different properties in different directions, as indicated by a power-law decay of eigenvalues. This suggests a non-uniform distribution of concepts.</li><li><strong>Layer Dependence:</strong> The slopes of the power-law eigenvalue decay vary across layers, with middle layers showing the steepest slopes, implying these layers compress information into fewer dimensions.</li><li><strong>Clustering Entropy:</strong> The study notes variations in clustering entropy across layers, providing insights into the spread of feature clusters and their hierarchical organization within the model.</li>
+        </ul>
+        
+        <h3>Strengths</h3>
+        <ul>
+        <li><strong>Clear and Concise Summary:</strong> The abstract effectively distills the study&#x27;s multi-scale investigation, providing a clear overview of the research focus on the structure of SAE feature spaces.</li><li><strong>Robust Methodology:</strong> The paper employs a systematic approach to measuring and analyzing spatial modularity using spectral clustering and multiple co-occurrence metrics, ensuring rigorous examination of functional lobes.</li><li><strong>Compelling Visual Analysis:</strong> The study uses visualizations like eigenvalue plots to compellingly demonstrate findings such as anisotropy in the galaxy-scale structure.</li><li><strong>Comprehensive Contextualization:</strong> The paper situates its analysis within the context of existing literature on SAE features and word embeddings, establishing a solid foundation for its investigations.</li>
+        </ul>
+        
+        <h3>Areas for Improvement</h3>
+        <ul>
+        <li><strong>Specify Metrics:</strong> Naming specific metrics for spatial locality in the abstract would enhance clarity and highlight the study&#x27;s methodological rigor.</li><li><strong>Expand Related Work:</strong> Including related work from domains such as cognitive science or graph theory could broaden the study&#x27;s contextual relevance and reveal interdisciplinary connections.</li><li><strong>Quantify Findings:</strong> The paper would benefit from quantifying improvements in crystal structure using specific metrics, providing a more rigorous assessment of results.</li>
+        </ul>
+        
+        <h3>Significant Elements</h3>
+        
+    <div>
+        <h4>Figure</h4>
+        <p><strong>Description:</strong> Figure 1 illustrates the impact of LDA in revealing parallelogram and trapezoid structures by removing distractor dimensions, shown through before-and-after visualizations.</p>
+        <p><strong>Relevance:</strong> This visualization effectively demonstrates how methodological adjustments can clarify geometric relationships in SAE feature space, supporting key findings on crystal structures.</p>
+    </div>
+    
+    <div>
+        <h4>Graph</h4>
+        <p><strong>Description:</strong> Figure 7 displays eigenvalue decay across layers, with a power-law fit showing anisotropy, and layer-dependent slopes indicating hierarchical organization.</p>
+        <p><strong>Relevance:</strong> The graph provides quantitative evidence for the galaxy-scale anisotropy, linking it to the hierarchical processing layers within the language model.</p>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>The study offers a detailed exploration of the structured organization within SAE feature spaces across multiple scales. At the atomic level, it highlights how geometric patterns elucidate conceptual relationships. At the brain scale, it reveals functional modularity akin to brain regions. At the galaxy scale, the anisotropic shape and layer-dependent clustering inform our understanding of hierarchical information processing in language models. The findings contribute to the field of model interpretability, suggesting new avenues for exploring concept representation. Future research could expand on the dynamic evolution of these structures and their practical implications for model performance.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Overview</h4>
+            <p>This paper explores the organization of concepts within large language models, using sparse autoencoders to identify key features.  They find structure at three scales: &quot;atomic&quot; crystal-like structures capturing relationships between words, &quot;brain&quot;-like modularity where related concepts cluster in lobes, and a &quot;galaxy&quot;-like overall shape of the concept cloud.  These findings offer insights into how language models represent and process information.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Multi-scale concept organization:</strong> Imagine the universe of concepts within a large language model as a vast space filled with points, each representing a different concept. This paper explores how these concept-points are organized, not randomly, but in fascinating structures at different scales.  At the smallest, &quot;atomic&quot; level, they form &quot;crystals&quot; like geometric shapes with sides like parallelograms.  These crystals capture relationships between words, like &quot;man is to woman as king is to queen.&quot; At a medium, &quot;brain&quot; scale, similar concepts cluster together in &quot;lobes,&quot; just like functional areas in our brains.  For example, math and coding concepts form their own lobe.  At the largest, &quot;galaxy&quot; scale, the entire cloud of concept-points isn&#x27;t a uniform blob but has a specific shape, like a flattened cucumber, with its dimensions shrinking at different rates.</li><li><strong>Sparse Autoencoders:</strong> Sparse autoencoders are like powerful sieves that sift through the complex activations of a language model to find the most important concept-points.  These sieves work by compressing the information and then trying to reconstruct it, keeping only the essential building blocks. The resulting collection of concept-points, called the &quot;SAE point cloud,&quot; is what this paper analyzes.</li><li><strong>Analysis Methods:</strong> The paper uses different methods to analyze the structure of the concept-points.  For the &quot;crystals,&quot; they look for parallelogram shapes. For the &quot;brain&quot; scale, they group concepts based on how often they appear together in text and then see if these groups are also close together in the concept space.  For the &quot;galaxy&quot; scale, they analyze the overall shape of the point cloud and how clustered it is.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear summary of findings</strong>
+        <p>The abstract clearly and concisely summarizes the key findings of the paper, highlighting the three levels of structure investigated: atomic, brain, and galaxy scales.  This provides a good overview of the paper&#x27;s contributions.</p>
+        <div class="quote">"We find that this concept universe has interesting structure at three levels: 1) The “atomic” small-scale structure... 2) The “brain” intermediate-scale structure... 3) The “galaxy” scale large-scale structure..." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Explain the impact of distractor features</strong> <p>While the abstract mentions the use of linear discriminant analysis (LDA) for projecting out distractor directions, it doesn&#x27;t explain why these distractors are problematic. Briefly mentioning the negative impact of distractors, such as word length, on crystal structure analysis would strengthen the abstract&#x27;s argument.</p> <p><strong>Implementation:</strong> Add a brief explanation of the negative impact of distractor features, such as word length, on the analysis of crystal structures. For example, add a phrase like &#x27;...improving parallelogram quality obscured by distractor features such as word length.&#x27;</p> <div class="quote">"We find that the quality of such parallelograms... improves greatly when projecting out global distractor directions such as word length..." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>1 INTRODUCTION</h3>
+            
+            <h4>Overview</h4>
+            <p>This paper sets out to explore how concepts are organized within large language models. Think of it like mapping the universe, but instead of stars, we&#x27;re mapping concepts. They use &quot;sparse autoencoders&quot; like powerful telescopes to identify these concepts.  They&#x27;ll be looking at three different scales:  &quot;atomic&quot; for fine details, &quot;brain&quot; for mid-level structures, and &quot;galaxy&quot; for the big picture.  They hope to find out if these concepts are arranged randomly or if there are patterns and structures, like constellations in the night sky.  This is important because it helps us understand how these models actually work and how they represent knowledge.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Concept organization in LLMs:</strong> Imagine our concepts as points of light scattered across a vast, dark space.  This paper explores how these &quot;concept stars&quot; cluster together in language models.  They use something called sparse autoencoders, which are like giant magnets that pull out the most important concept stars.  They look at these star clusters at three different zoom levels: close-up at the &quot;atomic&quot; level to see tiny crystal-like structures, a mid-range &quot;brain&quot; view to see how concept areas group together like lobes in a brain, and a wide-angle &quot;galaxy&quot; view to see the overall shape and clumpiness of the concept universe.</li><li><strong>Sparse Autoencoders and Vectors:</strong> Sparse autoencoders are like smart compressors. They squeeze down all the complex information in a language model, then try to puff it back up to the original.  This squeezing and puffing reveals the most important bits, the &quot;concept stars,&quot; that the model uses to understand language. These &quot;stars&quot; are actually vectors, which are like arrows pointing in different directions in a high-dimensional space.  The direction and length of the arrow capture the meaning of the concept.</li><li><strong>Three Scales of Analysis:</strong> This paper looks at three scales of organization: &quot;atomic,&quot; &quot;brain,&quot; and &quot;galaxy.&quot;  At the atomic level, they look for &quot;crystals,&quot; which are geometric patterns showing relationships between words, like &quot;man is to woman as king is to queen.&quot; At the brain level, they look for &quot;lobes,&quot; which are groups of concepts that often appear together, like math and coding terms. At the galaxy level, they look at the overall shape and distribution of the concept stars, like looking at the shape of a galaxy and how its stars are clustered.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear scope and purpose</strong>
+        <p>Clearly outlines the scope and purpose of the research, focusing on the structure of the concept universe in large language models at three different scales.</p>
+        <div class="quote">"This is the goal of the present paper, focusing on three separate spatial scales." (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Strong motivation</strong>
+        <p>Effectively motivates the research by highlighting the recent breakthrough in understanding large language models through sparse autoencoders and the availability of SAE point clouds.</p>
+        <div class="quote">"The past year has seen a breakthrough in understanding how large language models work: sparse autoencoders... Such SAE point clouds have recently been made publicly available... so it is timely to study their structure" (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>More impactful opening</strong> <p>The introduction could benefit from a more concise and impactful opening statement. The current opening sentence, while informative, lacks a strong hook to immediately grab the reader&#x27;s attention.</p> <p><strong>Implementation:</strong> Replace the current opening with a more compelling statement that highlights the significance of understanding concept organization in LLMs. For example: &quot;Unraveling the intricate organization of concepts within large language models is crucial for deciphering their inner workings and harnessing their full potential.&quot;</p> <div class="quote">"The past year has seen a breakthrough in understanding how large language models work" (Page 1)</div>
+    </li>
+    
+    <li>
+        <strong>Connect scales to research question</strong> <p>While the introduction mentions three spatial scales, it would be beneficial to briefly elaborate on the connection between these scales and the overall research question. This would provide a clearer roadmap for the reader.</p> <p><strong>Implementation:</strong> Add a sentence or two explaining how investigating these different scales contributes to a comprehensive understanding of concept organization. For example: &quot;By examining these scales, we aim to uncover the underlying principles governing concept formation and interaction within these complex systems.&quot;</p> <div class="quote">"This is the goal of the present paper, focusing on three separate spatial scales." (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>2 RELATED WORK</h3>
+            
+            <h4>Overview</h4>
+            <p>This section sets the stage by showing that the idea of concepts having geometric relationships isn&#x27;t new.  Think of words like points in space.  Sometimes, the distance and direction between these points reflect the relationship between the concepts they represent, like &quot;man&quot; and &quot;woman&quot; being similar in some ways to &quot;king&quot; and &quot;queen.&quot;  Previous studies have found these kinds of patterns in simpler models, and this paper aims to find them in the more complex world of large language models, using sparse autoencoders as their tool.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>SAE Feature Structure:</strong> Sparse autoencoders, imagine them as digital archaeologists, have been digging into the minds of large language models and uncovering fascinating artifacts: interpretable features.  These features are like conceptual building blocks, and this paper explores how they&#x27;re organized.  Think of it like exploring a newly discovered ancient city
+
+Previous work has hinted at interesting arrangements of these features, like neighborhoods of related concepts.  This paper builds on that, looking for even more complex structures.</li><li><strong>Function Vectors and Word Embeddings:</strong> Words aren&#x27;t just random strings of letters; they represent concepts, and these concepts have relationships with each other.  Earlier work found that these relationships can sometimes be represented mathematically, like &quot;man is to woman as king is to queen.&quot;  This paper explores similar relationships within the features discovered by sparse autoencoders, looking for geometric patterns that reflect these semantic connections.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Contextualizes the research well</strong>
+        <p>This section effectively establishes the context for the research by acknowledging prior work on SAE feature structure and its limitations.  Specifically, it highlights the observation of feature grouping and the speculation about more complex structures, setting the stage for the current investigation.</p>
+        <div class="quote">"&quot;neighborhoods&quot; of related features... multiple authors have recently speculated that SAE vectors might contain more important structures" (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Connects to relevant prior work</strong>
+        <p>The section clearly articulates the connection between the current work and previous research on function vectors and word embedding models.  It emphasizes the lineage of ideas related to linear representations of semantic concepts and parallelogram structures, effectively positioning the current research within the broader field.</p>
+        <div class="quote">"Function vectors and Word embedding models: Early word embedding methods... were found to contain directions encoding semantic concepts... Our discussion of crystal structures builds upon these previous works" (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Expand related work on spatial modularity</strong> <p>The related work section primarily focuses on SAE feature structure and function vectors.  Expanding the discussion to include related work on spatial modularity in other domains, such as biological brains or network science, would strengthen the paper&#x27;s interdisciplinary connections and provide a broader context for the &quot;brain&quot; scale analysis.</p> <p><strong>Implementation:</strong> Include a brief discussion of related work on spatial modularity in other fields.  For example, mention studies on functional brain regions and their spatial organization, or research on community detection and modularity in complex networks.  This could be a separate paragraph or integrated into the existing discussion.</p> <div class="quote">"SAE feature structure" (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Discuss other dimensionality reduction techniques</strong> <p>While the section mentions the use of UMAP projections for visualizing SAE features, it lacks a discussion of other dimensionality reduction techniques that might be relevant.  A brief comparison of different methods and their suitability for analyzing SAE feature structure would enhance the section&#x27;s comprehensiveness.</p> <p><strong>Implementation:</strong> Add a paragraph discussing other dimensionality reduction techniques, such as t-SNE, PCA, or MDS.  Briefly compare their strengths and weaknesses in the context of visualizing and analyzing high-dimensional feature spaces.  Explain why UMAP was chosen for this study and whether other methods were considered.</p> <div class="quote">"visualized SAE features with UMAP projections" (Page 1)</div>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>3 ATOM SCALE: CRYSTAL STRUCTURE</h3>
+            
+            <h4>Overview</h4>
+            <p>This section explores the &quot;atomic&quot; level of concept organization in large language models, searching for geometric patterns called &quot;crystal structures.&quot;  These crystals, visualized as parallelograms and trapezoids, represent relationships between words, similar to the classic &quot;man is to woman as king is to queen&quot; analogy.  The researchers use pairwise difference vectors and clustering to identify these crystals, applying LDA to filter out noise and reveal underlying geometric relationships.  Initial findings suggest these crystal structures are present, but obscured by irrelevant features, motivating further investigation into their prevalence and significance.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Crystal Structures:</strong> Imagine words as points in a vast conceptual space.  This section hunts for &quot;crystal structures,&quot; geometric patterns like parallelograms and trapezoids, formed by these word-points.  These shapes encode relationships between words, like &quot;man is to woman as king is to queen.&quot;  Think of it as finding constellations in the night sky of language, where the stars are words and the constellations are meaning.</li><li><strong>Methodology:</strong> To find these &quot;crystals,&quot; the researchers calculate the difference between every pair of word-vectors.  These differences, also vectors, are then grouped together based on their similarity.  If a group of difference-vectors forms a parallelogram or trapezoid, bingo!  We&#x27;ve found a crystal.  The shape tells us about the relationship between the words.</li><li><strong>Noise Reduction:</strong> The initial search was noisy, like trying to see constellations in a light-polluted sky.  To clear things up, they focused on specific layers of the language model where words are more clearly represented. They also used a technique called Linear Discriminant Analysis (LDA), which acts like a noise-canceling headphone, filtering out irrelevant information that obscures the crystal structures.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear definition of crystal structure</strong>
+        <p>This section clearly defines &quot;crystal structure&quot; in the context of SAE features, grounding the concept in geometric analogies like parallelograms and trapezoids.  The use of the classic (man, woman, king, queen) example, while acknowledged as imperfect, provides a familiar starting point for readers.</p>
+        <div class="quote">"In this section, we search for what we term crystal structure in the point cloud of SAE features. By this we mean geometric structure reflecting semantic relations between concepts, generalizing the classic example of (a, b, c, d)=(man,woman,king,queen)" (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>Well-explained methodology</strong>
+        <p>The section effectively explains the methodology for identifying crystal structures, including the use of pairwise difference vectors and clustering.  The discussion of normalization and its impact on identifying trapezoids versus parallelograms demonstrates a nuanced understanding of the geometric implications.</p>
+        <div class="quote">"We search for crystals by computing all pairwise difference vectors and clustering them... depending on whether the difference vectors are normalized or not before clustering" (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Smoother transition to Layers 0 and 1 analysis</strong> <p>While the section identifies noise in the initial crystal search, the subsequent focus on Layers 0 and 1 seems abrupt.  A more gradual transition, explaining the rationale for focusing on these layers, would improve the flow.  Additionally, clarifying the connection between single-word SAE features and the chosen dataset would strengthen the methodological justification.</p> <p><strong>Implementation:</strong> Add a transitional sentence explaining the rationale for focusing on Layers 0 and 1, such as, &quot;To understand the source of this noise, we began by examining the lower layers (0 and 1) where a significant portion of SAE features correspond to individual words, allowing for a more direct comparison with existing word-based datasets.&quot;</p> <div class="quote">"To investigate why, we focused our attention on Layers 0 (the token embedding) and 1" (Page 2)</div>
+    </li>
+    
+    <li>
+        <strong>More detail on LDA implementation</strong> <p>The section mentions the use of LDA to project out distractor dimensions, but the explanation of how these dimensions are identified and why they are considered &quot;distractors&quot; is insufficient.  Providing more detail on the LDA implementation, including the specific features used for projection, would enhance the reproducibility and clarity of the analysis.</p> <p><strong>Implementation:</strong> Expand the discussion of LDA to include the specific features used for projection, such as word length, frequency, or part-of-speech tags.  Explain how these features were selected and why they are considered detrimental to crystal structure analysis.  Include a sentence like, &quot;We used LDA to project out distractor dimensions, primarily word length, which we found to significantly confound the geometric relationships between SAE features.&quot;</p> <div class="quote">"To investigate why, we focused our attention on Layers 0 (the token embedding) and 1" (Page 2)</div>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+        <details class="non-text-element">
+            <summary>Figure 1. Parallelogram and trapezoid structure is revealed (left) when using...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 1. Parallelogram and trapezoid structure is revealed (left) when using LDA to project out distractor dimensions, tightening up clusters of pairwise Gemma-2-2b activation differences (right).</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">Figure 1 illustrates that this dramatically improves the cluster and trapezoid/parallelogram quality, highlighting that distractor features can hide existing crystals.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Overall purpose and structure of the figure</strong>: This figure aims to show how applying Linear Discriminant Analysis (LDA), a method for finding the best linear combination of features to separate different groups, reveals hidden &quot;crystal structures&quot; within the feature space of a language model called Gemma-2-2b.  Imagine the model&#x27;s &quot;thoughts&quot; as points in a high-dimensional space.  Sometimes, these points form geometric shapes like parallelograms or trapezoids, where each point represents a word or concept. These shapes, called &quot;crystals,&quot; capture relationships between concepts (e.g., &quot;man&quot; is to &quot;woman&quot; as &quot;king&quot; is to &quot;queen&quot;). However, irrelevant information, like word length, can obscure these shapes. LDA helps by projecting the points onto a lower-dimensional space where these irrelevant &quot;distractor dimensions&quot; are minimized, making the &quot;crystals&quot; more apparent. The left side likely shows the effect of LDA, while the right side visualizes the improved clusters of points representing differences between word activations, now forming tighter, clearer shapes.</li><li><strong>Visualization method and data representation</strong>: The figure uses a 2D scatter plot to visualize the &quot;crystal structures.&quot; Each point represents a pairwise difference between the activations of two words or concepts in the language model. The position of the point is determined by the values of the first two principal components after LDA is applied.  Color-coding is used to distinguish different clusters, which presumably correspond to different types of semantic relationships (e.g., country-capital, singular-plural).  The right side likely shows these clusters after LDA has been applied, demonstrating how removing distractor dimensions tightens the clusters and makes the parallelogram/trapezoid shapes more apparent.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Justification for using LDA and quantifying improvement</strong>: Using LDA to remove distractor dimensions is a valid approach, especially when dealing with high-dimensional data and known confounders. The authors&#x27; claim that this reveals underlying structure is plausible, but requires further justification.  They should quantify the improvement in &quot;crystal structure&quot; using metrics like variance explained within clusters or the degree to which the shapes resemble ideal parallelograms/trapezoids.  Simply stating &quot;dramatic improvement&quot; is subjective and not scientifically rigorous.  The authors should also justify their choice of LDA parameters and demonstrate that the results are robust to different parameter settings.</li><li><strong>Validity of &quot;crystal structures&quot; as semantic representations</strong>: The authors&#x27; focus on &quot;crystal structures&quot; as indicators of semantic relationships is interesting, but needs further validation. They should provide evidence that these geometric shapes genuinely reflect meaningful semantic connections, beyond anecdotal examples.  A more systematic analysis of the words/concepts within each cluster is needed to establish the validity of this approach.  They should also consider alternative methods for dimensionality reduction and clustering, and compare their performance to LDA.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and interpretability of visualization</strong>: The figure effectively communicates the main idea of crystal structure improvement through LDA. The visualization of clusters before and after LDA application clearly demonstrates the impact of distractor dimensions.  The color-coding helps differentiate clusters, and the choice of a 2D projection makes the results easily interpretable. Labeling the axes with PC1 and PC2 is standard practice and helps orient the reader.  Including examples like (Austria, Vienna, Switzerland, Bern) adds a concrete illustration of the concept. However, directly labeling the clusters with the transformations they represent (e.g., &quot;country-capital&quot;) would enhance clarity and avoid relying solely on color-coding.  Additionally, a brief note in the caption about the specific LDA implementation or parameter choices would improve reproducibility.</li><li><strong>Informativeness of caption</strong>: The caption clearly explains the figure&#x27;s purpose, highlighting the effect of LDA on revealing parallelogram and trapezoid structures. The reference to &quot;distractor dimensions&quot; provides context, and the mention of &quot;Gemma-2-2b activation differences&quot; specifies the data source.  However, the caption could be more informative by briefly mentioning the meaning of &quot;crystal structure&quot; in this context. For example, adding a phrase like  &quot;...revealing parallelogram and trapezoid structures indicative of semantic relations between concepts (crystal structure)...&quot; would improve understanding for a broader audience.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 11. Silhouette Score, a measure of clustering quality, as a function of...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 11. Silhouette Score, a measure of clustering quality, as a function of reduced dimension in LDA.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">No explicit numbered reference found</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose of the figure and explanation of silhouette score and LDA</strong>: This figure assesses the quality of clustering achieved after applying Linear Discriminant Analysis (LDA), a dimensionality reduction technique. Imagine you have a bunch of points representing features, and you want to group them into clusters based on their similarity. LDA helps by projecting these points onto a lower-dimensional space, making it easier to separate the clusters.  This figure uses the silhouette score, a metric that measures how similar each point is to its own cluster compared to other clusters, to evaluate the quality of clustering after LDA is applied.  A higher silhouette score indicates better-defined clusters.</li><li><strong>Explanation of axes and different lines</strong>: The x-axis represents the number of dimensions after LDA is applied. The y-axis represents the silhouette score, which typically ranges from -1 to 1.  Values closer to 1 indicate better clustering.  The plot shows how the silhouette score changes as the number of dimensions is reduced.  Separate lines are shown for different layers of the language model, indicating how the clustering quality varies across layers.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Methodology for silhouette score calculation and choice of LDA</strong>: Using the silhouette score to assess clustering quality is a standard practice.  However, the authors should clarify the specific clustering algorithm used to compute the silhouette score.  What distance metric was employed?  These details are crucial for reproducibility.  They should also justify the choice of LDA as the dimensionality reduction technique and consider alternative methods, such as PCA or t-SNE.</li><li><strong>Significance of the trend and implications for crystal structure identification</strong>: The authors should explain the significance of the observed trend.  Why does the silhouette score vary with reduced dimension and across layers?  How does this relate to the identification of &quot;crystal structures&quot;?  They should also investigate the optimal number of dimensions for clustering based on the silhouette score and discuss the implications of their findings for the broader research question.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and informativeness of the plot</strong>: The plot effectively communicates the trend of silhouette score with reduced dimension.  The use of separate lines for different layers is helpful. However, the plot could be improved by adding a clear indication of the peak silhouette score for each layer, perhaps with a marker or label.  The x-axis label could be more descriptive (e.g., &quot;Reduced Dimension&quot;).  The caption could also benefit from a brief explanation of what the silhouette score represents and its range.</li><li><strong>Context and purpose in caption</strong>: The caption clearly states what the plot shows: silhouette score as a function of reduced dimension in LDA.  However, it lacks context.  What is the purpose of analyzing the silhouette score?  How does it relate to the research question?  Adding a brief explanation, such as &quot;...to assess the impact of dimensionality reduction on crystal structure identification...&quot;,</li></ul>
+            </div>
+        </details>
+        
+    
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>4 BRAIN SCALE: MESO-SCALE MODULAR STRUCTURE</h3>
+            
+            <h4>Overview</h4>
+            <p>Imagine a language model&#x27;s understanding of concepts as a vast, interconnected web. This section explores whether this web is organized into distinct &quot;lobes,&quot; similar to functional areas in the brain. By analyzing how often concepts appear together in text and how close they are in the model&#x27;s internal representation, the researchers identify these lobes and find evidence that they specialize in different types of information, like math, code, or scientific writing.  They use a technique called spectral clustering, like shaking a network of concepts to see how it clumps together, and validate their findings by comparing them to what you&#x27;d expect if concepts were randomly distributed.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Functional Lobes:</strong> This section explores how related concepts, represented as points in the vast space of a language model&#x27;s activations, cluster together to form &quot;lobes.&quot;  Think of these lobes like specialized regions in a brain, each handling a different kind of information.  The researchers use a clever trick: they see which concepts often appear together in text (co-occurrence), and then check if those concepts are also close together in the activation space.  If they are, it suggests that the model has organized its &quot;thinking&quot; into specialized zones.</li><li><strong>Spectral Clustering and Affinity:</strong> To find these &quot;lobes,&quot; the researchers use a technique called spectral clustering. Imagine you have a network of concepts, where connections are stronger between concepts that often appear together. Spectral clustering is like shaking this network and seeing how it naturally breaks apart into clumps, which become our lobes. They try different ways of measuring how strongly concepts are connected (affinity measures) and find that one called the Phi coefficient works best.</li><li><strong>Statistical Validation:</strong> The researchers want to be sure these lobes aren&#x27;t just random clumps.  They compare their results to what you&#x27;d expect if the concepts were scattered randomly.  They use two checks: 1) They cluster concepts based on their meaning and separately based on their location in the activation space, and then see how much these two groupings agree. 2) They train a simple computer program to guess which lobe a concept belongs to just by looking at its location.  If the program does much better than random guessing, it means the lobes are really there.</li><li><strong>Lobe Specialization:</strong> To figure out what each lobe specializes in, the researchers feed different types of documents (like scientific papers, code, or chat logs) into the language model and see which lobe lights up the most for each type.  This helps them label the lobes, like identifying a &quot;math/code lobe&quot; that&#x27;s most active when processing code or mathematical text.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear conceptual framework</strong>
+        <p>The section clearly defines the concept of &quot;functional lobes&quot; in the SAE feature space, drawing an analogy to functional regions in animal brains like Broca&#x27;s area and the auditory cortex. This provides a clear conceptual framework for the investigation.</p>
+        <div class="quote">"In animal brains, such functional groups are well-known clusters in the 3D space where neurons are located. For example, Broca’s area is involved in speech production, the auditory cortex processes sound, and the amygdala is primarily associated with processing emotions. We are curious whether we can find analogous functional modularity in the SAE feature space." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Well-defined methodology</strong>
+        <p>The section provides a clear methodology for identifying functional lobes, including the computation of a co-occurrence histogram, the use of various affinity measures, and the application of spectral clustering. This makes the analysis reproducible.</p>
+        <div class="quote">"To automatically identify functional lobes, we first compute a histogram of SAE feature co-occurrences... Given this histogram, we compute an affinity score between each pair of SAE features based on their co-occurrence statistics and perform spectral clustering on the resulting affinity matrix." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Robust statistical validation</strong>
+        <p>The section presents a strong statistical validation of the findings by comparing the results with a null hypothesis and using two different approaches: mutual information between cosine similarity-based clustering and co-occurrence-based clustering, and logistic regression to predict lobe labels from feature geometry. This strengthens the claim that the observed lobes are not random.</p>
+        <div class="quote">"To show that this is statistically significant, we randomly permute the cluster labels from the cosine similarity-based clustering and measure the ad-justed mutual information. We also randomly re-initialize the SAE feature decoder directions from a random Gaussian and normalize, and then train logistic regression models to predict functional lobe from these feature directions. Figure 3 (bottom) shows that both tests rule out the null hypothesis at high significance, at 954 and 74 standard deviations, respectively..." (Page 4)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Analyze sensitivity to block size</strong> <p>While the section explores different co-occurrence measures, it lacks a discussion of the sensitivity of the results to the chosen block size (256 tokens). Exploring different block sizes and analyzing their impact on lobe identification would strengthen the robustness of the findings.</p> <p><strong>Implementation:</strong> Vary the block size used for calculating the co-occurrence histogram (e.g., 128, 512, 1024 tokens).  Compare the resulting lobe structures and analyze how the choice of block size affects the spatial modularity and the interpretation of the lobes.  Discuss the potential implications of different block sizes on the capture of short-range versus long-range co-occurrences.</p> <div class="quote">"block of 256 tokens" (Page 4)</div>
+    </li>
+    
+    <li>
+        <strong>Discuss dataset characteristics and limitations</strong> <p>The section mentions using The Pile dataset, but doesn&#x27;t provide details about its composition or potential biases.  A brief discussion of the dataset&#x27;s characteristics and potential limitations would enhance the analysis.</p> <p><strong>Implementation:</strong> Include a brief description of The Pile dataset, highlighting its size, diversity of sources, and any known biases. Discuss how the dataset&#x27;s characteristics might influence the observed lobe structure and potentially limit the generalizability of the findings. Consider using other datasets to validate the results and assess their robustness across different text corpora.</p> <div class="quote">"The Pile Gao et al. (2020)" (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Enhance lobe visualization</strong> <p>The visualization of lobes in Figure 2 is helpful, but limited to a 2D projection.  Exploring 3D visualizations or interactive visualizations could provide a more comprehensive understanding of the spatial relationships between lobes.</p> <p><strong>Implementation:</strong> Explore 3D visualization techniques, such as interactive point cloud viewers or 3D scatter plots, to represent the SAE feature space and the identified lobes.  This would allow for a more intuitive exploration of the spatial distribution of features and the relationships between different lobes.  Consider including interactive visualizations in supplementary materials to allow readers to explore the data directly.</p> <div class="quote">"Figure 2" (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+        <details class="non-text-element">
+            <summary>Figure 2. Features in the SAE point cloud identified that tend to fire together...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 2. Features in the SAE point cloud identified that tend to fire together within documents are seen to also be geometrically co-located in functional &quot;lobes&quot;, here down-projected to 2D with t-SNE with point size proportional to feature frequency.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">In contrast, Figure 2 shows lobes that appear visually quite spatially localized.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose and visualization method</strong>: This figure visualizes the spatial organization of features learned by a Sparse Autoencoder (SAE) from a large language model. Think of the SAE as a system that learns to represent the meaning of text by activating different combinations of features. Each feature can be thought of as a point in a high-dimensional space.  This figure explores whether features that frequently activate together when processing the same document are also close to each other in this space.  To visualize this high-dimensional space, the authors use t-SNE, a technique that projects the points onto a 2D plane while trying to preserve their relative distances. The size of each point represents how often that feature is activated across a dataset of documents. The figure shows these points grouped into &quot;lobes,&quot; suggesting a spatial organization where functionally related features cluster together.</li><li><strong>Key terms: point cloud, firing together, lobes</strong>: The &quot;point cloud&quot; refers to the set of all features learned by the SAE, each represented as a point in a high-dimensional space.  &quot;Firing together&quot; means that these features are frequently activated simultaneously when the SAE processes the same document. The figure investigates whether this functional co-activation corresponds to spatial proximity in the feature space.  The &quot;lobes&quot; are visually distinct clusters of points in the 2D t-SNE projection, suggesting that functionally related features tend to be located near each other.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Quantifying spatial localization and statistical significance</strong>: While visually suggestive, the claim of spatial localization needs more rigorous support. The authors should quantify the degree of clustering using appropriate metrics, such as silhouette scores or modularity measures.  They should also compare the observed clustering to a null model, such as randomly shuffled feature assignments, to demonstrate statistical significance.  Relying solely on visual inspection is not sufficient to establish the presence of meaningful structure.</li><li><strong>Justification for co-occurrence and sensitivity analysis</strong>: The choice of co-occurrence as a measure of functional similarity should be justified.  Do features that co-occur within a document necessarily represent related concepts?  The authors should explore alternative measures of functional similarity, such as semantic similarity based on word embeddings, and compare the resulting spatial organization.  They should also investigate the sensitivity of the results to the chosen document size and context window for co-occurrence calculation.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>t-SNE limitations and labeling</strong>: The figure&#x27;s use of t-SNE for dimensionality reduction is appropriate for visualization, but its limitations should be acknowledged. t-SNE can distort distances and create artificial clusters. The authors should clarify that the observed spatial localization is suggestive and requires further investigation with more robust methods. Labeling the lobes directly on the plot, rather than relying solely on the caption, would improve clarity.  A brief explanation of the color scheme in the caption would also be beneficial.</li><li><strong>Clarity and precision of language</strong>: The caption clearly conveys the main finding: features that activate together are spatially clustered. The use of &quot;lobes&quot; as an analogy to brain regions is effective in conveying the idea of functional modularity. However, the caption could be more specific about the meaning of &quot;fire together.&quot; Does it refer to co-occurrence within the same document, sentence, or some other unit of text?  Clarifying this would enhance the precision of the message.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 3. Top Left: Adjusted mutual information between spatial clusters and...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 3. Top Left: Adjusted mutual information between spatial clusters and functional (cooccurrence-based) clusters.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">Figure 3 shows that for both measures, the Phi coefficient wins, delivering the best correspondence between functional lobes and feature geometry.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose of the graph and meaning of AMI</strong>: This graph, specifically the top-left panel, shows how well two different ways of grouping features of a language model agree with each other. One way, creating &quot;spatial clusters,&quot; groups features based on their geometric locations in a high-dimensional space, like points clustered on a map. The other way, creating &quot;functional clusters,&quot; groups features based on how often they activate together when processing a document.  Imagine if words like &quot;king&quot; and &quot;queen&quot; often appeared in the same texts, they would be in the same functional cluster. The graph uses a metric called Adjusted Mutual Information (AMI) to measure the agreement between these two groupings.  A higher AMI means better agreement, suggesting that features close in space also tend to function similarly.</li><li><strong>Explanation of axes and different lines</strong>: The x-axis represents the number of clusters created in either the spatial or functional grouping (needs clarification). The y-axis represents the AMI score, which ranges from 0 to 1, with higher values indicating better agreement. Different lines on the graph correspond to different methods of calculating functional clusters based on co-occurrence, such as the Phi coefficient, which measures the correlation between two features&#x27; activations.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Methodology for spatial clustering</strong>: Using AMI to compare clusterings is a standard and valid approach. However, the authors should clarify how the spatial clusters were generated.  What clustering algorithm was used?  What distance metric was employed in the high-dimensional space?  These details are crucial for reproducibility and interpretation of the results.</li><li><strong>Statistical significance and alternative metrics</strong>: The claim that the Phi coefficient &quot;wins&quot; needs further justification.  Is the difference in AMI scores statistically significant?  The authors should perform statistical tests to compare the different co-occurrence measures and report the p-values.  They should also consider other evaluation metrics beyond AMI, such as the Fowlkes-Mallows index or the Rand index, to provide a more comprehensive assessment.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of caption</strong>: The caption clearly states what the graph depicts: adjusted mutual information between two types of clusters. However, it lacks context. It should specify what the &#x27;spatial&#x27; and &#x27;functional&#x27; clusters represent. For instance, are the spatial clusters based on feature vector geometry and functional clusters based on co-occurrence within documents?  Adding this information would make the caption self-sufficient.</li><li><strong>Clarity of axis labels and data presentation</strong>: The plot itself is clear, with well-labeled axes. The use of different colors for different co-occurrence measures is helpful.  However, the x-axis label &quot;Number of Clusters&quot; could be more informative. Does it refer to the number of spatial clusters, functional clusters, or both?  Clarifying this would prevent ambiguity.  Also, indicating the peak AMI value for the Phi coefficient directly on the graph would enhance readability.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 4. Fraction of contexts in which each lobe had the highest proportion of...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 4. Fraction of contexts in which each lobe had the highest proportion of activating features.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">We show these results for three lobes, computed with the Phi coefficient as the co-occurrence measure, in Figure 4.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Overall purpose and visualization method</strong>: This figure shows how different &quot;lobes&quot; of features in a language model are activated across various types of documents. Imagine the model&#x27;s &quot;brain&quot; is divided into specialized regions (&quot;lobes&quot;), each responsible for understanding different aspects of language. This figure explores which lobes are most active when processing different kinds of text, like scientific papers, code, or news articles. The figure uses a heatmap, where each row represents a document type (e.g., Wikipedia articles, code from GitHub) and each column represents a lobe. The color intensity in each cell indicates how often that lobe was the most active one when processing a chunk of text from that document type.  Brighter colors mean higher activation.</li><li><strong>Explanation of lobes and contexts</strong>: The &quot;lobes&quot; are groups of features that tend to activate together, identified using a method based on the Phi coefficient, a measure of correlation.  &quot;Contexts&quot; refer to short segments of text within a document.  For each context, the figure determines which lobe has the highest proportion of its features activated. The heatmap then aggregates these results across many contexts within each document type, showing the overall preference of each lobe for different types of text.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Justification for context length and alternative methods</strong>: The methodology of identifying lobes based on the Phi coefficient and then analyzing their activation across document types is sound. However, the choice of 256-token contexts should be justified.  Is this length optimal for capturing the relevant semantic information?  The authors should explore different context lengths and assess their impact on the results.  They should also consider alternative methods for identifying functional modules, such as clustering based on semantic similarity, and compare them to the co-occurrence-based approach.</li><li><strong>Statistical significance of lobe specialization</strong>: The authors should quantify the statistical significance of the observed associations between lobes and document types.  For example, they could compare the observed activation patterns to a null model where lobes are randomly assigned to features.  This would help determine whether the observed specialization of lobes is statistically significant or simply due to chance.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and informativeness of visualization</strong>: The heatmap effectively visualizes the association between lobes and document types. The color intensity clearly represents the activation strength, making it easy to identify which lobes are dominant in each document type.  However, the labels for document types could be more descriptive.  For instance, instead of &quot;Pile-CC,&quot; specifying &quot;Common Crawl&quot; would be more informative.  Similarly, clarifying abbreviations like &quot;USPTO&quot; would improve accessibility.  Adding a colorbar to explicitly map colors to activation fractions would further enhance clarity.</li><li><strong>Completeness and context in caption</strong>: The caption is concise but lacks detail. It states what the heatmap represents but doesn&#x27;t explain what &quot;contexts&quot; are or how they relate to documents.  Adding a brief explanation, such as &quot;...fraction of 256-token blocks within each document type...&quot; would improve understanding.  The caption should also mention the use of the Phi coefficient for lobe computation, as this is crucial for interpreting the results.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 5. Comparison of the lobe partitions of the SAE point cloud discovered...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 5. Comparison of the lobe partitions of the SAE point cloud discovered with different affinity measures, with the same t-SNE projection as Figure 2.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">The effects of the five different co-occurrence measures are compared in Figure 5.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose of the figure and meaning of affinity measures</strong>: This figure compares different ways of grouping features in a language model&#x27;s representation space into &quot;lobes.&quot; Imagine the model&#x27;s &quot;brain&quot; is divided into specialized regions, and we&#x27;re trying to find the best way to define these regions.  Each subplot in the figure shows a different way to group the features, using different methods for measuring how similar features are to each other. These methods, called &quot;affinity measures,&quot; determine which features are grouped together into lobes.  The figure uses t-SNE, a technique to visualize high-dimensional data in 2D, to show the spatial organization of these lobes.  The same t-SNE projection is used for all subplots, allowing for direct comparison of the different grouping methods.</li><li><strong>Explanation of SAE point cloud, lobe partitions, and affinity measures</strong>: The &quot;SAE point cloud&quot; refers to the set of all features learned by a Sparse Autoencoder (SAE), each represented as a point in a high-dimensional space. &quot;Lobe partitions&quot; are different ways of dividing this point cloud into clusters (&quot;lobes&quot;) based on how similar the features are. The figure explores how different affinity measures, which quantify feature similarity, affect the resulting lobe structure.  The different affinity measures likely include variations on how often features activate together when processing the same text.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Quantifying differences between partitions and justifying affinity measure choices</strong>: Comparing different affinity measures is a valid approach for understanding the robustness of the lobe structure.  However, the authors should quantify the differences between the partitions using appropriate metrics, such as variation of information or the Rand index.  Visual comparison alone is not sufficient to draw strong conclusions.  They should also justify the choice of the specific affinity measures used and explain why these measures are relevant to the research question.</li><li><strong>Addressing t-SNE limitations and exploring alternative methods</strong>: While using the same t-SNE projection facilitates comparison, the authors should acknowledge the limitations of t-SNE.  As t-SNE can distort distances and create artificial clusters, the observed spatial organization should be interpreted with caution.  The authors should consider using additional dimensionality reduction techniques, such as UMAP or PCA, to verify the robustness of the lobe structure.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and consistency of visualization</strong>: Using the same t-SNE projection across all subplots facilitates direct comparison of the different affinity measures. The consistent color scheme and layout make it easy to see the similarities and differences between the resulting lobe partitions.  However, labeling each subplot directly with the corresponding affinity measure would improve clarity and avoid the need to constantly refer back to the caption.  Additionally, a brief explanation of the color scheme (e.g., what do different colors represent?) would be beneficial.</li><li><strong>Informativeness and context in caption</strong>: The caption clearly explains the figure&#x27;s purpose: comparing lobe partitions based on different affinity measures.  The reference to &quot;the same t-SNE projection as Figure 2&quot; provides helpful context.  However, the caption could be more informative by briefly mentioning what types of affinity measures are being compared (e.g., &quot;...different co-occurrence-based affinity measures...&quot;).</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 10. Plot of the first principal component in the difference space as a...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 10. Plot of the first principal component in the difference space as a function of last token length difference in Gemma-2-2b layer 0.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">Figure 10 shows that the first principal component encodes mainly the length difference between two words&#x27; last tokens in Gemma-2-2b Layer 0.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose of the figure and explanation of PCA</strong>: This figure investigates the factors that influence the first principal component of the feature representations learned by a language model. Imagine each word represented as a point in a high-dimensional space. Principal Component Analysis (PCA) finds the directions of greatest variation in this space.  The first principal component is the direction along which the data varies the most. This figure specifically examines how the first principal component relates to the difference in length between the last tokens of two words.  It visualizes this relationship for the initial layer (Layer 0) of the Gemma-2-2b language model.</li><li><strong>Explanation of plot and difference space</strong>: The plot shows the first principal component value on the y-axis and the difference in the last token length between two words on the x-axis. Each point in the scatter plot represents a pair of words.  The &quot;difference space&quot; likely refers to the space of pairwise differences between word representations.  The figure aims to demonstrate that the first principal component is strongly influenced by the difference in the length of the last tokens.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Quantifying the relationship and exploring other layers/positions</strong>: Analyzing the relationship between the first principal component and word length is a valid approach for understanding the factors that influence feature representations.  However, the authors should quantify the strength of this relationship using a correlation coefficient or regression analysis.  Simply stating that the first principal component &quot;encodes mainly&quot; length difference is not sufficient.  They should also investigate whether this relationship holds for other layers of the model and other token positions besides the last token.</li><li><strong>Relevance to research question and controlling for word length</strong>: The authors should explain why this finding is relevant to the broader research question.  Does the influence of word length have implications for the interpretation of the &quot;brain scale&quot; structure?  They should also consider controlling for word length in their analysis of functional lobes to isolate the effects of semantic similarity.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and informativeness of the plot</strong>: The scatter plot clearly visualizes the relationship between the first principal component and the last token length difference. The linear trend is apparent, supporting the authors&#x27; claim.  However, adding a regression line to the plot would quantify the strength of the relationship and improve the visual representation.  Including axis labels with units (e.g., &quot;PC1 Value&quot;, &quot;Length Difference (characters)&quot;) would further enhance clarity.  The caption could also benefit from a brief explanation of what &quot;difference space&quot; refers to.</li><li><strong>Context and significance in caption</strong>: The caption clearly describes the plot&#x27;s content. However, it lacks context. Why is this relationship important?  How does it relate to the broader research question?  Adding a brief explanation, such as &quot;...demonstrating that word length is a significant factor in the first principal component...&quot;,</li></ul>
+            </div>
+        </details>
+        
+    
+        </div>
+        
+        <div id="section-5" class="section">
+            <h3>5 GALAXY SCALE: LARGE-SCALE POINT CLOUD STRUCTURE</h3>
+            
+            <h4>Overview</h4>
+            <p>This section zooms out to the largest scale and examines the overall shape and clustering of the concept point cloud, like studying the structure of a galaxy.  The key finding is that the cloud isn&#x27;t a uniform blob but has a specific shape, like a flattened cucumber, with its dimensions shrinking at different rates according to a power law.  This is revealed by analyzing the eigenvalues of the covariance matrix, which are like rulers measuring the spread of the cloud in different directions.  The observed power law is significantly different from what you&#x27;d expect if the concepts were randomly distributed, suggesting a non-random, structured organization of concepts within the language model.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Galaxy-scale structure:</strong> Imagine the universe of concepts within a language model as a vast, high-dimensional space filled with points, much like stars scattered across the cosmos. This section explores the overall shape and distribution of these concept-points, or &quot;SAE point cloud,&quot; at a large scale, analogous to studying the structure of a galaxy.  Instead of being a uniform blob, the cloud exhibits a distinct shape, resembling a flattened cucumber, with its &quot;width&quot; in different dimensions shrinking according to a power law.  This power law describes how quickly the spread of points decreases as we move along less important directions in the concept space.</li><li><strong>Eigenvalue analysis:</strong> To analyze the shape of the point cloud, the researchers use the eigenvalues of the covariance matrix. Think of the covariance matrix as describing how the concept-points are spread out. The eigenvalues are like a set of rulers, each measuring the spread in a particular direction.  A larger eigenvalue means a wider spread in that direction.  The fact that these eigenvalues follow a power law suggests that the cloud is not uniformly spread out but has a specific, non-spherical shape.</li><li><strong>Comparison with null hypothesis:</strong> The researchers compare the observed eigenvalue spectrum to what you&#x27;d expect if the concept-points were randomly scattered, like gas molecules in a box.  This &quot;null hypothesis&quot; of a random distribution predicts a flat eigenvalue spectrum, meaning all the &quot;rulers&quot; have roughly the same length.  The observed power law strongly deviates from this prediction, indicating that the shape of the concept cloud is not random but reflects some underlying structure in how the language model organizes concepts.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Quantitative shape analysis</strong>
+        <p>This section effectively quantifies the shape of the SAE point cloud by analyzing the eigenvalues of the covariance matrix. The observation of a power-law decay in eigenvalues, distinct from the expected flat spectrum of an isotropic Gaussian distribution, provides a compelling quantitative measure of the cloud&#x27;s non-spherical shape.</p>
+        <div class="quote">"Figure 6 (left) quantifies this by showing the eigenvalues of the point cloud’s covariance matrix in decreasing order... revealing that they are not constant, but appear to fall off according to a power law." (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Strong statistical baseline</strong>
+        <p>The comparison of the observed eigenvalue spectrum with that of a randomly generated isotropic Gaussian distribution provides a strong statistical baseline. This comparison clearly demonstrates the significance of the power-law decay and strengthens the argument for a non-random, structured shape of the point cloud.</p>
+        <div class="quote">"the figure compares it with the corresponding eigenvalue spectrum for a point cloud drawn from an isotropic Gaussian distribution, which is seen to be much flatter" (Page 7)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Formalize shape characterization</strong> <p>While the &quot;fractal cucumber&quot; analogy provides an intuitive picture of the point cloud&#x27;s shape, it lacks precise mathematical definition.  A more rigorous characterization of the shape, perhaps using fractal dimension or other relevant metrics, would strengthen the analysis.</p> <p><strong>Implementation:</strong> Calculate the fractal dimension of the point cloud using established methods.  Report the calculated dimension and discuss its implications for the cloud&#x27;s geometry.  Compare the fractal dimension across different layers to quantify the layer-dependence of the shape.</p> <div class="quote">"the point cloud has the shape of a “fractal cucumber”, whose width in successive dimensions falls off like a power law" (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Investigate activation vs. feature scaling</strong> <p>The section mentions that power-law scaling is less prominent for activations than SAE features.  This observation warrants further investigation.  Exploring the reasons behind this difference could provide valuable insights into the role of the sparse autoencoder in shaping the concept representation.</p> <p><strong>Implementation:</strong> Compare the eigenvalue spectra of activations and SAE features directly. Quantify the difference in power-law scaling using appropriate metrics (e.g., slope of the power law). Investigate potential factors contributing to this difference, such as the sparsity constraint or the architecture of the autoencoder.</p> <div class="quote">"We find such power law scaling is significantly less prominent for activations than for SAE features" (Page 7)</div>
+    </li>
+    
+    <li>
+        <strong>Deeper layer-wise analysis</strong> <p>The section briefly mentions the layer-dependence of the power-law slope and effective cloud volume.  Expanding this analysis to include a more detailed investigation of how these metrics evolve across layers could reveal valuable insights into the hierarchical organization of concepts within the LLM.</p> <p><strong>Implementation:</strong> Systematically analyze the power-law slope and effective cloud volume for each layer.  Visualize the trends of these metrics across layers.  Investigate potential correlations between these metrics and other layer-specific properties, such as the number of active features or the average activation magnitude.</p> <div class="quote">"Figure 6 (right) shows how the slope of the aforementioned power law depends on LLM layer... Figure 7 (right) also shows how effective cloud volume depends on layer" (Page 8)</div>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+        <details class="non-text-element">
+            <summary>Figure 6. 3D Point Cloud visualizations of top PCA components for the Gemma2-2b...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 6. 3D Point Cloud visualizations of top PCA components for the Gemma2-2b layer 12 SAE features.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">The simple null hypothesis that we try to rule out is that the point cloud is simply drawn from an isotropic multivariate Gaussian distribution.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose of visualization and explanation of PCA</strong>: This figure shows a 3D representation of how features learned by a Sparse Autoencoder (SAE) are distributed. Imagine each feature as a point in a very high-dimensional space.  Since we can&#x27;t visualize such a high-dimensional space directly, the authors use Principal Component Analysis (PCA), a method for reducing dimensionality, to project these points onto a 3D space.  PCA finds the directions of greatest variance in the data, and the figure shows the points along the three most important directions. This visualization helps explore the overall &quot;shape&quot; of the feature distribution and whether it resembles a simple cloud or has more complex structure.</li><li><strong>Explanation of point cloud, Gemma2-2b, and SAE features</strong>: The &quot;point cloud&quot; refers to the set of all features learned by the SAE, each represented as a point.  &quot;Gemma2-2b layer 12&quot; specifies the particular language model and layer being analyzed.  &quot;SAE features&quot; are the learned representations of concepts or words. The 3D visualization shows these features projected onto the first three principal components, which capture the most significant variations in the data.  The color of each point represents its &quot;magnitude,&quot; which could be related to the activation strength or frequency of the feature.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Quantifying deviation from isotropy and statistical testing</strong>: Visualizing the point cloud after PCA is a reasonable first step in exploring its structure. However, it&#x27;s crucial to go beyond visual inspection and quantify the deviation from isotropy.  The authors should calculate the eigenvalues of the covariance matrix and compare them to the expected distribution for an isotropic Gaussian.  They should also perform statistical tests, such as Bartlett&#x27;s test of sphericity, to assess the significance of the deviation.</li><li><strong>Justification for using top three components and exploring alternatives</strong>: The choice of the top three principal components should be justified.  Do these components capture a sufficient amount of variance in the data?  The authors should report the explained variance ratio for each component.  They should also consider visualizing the point cloud along other combinations of principal components or using alternative dimensionality reduction techniques to ensure that the observed structure is not an artifact of the chosen projection.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and interpretability of 3D visualization</strong>: Visualizing the point cloud in 3D helps illustrate the non-isotropic nature, but it&#x27;s difficult to discern fine-grained details.  While the color-coding based on point magnitude adds some information, it&#x27;s unclear what insights are gained from it.  Labeling the axes with the corresponding principal components (e.g., PC1, PC2, PC3) would improve clarity.  Additionally, providing a brief explanation in the caption about what the point cloud represents (e.g., &quot;Each point represents an SAE feature&quot;) would enhance understanding.</li><li><strong>Connecting visualization to research question</strong>: The caption clearly states what is being visualized: a 3D point cloud of SAE features projected onto the top principal components. However, it lacks context.  What is the purpose of this visualization?  What is the significance of examining the point cloud structure?  Connecting the visualization to the research question (e.g., &quot;...to assess the isotropy of the feature distribution...&quot;) would make the caption more informative.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 7. Eigenvalues of the point cloud are seen to decay as an an approximate...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 7. Eigenvalues of the point cloud are seen to decay as an an approximate power law (left), whose slope depends on layer (right) and is strongly inconsistent with sampling from an isotropic Gaussian distribution.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">Figure 6 (left) quantifies this by showing the eigenvalues of the point cloud&#x27;s covariance matrix in decreasing order, revealing that they are not constant, but appear to fall off according to a power law.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose of the figure and meaning of eigenvalues</strong>: This figure analyzes the distribution of features learned by a language model by examining the eigenvalues of the covariance matrix of the feature vectors. Imagine each feature as a point in a high-dimensional space. The covariance matrix describes how these features vary together.  Its eigenvalues represent the extent of variation along different directions in this space.  If the features were distributed like a simple spherical cloud (isotropic Gaussian), the eigenvalues would decay smoothly. However, the figure shows that the eigenvalues decay approximately as a power law, indicating a different, non-isotropic distribution.  The figure also shows how the steepness of this power-law decay changes across different layers of the language model.</li><li><strong>Explanation of plots and layer dependence</strong>: The left plot shows the eigenvalues plotted against their rank on a log-log scale. A straight line on a log-log plot indicates a power law.  The right plot shows how the slope of this power law, which represents the steepness of the decay, changes with the layer of the language model.  The layers refer to different processing stages within the model.  The figure also shows the &quot;effective point cloud volume,&quot; which is a measure of the spread of the feature distribution, and how it varies across layers.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Quantifying goodness of fit and considering alternative distributions</strong>: Analyzing the eigenvalue spectrum is a valid approach for assessing the isotropy of the feature distribution.  The comparison to an isotropic Gaussian provides a meaningful baseline. However, the authors should quantify the goodness of fit for the power-law approximation.  They should also consider alternative distributions, such as heavy-tailed distributions, and compare their fit to the observed eigenvalue decay.  Simply stating &quot;strongly inconsistent&quot; is not sufficient; statistical tests should be performed to assess the significance of the deviation from the Gaussian distribution.</li><li><strong>Investigating layer dependence and practical implications</strong>: The observation of a layer-dependent slope is interesting and warrants further investigation. The authors should explore the reasons behind this variation.  Is it related to the specific architecture of the language model or the nature of the features learned at different layers?  They should also analyze the relationship between the eigenvalue spectrum and the performance of the model on different tasks to assess the practical implications of the observed non-isotropy.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and informativeness of plots</strong>: Presenting the eigenvalue decay and layer-dependent slope in separate plots is a good choice. The log-log scale on the left plot is appropriate for visualizing power-law behavior.  However, the right plot could be improved.  Instead of plotting just the slopes, showing the actual power-law fits for different layers would be more informative.  Adding a legend to the left plot to identify the different layers would also enhance clarity.  The right plot&#x27;s y-axis label could be more descriptive (e.g., &quot;Power-law exponent&quot;) and indicate clearly what is being plotted.  Finally, the caption could benefit from a brief explanation of what the &quot;effective point cloud volume&quot; represents.</li><li><strong>Precision and context in caption</strong>: The caption clearly states the main findings: power-law decay of eigenvalues and layer-dependent slope. The reference to the isotropic Gaussian distribution provides context.  However, the caption could be more precise by specifying what &quot;layer&quot; refers to (e.g., &quot;...layer of the language model...&quot;).  Also, briefly mentioning the implication of the power-law decay (e.g., &quot;...suggesting a non-isotropic distribution of features...&quot;) would enhance the message.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 8. Estimated clustering entropy across layers with 95% confidence...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 8. Estimated clustering entropy across layers with 95% confidence intervals.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">Figure 8 shows the estimated clustering entropy across different layers.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose of the figure and meaning of clustering entropy</strong>: This figure measures how clustered the features learned by a language model are at different stages of processing. Imagine the features as points in a high-dimensional space.  If the points are randomly scattered, the entropy is high. If the points form tight clusters, the entropy is low. This figure calculates the &quot;clustering entropy,&quot; which quantifies the degree of clustering, for each layer of the language model.  The layers represent different processing stages, from the initial input to the final output.  The figure shows how the clustering entropy changes across these layers.</li><li><strong>Explanation of axes and confidence intervals</strong>: The x-axis represents the layer of the language model. The y-axis represents the clustering entropy.  The plot shows the estimated clustering entropy for each layer, along with 95% confidence intervals.  These intervals indicate the range within which the true clustering entropy is likely to fall, given the estimated value. The plot helps visualize how the degree of feature clustering varies across different processing stages in the model.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Methodology for clustering entropy calculation</strong>: Using clustering entropy to quantify the degree of clustering is a valid approach.  However, the authors should clearly define how the clustering entropy is calculated.  What clustering algorithm is used?  What distance metric is employed?  These details are crucial for reproducibility.  They should also justify the choice of the k-NN method for entropy estimation and consider alternative methods.</li><li><strong>Investigating the trend and its implications</strong>: The observed trend of reduced clustering entropy in middle layers is interesting, but requires further investigation. The authors should explore the reasons behind this trend.  Is it related to the specific architecture of the language model or the nature of the features learned at different layers?  They should also analyze the relationship between clustering entropy and the performance of the model on different tasks to understand the practical implications of the observed trend.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and informativeness of the plot</strong>: The plot clearly shows the trend of clustering entropy across layers. The inclusion of confidence intervals is crucial for assessing the reliability of the estimates.  However, the y-axis label could be more informative.  While &quot;Clustering Entropy&quot; is technically correct, briefly explaining what it represents (e.g., &quot;Measure of feature clustering&quot;) would make the plot more accessible.  Adding a horizontal line representing the entropy of a uniform distribution would provide a useful visual reference point.</li><li><strong>Context and significance in caption</strong>: The caption is concise and accurately describes the plot.  However, it could be improved by providing more context.  What is the significance of the observed trend?  How does it relate to the research question?  Adding a brief explanation, such as &quot;...indicating reduced clustering in middle layers...&quot;,</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 9. Histogram, over all features, of Phi coefficient with k-th nearest...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 9. Histogram, over all features, of Phi coefficient with k-th nearest cosine similarity neighbor.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">No explicit numbered reference found</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose of the figure and explanation of Phi coefficient and cosine similarity</strong>: This figure explores the relationship between two ways of measuring the similarity between features learned by a language model. One way uses the Phi coefficient, which measures how often two features activate together when processing the same text.  The other way uses cosine similarity, which measures the angle between the feature vectors in a high-dimensional space.  Imagine each feature as a point in this space; points close together have high cosine similarity.  The figure creates histograms of the Phi coefficient between each feature and its k-th nearest neighbor based on cosine similarity.  This helps understand if features that are close in space also tend to activate together.</li><li><strong>Explanation of histograms and k-th nearest neighbor</strong>: The histograms show the distribution of Phi coefficient values for different values of k, where k represents the number of nearest neighbors considered.  For example, k=1 corresponds to the nearest neighbor, k=2 corresponds to the second nearest neighbor, and so on. The x-axis represents the Phi coefficient, and the y-axis represents the frequency of features with that Phi coefficient value.  The &quot;random&quot; baseline represents the expected distribution if there were no relationship between co-occurrence and cosine similarity.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Methodology for random baseline and statistical testing</strong>: Analyzing the relationship between co-occurrence and cosine similarity is a valid approach for understanding the structure of feature representations.  The use of a &quot;random&quot; baseline is helpful for assessing the significance of the observed distributions. However, the authors should clarify how the &quot;random&quot; baseline is generated.  Is it based on randomly shuffled features or a theoretical distribution?  They should also quantify the difference between the observed distributions and the random baseline using statistical tests, such as the Kolmogorov-Smirnov test.</li><li><strong>Justification for Phi coefficient and sensitivity analysis</strong>: The choice of the Phi coefficient as a measure of co-occurrence should be justified.  Are there alternative measures that might be more appropriate?  The authors should also explore the sensitivity of the results to the choice of k.  Does the relationship between co-occurrence and cosine similarity change significantly with different values of k?  They should also consider using other distance metrics besides cosine similarity.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and informativeness of histograms</strong>: Presenting separate histograms for Layer 0 and Layer 12 is helpful for comparing the distributions.  The inclusion of a &quot;random&quot; baseline provides a useful reference point. However, the plot could be improved by clarifying the meaning of k.  Adding a brief explanation in the caption or labels (e.g., &quot;k = number of nearest neighbors&quot;) would enhance understanding.  Also, labeling the peaks of the distributions with the corresponding k values would improve readability.  The x-axis label could be more descriptive (e.g., &quot;Phi Coefficient with k-th Nearest Neighbor&quot;).</li><li><strong>Context and purpose in caption</strong>: The caption clearly states what the histograms represent.  However, it lacks context. What is the purpose of analyzing the Phi coefficient distribution?  How does it relate to the research question?  Adding a brief explanation, such as &quot;...to assess the relationship between feature co-occurrence and cosine similarity...&quot;,</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 12. Smoothed PCA scores for each SAE feature of the layer 12, width 16k,...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 12. Smoothed PCA scores for each SAE feature of the layer 12, width 16k, Lo = 176 Gemma Scope 2b SAE, sorted by frequency.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">No explicit numbered reference found</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Purpose of the figure and explanation of PCA scores</strong>: This figure analyzes how the features learned by a Sparse Autoencoder (SAE) are distributed across the principal components of the activation space. Imagine each feature as a point in a high-dimensional space. Principal Component Analysis (PCA) finds the directions of greatest variance in this space. Each feature can be assigned a &quot;PCA score,&quot; which represents its weighted position along these principal components.  This figure plots the smoothed PCA scores for each feature in a specific layer of the Gemma Scope 2b SAE model.  The features are sorted by their frequency of activation, meaning how often they are &quot;turned on&quot; when processing text.</li><li><strong>Explanation of axes, smoothing, and the observed dip</strong>: The x-axis represents the index of the SAE feature, sorted by decreasing frequency. The y-axis represents the smoothed PCA score.  The plot shows how the PCA scores vary across features.  Different lines correspond to different smoothing windows, which are used to average the scores and reveal the underlying trend.  The figure highlights a &quot;dip&quot; in PCA scores towards the end, suggesting that less frequent features have different PCA score characteristics.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Justification for smoothing windows and feature sorting, and comparison to baseline</strong>: Analyzing PCA scores can provide insights into the structure of feature representations.  The use of smoothing is appropriate for visualizing trends in noisy data.  However, the authors should justify the choice of smoothing windows.  Are the observed patterns robust to different window sizes?  They should also explain the significance of sorting features by frequency.  Does this sorting reveal any meaningful patterns?  They should also compare the observed distribution of PCA scores to a random baseline or a theoretical distribution.</li><li><strong>Significance of the observed dip and its implications for galaxy scale structure</strong>: The authors should explain the implications of the observed dip in PCA scores. What does it mean for the less frequent features to have different PCA score characteristics? How does this relate to the &quot;galaxy scale&quot; structure of the point cloud?  They should also investigate whether this dip is specific to layer 12 or if it occurs in other layers as well.  They should also explore the relationship between PCA scores and the performance of the model on different tasks.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and informativeness of the plot</strong>: The plot clearly shows the trend of smoothed PCA scores across features. The inclusion of different smoothing windows helps visualize the underlying pattern.  However, the plot could be improved by clarifying the meaning of &quot;PCA score.&quot;  The formula provided in the caption is helpful, but a brief intuitive explanation would enhance understanding for a broader audience.  Also, the x-axis label could be more informative (e.g., &quot;SAE Feature Index (Sorted by Frequency)&quot;).  The caption could also benefit from a brief explanation of why the features are sorted by frequency and the significance of the observed dip.</li><li><strong>Context and purpose in caption</strong>: The caption provides detailed information about the specific SAE model and parameters.  However, it lacks context. What is the purpose of analyzing PCA scores? How does it relate to the research question?  Adding a brief explanation, such as &quot;...to investigate the distribution of SAE features across principal components...&quot;,</li></ul>
+            </div>
+        </details>
+        
+    
+        </div>
+        
+        <div id="section-6" class="section">
+            <h3>6 CONCLUSION</h3>
+            
+            <h4>Overview</h4>
+            <p>This conclusion brings together the paper&#x27;s findings, showing that the &quot;concept universe&quot; within a large language model, as revealed by sparse autoencoders, isn&#x27;t random but organized at three scales.  Like tiny crystals, related concepts form geometric structures at the atomic level.  At a larger scale, concepts cluster into functional lobes, like specialized regions in a brain.  Zooming out further, the entire cloud of concepts has a specific, non-uniform shape, like a flattened cucumber.  These findings offer a new perspective on how language models represent and organize knowledge, paving the way for a deeper understanding of their inner workings.</p>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Atomic Scale:</strong> The conclusion summarizes the three key structural levels discovered in the &quot;concept universe&quot; of sparse autoencoder point clouds.  At the smallest, &quot;atomic&quot; level, concepts form &quot;crystals&quot; with parallelogram or trapezoid faces, like tiny geometric building blocks.  These crystals capture relationships between words, similar to the analogy &quot;man is to woman as king is to queen.&quot;  Distractor features, like word length, can obscure these crystals, but techniques like Linear Discriminant Analysis (LDA) can help reveal them.  Think of LDA as a filter that removes irrelevant noise, allowing the true crystal structure to shine through.</li><li><strong>Brain Scale:</strong> At the intermediate, &quot;brain&quot; scale, the concept universe exhibits modularity, with related concepts clustering together in &quot;lobes.&quot;  These lobes resemble functional regions in animal brains, like Broca&#x27;s area for speech or the auditory cortex for sound.  Just as different brain regions specialize in different tasks, these concept lobes group together features that often appear together in text, like math and coding terms forming a dedicated lobe.  This organization suggests that the language model, like our brains, processes information in a modular fashion.</li><li><strong>Galaxy Scale:</strong> At the largest, &quot;galaxy&quot; scale, the entire point cloud of concepts isn&#x27;t a uniform sphere but has a distinct shape, like a flattened cucumber.  This shape is revealed by analyzing the eigenvalues of the covariance matrix.  Eigenvalues are like a set of rulers, each measuring the spread of the cloud in a different direction.  The fact that these eigenvalues follow a power law, decreasing rapidly in certain directions, indicates a non-random, structured shape.  This &quot;fractal cucumber&quot; shape is most pronounced in the middle layers of the language model, suggesting a hierarchical organization of concepts.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Effective summary of findings</strong>
+        <p>The conclusion effectively summarizes the key findings of the paper, reiterating the observed structures at the atomic, brain, and galaxy scales. This provides a concise recap of the main contributions.</p>
+        <div class="quote">"In this paper, we have found that the concept universe of SAE point clouds has interesting structures at three levels" (Page 9)</div>
+    </li>
+    
+    <li>
+        <strong>Addresses research goal</strong>
+        <p>The conclusion directly addresses the paper&#x27;s primary research goal, which was to investigate the structure of SAE point clouds at different scales.  The concluding statement reinforces the connection between the findings and the broader goal of understanding large language models.</p>
+        <div class="quote">"We hope that our findings serve as a stepping stone toward deeper understanding of SAE features and the workings of large language models." (Page 9)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Suggest future directions</strong> <p>The conclusion could be strengthened by briefly mentioning the specific implications of the findings for future research or practical applications.  While the current statement expresses hope for deeper understanding, it lacks specific directions.  Hinting at potential avenues for future work would make the conclusion more impactful.</p> <p><strong>Implementation:</strong> Add a sentence or two suggesting specific future research directions or potential applications. For example, &#x27;These findings could inform the development of more interpretable and controllable LLMs, or guide the design of new architectures inspired by the observed multi-scale organization.&#x27;</p> <div class="quote">"We hope that our findings serve as a stepping stone toward deeper understanding of SAE features and the workings of large language models." (Page 9)</div>
+    </li>
+    
+    <li>
+        <strong>Acknowledge limitations</strong> <p>The conclusion focuses solely on the positive findings.  Briefly acknowledging limitations or open questions could enhance the paper&#x27;s scientific rigor and provide a more balanced perspective.  This would also create a natural segue into potential future work.</p> <p><strong>Implementation:</strong> Add a sentence acknowledging limitations or open questions. For example, &#x27;While this study reveals intriguing structural properties, further investigation is needed to understand the dynamic interplay between these different scales and their role in language processing.&#x27;</p> <div class="quote">"We hope that our findings serve as a stepping stone toward deeper understanding of SAE features and the workings of large language models." (Page 9)</div>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
