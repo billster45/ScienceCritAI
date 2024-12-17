@@ -1,0 +1,872 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhuman performance of a large language model
+on the reasoning tasks of a physician</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .quote {
+            background-color: #e7f4ff;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .key-point {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .key-point.strength {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+        .key-point.suggestion {
+            background-color: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: none;
+        }
+        details {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        summary {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        details > * {
+            padding: 10px;
+        }
+        .critique-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .critique-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Superhuman performance of a large language model
+on the reasoning tasks of a physician</h1>
+    
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overall-summary">Overall Summary</a></li>
+            <li><a href="#section-analysis">Section Analysis</a>
+                <ul>
+                <li><a href="#section-0">Abstract</a></li><li><a href="#section-1">Introduction</a></li><li><a href="#section-2">Results</a></li><li><a href="#section-3">Discussion</a></li><li><a href="#section-4">Methods</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="overall-summary" class="section">
+        <h2>Overall Summary</h2>
+        
+        <h3>Overview</h3>
+        <p>This study evaluated the performance of the o1-preview model on various medical reasoning tasks, comparing it to human physicians and prior LLMs like GPT-4. The o1-preview model demonstrated significant improvements in differential diagnosis generation (78.3% accuracy, 95% CI 70.7%-84.8%), diagnostic reasoning (median score 97% vs 74% for physicians on Landmark cases), and management reasoning (median score 86% vs 34% for physicians on Grey Matters cases). However, it showed no improvement in probabilistic reasoning compared to GPT-4. Inter-rater agreement between physicians was substantial for most tasks (kappa = 0.66 for differential diagnosis, 0.89 for R-IDEA score, 0.71 for Grey Matters cases).</p>
+        
+        <h3>Key Points</h3>
+        
+    <div class="key-point suggestion">
+        <strong>Lack of Clear Statement of Study Limitations in Abstract</strong> (written-content)
+        <br>
+        This high-impact improvement would enhance the abstract&#x27;s clarity and completeness, making it more informative and impactful. The abstract currently lacks a clear statement of the study&#x27;s limitations, which is crucial for proper interpretation of the findings. Including limitations in the abstract ensures that readers are aware of potential caveats from the outset. Addressing this would strengthen the paper by providing a balanced perspective on the study&#x27;s contributions and limitations, which is essential for maintaining scientific rigor and transparency. This would also prevent over-interpretation of the results and encourage a more nuanced understanding of the study&#x27;s implications. Ultimately, explicitly stating the study&#x27;s limitations in the abstract would improve the overall quality and credibility of the research.
+        <br>
+        <em>Section: Abstract</em>
+    </div>
+    
+    <div class="key-point suggestion">
+        <strong>Unclear Research Question in Introduction</strong> (written-content)
+        <br>
+        This high-impact improvement would enhance the introduction&#x27;s clarity and contextual understanding by explicitly stating the study&#x27;s main research question. The introduction currently provides background on the limitations of multiple-choice benchmarks and the promise of LLMs in clinical reasoning, but it does not explicitly articulate the central question the study aims to answer. Adding a clear research question would provide a focal point for the reader and set the stage for the study&#x27;s methodology and findings. This is essential for the introduction as it provides the reader with a clear understanding of what the study is trying to achieve. A well-defined research question ensures that the study&#x27;s purpose is immediately apparent, guiding the reader&#x27;s understanding of the subsequent sections. Ultimately, stating the research question would significantly improve the introduction&#x27;s clarity and purpose, making it more effective in setting up the study.
+        <br>
+        <em>Section: Introduction</em>
+    </div>
+    
+    <div class="key-point strength">
+        <strong>Robust Statistical Measures in Results</strong> (written-content)
+        <br>
+        The Results section effectively uses statistical measures like Cohen&#x27;s kappa, confidence intervals, and p-values to quantify the agreement between physician raters and to compare the performance of the o1-preview model with other models and human controls. This rigorous approach provides a strong foundation for the study&#x27;s findings and enhances the credibility of the results.
+        <br>
+        <em>Section: Results</em>
+    </div>
+    
+    <div class="key-point suggestion">
+        <strong>Unclear Metrics for Each Experiment in Results</strong> (written-content)
+        <br>
+        This medium-impact improvement would enhance the clarity and completeness of the Results section by explicitly stating the specific metrics used for each experiment. While the section presents various results, it does not always clearly define the exact metrics used for each comparison. For example, while the section mentions &#x27;agreement&#x27; for differential diagnoses, it does not specify how &#x27;agreement&#x27; was measured for the &#x27;Grey Matters Management Cases&#x27;. Explicitly stating the metrics would ensure that readers understand how the model&#x27;s performance was evaluated in each experiment. This is crucial for the Results section as it provides the necessary context for interpreting the findings and enhances the reproducibility of the study. This would strengthen the paper by increasing transparency and enabling more precise comparisons with other studies. Ultimately, explicitly stating the metrics used for each experiment would improve the overall quality and clarity of the Results section.
+        <br>
+        <em>Section: Results</em>
+    </div>
+    
+    <div class="key-point suggestion">
+        <strong>Lack of Clinical Context in Results</strong> (written-content)
+        <br>
+        This medium-impact improvement would enhance the Results section by providing more context for the clinical significance of the findings. While the section presents the model&#x27;s performance on various tasks, it does not always explain the clinical relevance of these results. For example, the section mentions that the model achieved a perfect R-IDEA score in 78/80 cases, but it does not discuss the implications of this result for clinical practice. Adding this context would help readers understand the practical importance of the study&#x27;s findings. This is crucial in the Results section as it bridges the gap between statistical results and real-world applications. Addressing this would strengthen the paper by making the results more meaningful and relevant to the clinical audience. Ultimately, adding clinical context to the findings would improve the overall impact and practical value of the study.
+        <br>
+        <em>Section: Results</em>
+    </div>
+    
+    <div class="key-point suggestion">
+        <strong>Ambiguity in Definition of Correct Diagnosis in Figure 1</strong> (graphical-figure)
+        <br>
+        The authors did not specify how they defined a &#x27;correct diagnosis&#x27; in the differential. This ambiguity could affect the interpretation of the accuracy values, if there was a specific rank of differential diagnoses that was considered the threshold for the diagnosis to be considered &#x27;correct&#x27;.
+        <br>
+        <em>Section: Results</em>
+    </div>
+    
+    <div class="key-point suggestion">
+        <strong>Lack of Methodological Details for the R-IDEA Score in Figure 4</strong> (graphical-figure)
+        <br>
+        The figure and the reference text do not explicitly explain the methodology behind the R-IDEA score, and whether it is a scoring system that is validated for use in this study. Without a description of the methodology and validation of the R-IDEA, it is not possible to evaluate the scientific validity of this element. Additionally, it is unclear whether the data for the different models and groups was generated using the same methodology and prompts, which could impact the overall validity of the study.
+        <br>
+        <em>Section: Results</em>
+    </div>
+    
+    <div class="key-point suggestion">
+        <strong>Lack of Methodological Details for Normalization and Scoring Metrics in Figure 5</strong> (graphical-figure)
+        <br>
+        The caption and the reference text mention that the scores are &#x27;normalized&#x27; but they don&#x27;t provide any details about how the scores were normalized. The process of normalization is important for the scientific validity, as it can impact the results of the study. Also, it is not clear whether the methods used to calculate the management reasoning and diagnostic reasoning points are valid or reliable measures of these constructs. Without more information on the scoring methodology, it is not possible to assess the scientific validity of this element.
+        <br>
+        <em>Section: Results</em>
+    </div>
+    
+    <div class="key-point suggestion">
+        <strong>Lack of a Systematic Approach in Table 1</strong> (graphical-figure)
+        <br>
+        The table does not provide a systematic or comprehensive assessment of the models&#x27; performance. The selection of cases is not justified, and it is unclear if they were randomly selected or chosen because they were the only cases that show this effect. The inclusion of only three cases could be insufficient to draw broader conclusions, and might introduce a bias into the study. The table also does not explain how the case information was presented to each model, or if the prompts were similar.
+        <br>
+        <em>Section: Results</em>
+    </div>
+    
+    <div class="key-point strength">
+        <strong>Clear Summary of Key Findings in Discussion</strong> (written-content)
+        <br>
+        The Discussion section effectively summarizes the key findings, highlighting the superior performance of the o1-preview model in differential diagnosis, diagnostic reasoning, and management reasoning. This clear summary provides a strong foundation for the subsequent discussion of implications and limitations.
+        <br>
+        <em>Section: Discussion</em>
+    </div>
+    
+    <div class="key-point suggestion">
+        <strong>Unclear Main Conclusions in Discussion</strong> (written-content)
+        <br>
+        This high-impact improvement would enhance the Discussion section by explicitly stating the main conclusions of the study in a concise manner. While the section discusses various implications and limitations, it does not clearly articulate the core conclusions that the authors want the reader to take away. Adding a concluding paragraph that summarizes the main findings and their significance would provide a strong closing statement. This is crucial for the Discussion section as it reinforces the study&#x27;s key contributions and provides a clear sense of closure. This would strengthen the paper by ensuring that the main messages are clearly conveyed and that the reader is left with a clear understanding of the study&#x27;s overall impact. Ultimately, explicitly stating the main conclusions would significantly improve the Discussion section&#x27;s effectiveness.
+        <br>
+        <em>Section: Discussion</em>
+    </div>
+    
+    <div class="key-point strength">
+        <strong>Clear Identification of the Model and Access Method in Methods</strong> (written-content)
+        <br>
+        The Methods section clearly identifies the specific model used (o1-preview-2024-09-12) and how it was accessed through OpenAI&#x27;s API. This is crucial for reproducibility and allows other researchers to understand exactly which model was evaluated.
+        <br>
+        <em>Section: Methods</em>
+    </div>
+    
+    <div class="key-point suggestion">
+        <strong>Lack of Specific Prompts in Methods</strong> (written-content)
+        <br>
+        This high-impact improvement would enhance the Methods section by explicitly stating the specific prompts used for each experiment. While the section mentions adapting prompts from previous studies, it does not provide the exact wording of these prompts, which is essential for reproducibility. Including the prompts would allow other researchers to replicate the study precisely and understand the context in which the model was evaluated. This is crucial for the Methods section as it details the core experimental procedures. This would strengthen the paper by increasing transparency and enabling more precise comparisons with other studies. Ultimately, providing the specific prompts would significantly improve the study&#x27;s scientific contribution by ensuring its findings can be properly contextualized and replicated.
+        <br>
+        <em>Section: Methods</em>
+    </div>
+    
+        
+        <h3>Conclusion</h3>
+        <p>The study provides a comprehensive evaluation of the o1-preview model&#x27;s capabilities in medical reasoning, demonstrating its superior performance in several key areas compared to previous models and human physicians. The use of robust statistical measures and the clear presentation of results through figures and tables are major strengths. However, the study&#x27;s impact is limited by the lack of a clearly stated research question, insufficient detail on specific metrics and prompts used, and limited discussion of the clinical significance of the findings. Additionally, the lack of improvement in probabilistic reasoning is not adequately addressed. While the study acknowledges some limitations, it does not fully explore their implications. The conclusion effectively summarizes the findings but fails to clearly articulate the main takeaways and provide specific guidance for future research. The study&#x27;s practical utility is promising, particularly in differential diagnosis and management reasoning, but further research, including human-computer interaction studies and clinical trials, is needed to fully realize its potential. Key unanswered questions include how to improve the model&#x27;s probabilistic reasoning, how to address its verbosity, and how to effectively integrate it into clinical workflows. The methodological limitations, particularly the lack of detail on prompts and metrics, could affect the reproducibility and generalizability of the findings. Overall, the study represents a significant step forward in evaluating LLMs for medical reasoning, but further refinements are needed to fully leverage its potential benefits for end users.</p>
+    </div>
+    
+    <div id="section-analysis" class="section">
+        <h2>Section Analysis</h2>
+        
+        <div id="section-0" class="section">
+            <h3>Abstract</h3>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Context of LLM evaluation in medical tasks:</strong> The abstract introduces the study&#x27;s focus on evaluating the performance of large language models (LLMs) in medical reasoning tasks. Traditionally, LLMs in medicine have been evaluated using multiple-choice question benchmarks. These benchmarks, while common, are often limited because they are highly constrained and don&#x27;t fully capture the complexity of real-world clinical scenarios. Think of it like training a chess-playing AI solely on simple puzzles; it might excel at those, but not necessarily at a full game. The abstract points out that clinical reasoning, which involves critical thinking to gather and synthesize clinical data for diagnosis and management, is a more appropriate benchmark. This is like testing the chess AI in a real game to see if it can truly strategize and adapt. The authors are thus moving away from simple tests to more complex evaluations.</li><li><strong>Study Objective and Experimental Design:</strong> The abstract outlines the study&#x27;s objective: to evaluate OpenAI&#x27;s 01-preview model, a specific LLM designed to enhance runtime through &#x27;chain of thought&#x27; processes. This means the model is intended to &#x27;think through&#x27; the problem step-by-step before providing an answer, much like a human expert would. The study characterizes the performance of this model using five different experiments. These experiments cover a range of medical reasoning domains: differential diagnosis generation (coming up with a list of possible diagnoses), displaying diagnostic reasoning (explaining the thought process), triage differential diagnosis (prioritizing diagnoses in urgent cases), probabilistic reasoning (assessing the likelihood of different diagnoses), and management reasoning (deciding on treatment plans). These tasks are adjudicated by physician experts using validated psychometrics, which ensures a rigorous and reliable evaluation. It&#x27;s like having a panel of expert chess players assess the AI&#x27;s performance in various strategic scenarios.</li><li><strong>Key Findings and Implications:</strong> The abstract highlights the study&#x27;s key findings. The primary outcome was a comparison of the 01-preview model&#x27;s performance with previous experiments that included historical human controls and benchmarks of earlier LLMs. The study found significant improvements in differential diagnosis generation and the quality of diagnostic and management reasoning. This indicates that the 01-preview model excels in tasks that require complex critical thinking, such as diagnosis and treatment planning. However, the study also found no improvements in probabilistic reasoning or triage differential diagnosis. This suggests that the model is not uniformly superior across all types of medical reasoning tasks. It&#x27;s like finding that the chess AI is excellent at attacking and strategizing but not as good at calculating probabilities or prioritizing moves under time pressure. The abstract concludes by noting that new, robust benchmarks are needed for scalable evaluation of LLM capabilities compared to human physicians, along with trials in real clinical settings. This suggests that the current benchmarks are not sufficient to fully capture the complexity of medical decision-making.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Include a summary of the study&#x27;s limitations.</strong>
+        
+        <p>This high-impact improvement would enhance the abstract&#x27;s clarity and completeness, making it more informative and impactful. The abstract currently lacks a clear statement of the study&#x27;s limitations, which is crucial for proper interpretation of the findings. Including limitations in the abstract ensures that readers are aware of potential caveats from the outset.  Addressing this would strengthen the paper by providing a balanced perspective on the study&#x27;s contributions and limitations, which is essential for maintaining scientific rigor and transparency. This would also prevent over-interpretation of the results and encourage a more nuanced understanding of the study&#x27;s implications. Ultimately, explicitly stating the study&#x27;s limitations in the abstract would improve the overall quality and credibility of the research.</p>
+        <div class="quote">"This study highlights 01-preview&#x27;s ability to perform strongly on tasks that require complex critical thinking such as diagnosis and management" (Page 2)</div>
+        <p><strong>Implementation:</strong> Add a sentence or two to the end of the abstract summarizing the main limitations of the study. For example, &#x27;Limitations of this study include the focus on internal medicine cases, the potential for verbosity bias, and the lack of human-computer interaction analysis.&#x27;</p>
+    </li>
+    
+    <li>
+        <strong>Specify the exact version of the 01-preview model.</strong>
+        
+        <p>This medium-impact improvement would enhance the abstract&#x27;s clarity and contextual understanding by explicitly stating the specific version of the model used. The abstract currently mentions the &#x27;01-preview model&#x27; but does not provide the exact version, which is important for reproducibility and future comparisons. Adding the specific version will ensure that other researchers can accurately replicate the study and understand the precise model being evaluated. This will strengthen the paper by increasing transparency and enabling more precise comparisons with other studies. It also provides essential information for readers to assess the study&#x27;s findings and implications. Ultimately, stating the exact model version enhances the scientific rigor and reproducibility of the work.</p>
+        <div class="quote">"We sought to evaluate OpenAl&#x27;s 01-preview model, a model developed to increase run-time via chain of thought processes prior to generating a response." (Page 2)</div>
+        <p><strong>Implementation:</strong> Include the specific version of the 01-preview model used in the study. For example, change the sentence to read: &#x27;We sought to evaluate OpenAl&#x27;s 01-preview model (o1-preview-2024-09-12), a model developed to increase run-time via chain of thought processes prior to generating a response.&#x27;</p>
+    </li>
+    
+    <li>
+        <strong>Explicitly state the primary outcome measure used.</strong>
+        
+        <p>This medium-impact improvement would enhance the abstract&#x27;s clarity and completeness by explicitly stating the primary outcome measure. The abstract mentions &#x27;comparison of the o1-preview output&#x27; but does not clearly define what metric was used for this comparison. Stating the primary outcome measure will ensure that readers immediately understand how the model&#x27;s performance was evaluated. This will strengthen the paper by making the abstract more informative and accessible, allowing readers to quickly grasp the study&#x27;s main findings. It also provides essential context for interpreting the results and assessing the study&#x27;s implications. Ultimately, specifying the primary outcome measure will improve the overall quality and clarity of the abstract.</p>
+        <div class="quote">"Our primary outcome was comparison of the o1-preview output to identical prior experiments that have historical human controls and benchmarks of previous LLMs." (Page 2)</div>
+        <p><strong>Implementation:</strong> Add a phrase or sentence that explicitly states the primary outcome measure. For example, change the sentence to read: &#x27;Our primary outcome was comparison of the o1-preview output to identical prior experiments that have historical human controls and benchmarks of previous LLMs, measured by the percentage of correct diagnoses and management decisions.&#x27;</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-1" class="section">
+            <h3>Introduction</h3>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Context of AI in Medical Diagnostics:</strong> The introduction begins by establishing the context of artificial intelligence (AI) in medicine, specifically focusing on diagnostic support tools. These tools have evolved from early computational methods like regression modeling and rule-based systems to more advanced natural language processing (NLP) techniques. Think of it like the evolution of calculators: starting from simple abacuses, then moving to mechanical calculators, and finally to sophisticated electronic calculators. The introduction highlights that recent advances in large language models (LLMs) have surpassed the performance of these earlier methods, similar to how modern computers outperform older calculators. This sets the stage for the study&#x27;s focus on evaluating the capabilities of a specific LLM in medical reasoning.</li><li><strong>Limitations of Multiple-Choice Benchmarks:</strong> The introduction then discusses the limitations of traditional multiple-choice question benchmarks for evaluating LLMs in medicine. These benchmarks, while commonly used, are often highly constrained and do not accurately reflect the complexity of real-world clinical scenarios. It&#x27;s like assessing a chef&#x27;s skills by only asking them to identify ingredients in a multiple-choice quiz, rather than having them prepare a complex dish. The introduction argues that clinical reasoning, which involves critical thinking to gather and synthesize clinical data for diagnosis and management, is a more appropriate benchmark for evaluating LLMs. This is like testing the chef by having them create a meal from scratch, requiring them to use their skills and knowledge in a realistic setting. The authors are thus making a case for moving beyond simple tests to more complex evaluations.</li><li><strong>Introduction of the 01-preview Model:</strong> The introduction highlights the recent release of OpenAI&#x27;s 01-preview model, which is designed to enhance runtime through &#x27;chain of thought&#x27; (CoT) processes. CoT prompting is a technique that encourages the model to break down complex problems into a series of intermediate steps, similar to how a human expert would approach a problem. This is like a chess player explaining their thought process step-by-step before making a move, rather than simply providing the final move. The introduction also notes that this model has demonstrated superior ability in solving complex problems across various domains, including informatics, mathematics, engineering, and medical question-answering. This sets the stage for the study&#x27;s evaluation of the 01-preview model in a more comprehensive clinical setting.</li><li><strong>Importance of Multi-Step Reasoning:</strong> The introduction emphasizes the importance of multi-step reasoning in medical tasks, which involves constant adjustments based on new data, iterative refinement of diagnoses and management plans, and consequential treatment decisions under uncertainty. This type of reasoning is crucial in clinical practice and is not well-captured by simple multiple-choice questions. It&#x27;s like navigating a complex maze, where each step requires careful consideration of the current situation and potential future paths. The introduction also notes that prior LLMs have shown promise in outperforming clinicians in routine and complex diagnostic scenarios, which further justifies the need for rigorous evaluation of these models. This provides the rationale for the study&#x27;s focus on evaluating the 01-preview model&#x27;s abilities across several medical reasoning domains.</li><li><strong>Study Approach and Evaluation Metrics:</strong> The introduction concludes by outlining the study&#x27;s approach: a series of experiments to evaluate the 01-preview system&#x27;s abilities across several medical reasoning domains. These domains include differential diagnosis generation (creating a list of possible diagnoses), presentation of reasoning (explaining the thought process), probabilistic reasoning (assessing the likelihood of different diagnoses), and management reasoning (deciding on treatment plans). The introduction also mentions that physician experts assessed the quality of LLM outputs using validated psychometrics, which ensures a rigorous and reliable evaluation. This is like having a panel of expert judges evaluate the chef&#x27;s dishes using a standardized scoring system. The introduction also notes that the study compared the performance of 01-preview to the responses of hundreds of physicians and prior LLMs, providing a clear context for the study&#x27;s findings.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Explicitly state the study&#x27;s research question.</strong>
+        
+        <p>This high-impact improvement would enhance the introduction&#x27;s clarity and contextual understanding by explicitly stating the study&#x27;s main research question. The introduction currently provides background on the limitations of multiple-choice benchmarks and the promise of LLMs in clinical reasoning, but it does not explicitly articulate the central question the study aims to answer. Adding a clear research question would provide a focal point for the reader and set the stage for the study&#x27;s methodology and findings. This is essential for the introduction as it provides the reader with a clear understanding of what the study is trying to achieve. A well-defined research question ensures that the study&#x27;s purpose is immediately apparent, guiding the reader&#x27;s understanding of the subsequent sections. Ultimately, stating the research question would significantly improve the introduction&#x27;s clarity and purpose, making it more effective in setting up the study.</p>
+        <div class="quote">"Given the importance of multi-step reasoning in medical tasks, we performed a series of experiments to evaluate the 01-preview system&#x27;s abilities" (Page 2)</div>
+        <p><strong>Implementation:</strong> Add a sentence or two at the end of the introduction that clearly states the research question. For example, &#x27;Therefore, this study aims to evaluate the performance of the 01-preview model across five medical reasoning domains, comparing its performance to human physicians and prior LLMs.&#x27;</p>
+    </li>
+    
+    <li>
+        <strong>Briefly mention the study&#x27;s limitations.</strong>
+        
+        <p>This medium-impact improvement would enhance the introduction&#x27;s completeness by briefly mentioning the limitations of the study. The introduction currently focuses on the rationale for the study and the need for better benchmarks, but it does not provide any indication of the study&#x27;s limitations. Including a brief mention of the limitations would provide a balanced perspective and prepare the reader for a more nuanced interpretation of the results. This is crucial in the introduction to give the reader an idea of the study&#x27;s scope and the potential caveats to the findings. Addressing this would strengthen the paper by demonstrating the authors&#x27; awareness of the study&#x27;s limitations and promoting a more critical evaluation of the results. Ultimately, briefly mentioning the study&#x27;s limitations in the introduction would improve the paper&#x27;s credibility and transparency.</p>
+        <div class="quote">"In reality, clinical practice requires real-time complex multi-step reasoning" (Page 2)</div>
+        <p><strong>Implementation:</strong> Add a sentence or two at the end of the introduction that briefly mentions the main limitations of the study. For example, &#x27;While this study provides valuable insights, it is limited by its focus on internal medicine cases and the absence of human-computer interaction analysis.&#x27;</p>
+    </li>
+    
+    <li>
+        <strong>Explicitly connect benchmark limitations to the focus on complex reasoning.</strong>
+        
+        <p>This medium-impact improvement would enhance the introduction&#x27;s flow and logical progression by explicitly connecting the study&#x27;s focus on complex reasoning to the limitations of existing benchmarks. The introduction discusses the limitations of multiple-choice benchmarks and the importance of complex reasoning, but it does not explicitly link these two concepts. By making this connection explicit, the authors would clarify why the study focuses on complex reasoning tasks. This connection is important in the introduction as it establishes the logical flow of the argument and justifies the study&#x27;s approach. Addressing this would strengthen the paper by making the rationale for the study more transparent and coherent. Ultimately, explicitly connecting the limitations of benchmarks to the focus on complex reasoning would improve the introduction&#x27;s clarity and logical structure.</p>
+        <div class="quote">"However, existing multiple choice evaluations do not represent the breadth or complexity of clinical decision-making" (Page 2)</div>
+        <p><strong>Implementation:</strong> Add a sentence that explicitly connects the limitations of multiple-choice benchmarks to the study&#x27;s focus on complex reasoning. For example, &#x27;Given that multiple-choice benchmarks do not capture the complexity of clinical decision-making, this study focuses on evaluating the model&#x27;s performance in complex reasoning tasks.&#x27;</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-2" class="section">
+            <h3>Results</h3>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Differential Diagnosis Generation on NEJM CPCs:</strong> The Results section begins by evaluating the o1-preview model&#x27;s ability to generate differential diagnoses using the New England Journal of Medicine (NEJM) Clinicopathological Conferences (CPCs). These CPCs are like medical mystery cases, where doctors try to figure out the correct diagnosis based on patient information. The model&#x27;s performance is assessed by comparing its generated list of possible diagnoses with the actual diagnosis. Two physicians evaluated the quality of the model&#x27;s differential diagnoses, and their agreement was measured using Cohen&#x27;s kappa, a statistical measure that quantifies inter-rater reliability. A kappa of 0.66 indicates substantial agreement, suggesting the model&#x27;s diagnoses were consistently evaluated by the physicians. The model included the correct diagnosis in 78.3% of cases, with a 95% confidence interval of 70.7% to 84.8%. This means that if we were to repeat this experiment many times, we&#x27;d expect the model to include the correct diagnosis in 70.7% to 84.8% of cases 95% of the time. The first diagnosis suggested by the model was correct in 52% of cases, indicating that while the model often includes the correct diagnosis, it&#x27;s not always the top suggestion. This is like a detective identifying the correct suspect but not always putting them first on the list.</li><li><strong>Diagnostic Test Selection on NEJM CPCs:</strong> The Results section further examines the o1-preview model&#x27;s ability to select the next diagnostic test in the NEJM CPCs. This is like evaluating a doctor&#x27;s ability to choose the right tests to confirm a diagnosis. Two physicians scored the model&#x27;s suggested test plan, and their agreement was measured using Cohen&#x27;s kappa. Although the proportion of agreements was high (86%), the kappa was low (0.28) due to severe class imbalance, which means that the majority of the responses fell into one category, making it difficult to measure agreement. In 87.5% of cases, the model selected the correct test to order. In 11% of cases, the chosen testing plan was judged to be helpful, and in 1.5% of cases, it was deemed unhelpful. This shows that the model is generally good at choosing the right tests, but there is room for improvement. It&#x27;s like a chess AI being good at choosing the right move most of the time, but occasionally making a less optimal choice.</li><li><strong>Presentation of Reasoning in NEJM Healer Cases:</strong> The Results section then assesses the o1-preview model&#x27;s presentation of reasoning using 20 clinical medical cases from the NEJM Healer curriculum. These cases are virtual patient encounters designed to assess clinical reasoning. The quality of the model&#x27;s reasoning was evaluated using the Revised-IDEA (R-IDEA) score, a validated 10-point scale that measures four core domains of documenting clinical reasoning. Two physicians scored the model&#x27;s reasoning, and their agreement was high (99%), with a kappa of 0.89, indicating very strong agreement. The model achieved a perfect R-IDEA score in 78 out of 80 cases, which is a remarkable performance. This suggests that the model is not only good at making diagnoses but also at explaining its reasoning, similar to a skilled debater who can clearly articulate their arguments. This is a key aspect of clinical practice, where explaining the thought process is crucial for patient care and communication with other physicians.</li><li><strong>Management Reasoning in Grey Matters Cases:</strong> The Results section also evaluates the o1-preview model&#x27;s performance on &#x27;Grey Matters Management Cases,&#x27; which are based on real clinical scenarios. The model&#x27;s responses were scored by two physicians, with substantial agreement (kappa = 0.71). The median score for the model was 86%, compared to 42% for GPT-4, 41% for physicians with access to GPT-4, and 34% for physicians with conventional resources. Using a mixed-effects model, the o1-preview model scored significantly higher than all other groups. This demonstrates that the model excels in tasks requiring complex critical thinking, such as deciding on the next steps in patient management. It&#x27;s like a project manager who can not only identify the problems but also create an effective plan to solve them. This is a crucial aspect of medical practice, where effective management of patients is essential for good outcomes.</li><li><strong>Diagnostic Reasoning in Landmark Cases:</strong> The Results section further examines the o1-preview model&#x27;s performance on &#x27;Landmark Diagnostic Cases,&#x27; which are based on a landmark study of computer-based diagnostic systems. The model&#x27;s responses were scored by two physicians, with moderate agreement (kappa = 0.42). The median score for the model was 97%, compared to 92% for GPT-4, 76% for physicians with access to GPT-4, and 74% for physicians with conventional resources. Using a mixed-effects model, the model performed comparably to GPT-4 and better than physicians. This shows that the model can perform well in complex diagnostic scenarios. This is similar to a chess AI being able to perform at a high level, but not significantly better than other top AI players. It&#x27;s important to note that these cases were not publicly released to prevent memorization, which is crucial for maintaining the validity of the evaluation.</li><li><strong>Probabilistic Reasoning in Diagnostic Cases:</strong> Finally, the Results section evaluates the o1-preview model&#x27;s performance on &#x27;Diagnostic Probabilistic Reasoning Cases,&#x27; which involve estimating the probability of a disease before and after a test. The model performs similarly to GPT-4 in estimating pre-test and post-test probabilities. The exception is the stress test for coronary artery disease, where the model&#x27;s density is closer to the reference range than both models and humans. This indicates that the model&#x27;s performance on probabilistic reasoning tasks is not superior to previous models, and there is room for improvement. It&#x27;s like a weather forecasting AI being good at predicting rain, but not better than other existing models. This is an important area for future research, as probabilistic reasoning is a key component of clinical decision-making.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Use of robust statistical measures</strong>
+        <p>The Results section effectively uses statistical measures like Cohen&#x27;s kappa, confidence intervals, and p-values to quantify the agreement between physician raters and to compare the performance of the o1-preview model with other models and human controls. This rigorous approach provides a strong foundation for the study&#x27;s findings and enhances the credibility of the results.</p>
+        <div class="quote">"There was substantial agreement between the two physicians evaluating the quality of o1-preview’s differential diagnosis (agreement on 120/143 cases [84%], κ=0.66)." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Clear presentation of results with figures and tables</strong>
+        <p>The Results section presents data clearly through figures and tables, which aids in understanding the findings. The figures visually compare the model&#x27;s performance with other benchmarks, and the tables provide detailed examples of the model&#x27;s outputs. This enhances the accessibility of the results and allows readers to easily interpret the data.</p>
+        <div class="quote">"o1-preview included the correct diagnosis in its differential in 78.3% of cases (95% CI, 70.7% to 84.8%) (Figure 1)." (Page 3)</div>
+    </li>
+    
+    <li>
+        <strong>Comprehensive evaluation across multiple reasoning tasks</strong>
+        <p>The Results section includes a variety of clinical reasoning tasks, including differential diagnosis generation, diagnostic test selection, presentation of reasoning, and probabilistic reasoning. This broad approach provides a comprehensive assessment of the model&#x27;s capabilities across different aspects of medical decision-making, increasing the generalizability of the findings.</p>
+        <div class="quote">"We next evaluated the ability of o1-preview to select the next diagnostic test in the NEJM CPCs." (Page 3)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Explicitly state metrics for each experiment</strong>
+        
+        <p>This medium-impact improvement would enhance the clarity and completeness of the Results section by explicitly stating the specific metrics used for each experiment. While the section presents various results, it does not always clearly define the exact metrics used for each comparison. For example, while the section mentions &#x27;agreement&#x27; for differential diagnoses, it does not specify how &#x27;agreement&#x27; was measured for the &#x27;Grey Matters Management Cases&#x27;. Explicitly stating the metrics would ensure that readers understand how the model&#x27;s performance was evaluated in each experiment. This is crucial for the Results section as it provides the necessary context for interpreting the findings and enhances the reproducibility of the study. This would strengthen the paper by increasing transparency and enabling more precise comparisons with other studies. Ultimately, explicitly stating the metrics used for each experiment would improve the overall quality and clarity of the Results section.</p>
+        <div class="quote">"The median score for the o1-preview per case was 86% (IQR, 82%-87%) (Figure 5A)" (Page 4)</div>
+        <p><strong>Implementation:</strong> For each experiment, include a sentence that clearly states the metric used for evaluation. For example, when presenting the results for the &#x27;Grey Matters Management Cases&#x27;, add a phrase like &#x27;The primary outcome was the percentage of total points obtained by o1-preview, measured using a 100-point scale&#x27;.</p>
+    </li>
+    
+    <li>
+        <strong>Mention specific limitations for each experiment</strong>
+        
+        <p>This medium-impact improvement would enhance the Results section by explicitly mentioning any limitations associated with each experiment. While the Discussion section addresses general limitations, the Results section would benefit from brief, specific limitations for each experiment. For example, the kappa value for diagnostic test selection was low, which should be noted in the results. Adding these specific limitations would provide a balanced perspective on the study&#x27;s findings and prevent over-interpretation of the results. This is important in the Results section to give the reader an idea of the scope and potential caveats of the findings. Addressing this would strengthen the paper by demonstrating the authors&#x27; awareness of the limitations and promoting a more critical evaluation of the results. Ultimately, briefly mentioning the limitations within the Results section would improve the paper&#x27;s credibility and transparency.</p>
+        <div class="quote">"The proportion of agreements was high, but the kappa was low due to severe class imbalance." (Page 3)</div>
+        <p><strong>Implementation:</strong> For each experiment, include a sentence or phrase that briefly mentions any specific limitations. For example, when presenting the results for the diagnostic test selection, add a phrase like &#x27;While the proportion of agreements was high, the kappa was low due to severe class imbalance&#x27;.</p>
+    </li>
+    
+    <li>
+        <strong>Provide clinical context for the findings</strong>
+        
+        <p>This medium-impact improvement would enhance the Results section by providing more context for the clinical significance of the findings. While the section presents the model&#x27;s performance on various tasks, it does not always explain the clinical relevance of these results. For example, the section mentions that the model achieved a perfect R-IDEA score in 78/80 cases, but it does not discuss the implications of this result for clinical practice. Adding this context would help readers understand the practical importance of the study&#x27;s findings. This is crucial in the Results section as it bridges the gap between statistical results and real-world applications. Addressing this would strengthen the paper by making the results more meaningful and relevant to the clinical audience. Ultimately, adding clinical context to the findings would improve the overall impact and practical value of the study.</p>
+        <div class="quote">"For 78/80 of the cases, o1-preview achieved a perfect R-IDEA score." (Page 3)</div>
+        <p><strong>Implementation:</strong> For each experiment, include a sentence or two that discusses the clinical significance of the results. For example, after presenting the R-IDEA scores, add a phrase like &#x27;This suggests that the model is highly capable of documenting clinical reasoning, which is a crucial aspect of medical practice&#x27;.</p>
+    </li>
+    
+            </ul>
+            
+            
+    <h4>Non-Text Elements</h4>
+    
+        <details class="non-text-element">
+            <summary>Figure 1: Barplot showing the accuracy of including the correct diagnosis in...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 1: Barplot showing the accuracy of including the correct diagnosis in the differential for differential diagnosis (DDx) generators and LLMs on the NEJM CPCs, sorted by year. Data for other LLMs or DDx generators was obtained from the literature.36 23 8 The 95% confidence intervals were computed using a one-sample binomial test.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">01-preview included the correct diagnosis in its differential in 78.3% of cases (95% CI, 70.7% to 84.8%) (Figure 1).</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Key aspect of what is shown</strong>: This figure is a barplot which is a type of graph that uses rectangular bars to show numerical data. The height or length of each bar corresponds to a specific value, making it easy to compare different categories. In this case, each bar represents the accuracy of a different method or model for generating a differential diagnosis. The ‘differential diagnosis’ is a list of possible medical conditions that could be causing a patient&#x27;s symptoms. Each bar is labeled with the name of the model or method used, which can be an automated ‘differential diagnosis generator’ or a ‘Large Language Model’ (LLM), a type of artificial intelligence system. The height of each bar shows the percentage of times that a correct diagnosis was included in the generated differential diagnosis. ‘Accuracy’ in this context means the ability of the model to include the actual correct diagnosis within the list of differential diagnoses. The bars are sorted by the year the model or method was developed. The vertical lines on each bar are 95% ‘confidence intervals’, which are a range of values where the true value of the accuracy is likely to fall. The confidence intervals are calculated using a statistical test called a &#x27;one-sample binomial test&#x27;. This test helps to account for the uncertainty in the accuracy calculation due to having only a limited number of medical cases to analyze. The test provides a measure of how much variability you might expect in the result.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Appropriateness of statistical methods</strong>: The use of a one-sample binomial test to calculate confidence intervals is appropriate for proportions. The 95% confidence intervals provide a measure of the uncertainty associated with each model&#x27;s estimated accuracy. The fact that the data for other LLMs and DDx generators was sourced from literature is acceptable, however it is important to note that these might have been measured differently, affecting the validity of the comparison.</li><li><strong>Data comparison and potential biases</strong>: The sorting of models by year is reasonable for showing the evolution of the field, but it could also be biased if earlier models were evaluated with different methodologies or data sets. It is important to ensure that the different methods/models were evaluated on a comparable dataset of medical cases, which isn&#x27;t clearly stated in the caption. The inclusion of 01-preview data with other LLMs is useful, but it does not highlight whether the model is better than its predecessors in terms of medical accuracy.</li><li><strong>Definition of correct diagnosis</strong>: The authors did not specify how they defined a &#x27;correct diagnosis&#x27; in the differential. This ambiguity could affect the interpretation of the accuracy values, if there was a specific rank of differential diagnoses that was considered the threshold for the diagnosis to be considered &#x27;correct&#x27;.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of the caption</strong>: The caption clearly indicates the figure&#x27;s purpose, which is to compare the diagnostic accuracy of different methods. The use of &#x27;differential diagnosis (DDx) generators&#x27; and &#x27;LLMs&#x27; indicates that the barplot compares automated approaches with large language models. The caption also explains that the data is sorted by year and that information was sourced from existing literature. The mention of &#x27;95% confidence intervals&#x27; shows that the statistical uncertainty of each estimate is being considered. However, the figure could be improved by adding a clear definition for &#x27;correct diagnosis&#x27;.</li><li><strong>Effectiveness of the barplot presentation</strong>: The barplot is generally effective in presenting the data visually. The inclusion of error bars representing 95% confidence intervals allows for a visual assessment of the uncertainty associated with each estimate. The sorting of the models by year enables the reader to quickly see how newer approaches tend to perform better. However, using a barplot with distinct categories (models and methods) might not accurately represent the actual change in performance that is being measured and might benefit from using an alternative representation.</li><li><strong>Axis labels and descriptions</strong>: The y-axis label, ‘Model’, is clear. However, the x-axis label, ‘Percent Correct Diagnosis in Differential’, could be more precise by defining the criteria for a ‘correct diagnosis’, or by adding additional information in the caption. For example, &#x27;a model&#x27;s top suggestion was the correct answer&#x27; or &#x27;the target diagnosis was within a ranked list of differential diagnoses&#x27;.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 2: A. Comparison of o1-preview with a previous evaluation of GPT-4 in...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 2: A. Comparison of o1-preview with a previous evaluation of GPT-4 in providing the exact or very close diagnosis (Bond scores 4-5) on the same 70 cases. Bars are annotated with the accuracy of each model. 95% confidence intervals were computed using a one-sample binomial test. P-value was computed using McNemar&#x27;s test. B. Histogram of o1 performance as measured by the Bond Score on the complete set of 143 cases.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">On 70 cases evaluated using GPT-4 in a prior study, 01-preview produced a response with the exact or a very close diagnosis in 88.6% of cases, compared to 72.9% of cases by GPT-4 (p=.015, Figure 2).</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Key aspect of what is shown</strong>: This figure has two parts, A and B. Figure 2A is a barplot which is a type of graph that uses rectangular bars to show numerical data. Here, it is used to compare the performance of two different AI models: 01-preview and GPT-4. Each model was evaluated on the same 70 medical cases, and the bar height represents the percentage of times that the model provided a diagnosis that was either &#x27;exact&#x27; or &#x27;very close&#x27; to the correct one. The term &#x27;Bond scores 4-5&#x27; is used here, which is a scoring method where 5 is the best possible score and indicates an exact diagnosis. The vertical lines on top of each bar represent the 95% &#x27;confidence intervals&#x27;, which is a range of values where the true accuracy is likely to fall. This accounts for the uncertainty due to limited data. Additionally, the caption notes that the &#x27;p-value was computed using McNemar&#x27;s test&#x27;. A &#x27;p-value&#x27; is a statistical measure that indicates the likelihood that the difference observed between the two models is due to random chance. The McNemar&#x27;s test is a specific statistical test used for comparing paired data, like the results for the same 70 cases being assessed by the two different models. Figure 2B is a &#x27;histogram&#x27; which is a type of graph used to show the distribution of numerical data. Here, the histogram shows the distribution of ‘Bond scores’ achieved by the 01-preview model when it is evaluated across all 143 cases, which includes the 70 cases from Figure 2A. Each bar in the histogram shows the number of cases that have a particular Bond score, which can range from 0 to 5. This helps to see how frequently the 01-preview model achieved each level of diagnostic accuracy.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Appropriateness of statistical methods</strong>: The use of a one-sample binomial test for calculating the 95% confidence intervals is appropriate for proportions. The McNemar&#x27;s test is correctly used for comparing the paired proportions between 01-preview and GPT-4, where each model was tested on the same set of 70 cases. The reported p-value of 0.015 indicates a statistically significant difference between the two models, suggesting that the difference observed in the accuracy is unlikely due to random chance. However, the validity of this comparison relies on the assumption that the 70 cases were a representative sample from the full data set, and this should be addressed.</li><li><strong>Interpretation of statistical results</strong>: The reference text correctly points out that the 70 cases used for comparison are the same cases used in a prior study with GPT-4. This allows for a direct comparison between the two models. The performance of 01-preview (88.6%) is significantly better than GPT-4 (72.9%), as highlighted by the p-value. This supports the claim that 01-preview is an improvement over its predecessor.</li><li><strong>Methodological details and definition of scoring metrics</strong>: The figure and reference text mention that ‘Bond scores 4-5’ are considered ‘exact or very close diagnosis’. However, the definition of Bond scores is not discussed in depth. This raises questions about the degree of subjectivity in the scoring and whether it is reproducible by other researchers. A detailed description of how the Bond score was developed is needed for evaluating this element&#x27;s validity. In addition, it is not clear whether the data for the GPT-4 evaluation was collected using the same methodology, prompts, and raters. If the data was collected using different conditions, this could affect the validity of the comparison.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of the caption</strong>: The caption for Figure 2 is well structured and provides the necessary details. It clearly states that part A is a comparison of two models (01-preview and GPT-4) based on &#x27;exact or very close diagnosis&#x27; which is defined by &#x27;Bond scores 4-5&#x27;. It also mentions that the comparison uses the same 70 cases. The statistical tests used (one-sample binomial test and McNemar&#x27;s test) are also included in the caption. Part B is described as a histogram of the 01-preview model performance based on the Bond Score over 143 cases. This overall provides good context for the figure&#x27;s content.</li><li><strong>Appropriateness of visualization methods</strong>: The use of a barplot in Figure 2A is appropriate for comparing the performance of two models. The accuracy of each model is clearly indicated by the height of the bar. The 95% confidence intervals show the uncertainty of each estimated accuracy. The annotation of the bars with the accuracy is also helpful for quick interpretation. The histogram in Figure 2B is effective in showing the distribution of the 01-preview model&#x27;s Bond scores, where most of the cases have a Bond score of 4 or 5.</li><li><strong>Axis labels and descriptions</strong>: The axis labels in both subfigures are clear. However, the histogram in Figure 2B could benefit from a brief explanation of the Bond Score in the figure itself, rather than just the caption, as some readers may not fully understand what a Bond score is and how it is measured. It is important to have this context, especially because it is a scoring methodology developed by the authors themselves.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 3: Performance of o1-preview in predicting the next diagnostic tests...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 3: Performance of o1-preview in predicting the next diagnostic tests that should be ordered. Performance was measured by two physicians using a likert scale of 
+“Unhelpful,” &quot;Helpful,” and “Exactly right.” We excluded 7 cases from the total case set in which it did not make sense to ask for the next test (Supplement 1B).</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">In 87.5% of cases, o1-preview selected the correct test to order, in another 11% of cases the chosen testing plan was judged by the two physicians to be helpful, and in 1.5% of cases it would have been unhelpful (Figure 3).</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Key aspect of what is shown</strong>: This figure is a barplot, which is a type of graph that uses bars to display numerical data. In this case, each bar represents the number of times the 01-preview model&#x27;s suggestion for the next diagnostic test was rated as ‘Unhelpful,’ ‘Helpful,’ or ‘Exactly right.’ The rating was provided by two physicians, who evaluated the model&#x27;s suggestions for different medical cases. A ‘diagnostic test’ is a procedure used to help identify a disease or condition, and the model was tasked with suggesting the next test that should be ordered, after being presented with a medical case. A ‘Likert scale’ is a rating scale where people indicate their level of agreement or disagreement, or how they perceive a particular item or question. Here, the Likert scale has three categories: ‘Unhelpful’, which indicates that the suggested test would not help in diagnosis; ‘Helpful’, which means that the suggested test would provide some benefit; and ‘Exactly right’, which implies that the suggested test is the most appropriate one to perform. The figure does not provide the total number of cases evaluated, but the caption notes that 7 cases were excluded because &#x27;it did not make sense to ask for the next test&#x27;, which means that for these 7 cases, no diagnostic test was deemed necessary or helpful.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Appropriateness of measurement scale</strong>: The use of a Likert scale is appropriate for capturing the subjective judgments of the physicians. The three categories (&#x27;Unhelpful,&#x27; &#x27;Helpful,&#x27; &#x27;Exactly right&#x27;) are sufficiently distinct for this purpose. The percentages provided in the reference text accurately represent the data displayed in the barplot. The reference text also provides the distribution of the ratings, which supports the conclusion that the o1-preview model is generally accurate in predicting the next test.</li><li><strong>Potential biases due to case exclusions</strong>: The exclusion of 7 cases is a potential source of bias, as the authors mention that &#x27;it did not make sense to ask for the next test&#x27;, but it is unclear what this criteria is. The reasons behind the exclusion of these cases should be explicitly stated in the main text and not just in the supplement. Without this information, it&#x27;s impossible to assess whether these exclusions were justified and if they could impact the overall results. Additionally, the reference text uses the term &#x27;correct test to order&#x27; which is not directly described in the figure. This term is also not present in the caption.</li><li><strong>Lack of inter-rater reliability assessment</strong>: The study mentions that two physicians were used to score the suggested test plans, however, the methodology does not indicate whether their scores were statistically compared for inter-rater reliability. Inter-rater reliability is critical to ensure that the scores provided are consistent and not biased by the subjective interpretation of a single physician. This needs to be explicitly addressed.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of the caption</strong>: The caption clearly states the figure&#x27;s purpose which is to evaluate how well the o1-preview model can predict the next diagnostic test. It also describes how the performance was measured (using a Likert scale), and mentions that 7 cases were excluded. However, the caption could be improved by stating which kind of cases were excluded, and why, and by stating the total number of cases evaluated.</li><li><strong>Effectiveness of the barplot presentation</strong>: The barplot effectively shows the distribution of ratings given by the physicians. The categories are clear (&#x27;Unhelpful,&#x27; &#x27;Helpful,&#x27; &#x27;Exactly right&#x27;), and the use of a barplot is suitable for this kind of categorical data. The visual representation effectively conveys the distribution of responses and makes it clear that the majority of the tests suggested by the model were &#x27;Exactly Right&#x27;.</li><li><strong>Axis labels and descriptions</strong>: The axis labels are descriptive, and the use of &#x27;Diagnostic Test Score&#x27; on the x-axis is generally understandable. However, it might be beneficial to explicitly state that the scores are based on the Likert scale ratings provided by the physicians, in case that was not clear to the reader.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 4: A. Distribution of 312 R-IDEA scores stratified by respondents on 20...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 4: A. Distribution of 312 R-IDEA scores stratified by respondents on 20 NEJM Healer cases. B. Box plot of the proportion of cannot-miss diagnoses included in differential diagnosis for the initial triage presentation. The total sample size in this figure is 70, with 18 responses from attending physicians, GPT-4 and o1-preview, and 16 responses from residents. Two cases were excluded because the cannot-miss diagnoses could not be identified. Ns: not statistically significant.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">GPT-4 (47/80, p&lt;0.0001), attending physicians (28/80, p&lt;0.0001), and resident physicians (16/80, p&lt;0.0001) as shown in Figure 4A.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Key aspect of what is shown</strong>: This figure has two parts, A and B. Figure 4A shows a series of histograms, which are a type of graph that use bars to show the distribution of numerical data. Here, each histogram shows the distribution of &#x27;R-IDEA scores&#x27; for a particular group of respondents. The &#x27;R-IDEA&#x27; score is a measure of the quality of clinical reasoning documentation, and each score ranges from 0 to 10. The ‘respondents’ can be either the 01-preview AI model, the GPT-4 AI model, attending physicians, or resident physicians. The histograms are used to compare the overall distribution of the R-IDEA scores across different respondent types, and a higher R-IDEA score indicates better documentation of clinical reasoning. Figure 4B is a ‘box plot’ which is a type of graph used to show the distribution of a numerical variable using its median, quartiles, and range. The box plot represents the proportion of ‘cannot-miss’ diagnoses included by different groups during the ‘initial triage presentation’. A ‘cannot-miss’ diagnosis refers to a diagnosis that must be considered in a patient&#x27;s assessment because it has a high risk of severe negative outcomes if it is not diagnosed in a timely manner. Each box plot corresponds to a different group: resident physicians, attending physicians, the GPT-4 AI model, and the 01-preview AI model. The box plot shows the median (the line inside the box), the interquartile range (the box itself), and the range of data (the lines extending from the box). Additionally, the caption indicates that &#x27;ns&#x27; refers to &#x27;not statistically significant&#x27;, which is a statistical term used to show that the observed differences between the groups are not likely due to random chance. Two cases were excluded from the analysis in part B, because the “cannot-miss” diagnoses could not be identified for those cases.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Appropriateness of statistical methods</strong>: The use of histograms to show the distribution of R-IDEA scores in Figure 4A is appropriate. The reference text correctly states the number of cases that obtained a perfect R-IDEA score (10/10) for the GPT-4, attending physicians, and resident physicians. It also mentions the p-values obtained, which indicate that all these groups were significantly different from the 01-preview model. This statistical analysis is adequate for testing whether the 01-preview model is significantly different from the other groups.</li><li><strong>Clarity of reference to the figure</strong>: The reference text references Figure 4A, but does not refer to figure 4B. The reference text also only reports the number of perfect scores for different groups, and does not report on the statistical significance of the differences between the groups, which are presented in the figure. The reference text mentions the p-values but does not state what statistical test was used to compute these. This makes it difficult to assess the overall validity of the statistical test performed.</li><li><strong>Lack of methodological details for the R-IDEA score</strong>: The figure and the reference text do not explicitly explain the methodology behind the R-IDEA score, and whether it is a scoring system that is validated for use in this study. Without a description of the methodology and validation of the R-IDEA, it is not possible to evaluate the scientific validity of this element. Additionally, it is unclear whether the data for the different models and groups was generated using the same methodology and prompts, which could impact the overall validity of the study.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of the caption</strong>: The caption is relatively comprehensive, describing both subfigures A and B. It mentions that Figure 4A shows the distribution of &#x27;R-IDEA&#x27; scores for different respondents and Figure 4B shows a box plot of &#x27;cannot-miss&#x27; diagnoses. The caption also provides the total sample sizes, the number of responses per group, and the reason for excluding two cases. However, it could benefit from a brief explanation of what &#x27;R-IDEA&#x27; scores and &#x27;cannot-miss&#x27; diagnoses mean for the reader.</li><li><strong>Appropriateness of visualization methods</strong>: Figure 4A uses histograms to display the distribution of R-IDEA scores. This is appropriate for visualizing how the scores are distributed for each group (01-preview, GPT-4, attending physicians, and resident physicians). Figure 4B uses a box plot, which is a good choice for showing the median, quartiles, and range of the &#x27;cannot-miss&#x27; diagnoses for each group. Both plots are effective in communicating the respective datasets, however it could be improved by including a numerical y-axis for the histogram. Without a numerical y-axis, it is difficult to assess the significance of the data.</li><li><strong>Axis labels and descriptions</strong>: The axis labels in both subfigures are clear. However, the y-axis label in the histograms in figure 4A is missing, and the x-axis label in figure 4B is also missing. The use of “ns” for non-significant differences in Figure 4B is effective, but the figure could benefit from also providing the actual p-values for the comparisons.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 5: A. Box plot of normalized management reasoning points by LLMs and...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 5: A. Box plot of normalized management reasoning points by LLMs and physicians. Five cases were included. We generated one o1-preview response for each case. The prior study collected five GPT-4 responses to each case, 176 responses from physicians with access to GPT-4, and 199 responses from physicians with access to conventional resources. *: p &lt;= 0.05, **: p &lt;= 0.01, ***: p &lt;= 0.001, ****: *: p &lt;= 0.0001. B. Box plot of normalized diagnostic reasoning points by model and physicians. Six diagnostic challenges were included. We generated one o1-preview response for each case. The prior study collected three GPT-4 responses to all cases, 25 responses from physicians with access to GPT-4, and 25 responses from physicians with access to conventional resources. Ns: not statistically significant.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">The median score for the o1-preview per case was 86% (IQR, 82%-87%) (Figure 5A) as compared to GPT-4 (median 42%, IQR 33%-52%), physicians with access to GPT-4 (median 41%, IQR 31%-54%), and physicians with conventional resources (median 34%, IQR 23%-48%).</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Key aspect of what is shown</strong>: This figure has two parts, A and B. Both figures use ‘box plots’, which are a type of graph used to show the distribution of numerical data through its quartiles, median and range. Figure 5A shows the distribution of ‘normalized management reasoning points’ for different groups. ‘Management reasoning’ refers to the process of deciding the next steps in a patient’s care, and ‘normalized’ means that the scores have been adjusted to a scale of 0 to 100 to allow for a fair comparison across different cases. The groups being compared are the 01-preview AI model, the GPT-4 AI model, physicians with access to GPT-4, and physicians with access to conventional resources. The caption notes that there were five medical cases used to evaluate the management reasoning, and that one response was generated for each case using the 01-preview model. It also notes that the prior study collected five GPT-4 responses per case and 176 and 199 responses for physicians with access to GPT-4 and conventional resources, respectively. Figure 5B shows a box plot of ‘normalized diagnostic reasoning points’ for similar groups. ‘Diagnostic reasoning’ refers to the process of identifying the most likely diagnosis, and like in figure 5A, the scores have been normalized to a scale of 0 to 100. The figure indicates that six diagnostic cases were used for the evaluation and that one response was generated for each case using the 01-preview model. The prior study collected three GPT-4 responses per case, and 25 responses from physicians with access to GPT-4 and conventional resources. Additionally, the caption notes that “ns” indicates ‘not statistically significant’ and the asterisks represent different levels of statistical significance. Statistical significance is used to determine whether the observed differences are likely due to random chance or a real effect.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Appropriateness of descriptive statistics</strong>: The use of box plots to represent the distribution of scores is appropriate. The reference text correctly provides the median and interquartile range (IQR) values for each group in Figure 5A. The IQR is a measure of the variability in the data and provides context for the median value. The reference text highlights the superior performance of the o1-preview model as compared to the other groups.</li><li><strong>Clarity of reference to the figure</strong>: The reference text focuses on Figure 5A and does not reference figure 5B. The reference text only reports descriptive statistics, and does not mention any of the statistical tests used, or whether the differences were statistically significant. Although the reference text reports the medians for each group, it does not include the p-values that are shown in the figure. This makes it difficult to evaluate whether the differences between groups are significant.</li><li><strong>Lack of methodological details for normalization and scoring metrics</strong>: The caption and the reference text mention that the scores are &#x27;normalized&#x27; but they don&#x27;t provide any details about how the scores were normalized. The process of normalization is important for the scientific validity, as it can impact the results of the study. Also, it is not clear whether the methods used to calculate the management reasoning and diagnostic reasoning points are valid or reliable measures of these constructs. Without more information on the scoring methodology, it is not possible to assess the scientific validity of this element.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of the caption</strong>: The caption for Figure 5 is generally comprehensive, clearly differentiating between the two subfigures (A and B). It specifies that both are box plots comparing LLMs and physicians, but each subfigure focuses on a different task (management and diagnostic reasoning). The caption also provides crucial information, including the number of cases, the number of responses collected for each model and group, and a definition of the statistical significance symbols. However, the caption could be improved by adding a brief explanation of what is meant by &#x27;normalized&#x27; and by including more information on how the ‘management reasoning points’ and ‘diagnostic reasoning points’ were determined.</li><li><strong>Appropriateness of visualization methods</strong>: The use of box plots in both subfigures is appropriate for showing the distribution of scores for each group. The box plots effectively display the median, interquartile range, and outliers for each group, which enables a quick comparison of the performance of the different models and physicians. However, it is difficult to compare the distributions across groups because of the lack of the y-axis labels.</li><li><strong>Axis labels and descriptions</strong>: The x-axis labels in both figures are clear and accurately describe each group being compared. The use of asterisks to indicate statistical significance is effective, however, the y-axis labels are missing and this limits the interpretability of the data. The inclusion of the number of cases in the caption is useful, but it would also be beneficial to include this information in the figure itself, for better readability.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Figure 6: Density plots for the distribution of responses by 01-preview, GPT-4...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Figure 6: Density plots for the distribution of responses by 01-preview, GPT-4 and humans to clinical vignettes asking for (1) the pretest probability of disease, (2) the updated probability after a positive test result, and (3) the updated probability after a negative test result. The shaded blue indicates the reference range based on a review of literature from a prior study.22 Human responses are from 553 medical practitioners (290 resident physicians, 202 attending physicians, and 61 nurse practitioners or physician assistants). 100 predictions were generated by GPT-4 and o1-preview for each question.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">As shown in Figure 6 and Table 3, 01-preview performs similarly to GPT-4 in estimating pre-test and post-test probabilities.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Key aspect of what is shown</strong>: This figure uses ‘density plots’, which are a type of graph used to display the distribution of continuous numerical data. Here, each plot shows the distribution of probability estimates made by the 01-preview AI model, the GPT-4 AI model, and a group of human medical practitioners. These estimates are related to the probability of a disease given different clinical vignettes or scenarios. A ‘clinical vignette’ is a short, hypothetical case scenario used for educational or research purposes. The ‘pretest probability of disease’ refers to the initial probability of a patient having a particular disease before any tests are done. The ‘updated probability after a positive test result’ refers to the probability of the disease after a positive test result is obtained. Similarly, the ‘updated probability after a negative test result’ is the probability after a negative test result. The figure contains 4 sets of density plots which show the changes in probability estimates for each clinical vignette after different test results. The shaded blue area indicates the ‘reference range’, which is a range of probabilities from prior literature that is used as a benchmark. The figure caption also notes that 553 medical practitioners were used as a human control, and that each model generated 100 estimates for each probability question. This shows how the models and the humans respond to the same questions, and whether they align with the reference ranges.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Appropriateness of visualization methods</strong>: The use of density plots is an appropriate method for visualizing the distribution of probabilistic estimates. The figure shows the variability in the estimates of each group. The inclusion of the reference range provides a useful benchmark to evaluate the model performance. The reference text correctly highlights that 01-preview and GPT-4 perform similarly in estimating pre-test and post-test probabilities. This claim is supported by the figure, which shows that the distributions of the two models are very similar.</li><li><strong>Interpretation of the results</strong>: The reference text refers to both Figure 6 and Table 3, but does not specify the specific table values that support the claim that both models perform similarly. This claim could be further supported by citing specific data from Table 3. The reference text is also somewhat vague, as it states that both models perform similarly, but does not address the fact that the 01-preview model seems to be slightly closer to the reference range in the &#x27;Stress test for coronary artery disease&#x27; scenario, and that all groups are often far from the reference ranges. This requires a more detailed evaluation of the data.</li><li><strong>Lack of methodological details</strong>: The figure caption states that the reference ranges are based on a review of literature from a prior study, but does not explain how the reference ranges were established, which limits the ability to assess the scientific validity of these benchmarks. Also, the figure does not explicitly state which specific cases were used, and it is not clear whether the human controls were presented with the same prompts and scenarios as the AI models. Without further details on the methodology, it is difficult to assess the scientific validity of this element.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of the caption</strong>: The caption provides good context for the figure, stating that it shows density plots representing responses by 01-preview, GPT-4, and humans for clinical vignettes. It clearly explains that the responses are for pretest probabilities, probabilities after positive tests, and probabilities after negative tests. The caption also mentions that the shaded blue area is the reference range obtained from a prior study, and provides the number of human participants and the number of predictions generated by the models. However, the caption does not mention which specific clinical cases were used, nor does it define the meaning of &#x27;pretest&#x27; and &#x27;post-test&#x27; probabilities, and it would benefit from an explanation of the term &#x27;density plot&#x27;.</li><li><strong>Effectiveness of the density plot presentation</strong>: The use of density plots is suitable for visualizing the distribution of probabilistic estimates for each group. The plots are well-organized, allowing the reader to see how the distributions of each group change after a positive and negative test result. The overlay of the shaded blue area for the reference range helps the reader evaluate the model and human performance with respect to established benchmarks. However, the density plots would benefit from a numerical y-axis to evaluate the actual densities of each distribution.</li><li><strong>Axis labels and descriptions</strong>: The axis labels are clear (&#x27;Estimates, %&#x27;), which is useful to interpret the data. The figure is also well-organized into three rows, each representing a different clinical case, and each column represents a different probability estimate (pretest, post-test positive, post-test negative). This layout makes it easy to compare the different scenarios. However, the cases used are not stated within the figure itself, and the y-axis labels are missing, which makes it difficult to assess the distribution of the data.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Table 1: Three examples in which o1-preview correctly diagnosed a complex case...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Table 1: Three examples in which o1-preview correctly diagnosed a complex case that GPT-4 could not solve. GPT-4 examples are from a prior study8</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">Examples of o1-preview solving a complex case are shown in Table 1.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Key aspect of what is shown</strong>: Table 1 is a table which is a way of organizing information using rows and columns. The table is used to present examples of where the 01-preview AI model was able to correctly diagnose a complex medical case, while the GPT-4 AI model did not. Each row in the table corresponds to a different medical case, which is identified by the case number in the first column. The ‘Final Diagnosis’ column shows the actual diagnosis of the case. The ‘GPT-4 Differential’ column shows the list of possible diagnoses that the GPT-4 model generated. A ‘differential diagnosis’ is a list of possible medical conditions that could be causing a patient’s symptoms. The ‘01-preview Differential’ column shows the list of possible diagnoses generated by the 01-preview model. The models can provide a list of possible diagnoses, but can also include a “Most Likely Diagnosis” which is the diagnosis they deemed most probable, based on the information provided. A ‘Bond Score’ is included at the end of each differential diagnosis, which is a score that measures how close the model&#x27;s diagnoses are to the actual diagnosis. It is a numerical score, and higher scores generally indicate better performance. The caption notes that the GPT-4 examples are from a prior study, which means that the GPT-4 model was evaluated in a separate study, and the data has been included here for comparison.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Usefulness of examples</strong>: The table is useful for providing specific examples of cases where the 01-preview model outperforms GPT-4. The examples are well-chosen and demonstrate the strengths of the 01-preview model in complex diagnostic situations. The reference text accurately points out that Table 1 shows examples of o1-preview correctly diagnosing a complex case. However, the reference text could be improved by highlighting that GPT-4 failed in these cases.</li><li><strong>Lack of a systematic approach</strong>: The table does not provide a systematic or comprehensive assessment of the models&#x27; performance. The selection of cases is not justified, and it is unclear if they were randomly selected or chosen because they were the only cases that show this effect. The inclusion of only three cases could be insufficient to draw broader conclusions, and might introduce a bias into the study. The table also does not explain how the case information was presented to each model, or if the prompts were similar.</li><li><strong>Lack of methodological details</strong>: The use of &#x27;Bond Score&#x27; as a metric is included in the table but is not explained in the reference text. The definition of &#x27;correct diagnosis&#x27; is not explicit in the table or the reference text. Without a clear explanation of the scoring system and the criteria for a &#x27;correct diagnosis&#x27;, it is difficult to assess the scientific validity of the data presented. Also, the table lacks information on how the ‘differential diagnosis’ for each model was generated, which is critical for evaluating the methodology.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of the caption</strong>: The caption is clear and concise, indicating the purpose of the table which is to show examples of complex cases that o1-preview diagnosed correctly while GPT-4 did not. It also mentions that the GPT-4 data is from a prior study, which is important for context. However, the caption does not explicitly state how a &#x27;correct diagnosis&#x27; was defined, or what the criteria for a &#x27;complex case&#x27; were, which could limit the reader&#x27;s understanding of the data presented.</li><li><strong>Effectiveness of the table presentation</strong>: The table is well-organized with clear column headers, making it easy to compare the different diagnoses provided by both models. The table is effective at presenting the information clearly, and the use of bold text to highlight the &#x27;Most Likely Diagnosis&#x27; is helpful. However, it would be beneficial to explicitly state what a ‘differential diagnosis’ is in the context of this table, as well as to include the actual case information for the reader.</li><li><strong>Column headers and descriptions</strong>: The column headers are descriptive and informative. The inclusion of &#x27;Bond Score&#x27; is useful but requires further context, as this scoring methodology is not well-known. The table uses a clear font and layout, which contributes to readability. However, it would be beneficial to add a numerical ID to each case for better referencing.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Table 2: Three examples of the o1-preview suggested testing plan compared to...</summary>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">Full Caption</div>
+                <p>Table 2: Three examples of the o1-preview suggested testing plan compared to the testing plan conducted. One example scored a two, indicating that the test was appropriate and nearly identical to the case plan. A score of one indicates that the suggested diagnostics would have been helpful or yielded the diagnosis via another test not used in the case. A score of zero indicates that the suggested diagnostics would be unhelpful. Verbose rationales from 01-preview were abridged by a physician (Z.K.) to better fit in the table.</p>
+            </div>
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">Examples are shown in Table 2.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Key aspect of what is shown</strong>: Table 2 is a table, which is a structured way of organizing information using rows and columns. This table is used to show examples of how the o1-preview AI model&#x27;s suggestions for diagnostic testing compare to the actual tests that were conducted in three different medical cases. The ‘Case’ column indicates the case number, and the ‘Case Test Plan’ column provides a description of the diagnostic tests that were actually performed in each case. The ‘o1-preview Suggested Test Plan’ column lists the tests that the o1-preview model suggested for each case. The ‘Score’ column provides a numerical score (0, 1, or 2) that is used to evaluate how well the o1-preview&#x27;s suggested plan aligned with the actual test plan. A score of 2 indicates that the suggested plan was appropriate and nearly identical to the actual plan. A score of 1 indicates that the suggested plan was helpful or could have yielded the diagnosis via another test that was not used. A score of 0 indicates that the suggested plan was unhelpful. The table presents the information side-by-side so that it is easy to compare what was done with what the model suggested. The caption also mentions that the &#x27;verbose rationales&#x27; of the 01-preview model were abridged or shortened by a physician (Z.K.) to better fit in the table, which implies that the model provided more detailed explanations than what is presented in the table.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Usefulness of examples</strong>: The table is useful for providing specific examples of cases where the o1-preview model&#x27;s suggested testing plans were evaluated. The table highlights the model&#x27;s ability to suggest appropriate testing strategies. The reference text correctly states that Table 2 shows examples of the o1-preview model&#x27;s suggested testing plans. However, the reference text could be improved by stating that the table compares the model&#x27;s suggestions to the actual testing plans used in each case.</li><li><strong>Lack of a systematic approach</strong>: The table only provides three examples and does not provide any statistical measures of the overall performance of the model in recommending the next tests. This means that the examples might be biased and are not representative of the model&#x27;s overall performance. The selection criteria for these cases is not mentioned, and it is unclear if the selected examples are representative of the overall dataset. The table also does not state how the actual test plans were selected, or whether they were the optimal plans.</li><li><strong>Lack of methodological details</strong>: The table provides a score for each case, but does not specify how the scores were assigned, and whether there was any inter-rater reliability measure. Without a clear explanation of how the scores were assigned, it is difficult to assess the scientific validity of the evaluation. Additionally, the table lacks information on how the &#x27;o1-preview Suggested Test Plan&#x27; was generated. The methodology does not specify whether the models were provided with the complete case information, or just the differential diagnosis.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of the caption</strong>: The caption clearly states the purpose of the table, which is to compare the o1-preview&#x27;s suggested testing plans with the actual testing plans conducted in three medical cases. The caption also provides a clear explanation of the scoring system (0, 1, and 2) used to evaluate the suggested plans. The caption also mentions that the verbose rationales of the 01-preview were abridged to fit the table, which is a useful note for the reader. However, the caption does not provide information on what &#x27;testing plans&#x27; are, and how they are defined, and does not state how the actual plans were selected.</li><li><strong>Effectiveness of the table presentation</strong>: The table is well-organized, with columns for the &#x27;Case&#x27;, &#x27;Case Test Plan&#x27;, &#x27;o1-preview Suggested Test Plan&#x27;, and &#x27;Score&#x27;. The use of a table is appropriate for presenting this kind of comparative data. The table effectively presents the actual test plans and the model&#x27;s suggestions side-by-side, which makes it easy for the reader to compare them. The use of bold text to indicate important information and the numerical score is also useful.</li><li><strong>Column headers and descriptions</strong>: The column headers are descriptive and clearly indicate the content of each column. The table provides a clear numerical score that is associated with a description of its meaning in the caption. However, it would be beneficial to include a numerical ID for each case for better referencing and to clarify what the criteria were for a test plan to be considered &#x27;helpful&#x27;, &#x27;unhelpful&#x27;, or &#x27;exactly right&#x27;.</li></ul>
+            </div>
+        </details>
+        
+        <details class="non-text-element">
+            <summary>Table 3: Probabilistic Reasoning Before and After Testing by 01-preview</summary>
+            
+            
+            
+            <div class="critique-section">
+                <div class="critique-title">First Reference in Text</div>
+                <div class="quote">As shown in Figure 6 and Table 3, 01-preview performs similarly to GPT-4 in estimating pre-test and post-test probabilities.</div>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Description</div>
+                
+        <ul>
+        <li><strong>Key aspect of what is shown</strong>: Table 3 is a table, which is a way of organizing information using rows and columns. This table is used to present the results of the probabilistic reasoning performance of the 01-preview AI model. The table shows how the model estimates the probability of a disease both before any tests are done (‘Before test’), and after either a positive or a negative test result (‘After positive test result’ and ‘After negative test result’). The ‘Reference probability range’ column shows the range of probabilities based on prior literature, which is used as a benchmark. The ‘01-preview (n=100)’ and ‘GPT-4 (n=100)’ columns show the median estimate, and the ‘interquartile range’ (IQR) which is a measure of the variability in the data, for each probability estimate. The ‘Clinician (n=553)’ column shows the median estimate for a group of 553 medical practitioners. Additionally, the table includes the ‘Mean Absolute Error (MAE)’ and ‘Mean Absolute Percentage Error (MAPE)’ for each model and for the human clinicians, which are statistical measures of how different the models’ estimates are from the reference ranges. The caption specifies that 100 predictions were generated by both models for each question.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Scientific Validity</div>
+                
+        <ul>
+        <li><strong>Usefulness of numerical data</strong>: The table provides numerical data that supports the claim that 01-preview and GPT-4 perform similarly in probabilistic reasoning. The inclusion of MAE and MAPE provides a quantitative measure of the models&#x27; performance. The reference text correctly notes that the 01-preview model performs similarly to GPT-4. However, it could be improved by highlighting that the performance of both models is not always within the reference ranges.</li><li><strong>Lack of statistical test details</strong>: The table lacks information on the statistical tests used to determine the p-values. Without this information, it is difficult to assess whether the differences between the models and the human controls are statistically significant. Also, the table does not specify the number of cases included in each scenario, which makes it difficult to interpret the results.</li><li><strong>Lack of methodological details</strong>: The table does not explicitly explain what a &#x27;pre-test&#x27; and &#x27;post-test&#x27; probability is, and it lacks detail on the actual clinical vignettes used. Without this context, it is difficult to assess the validity of the probabilistic reasoning task. Additionally, the table does not specify the methodology used to obtain the reference probability ranges, and if the prior studies are comparable.</li></ul>
+            </div>
+            
+            <div class="critique-section">
+                <div class="critique-title">Communication</div>
+                
+        <ul>
+        <li><strong>Clarity and completeness of the caption</strong>: The caption is concise and clearly indicates the table&#x27;s purpose, which is to show the probabilistic reasoning performance of the 01-preview model before and after testing. However, the caption could be improved by specifying what type of testing is being referred to, and whether the human controls were also included in this table.</li><li><strong>Effectiveness of the table presentation</strong>: The table is well-organized, with clear column headers. The use of a table is appropriate for presenting the numerical data associated with the different models. The table is effective at showing the pre-test and post-test probability estimates, as well as the mean absolute error (MAE) and mean absolute percentage error (MAPE) for each scenario. However, it would be useful to add a definition of MAE and MAPE in the table itself.</li><li><strong>Column headers and descriptions</strong>: The column headers are descriptive and informative. The inclusion of &#x27;Reference probability range&#x27; is useful for providing a benchmark for the estimates. The use of p-value indicators is helpful, but could be improved by adding a footnote explaining what statistical test was used to obtain these values. The table also provides the interquartile range (IQR) for each estimate, but it does not state that this is what it is measuring.</li></ul>
+            </div>
+        </details>
+        
+    
+        </div>
+        
+        <div id="section-3" class="section">
+            <h3>Discussion</h3>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Summary of Study Objective and Main Findings:</strong> The Discussion section opens by summarizing the study&#x27;s main objective: evaluating the o1-preview model&#x27;s medical reasoning abilities across five different experiments. The experiments covered a range of tasks, including differential diagnosis generation, presentation of reasoning, probabilistic reasoning, and management reasoning. The authors compared the model&#x27;s performance to historical controls, including human baselines and the GPT-4 model. This is like a coach reviewing a player&#x27;s performance across different drills to see where they excel and where they need improvement. The key finding is that the o1-preview model showed significant gains in performance for most tasks, similar to what has been observed in non-medical studies. This sets the stage for a deeper dive into the specific strengths and weaknesses of the model.</li><li><strong>Specific Strengths and Weaknesses of the Model:</strong> The Discussion section then elaborates on the specific areas where the o1-preview model demonstrated superior performance. It highlights that the model surpassed both GPT-4 and previous non-LLM differential generators in differential diagnosis generation, as well as the human baseline. The model also showed similar gains in the display of reasoning and management reasoning compared to prior studies. This is like a chef not only making a delicious dish but also explaining the steps and techniques involved, showcasing both skill and understanding. However, the authors also note that there were no improvements in probabilistic reasoning or critical diagnosis identification over GPT-4, although probabilistic reasoning was still superior to the human baseline. This nuanced finding suggests that while the model excels in tasks requiring critical thinking, it struggles with tasks involving abstraction, similar to a chess AI being great at strategy but not at calculating probabilities.</li><li><strong>Implications for Clinical Practice and Research:</strong> The Discussion section then transitions to discussing the implications of these findings for the science and practice of clinical medicine. The authors point out that the rapid improvement in LLMs has major implications for the field. The study demonstrates consistent and superhuman performance on many human-adjudicated medical reasoning tasks. This is like a new technology that is not only faster but also more accurate than previous methods. The authors also address the concerns about applying AI in clinical decision support, noting that while it may be viewed as high-risk, it also has the potential to mitigate the human and financial costs of diagnostic error and delay. This is like a safety feature in a car that, while complex, can prevent accidents and save lives. This section underscores the importance of further research and trials to safely integrate AI into clinical practice.</li><li><strong>Need for New Benchmarks and Evaluation Strategies:</strong> The Discussion section further emphasizes the need for new benchmarks to assess how AI models should be integrated into clinical reasoning workflows. The authors argue that multiple-choice question benchmarks are not realistic proxies for high-stakes medical reasoning. The NEJM CPCs, used in this study, are more challenging, and the o1-preview model is able to produce high-quality differentials in almost 90% of cases. This is like moving from simple puzzles to real-world scenarios to truly test the AI&#x27;s capabilities. The authors also note that current metrics for clinical management reasoning are laborious and not scalable, indicating a need for additional challenging and realistic evaluations, including adding modalities and enriching existing benchmarks. This is like a call for better testing methods to accurately assess the performance of AI in complex medical tasks.</li><li><strong>Limitations of the Study:</strong> The Discussion section acknowledges several limitations of the study. First, the o1-preview model tends towards verbosity, which may have led to higher scoring in some experiments. Second, the study only reflects model performance and does not include human-computer interaction analysis, which is crucial for developing clinical decision support tools. Third, the study examined only five aspects of clinical reasoning, while there are many other tasks that could be studied. Fourth, the study focused on internal medicine cases, which is not representative of broader medical practice. This is like a scientist acknowledging the limitations of their experiment and suggesting ways to improve future studies. These limitations highlight the need for further research to address these gaps and ensure the safe and effective implementation of AI in clinical settings.</li><li><strong>Conclusion and Call for Future Action:</strong> The Discussion section concludes by reiterating the o1-preview model&#x27;s superhuman performance in differential diagnosis, diagnostic clinical reasoning, and management reasoning, surpassing prior models and human physicians. The authors emphasize the urgent need for better and more meaningful evaluation strategies, given the rapid pace of improvement in automated systems. They also suggest that the model&#x27;s performance on challenging diagnostic problems indicates opportunities to support clinicians in real-world settings. The section ends with a call for clinical trials and workforce retraining with integrated AI systems to confirm the potential of such systems to boost clinical practice and patient outcomes. This is like a final summary of the key takeaways and a call to action for the future of AI in medicine.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear summary of key findings</strong>
+        <p>The Discussion section effectively summarizes the key findings, highlighting the superior performance of the o1-preview model in differential diagnosis, diagnostic reasoning, and management reasoning. This clear summary provides a strong foundation for the subsequent discussion of implications and limitations.</p>
+        <div class="quote">"We evaluated the medical reasoning abilities of the 01-preview model across five diverse experiments" (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Connection to clinical practice</strong>
+        <p>The Discussion section appropriately connects the study&#x27;s findings to broader implications for clinical practice, such as the potential for AI to mitigate diagnostic errors and delays. This demonstrates the practical relevance of the research and its potential impact on healthcare.</p>
+        <div class="quote">"This rapid pace of improvement in LLMs has major implications for science and practice of clinical medicine." (Page 5)</div>
+    </li>
+    
+    <li>
+        <strong>Acknowledgment of limitations</strong>
+        <p>The Discussion section acknowledges the limitations of the study, including the model&#x27;s verbosity, the lack of human-computer interaction analysis, and the focus on internal medicine cases. This demonstrates a balanced and critical perspective on the research.</p>
+        <div class="quote">"Our study has several limitations. First, 01-preview tends towards verbosity" (Page 5)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Explicitly state the main conclusions</strong>
+        
+        <p>This high-impact improvement would enhance the Discussion section by explicitly stating the main conclusions of the study in a concise manner. While the section discusses various implications and limitations, it does not clearly articulate the core conclusions that the authors want the reader to take away. Adding a concluding paragraph that summarizes the main findings and their significance would provide a strong closing statement. This is crucial for the Discussion section as it reinforces the study&#x27;s key contributions and provides a clear sense of closure. This would strengthen the paper by ensuring that the main messages are clearly conveyed and that the reader is left with a clear understanding of the study&#x27;s overall impact. Ultimately, explicitly stating the main conclusions would significantly improve the Discussion section&#x27;s effectiveness.</p>
+        <div class="quote">"In conclusion, o1-preview demonstrates superhuman performance in differential diagnosis, diagnostic clinical reasoning, and management reasoning" (Page 6)</div>
+        <p><strong>Implementation:</strong> Add a concluding paragraph that explicitly states the main conclusions of the study. For example, &#x27;In conclusion, this study demonstrates that the o1-preview model exhibits superior performance in complex medical reasoning tasks, particularly in differential diagnosis and management. These findings suggest the potential for AI to improve clinical practice, but further research is needed to address limitations and ensure safe implementation.&#x27;</p>
+    </li>
+    
+    <li>
+        <strong>Discuss the lack of improvement in probabilistic reasoning</strong>
+        
+        <p>This medium-impact improvement would enhance the Discussion section by explicitly addressing the lack of improvement in probabilistic reasoning. While the section notes that no improvements were observed in probabilistic reasoning, it does not fully explore the potential reasons for this finding. Discussing why the model did not improve in this area would provide a more comprehensive analysis of the results. This is important in the Discussion section as it provides a more nuanced understanding of the model&#x27;s capabilities and limitations. Addressing this would strengthen the paper by demonstrating a thorough exploration of all the findings and encouraging future research in this area. Ultimately, explicitly discussing the lack of improvement in probabilistic reasoning would improve the overall quality and depth of the Discussion section.</p>
+        <div class="quote">"We did not see improvements in either probabilistic reasoning or critical diagnosis identification over GPT-4" (Page 5)</div>
+        <p><strong>Implementation:</strong> Add a paragraph that explores the potential reasons for the lack of improvement in probabilistic reasoning. For example, &#x27;The lack of improvement in probabilistic reasoning tasks may be due to the model&#x27;s difficulty in handling abstract concepts or the limitations of the current probabilistic reasoning benchmarks. Further research is needed to investigate these factors and develop more robust evaluation methods.&#x27;</p>
+    </li>
+    
+    <li>
+        <strong>Provide specific recommendations for future research</strong>
+        
+        <p>This medium-impact improvement would enhance the Discussion section by providing more specific recommendations for future research. While the section mentions the need for new benchmarks and trials in real-world settings, it does not provide specific directions for future studies. Suggesting concrete research avenues would make the discussion more actionable and impactful. This is important in the Discussion section as it provides a clear path for future research and encourages the scientific community to build upon the current findings. Addressing this would strengthen the paper by demonstrating a forward-thinking approach and highlighting the potential for further advancements in the field. Ultimately, providing more specific recommendations for future research would improve the overall value and impact of the Discussion section.</p>
+        <div class="quote">"These findings suggest the need for trials to evaluate these technologies in real-world patient care settings" (Page 5)</div>
+        <p><strong>Implementation:</strong> Add a paragraph that provides specific recommendations for future research. For example, &#x27;Future research should focus on developing new benchmarks that incorporate human-computer interaction, exploring the model&#x27;s performance in diverse clinical settings, and investigating methods to improve its probabilistic reasoning capabilities. Additionally, clinical trials are needed to evaluate the impact of these models on patient outcomes.&#x27;</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+        <div id="section-4" class="section">
+            <h3>Methods</h3>
+            
+            <h4>Key Aspects</h4>
+            <ul>
+            <li><strong>Model Identification and Access:</strong> The Methods section begins by identifying the specific large language model (LLM) used in the study: the o1-preview model, accessed via OpenAI&#x27;s Application Programming Interface (API). This is akin to specifying the exact type of microscope used in a biology experiment. The specific version of the model, &#x27;o1-preview-2024-09-12&#x27;, is crucial for reproducibility, much like noting the precise settings on the microscope. This level of detail ensures that other researchers can replicate the study and verify the findings. Without this information, the study&#x27;s results would be difficult to interpret and build upon.</li><li><strong>NEJM CPC Case Selection:</strong> The Methods section then details the selection process for the New England Journal of Medicine (NEJM) Clinicopathological Conference (CPC) cases. The authors chose all 143 diagnostic cases from 2021 to September 2024 that included a &#x27;Differential Diagnosis&#x27; section. This is like selecting a specific set of test tubes from a larger collection, ensuring that each test tube meets specific criteria. The section also notes that 70 of these cases, published between 2021 and 2022, were previously evaluated in a prior study of GPT-4. This information is essential for understanding the dataset used in the study and for contextualizing the results in comparison to previous research. It is akin to noting the specific batch number of chemicals used in an experiment, which is crucial for interpreting the results.</li><li><strong>Prompting Strategy for NEJM CPCs:</strong> For the NEJM CPC cases, the Methods section explains how the model was prompted. The authors adapted the prompt from a prior study of GPT-4 for differential diagnosis prediction. This is like using a specific recipe in a cooking experiment, where slight variations in the recipe can lead to different results. After the initial differential diagnosis, the model was queried with &quot;What diagnostic tests would you order next given this differential?&quot; This two-step prompting approach is important because it allows the model to first generate a list of possible diagnoses and then decide on the next steps, mimicking the real-world clinical reasoning process. This is like asking a chef to first plan a menu and then decide which ingredients to buy, reflecting a step-by-step decision-making process.</li><li><strong>Primary Outcomes and Scoring for NEJM CPCs:</strong> The Methods section clearly defines the primary outcomes for the NEJM CPC cases: differential diagnosis quality and the quality of the suggested testing plan. This is like defining the specific measurements that will be taken in an experiment, such as the volume of liquid or the temperature of a solution. The quality of the differential diagnoses was rated independently by two attending internal medicine physicians using the Bond Score, a previously developed scoring system. Bond Scores range from zero to five, where five represents a differential list that contains the exact target diagnosis, and zero represents a list with no suggestions close to the target diagnosis. This is like using a standardized ruler to measure the length of an object, ensuring consistency and reliability. The quality of the testing plan was scored using a Likert scale from zero to two, comparing the suggested plan to the actual diagnostics performed in the case. This is like using a calibrated thermometer to measure temperature, ensuring that the measurements are accurate and consistent.</li><li><strong>Interrater Agreement and Statistical Analysis for NEJM CPCs:</strong> The Methods section describes the statistical analysis used to assess interrater agreement for the NEJM CPC cases. A linear-weighted Cohen&#x27;s kappa was computed to assess agreement between the two physicians rating the differential diagnoses and diagnostic test selections. Cohen&#x27;s kappa is a statistical measure that quantifies the level of agreement between two raters, accounting for the possibility of agreement occurring by chance. The linear weighting is used to give more credit for agreement on adjacent categories (e.g. a score of 4 vs 5) than on categories that are further apart (e.g. 0 vs 5). This is like using a specialized statistical tool to measure the consistency of two different people&#x27;s measurements, ensuring that the results are not due to random chance. Discordant scores were reconciled through discussion, which is like resolving disagreements in measurements by re-examining the data, ensuring that the final scores are as accurate as possible.</li><li><strong>Addressing Memorization and Statistical Comparisons:</strong> The Methods section addresses the potential for memorization, given that the o1-preview model has a pretraining end date of October 2023. To assess this, the authors conducted a sensitivity analysis, examining the model&#x27;s performance before and after this cutoff date. This is like performing a control experiment to rule out potential confounding factors. The performance of other LLMs and differential diagnosis generators on NEJM CPCs from previous studies are included for comparison, which is like comparing results to established benchmarks. The comparison of o1-preview to a historical control of GPT-4 was performed using a McNemar&#x27;s test, which is a statistical test used to compare paired proportions. This is like using a specific statistical tool to compare two different methods, ensuring that the results are statistically valid.</li><li><strong>NEJM Healer Diagnostic Cases and R-IDEA Scoring:</strong> The Methods section details the use of 20 NEJM Healer cases, separated into four sections representing sequential stages of clinical data acquisition. This is like breaking down a complex problem into smaller, more manageable parts. The primary outcome for these cases was the quality of clinical reasoning documentation, measured by the R-IDEA score. The R-IDEA is a validated 10-point scale for evaluating four core domains of documenting clinical reasoning. This is like using a standardized rubric to assess the quality of a written report, ensuring that the evaluation is consistent and reliable. Two attending internal medicine physicians rated the cases, and a linear-weighted Cohen&#x27;s kappa was used to assess interrater agreement. Discordant scores were reconciled by a third internal medicine physician, which is like having a third judge resolve disagreements, ensuring the reliability of the results.</li><li><strong>Identification of &quot;Cannot-Miss&quot; Diagnoses:</strong> The Methods section explains the secondary outcome for the NEJM Healer cases: the identification of &quot;cannot-miss&quot; diagnoses. These are diagnoses that, if missed, could have severe consequences for the patient. The authors used a list of &quot;cannot-miss&quot; diagnoses defined in a prior study, focusing on the initial triage presentation data. This is like prioritizing critical tasks in a complex project, ensuring that the most important aspects are addressed first. The proportion of &quot;cannot-miss&quot; diagnoses included by each model was compared using pairwise t-tests with Holm-Bonferroni correction, a statistical method used to account for multiple comparisons. This is like using a specific statistical tool to compare different methods, ensuring that the results are statistically valid and not due to chance.</li><li><strong>Grey Matters Management Cases Methodology:</strong> The Methods section describes the methodology for the &#x27;Grey Matters Management Cases,&#x27; which involved five clinical vignettes. The cases were presented to the o1-preview model, and the responses were graded by two attending internal medicine physicians using rubrics generated by a combination of generalists and subspecialists. This is like using a panel of experts to evaluate a complex task, ensuring that the evaluation is comprehensive and accurate. The scoring of all rubrics was normalized on a 100-point scale. A linear-weighted Cohen&#x27;s kappa was computed to assess interrater agreement, and discordant scores were reconciled by a third internal medicine physician. The primary outcome was the percentage of total points obtained by the model for each case. This is like using a standardized scoring system to measure performance, ensuring consistency and comparability.</li><li><strong>Statistical Analysis for Grey Matters Cases:</strong> The Methods section explains that the same methodology used in prior studies evaluating GPT-4 for management and diagnostic reasoning was used for the &#x27;Grey Matters Management Cases.&#x27; A linear mixed-effects model was used to compare the total percentage points scored by o1-preview to historical controls. This is like using a consistent experimental setup across different studies, ensuring that the results are comparable. The group was used as the fixed effect, and random intercepts were included for the case number and the interaction of trial number and individual. This is like controlling for various factors that might influence the results, ensuring that the findings are accurate and reliable. P-values were computed for each fixed effect using Satterthwaite&#x27;s approximation for degrees of freedom, a statistical method used to account for the variability in the data. This is like using a specific statistical tool to analyze data, ensuring that the results are statistically valid.</li><li><strong>Landmark Diagnostic Cases Methodology:</strong> The Methods section outlines the methodology for the &#x27;Landmark Diagnostic Cases,&#x27; which involved six clinical vignettes adapted from a landmark study. The model was asked to respond with the top three differential diagnoses, three factors that favor or oppose each diagnosis, the final most likely diagnosis, and three next diagnostic steps. This is like asking a detective to not only identify the suspects but also to explain the evidence for and against each suspect, and to propose the next steps in the investigation. Each case was scored across four categories: initial diagnoses, supporting factors, opposing factors, and final diagnosis, as well as the next steps. The scoring rubrics were normalized on a 100-point scale. Two internal medicine attending physicians graded each of the responses, and a linear-weighted Cohen&#x27;s kappa was computed to assess interrater agreement. Scoring discrepancies were reconciled by a third internal medicine physician. The primary outcome was the percentage of total points obtained by o1-preview for each of the six cases. This is like using a detailed scoring rubric to evaluate a complex task, ensuring that the evaluation is thorough and consistent.</li><li><strong>Statistical Analysis for Landmark Cases:</strong> The Methods section explains that the same statistical method used for the &#x27;Grey Matters Management Cases&#x27; was used for the &#x27;Landmark Diagnostic Cases.&#x27; This is like using the same analysis method to compare different sets of data, ensuring that the results are consistent and comparable. The total percentage points scored by o1-preview were compared to historical controls using a linear mixed effects model. This is like using a specific statistical tool to compare different groups, ensuring that the results are statistically valid. The analysis was performed in R version 4.4.2, which is like noting the specific software used to perform the analysis, ensuring that the results are reproducible.</li><li><strong>Diagnostic Probabilistic Reasoning Cases Methodology:</strong> The Methods section describes the methodology for the &#x27;Diagnostic Probabilistic Reasoning Cases,&#x27; which involved posing the same questions from a prior study on primary care topics. The o1-preview model was given case vignettes and asked to estimate the probability of a disease before and after a test. This is like asking a weather forecasting model to predict the probability of rain before and after receiving new data, testing its ability to update its predictions based on new information. One hundred model outputs were generated for each of the five cases. The previous study used a default temperature of 1 for GPT-4, which is a parameter that modulates the diversity of the output. The same default temperature of 1 was used for o1-preview. This is like using the same settings on a machine, ensuring that the results are comparable.</li><li><strong>Statistical Analysis for Probabilistic Reasoning Cases:</strong> The Methods section explains that Mean Absolute Error (MAE) and Mean Absolute Percentage Error (MAPE) were computed to compare the model&#x27;s predictions to reference probabilities collected from a previous literature review. MAE is a measure of the average magnitude of errors in a set of predictions, and MAPE is a measure of the average percentage error. This is like using specific statistical tools to measure the accuracy of a model&#x27;s predictions, ensuring that the results are quantifiable and comparable. The analysis was performed in R version 4.4.2, which is like noting the specific software used to perform the analysis, ensuring that the results are reproducible.</li>
+            </ul>
+            
+            <h4>Strengths</h4>
+            <ul>
+            
+    <li>
+        <strong>Clear identification of the model and access method</strong>
+        <p>The Methods section clearly identifies the specific model used (o1-preview-2024-09-12) and how it was accessed through OpenAI&#x27;s API. This is crucial for reproducibility and allows other researchers to understand exactly which model was evaluated.</p>
+        <div class="quote">"The 01-preview model (“o1-preview-2024-09-12”) was accessed through OpenAl&#x27;s Application Programming Interface (API)." (Page 6)</div>
+    </li>
+    
+    <li>
+        <strong>Detailed description of case selection process</strong>
+        <p>The Methods section provides a detailed description of the case selection process for the NEJM CPCs, including the specific years of publication and the criteria for inclusion (cases with a &quot;Differential Diagnosis&quot; section). This level of detail is important for understanding the dataset used in the study.</p>
+        <div class="quote">"We selected all 143 diagnostic cases from 2021 to September 2024 (cases including the section “Differential Diagnosis”)." (Page 6)</div>
+    </li>
+    
+    <li>
+        <strong>Clear definition of primary outcomes</strong>
+        <p>The Methods section clearly defines the primary outcomes for each experiment, including differential diagnosis quality, quality of the suggested testing plan, and the R-IDEA score for clinical reasoning documentation. This helps to clarify what the study was measuring and how the model&#x27;s performance was evaluated.</p>
+        <div class="quote">"Our primary outcomes were differential diagnosis quality and the quality of the suggested testing plan." (Page 6)</div>
+    </li>
+    
+    <li>
+        <strong>Thorough description of scoring systems and interrater reliability</strong>
+        <p>The Methods section thoroughly describes the scoring systems used, such as the Bond Score for differential diagnoses and the Likert scale for testing plans. It also specifies the use of linear-weighted Cohen&#x27;s kappa for interrater agreement and how discordant scores were resolved. This level of detail enhances the rigor and transparency of the study.</p>
+        <div class="quote">"Differential diagnoses were rated independently by two attending internal medicine physicians (Z.K., A.R), using a previously-developed scoring system called the Bond Score." (Page 6)</div>
+    </li>
+    
+            </ul>
+            
+            <h4>Suggestions for Improvement</h4>
+            <ul>
+            
+    <li>
+        <strong>Include specific prompts used for each experiment</strong>
+        
+        <p>This high-impact improvement would enhance the Methods section by explicitly stating the specific prompts used for each experiment. While the section mentions adapting prompts from previous studies, it does not provide the exact wording of these prompts, which is essential for reproducibility. Including the prompts would allow other researchers to replicate the study precisely and understand the context in which the model was evaluated. This is crucial for the Methods section as it details the core experimental procedures. This would strengthen the paper by increasing transparency and enabling more precise comparisons with other studies. Ultimately, providing the specific prompts would significantly improve the study&#x27;s scientific contribution by ensuring its findings can be properly contextualized and replicated.</p>
+        <div class="quote">"For differential diagnosis prediction, we adapted the prompt from the prior study of GPT-4 (Supplement 1A)." (Page 6)</div>
+        <p><strong>Implementation:</strong> Include the exact prompts used for each experiment, either in the main text or in the supplementary materials. For example, for the NEJM CPCs, include the exact prompt used to query the model after the differential diagnosis prediction (&#x27;What diagnostic tests would you order next given this differential?&#x27;).</p>
+    </li>
+    
+    <li>
+        <strong>Explain rationale for using linear-weighted Cohen&#x27;s kappa</strong>
+        
+        <p>This medium-impact improvement would enhance the Methods section by explicitly stating the rationale for using a linear-weighted Cohen&#x27;s kappa instead of a standard Cohen&#x27;s kappa. While the section mentions using a linear-weighted kappa, it does not explain why this specific measure was chosen. Providing this rationale would clarify the methodological choices and ensure that readers understand the statistical approach. This is important in the Methods section as it provides context for the statistical analyses. This would strengthen the paper by demonstrating the authors&#x27; awareness of the nuances of interrater reliability measures and promoting a more critical evaluation of the results. Ultimately, explaining the rationale for using a linear-weighted kappa would improve the overall quality and transparency of the Methods section.</p>
+        <div class="quote">"For both the differential diagnosis and diagnostic test selections, a linear-weighted Cohen&#x27;s kappa was computed to assess interrater agreement" (Page 7)</div>
+        <p><strong>Implementation:</strong> Add a sentence or two explaining why a linear-weighted Cohen&#x27;s kappa was used. For example, &#x27;A linear-weighted Cohen&#x27;s kappa was used to assess interrater agreement because it accounts for the degree of disagreement, which is important when scoring systems have ordinal categories.&#x27;</p>
+    </li>
+    
+    <li>
+        <strong>Specify criteria for &quot;cannot-miss&quot; diagnoses</strong>
+        
+        <p>This medium-impact improvement would enhance the Methods section by explicitly stating the criteria used to define &quot;cannot-miss&quot; diagnoses. While the section mentions using a list of &quot;cannot-miss&quot; diagnoses defined in a prior study, it does not specify what these criteria were. Providing these criteria would clarify the study&#x27;s methodology and ensure that readers understand how these diagnoses were identified. This is crucial for the Methods section as it describes the key elements of the study&#x27;s design. This would strengthen the paper by increasing transparency and enabling more precise comparisons with other studies. Ultimately, specifying the criteria for &quot;cannot-miss&quot; diagnoses would improve the overall quality and clarity of the Methods section.</p>
+        <div class="quote">"For each case, using only the initial triage presentation data, we used a list of “cannot-miss” defined in a prior study" (Page 7)</div>
+        <p><strong>Implementation:</strong> Include the criteria used to define &quot;cannot-miss&quot; diagnoses, either in the main text or in the supplementary materials. For example, &#x27;Cannot-miss diagnoses were defined as conditions that, if missed, could lead to significant patient harm or death.&#x27;</p>
+    </li>
+    
+    <li>
+        <strong>Provide more detail on statistical analysis for probabilistic reasoning</strong>
+        
+        <p>This medium-impact improvement would enhance the Methods section by providing more detail on the statistical analysis used for the probabilistic reasoning cases. While the section mentions using Mean Absolute Error (MAE) and Mean Absolute Percentage Error (MAPE), it does not fully explain how these metrics were applied in this context. Providing more detail would help readers understand the statistical methods and ensure the reproducibility of the study. This is important in the Methods section as it provides context for the statistical analyses. This would strengthen the paper by demonstrating a thorough understanding of the statistical methods and promoting a more critical evaluation of the results. Ultimately, providing more detail on the statistical analysis for probabilistic reasoning would improve the overall quality and transparency of the Methods section.</p>
+        <div class="quote">"Mean absolute error (MAE) and mean absolute percentage error were computed to compare predictions to the reference probabilities" (Page 9)</div>
+        <p><strong>Implementation:</strong> Add a sentence or two explaining how MAE and MAPE were computed in the context of the probabilistic reasoning cases. For example, &#x27;MAE and MAPE were computed by comparing the model&#x27;s predicted probabilities to the reference probabilities for each case, averaging the absolute errors across all cases&#x27;.</p>
+    </li>
+    
+            </ul>
+            
+            
+        </div>
+        
+    </div>
+    
+    <a href="#" class="back-to-top">↑ Back to Top</a>
+    
+    <script>
+        window.onscroll = function() {
+            var backToTopButton = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
+    
