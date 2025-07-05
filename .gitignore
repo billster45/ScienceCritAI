@@ -41,3 +41,5 @@ Thumbs.db
 test_*.md
 test_*.py
 *.backup
+
+.env
