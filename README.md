@@ -15,6 +15,14 @@ A collection of scientific paper reviews and analyses.
 
 ## AI & Machine Learning
 
+### [Delving into LLM-assisted writing in biomedical publications through excess vocabulary](https://billster45.github.io/ScienceCritAI/LLM_biomedical_papers_summary_20250704_192742.html)
+**Authors:** Dmitry Kobak, Rita González-Márquez, Emőke-Ágnes Horvát, Jan Lause
+**Journal:** Science Advances
+**Institution:** Hertie Institute for Al in Brain Health, University of Tübingen, 72076 Tübingen, Germany
+**Date:** 2025-07-04
+
+---
+
 ### [Sequential Diagnosis with Language Models](https://billster45.github.io/ScienceCritAI/LLM_sequential_diagnosis_summary_20250630_164738.html)
 **Authors:** Harsha Nori, Mayank Daswani, Christopher Kelly, Scott Lundberg, Marco Tulio Ribeiro, Marc Wilson, Xiaoxuan Liu, Viknesh Sounderajah, Jonathan Carlson, Matthew P Lungren, Bay Gross, Peter Hames, Mustafa Suleyman, Dominic King, Eric Horvitz
 **Journal:** arXiv:arXiv:2506.22405v1
@@ -828,6 +836,6 @@ items add to concern about plastic recycling](https://billster45.github.io/Scien
 ---
 
 
-*Last updated: 2025-07-01 18:35:22 UTC*
+*Last updated: 2025-07-05 06:32:28 UTC*
 
-*Total papers: 132*
+*Total papers: 133*
