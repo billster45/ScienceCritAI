@@ -97,6 +97,14 @@ def categorize_papers(papers):
     
     return categories
 
+def clean_title_for_link(title):
+    """Clean title by removing newlines and extra whitespace for use in markdown links."""
+    if not title:
+        return title
+    # Replace newlines with spaces and collapse multiple spaces into one
+    cleaned = re.sub(r'\s+', ' ', title.strip())
+    return cleaned
+
 def generate_readme_content(categories, base_url="https://billster45.github.io/ScienceCritAI"):
     """Generate README content with organized paper links."""
     content = ["# ScienceCritAI", "", "A collection of scientific paper reviews and analyses.", ""]
@@ -137,7 +145,8 @@ def generate_readme_content(categories, base_url="https://billster45.github.io/S
             
             # Create paper entry
             if metadata and metadata.get('title'):
-                title = metadata['title']
+                # Clean the title to remove newlines for the link
+                title = clean_title_for_link(metadata['title'])
             else:
                 # Fallback to filename without extension
                 title = os.path.splitext(paper['filename'])[0].replace('_', ' ').title()

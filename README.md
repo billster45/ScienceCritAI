@@ -127,25 +127,22 @@ A collection of scientific paper reviews and analyses.
 
 ---
 
-### [GPT-4 assistance for improvement of  physician performance on patient care tasks: a randomized controlled trial](https://billster45.github.io/ScienceCritAI/GPT4_doctors_summary_20250206_202558.html)
+### [GPT-4 assistance for improvement of physician performance on patient care tasks: a randomized controlled trial](https://billster45.github.io/ScienceCritAI/GPT4_doctors_summary_20250206_202558.html)
 **Date:** 2025-02-06
 
 ---
 
-### [People who frequently use ChatGPT for writing tasks
-are accurate and robust detectors of AI-generated text](https://billster45.github.io/ScienceCritAI/ChatGPT_writers_detect_AI_writing_summary_20250129_193311.html)
+### [People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text](https://billster45.github.io/ScienceCritAI/ChatGPT_writers_detect_AI_writing_summary_20250129_193311.html)
 **Date:** 2025-01-29
 
 ---
 
-### [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via
-Reinforcement Learning](https://billster45.github.io/ScienceCritAI/DeepSeekR1_summary_20250127_174004.html)
+### [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://billster45.github.io/ScienceCritAI/DeepSeekR1_summary_20250127_174004.html)
 **Date:** 2025-01-27
 
 ---
 
-### [Superhuman performance of a large language model
-on the reasoning tasks of a physician](https://billster45.github.io/ScienceCritAI/LLM_physician_summary_20241217_191833.html)
+### [Superhuman performance of a large language model on the reasoning tasks of a physician](https://billster45.github.io/ScienceCritAI/LLM_physician_summary_20241217_191833.html)
 **Date:** 2024-12-17
 
 ---
@@ -315,35 +312,22 @@ on the reasoning tasks of a physician](https://billster45.github.io/ScienceCritA
 
 ---
 
-### [Is LDL cholesterol associated with long-term
-mortality among primary
-prevention adults? A retrospective
-cohort study from a large
-healthcare system](https://billster45.github.io/ScienceCritAI/LDL_mortality_summary_20250102_172814.html)
+### [Is LDL cholesterol associated with long-term mortality among primary prevention adults? A retrospective cohort study from a large healthcare system](https://billster45.github.io/ScienceCritAI/LDL_mortality_summary_20250102_172814.html)
 **Date:** 2025-01-02
 
 ---
 
-### [Alzheimer’s disease mortality among taxi and ambulance drivers:
-population based cross sectional study](https://billster45.github.io/ScienceCritAI/Alzheimers_Taxi_Ambulance_summary_20241229_085955.html)
+### [Alzheimer’s disease mortality among taxi and ambulance drivers: population based cross sectional study](https://billster45.github.io/ScienceCritAI/Alzheimers_Taxi_Ambulance_summary_20241229_085955.html)
 **Date:** 2024-12-29
 
 ---
 
-### [Low-density lipoproteins cause atherosclerotic
-cardiovascular disease. 1. Evidence from
-genetic, epidemiologic, and clinical studies.
-A consensus statement fromthe European
-Atherosclerosis Society Consensus Panel](https://billster45.github.io/ScienceCritAI/CVD_LDL_summary_20241211_212159.html)
+### [Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies. A consensus statement fromthe European Atherosclerosis Society Consensus Panel](https://billster45.github.io/ScienceCritAI/CVD_LDL_summary_20241211_212159.html)
 **Date:** 2024-12-11
 
 ---
 
-### [Handwriting but not typewriting
-leads to widespread brain
-connectivity: a high-density EEG
-study with implications for the
-classroom](https://billster45.github.io/ScienceCritAI/Handwriting_brain_connections_summary_20241207_092845.html)
+### [Handwriting but not typewriting leads to widespread brain connectivity: a high-density EEG study with implications for the classroom](https://billster45.github.io/ScienceCritAI/Handwriting_brain_connections_summary_20241207_092845.html)
 **Date:** 2024-12-07
 
 ---
@@ -386,21 +370,17 @@ classroom](https://billster45.github.io/ScienceCritAI/Handwriting_brain_connecti
 
 ---
 
-### [The intensity paradox: A systematic review and meta-analysis
-of its impact on the cardiorespiratory fitness of
-older adults](https://billster45.github.io/ScienceCritAI/Fitness_Intensity_Paradox_summary_20250130_181046.html)
+### [The intensity paradox: A systematic review and meta-analysis of its impact on the cardiorespiratory fitness of older adults](https://billster45.github.io/ScienceCritAI/Fitness_Intensity_Paradox_summary_20250130_181046.html)
 **Date:** 2025-01-30
 
 ---
 
-### [Spiritual Fitness: A New Dimension
-in Alzheimer’s Disease Prevention](https://billster45.github.io/ScienceCritAI/spiritual-fitness_summary_20250126_101710.html)
+### [Spiritual Fitness: A New Dimension in Alzheimer’s Disease Prevention](https://billster45.github.io/ScienceCritAI/spiritual-fitness_summary_20250126_101710.html)
 **Date:** 2025-01-26
 
 ---
 
-### [Aerobic Exercise andWeight Loss in Adults
-A Systematic Review and Dose-Response Meta-Analysis](https://billster45.github.io/ScienceCritAI/Aerobic_exercise_weight_loss_summary_20241230_190420.html)
+### [Aerobic Exercise andWeight Loss in Adults A Systematic Review and Dose-Response Meta-Analysis](https://billster45.github.io/ScienceCritAI/Aerobic_exercise_weight_loss_summary_20241230_190420.html)
 **Date:** 2024-12-30
 
 ---
@@ -501,11 +481,7 @@ A Systematic Review and Dose-Response Meta-Analysis](https://billster45.github.i
 
 ---
 
-### [Effects of early, late and self-selected 
-time-restricted eating on visceral adipose 
-tissue and cardiometabolic health in 
-participants with overweight or obesity:  
-a randomized controlled trial](https://billster45.github.io/ScienceCritAI/Time_restricted_eating_adipose_summary_20250204_080218.html)
+### [Effects of early, late and self-selected time-restricted eating on visceral adipose tissue and cardiometabolic health in participants with overweight or obesity: a randomized controlled trial](https://billster45.github.io/ScienceCritAI/Time_restricted_eating_adipose_summary_20250204_080218.html)
 **Date:** 2025-02-04
 
 ---
@@ -518,17 +494,12 @@ a randomized controlled trial](https://billster45.github.io/ScienceCritAI/Time_r
 
 ---
 
-### [Predictive equation derived from 6,497
-doubly labelled water measurements
-enables the detection of erroneous
-self-reported energy intake](https://billster45.github.io/ScienceCritAI/Self_Reported_Energy_Intake_summary_20250125_091153.html)
+### [Predictive equation derived from 6,497 doubly labelled water measurements enables the detection of erroneous self-reported energy intake](https://billster45.github.io/ScienceCritAI/Self_Reported_Energy_Intake_summary_20250125_091153.html)
 **Date:** 2025-01-25
 
 ---
 
-### [Oreo Cookie Treatment Lowers LDL Cholesterol More Than
-High-Intensity Statin therapy in a Lean Mass Hyper-Responder
-on a Ketogenic Diet: A Curious Crossover Experiment](https://billster45.github.io/ScienceCritAI/Oreo_Cookie_LDL_summary_20250124_173235.html)
+### [Oreo Cookie Treatment Lowers LDL Cholesterol More Than High-Intensity Statin therapy in a Lean Mass Hyper-Responder on a Ketogenic Diet: A Curious Crossover Experiment](https://billster45.github.io/ScienceCritAI/Oreo_Cookie_LDL_summary_20250124_173235.html)
 **Date:** 2025-01-24
 
 ---
@@ -543,15 +514,12 @@ on a Ketogenic Diet: A Curious Crossover Experiment](https://billster45.github.i
 
 ---
 
-### [Effects of cocoa extract and a multivitamin on cognitive
-function: A randomized clinical trial](https://billster45.github.io/ScienceCritAI/Cocoa_Cognition_summary_20250104_075859.html)
+### [Effects of cocoa extract and a multivitamin on cognitive function: A randomized clinical trial](https://billster45.github.io/ScienceCritAI/Cocoa_Cognition_summary_20250104_075859.html)
 **Date:** 2025-01-04
 
 ---
 
-### [Coffee and tea consumption and the risk of head and neck
-cancer: An updated pooled analysis in the International Head
-and Neck Cancer Epidemiology Consortium](https://billster45.github.io/ScienceCritAI/Coffee_Tea_Cancer_summary_20241227_124017.html)
+### [Coffee and tea consumption and the risk of head and neck cancer: An updated pooled analysis in the International Head and Neck Cancer Epidemiology Consortium](https://billster45.github.io/ScienceCritAI/Coffee_Tea_Cancer_summary_20241227_124017.html)
 **Date:** 2024-12-27
 
 ---
@@ -561,8 +529,7 @@ and Neck Cancer Epidemiology Consortium](https://billster45.github.io/ScienceCri
 
 ---
 
-### [Dietary plant-to-animal protein ratio and risk of cardiovascular disease in 3
-prospective cohorts](https://billster45.github.io/ScienceCritAI/CVD_plant_animal_protein_summary_20241208_103736.html)
+### [Dietary plant-to-animal protein ratio and risk of cardiovascular disease in 3 prospective cohorts](https://billster45.github.io/ScienceCritAI/CVD_plant_animal_protein_summary_20241208_103736.html)
 **Date:** 2024-12-08
 
 ---
@@ -572,9 +539,7 @@ prospective cohorts](https://billster45.github.io/ScienceCritAI/CVD_plant_animal
 
 ---
 
-### [Creatine Improves Total Sleep Duration Following Resistance
-Training Days versus Non-Resistance Training Days among
-Naturally Menstruating Females](https://billster45.github.io/ScienceCritAI/Creatine_sleep_summary_20241116_093149.html)
+### [Creatine Improves Total Sleep Duration Following Resistance Training Days versus Non-Resistance Training Days among Naturally Menstruating Females](https://billster45.github.io/ScienceCritAI/Creatine_sleep_summary_20241116_093149.html)
 **Date:** 2024-11-16
 
 ---
@@ -604,12 +569,12 @@ Naturally Menstruating Females](https://billster45.github.io/ScienceCritAI/Creat
 
 ---
 
-### [Association between Adherence to the EAT-Lancet Diet and Cardiometabolic Risk Factors in Brazilian Adults and Elderly](https://billster45.github.io/ScienceCritAI/EAT-Lancet_diet_CVD_summary_20241007_203826.html)
+### [APOE Genotype and Insulin Modulate the Impact of Dietary Macronutrients on Cognitive Performance in Older Adults](https://billster45.github.io/ScienceCritAI/macrontrients_dementia_summary_20241007_070459.html)
 **Date:** 2024-10-07
 
 ---
 
-### [APOE Genotype and Insulin Modulate the Impact of Dietary Macronutrients on Cognitive Performance in Older Adults](https://billster45.github.io/ScienceCritAI/macrontrients_dementia_summary_20241007_070459.html)
+### [Association between Adherence to the EAT-Lancet Diet and Cardiometabolic Risk Factors in Brazilian Adults and Elderly](https://billster45.github.io/ScienceCritAI/EAT-Lancet_diet_CVD_summary_20241007_203826.html)
 **Date:** 2024-10-07
 
 ---
@@ -660,8 +625,7 @@ Naturally Menstruating Females](https://billster45.github.io/ScienceCritAI/Creat
 
 ---
 
-### [The effect of alcohol on subsequent sleep in healthy adults: A systematic
-review and meta-analysis](https://billster45.github.io/ScienceCritAI/Alcohol_sleep_summary_20241214_171443.html)
+### [The effect of alcohol on subsequent sleep in healthy adults: A systematic review and meta-analysis](https://billster45.github.io/ScienceCritAI/Alcohol_sleep_summary_20241214_171443.html)
 **Date:** 2024-12-14
 
 ---
@@ -749,8 +713,7 @@ review and meta-analysis](https://billster45.github.io/ScienceCritAI/Alcohol_sle
 
 ---
 
-### [From e-waste to living space: Flame retardants contaminating household
-items add to concern about plastic recycling](https://billster45.github.io/ScienceCritAI/Household_plastic_summary_20241218_160834.html)
+### [From e-waste to living space: Flame retardants contaminating household items add to concern about plastic recycling](https://billster45.github.io/ScienceCritAI/Household_plastic_summary_20241218_160834.html)
 **Date:** 2024-12-18
 
 ---
@@ -836,6 +799,6 @@ items add to concern about plastic recycling](https://billster45.github.io/Scien
 ---
 
 
-*Last updated: 2025-07-05 06:32:28 UTC*
+*Last updated: 2025-07-05 08:13:18 UTC*
 
 *Total papers: 133*
