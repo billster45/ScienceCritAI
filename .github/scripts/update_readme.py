@@ -107,13 +107,16 @@ def clean_title_for_link(title):
 
 def generate_readme_content(categories, base_url="https://billster45.github.io/ScienceCritAI"):
     """Generate README content with organized paper links."""
-    content = ["# ScienceCritAI", "", "A collection of scientific paper reviews and analyses.", ""]
-    
-    # Add table of contents
-    content.extend([
+    content = [
+        "# ScienceCritAI",
+        "",
+        "A collection of AI-automated scientific paper peer reviews posted on X/Twitter at [@ScienceCrit_AI](https://x.com/ScienceCrit_AI).",
+        "",
+        "Learn how this project works on Medium: [From PDFs to Tweets: How tools like ScienceCritAI could transform scientific peer review](https://medium.com/@billcockerill/from-pdfs-to-tweets-how-tools-like-sciencecritai-could-transform-scientific-peer-review-142786283ecf)",
+        "",
         "## Table of Contents",
         ""
-    ])
+    ]
     
     for category in categories:
         if categories[category]:
@@ -128,6 +131,8 @@ def generate_readme_content(categories, base_url="https://billster45.github.io/S
             
         content.extend([
             f"## {category}",
+            "",
+            "[↑ Back to top](#sciencecritai)",
             ""
         ])
         
@@ -153,16 +158,17 @@ def generate_readme_content(categories, base_url="https://billster45.github.io/S
             
             content.append(f"### [{title}]({url})")
             
+            # Add metadata in specific order: Date, Journal, Institution, Authors
+            if date:
+                content.append(f"**Date:** {date.strftime('%Y-%m-%d')}")
+            
             if metadata:
-                if metadata.get('authors'):
-                    content.append(f"**Authors:** {metadata['authors']}")
                 if metadata.get('journal'):
                     content.append(f"**Journal:** {metadata['journal']}")
                 if metadata.get('institution'):
                     content.append(f"**Institution:** {metadata['institution']}")
-            
-            if date:
-                content.append(f"**Date:** {date.strftime('%Y-%m-%d')}")
+                if metadata.get('authors'):
+                    content.append(f"**Authors:** {metadata['authors']}")
             
             content.extend(["", "---", ""])
     

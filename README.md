@@ -1,6 +1,8 @@
 # ScienceCritAI
 
-A collection of scientific paper reviews and analyses.
+A collection of AI-automated scientific paper peer reviews posted on X/Twitter at [@ScienceCrit_AI](https://x.com/ScienceCrit_AI).
+
+Learn how this project works on Medium: [From PDFs to Tweets: How tools like ScienceCritAI could transform scientific peer review](https://medium.com/@billcockerill/from-pdfs-to-tweets-how-tools-like-sciencecritai-could-transform-scientific-peer-review-142786283ecf)
 
 ## Table of Contents
 
@@ -15,115 +17,117 @@ A collection of scientific paper reviews and analyses.
 
 ## AI & Machine Learning
 
+[↑ Back to top](#sciencecritai)
+
 ### [Delving into LLM-assisted writing in biomedical publications through excess vocabulary](https://billster45.github.io/ScienceCritAI/LLM_biomedical_papers_summary_20250704_192742.html)
-**Authors:** Dmitry Kobak, Rita González-Márquez, Emőke-Ágnes Horvát, Jan Lause
+**Date:** 2025-07-04
 **Journal:** Science Advances
 **Institution:** Hertie Institute for Al in Brain Health, University of Tübingen, 72076 Tübingen, Germany
-**Date:** 2025-07-04
+**Authors:** Dmitry Kobak, Rita González-Márquez, Emőke-Ágnes Horvát, Jan Lause
 
 ---
 
 ### [Sequential Diagnosis with Language Models](https://billster45.github.io/ScienceCritAI/LLM_sequential_diagnosis_summary_20250630_164738.html)
-**Authors:** Harsha Nori, Mayank Daswani, Christopher Kelly, Scott Lundberg, Marco Tulio Ribeiro, Marc Wilson, Xiaoxuan Liu, Viknesh Sounderajah, Jonathan Carlson, Matthew P Lungren, Bay Gross, Peter Hames, Mustafa Suleyman, Dominic King, Eric Horvitz
+**Date:** 2025-06-30
 **Journal:** arXiv:arXiv:2506.22405v1
 **Institution:** Microsoft AI
-**Date:** 2025-06-30
+**Authors:** Harsha Nori, Mayank Daswani, Christopher Kelly, Scott Lundberg, Marco Tulio Ribeiro, Marc Wilson, Xiaoxuan Liu, Viknesh Sounderajah, Jonathan Carlson, Matthew P Lungren, Bay Gross, Peter Hames, Mustafa Suleyman, Dominic King, Eric Horvitz
 
 ---
 
 ### [Hospital Length-of-Stay Prediction Using Machine Learning Algorithms-A Literature Review](https://billster45.github.io/ScienceCritAI/Hospital_stay_ML_review_summary_20250524_134148.html)
-**Authors:** Guilherme Almeida, Fernanda Brito Correia, Ana Rosa Borges, Jorge Bernardino
+**Date:** 2025-05-24
 **Journal:** Applied Sciences
 **Institution:** Coimbra Institute of Engineering-ISEC, Polytechnic University of Coimbra
-**Date:** 2025-05-24
+**Authors:** Guilherme Almeida, Fernanda Brito Correia, Ana Rosa Borges, Jorge Bernardino
 
 ---
 
 ### [Towards conversational diagnostic artificial intelligence](https://billster45.github.io/ScienceCritAI/LLM_medical_diagnosis_summary_20250505_194205.html)
-**Authors:** Tao Tu, Mike Schaekermann, Anil Palepu, Khaled Saab, Jan Freyberg, Ryutaro Tanno, Amy Wang, Brenna Li, Mohamed Amin, Yong Cheng, Elahe Vedadi, Nenad Tomasev, Shekoofeh Azizi, Karan Singhal, Le Hou, Albert Webson, Kavita Kulkarni, S. Sara Mahdavi, Christopher Semturs, Juraj Gottweis, Joelle Barral, Katherine Chou, Greg S. Corrado, Yossi Matias, Alan Karthikesalingam, Vivek Natarajan
+**Date:** 2025-05-05
 **Journal:** Nature
 **Institution:** Google Research, Mountain View, CA, USA
-**Date:** 2025-05-05
+**Authors:** Tao Tu, Mike Schaekermann, Anil Palepu, Khaled Saab, Jan Freyberg, Ryutaro Tanno, Amy Wang, Brenna Li, Mohamed Amin, Yong Cheng, Elahe Vedadi, Nenad Tomasev, Shekoofeh Azizi, Karan Singhal, Le Hou, Albert Webson, Kavita Kulkarni, S. Sara Mahdavi, Christopher Semturs, Juraj Gottweis, Joelle Barral, Katherine Chou, Greg S. Corrado, Yossi Matias, Alan Karthikesalingam, Vivek Natarajan
 
 ---
 
 ### [NotebookLM: An LLM with RAG for active learning and collaborative tutoring](https://billster45.github.io/ScienceCritAI/NotebookLM_Active_Learning_summary_20250429_183656.html)
-**Authors:** Eugenio Tufino
+**Date:** 2025-04-29
 **Journal:** arXiv
 **Institution:** Department of Physics and Astronomy, University of Padua, Padua, Italy
-**Date:** 2025-04-29
+**Authors:** Eugenio Tufino
 
 ---
 
 ### [Executable Code Actions Elicit Better LLM Agents](https://billster45.github.io/ScienceCritAI/LLM_Code_agents_summary_20250426_170014.html)
-**Authors:** Xingyao Wang, Yangyi Chen, Lifan Yuan, Yizhe Zhang, Yunzhu Li, Hao Peng, Heng Ji
+**Date:** 2025-04-26
 **Journal:** Proceedings of the 41st International Conference on Machine Learning
 **Institution:** Department of Computer Science, University of Illinois Urbana-Champaign
-**Date:** 2025-04-26
+**Authors:** Xingyao Wang, Yangyi Chen, Lifan Yuan, Yizhe Zhang, Yunzhu Li, Hao Peng, Heng Ji
 
 ---
 
 ### [Accurate predictions on small data with a tabular foundation model](https://billster45.github.io/ScienceCritAI/Transformer_Tabular_data_summary_20250415_183227.html)
-**Authors:** Noah Hollmann, Samuel Müller, Lennart Purucker, Arjun Krishnakumar, Max Körfer, Shi Bin Hoo, Robin Tibor Schirrmeister, Frank Hutter
+**Date:** 2025-04-15
 **Journal:** Nature
 **Institution:** Machine Learning Lab, University of Freiburg, Freiburg, Germany
-**Date:** 2025-04-15
+**Authors:** Noah Hollmann, Samuel Müller, Lennart Purucker, Arjun Krishnakumar, Max Körfer, Shi Bin Hoo, Robin Tibor Schirrmeister, Frank Hutter
 
 ---
 
 ### [Measuring AI Ability to Complete Long Tasks](https://billster45.github.io/ScienceCritAI/LLM_long_tasks_summary_20250326_073026.html)
-**Authors:** Thomas Kwa, Ben West, Joel Becker, Amy Deng, Katharyn Garcia, Max Hasin, Sami Jawhar, Megan Kinniment, Nate Rush, Sydney Von Arx, Ryan Bloom, Thomas Broadley, Haoxing Du, Brian Goodrich, Nikola Jurkovic, Luke Harold Miles, Seraphina Nix, Tao Lin, Neev Parikh, David Rein, Lucas Jun Koba Sato, Hjalmar Wijk, Daniel M. Ziegler, Elizabeth Barnes, Lawrence Chan
+**Date:** 2025-03-26
 **Journal:** arXiv
 **Institution:** Model Evaluation & Threat Research (METR)
-**Date:** 2025-03-26
+**Authors:** Thomas Kwa, Ben West, Joel Becker, Amy Deng, Katharyn Garcia, Max Hasin, Sami Jawhar, Megan Kinniment, Nate Rush, Sydney Von Arx, Ryan Bloom, Thomas Broadley, Haoxing Du, Brian Goodrich, Nikola Jurkovic, Luke Harold Miles, Seraphina Nix, Tao Lin, Neev Parikh, David Rein, Lucas Jun Koba Sato, Hjalmar Wijk, Daniel M. Ziegler, Elizabeth Barnes, Lawrence Chan
 
 ---
 
 ### [A unified acoustic-to-speech-to-language embedding space captures the neural basis of natural language processing in everyday conversations](https://billster45.github.io/ScienceCritAI/LLM_neural_patterns_with_supp_summary_20250325_083412.html)
-**Authors:** Ariel Goldstein, Haocheng Wang, Leonard Niekerken, Mariano Schain, Zaid Zada, Bobbi Aubrey, Tom Sheffer, Samuel A. Nastase, Harshvardhan Gazula, Aditi Singh, Aditi Rao, Gina Choe, Catherine Kim, Werner Doyle, Daniel Friedman, Sasha Devore, Patricia Dugan, Avinatan Hassidim, Michael Brenner, Yossi Matias, Orrin Devinsky, Adeen Flinker, Uri Hasson
+**Date:** 2025-03-25
 **Journal:** nature human behaviour
 **Institution:** Department of Psychology and the Princeton Neuroscience Institute, Princeton University, Princeton, NJ, USA
-**Date:** 2025-03-25
+**Authors:** Ariel Goldstein, Haocheng Wang, Leonard Niekerken, Mariano Schain, Zaid Zada, Bobbi Aubrey, Tom Sheffer, Samuel A. Nastase, Harshvardhan Gazula, Aditi Singh, Aditi Rao, Gina Choe, Catherine Kim, Werner Doyle, Daniel Friedman, Sasha Devore, Patricia Dugan, Avinatan Hassidim, Michael Brenner, Yossi Matias, Orrin Devinsky, Adeen Flinker, Uri Hasson
 
 ---
 
 ### [One Does Not Simply Meme Alone: Evaluating Co-Creativity Between LLMs and Humans in the Generation of Humor](https://billster45.github.io/ScienceCritAI/LLM_memes_summary_20250319_185716.html)
-**Authors:** Zhikun Wu, Thomas Weber, Florian Müller
+**Date:** 2025-03-19
 **Journal:** 30th International Conference on Intelligent User Interfaces (IUI '25)
 **Institution:** KTH Royal Institute of Technology
-**Date:** 2025-03-19
+**Authors:** Zhikun Wu, Thomas Weber, Florian Müller
 
 ---
 
 ### [AGENTIC DEEP GRAPH REASONING YIELDS SELF-ORGANIZING KNOWLEDGE NETWORKS](https://billster45.github.io/ScienceCritAI/LLM_Knowledge_Networks_summary_20250302_095751.html)
-**Authors:** Markus J. Buehler
+**Date:** 2025-03-02
 **Journal:** N/A
 **Institution:** Massachusetts Institute of Technology
-**Date:** 2025-03-02
+**Authors:** Markus J. Buehler
 
 ---
 
 ### [Utility Engineering: Analyzing and Controlling Emergent Value Systems in AIs](https://billster45.github.io/ScienceCritAI/LLM_values_summary_20250228_174807.html)
-**Authors:** Mantas Mazeika, Xuwang Yin, Rishub Tamirisa, Jaehyuk Lim, Bruce W. Lee, Richard Ren, Long Phan, Norman Mu, Adam Khoja, Oliver Zhang, Dan Hendrycks
+**Date:** 2025-02-28
 **Journal:** N/A
 **Institution:** Center for AI Safety
-**Date:** 2025-02-28
+**Authors:** Mantas Mazeika, Xuwang Yin, Rishub Tamirisa, Jaehyuk Lim, Bruce W. Lee, Richard Ren, Long Phan, Norman Mu, Adam Khoja, Oliver Zhang, Dan Hendrycks
 
 ---
 
 ### [When ELIZA meets therapists: A Turing test for the heart and mind](https://billster45.github.io/ScienceCritAI/LLM_therapy_summary_20250215_125001.html)
-**Authors:** S. Gabe Hatch, Zachary T. Goodman, Laura Vowels, H. Dorian Hatch, Alyssa L. Brown, Shayna Guttman, Yunying Le, Benjamin Bailey, Russell J. Bailey, Charlotte R. Esplin, Steven M. Harris, D. Payton Holt, Jr., Merranda McLaughlin, Patrick O'Connell, Karen Rothman, Lane Ritchie, D. Nicholas Top, Jr., Scott R. Braithwaite
+**Date:** 2025-02-15
 **Journal:** PLOS Mental Health
 **Institution:** Hatch Data and Mental Health, Orem, Utah, United States of America
-**Date:** 2025-02-15
+**Authors:** S. Gabe Hatch, Zachary T. Goodman, Laura Vowels, H. Dorian Hatch, Alyssa L. Brown, Shayna Guttman, Yunying Le, Benjamin Bailey, Russell J. Bailey, Charlotte R. Esplin, Steven M. Harris, D. Payton Holt, Jr., Merranda McLaughlin, Patrick O'Connell, Karen Rothman, Lane Ritchie, D. Nicholas Top, Jr., Scott R. Braithwaite
 
 ---
 
 ### [Which Economic Tasks are Performed with AI? Evidence from Millions of Claude Conversations](https://billster45.github.io/ScienceCritAI/Claude_conversations_summary_20250213_175502.html)
-**Authors:** Kunal Handa, Alex Tamkin, Miles McCain, Saffron Huang, Esin Durmus, Sarah Heck, Jared Mueller, Jerry Hong, Stuart Ritchie, Tim Belonax, Kevin K. Troy, Dario Amodei, Jared Kaplan, Jack Clark, Deep Ganguli
+**Date:** 2025-02-13
 **Journal:** Not specified
 **Institution:** Anthropic
-**Date:** 2025-02-13
+**Authors:** Kunal Handa, Alex Tamkin, Miles McCain, Saffron Huang, Esin Durmus, Sarah Heck, Jared Mueller, Jerry Hong, Stuart Ritchie, Tim Belonax, Kevin K. Troy, Dario Amodei, Jared Kaplan, Jack Clark, Deep Ganguli
 
 ---
 
@@ -259,51 +263,53 @@ A collection of scientific paper reviews and analyses.
 
 ## Health & Medicine
 
+[↑ Back to top](#sciencecritai)
+
 ### [Predicting hospital length of stay using machine learning on a large open health dataset](https://billster45.github.io/ScienceCritAI/Hospital_LoS_open_data_summary_20250526_084207.html)
-**Authors:** Raunak Jain, Mrityunjai Singh, A. Ravishankar Rao, Rahul Garg
+**Date:** 2025-05-26
 **Journal:** BMC Health Services Research
 **Institution:** Indian Institute of Technology, Delhi, India
-**Date:** 2025-05-26
+**Authors:** Raunak Jain, Mrityunjai Singh, A. Ravishankar Rao, Rahul Garg
 
 ---
 
 ### [Decision analysis framework for predicting no-shows to appointments using machine learning algorithms](https://billster45.github.io/ScienceCritAI/Appointment_no_show_summary_20250524_082436.html)
-**Authors:** Carolina Deina, Flavio S. Fogliatto, Giovani J. C. da Silveira, Michel J. Anzanello
+**Date:** 2025-05-24
 **Journal:** BMC Health Services Research
 **Institution:** Department of Industrial Engineering, Federal University of Rio Grande do Sul
-**Date:** 2025-05-24
+**Authors:** Carolina Deina, Flavio S. Fogliatto, Giovani J. C. da Silveira, Michel J. Anzanello
 
 ---
 
 ### [Phthalate exposure from plastics and cardiovascular disease: global estimates of attributable mortality and years life lost](https://billster45.github.io/ScienceCritAI/Plastics_CVD_summary_20250430_182229.html)
-**Authors:** Sara Hyman, Jonathan Acevedo, Chiara Giannarelli, Leonardo Trasande
+**Date:** 2025-04-30
 **Journal:** eBioMedicine
 **Institution:** New York University Grossman School of Medicine, New York, NY, USA
-**Date:** 2025-04-30
+**Authors:** Sara Hyman, Jonathan Acevedo, Chiara Giannarelli, Leonardo Trasande
 
 ---
 
 ### [The Warburg hypothesis and the emergence of the mitochondrial metabolic theory of cancer](https://billster45.github.io/ScienceCritAI/Warburg_Cancer_summary_20250416_155626.html)
-**Authors:** Thomas N. Seyfried, Derek C. Lee, Tomas Duraj, Nathan L. Ta, Purna Mukherjee, Michael Kiebish, Gabriel Arismendi-Morillo, Christos Chinopoulos
+**Date:** 2025-04-16
 **Journal:** Journal of Bioenergetics and Biomembranes
 **Institution:** Biology Department, Boston College, 140 Commonwealth Ave, Chestnut Hill, Boston, MA 02467, USA
-**Date:** 2025-04-16
+**Authors:** Thomas N. Seyfried, Derek C. Lee, Tomas Duraj, Nathan L. Ta, Purna Mukherjee, Michael Kiebish, Gabriel Arismendi-Morillo, Christos Chinopoulos
 
 ---
 
 ### [Neuronal polyunsaturated fatty acids are protective in ALS/FTD](https://billster45.github.io/ScienceCritAI/Fats_dementia_summary_20250305_200019.html)
-**Authors:** Ashling Giblin, Alexander J. Cammack, Niek Blomberg, Sharifah Anoar, Alla Mikheenko, Mireia Carcolé, Magda L. Atilano, Alex Hull, Dunxin Shen, Xiaoya Wei, Rachel Coneys, Lele Zhou, Yassene Mohammed, Damien Olivier-Jimenez, Lian Y. Wang, Kerri J. Kinghorn, Teresa Niccoli, Alyssa N. Coyne, Rik van der Kant, Tammaryn Lashley, Martin Giera, Linda Partridge, Adrian M. Isaacs
+**Date:** 2025-03-05
 **Journal:** Nature Neuroscience
 **Institution:** UK Dementia Research Institute, UCL, London, UK
-**Date:** 2025-03-05
+**Authors:** Ashling Giblin, Alexander J. Cammack, Niek Blomberg, Sharifah Anoar, Alla Mikheenko, Mireia Carcolé, Magda L. Atilano, Alex Hull, Dunxin Shen, Xiaoya Wei, Rachel Coneys, Lele Zhou, Yassene Mohammed, Damien Olivier-Jimenez, Lian Y. Wang, Kerri J. Kinghorn, Teresa Niccoli, Alyssa N. Coyne, Rik van der Kant, Tammaryn Lashley, Martin Giera, Linda Partridge, Adrian M. Isaacs
 
 ---
 
 ### [Bioaccumulation of microplastics in decedent human brains](https://billster45.github.io/ScienceCritAI/Microplastics_brain_summary_20250211_155731.html)
-**Authors:** Alexander J. Nihart, Marcus A. Garcia, Eliane El Hayek, Rui Liu, Marian Olewine, Josiah D. Kingston, Eliseo F. Castillo, Rama R. Gullapalli, Tamara Howard, Barry Bleske, Justin Scott, Jorge Gonzalez-Estrella, Jessica M. Gross, Michael Spildes, Natalie L. Adolphi, Daniel F. Gallego, Heather S. Jarrell, Gabrielle Dvorscak, Maria E. Zuluaga-Ruiz, Andrew B. West, Matthew J. Campen
+**Date:** 2025-02-11
 **Journal:** nature medicine
 **Institution:** University of New Mexico Health Sciences
-**Date:** 2025-02-11
+**Authors:** Alexander J. Nihart, Marcus A. Garcia, Eliane El Hayek, Rui Liu, Marian Olewine, Josiah D. Kingston, Eliseo F. Castillo, Rama R. Gullapalli, Tamara Howard, Barry Bleske, Justin Scott, Jorge Gonzalez-Estrella, Jessica M. Gross, Michael Spildes, Natalie L. Adolphi, Daniel F. Gallego, Heather S. Jarrell, Gabrielle Dvorscak, Maria E. Zuluaga-Ruiz, Andrew B. West, Matthew J. Campen
 
 ---
 
@@ -354,19 +360,21 @@ A collection of scientific paper reviews and analyses.
 
 ## Exercise & Fitness
 
+[↑ Back to top](#sciencecritai)
+
 ### [Dose-response relationship between evening exercise and sleep](https://billster45.github.io/ScienceCritAI/Evening_exercise_sleep_summary_20250418_074519.html)
-**Authors:** Josh Leota, David M. Presby, Flora Le, Mark É. Czeisler, Luis Mascaro, Emily R. Capodilupo, Joshua F. Wiley, Sean P. A. Drummond, Shantha M. W. Rajaratnam, Elise R. Facer-Childs
+**Date:** 2025-04-18
 **Journal:** Nature Communications
 **Institution:** School of Psychological Sciences, Faculty of Medicine, Nursing and Health Sciences, Monash University, 18 Innovation Walk, Clayton 3800, Australia.
-**Date:** 2025-04-18
+**Authors:** Josh Leota, David M. Presby, Flora Le, Mark É. Czeisler, Luis Mascaro, Emily R. Capodilupo, Joshua F. Wiley, Sean P. A. Drummond, Shantha M. W. Rajaratnam, Elise R. Facer-Childs
 
 ---
 
 ### [The Effects of Massage Guns on Performance and Recovery: A Systematic Review](https://billster45.github.io/ScienceCritAI/Massage_gun_recovery_summary_20250216_105543.html)
-**Authors:** Ricardo Maia Ferreira, Rafael Silva, Pedro Vigário, Pedro Nunes Martins, Filipe Casanova, Ricardo Jorge Fernandes, António Rodrigues Sampaio
+**Date:** 2025-02-16
 **Journal:** J. Funct. Morphol. Kinesiol.
 **Institution:** Polytechnic Institute of Maia
-**Date:** 2025-02-16
+**Authors:** Ricardo Maia Ferreira, Rafael Silva, Pedro Vigário, Pedro Nunes Martins, Filipe Casanova, Ricardo Jorge Fernandes, António Rodrigues Sampaio
 
 ---
 
@@ -457,27 +465,29 @@ A collection of scientific paper reviews and analyses.
 
 ## Nutrition & Diet
 
+[↑ Back to top](#sciencecritai)
+
 ### [A short-term, high-caloric diet has prolonged effects on brain insulin action in men](https://billster45.github.io/ScienceCritAI/Junk_Food_Brain_Insulin_summary_20250227_073343.html)
-**Authors:** Stephanie Kullmann, Lore Wagner, Robert Hauffe, Anne Kühnel, Leontine Sandforth, Ralf Veit, Corinna Dannecker, Jürgen Machann, Andreas Fritsche, Nobert Stefan, Hubert Preissl, Nils B. Kroemer, Martin Heni, André Kleinridders, Andreas L. Birkenfeld
+**Date:** 2025-02-27
 **Journal:** Nature Metabolism
 **Institution:** Institute for Diabetes Research and Metabolic Diseases of the Helmholtz Center Munich at the University of Tübingen, Tübingen, Germany
-**Date:** 2025-02-27
+**Authors:** Stephanie Kullmann, Lore Wagner, Robert Hauffe, Anne Kühnel, Leontine Sandforth, Ralf Veit, Corinna Dannecker, Jürgen Machann, Andreas Fritsche, Nobert Stefan, Hubert Preissl, Nils B. Kroemer, Martin Heni, André Kleinridders, Andreas L. Birkenfeld
 
 ---
 
 ### [Carrageenan and insulin resistance in humans: a randomised double-blind cross-over trial](https://billster45.github.io/ScienceCritAI/Carragean_insulin_resistance-supp_summary_20250222_084337.html)
-**Authors:** Robert Wagner, Janine Buettner, Martin Heni, Louise Fritsche, Stephanie Kullmann, Moritz Wagmüller, Andreas Peter, Hubert Preissl, Jürgen Machann, Reiner Jumpertz von Schwartzenberg, Andreas L. Birkenfeld, Ulrich-Frank Pape, Gerrit van Hall, Peter Plomgaard, Hans-Ulrich Häring, Andreas Fritsche, Kelsey N. Thompson, Reinhild Klein, Norbert Stefan
+**Date:** 2025-02-22
 **Journal:** BMC Medicine
 **Institution:** BMC Medicine
-**Date:** 2025-02-22
+**Authors:** Robert Wagner, Janine Buettner, Martin Heni, Louise Fritsche, Stephanie Kullmann, Moritz Wagmüller, Andreas Peter, Hubert Preissl, Jürgen Machann, Reiner Jumpertz von Schwartzenberg, Andreas L. Birkenfeld, Ulrich-Frank Pape, Gerrit van Hall, Peter Plomgaard, Hans-Ulrich Häring, Andreas Fritsche, Kelsey N. Thompson, Reinhild Klein, Norbert Stefan
 
 ---
 
 ### [Individual and additive effects of vitamin D, omega-3 and exercise on DNA methylation clocks of biological aging in older adults from the DO-HEALTH trial](https://billster45.github.io/ScienceCritAI/Omega3_aging_summary_20250210_181514.html)
-**Authors:** Heike A. Bischoff-Ferrari, Stephanie Gängler, Maud Wieczorek, Daniel W. Belsky, Joanne Ryan, Reto W. Kressig, Hannes B. Stähelin, Robert Theiler, Bess Dawson-Hughes, René Rizzoli, Bruno Vellas, Laure Rouch, Sophie Guyonnet, Andreas Egli, E. John Orav, Walter Willett, Steve Horvath
+**Date:** 2025-02-10
 **Journal:** Nature Aging
 **Institution:** University of Zurich
-**Date:** 2025-02-10
+**Authors:** Heike A. Bischoff-Ferrari, Stephanie Gängler, Maud Wieczorek, Daniel W. Belsky, Joanne Ryan, Reto W. Kressig, Hannes B. Stähelin, Robert Theiler, Bess Dawson-Hughes, René Rizzoli, Bruno Vellas, Laure Rouch, Sophie Guyonnet, Andreas Egli, E. John Orav, Walter Willett, Steve Horvath
 
 ---
 
@@ -487,10 +497,10 @@ A collection of scientific paper reviews and analyses.
 ---
 
 ### [Why Do Teachers Matter? A Meta-Analytic Review of how Teacher Characteristics and Competencies Affect Students' Academic Achievement](https://billster45.github.io/ScienceCritAI/Teachers_matter_summary_20250202_101853.html)
-**Authors:** Esther López-Martín, Belén Gutiérrez-de-Rozas, Ana María González-Benito, Eva Expósito-Casas
+**Date:** 2025-02-02
 **Journal:** International Journal of Educational Research
 **Institution:** Universidad Nacional de Educación a Distancia (UNED), Department of Methods of Research and Diagnosis in Education II, C/ Juan del Rosal, 14, 28040, Madrid, Spain
-**Date:** 2025-02-02
+**Authors:** Esther López-Martín, Belén Gutiérrez-de-Rozas, Ana María González-Benito, Eva Expósito-Casas
 
 ---
 
@@ -569,12 +579,12 @@ A collection of scientific paper reviews and analyses.
 
 ---
 
-### [Association between Adherence to the EAT-Lancet Diet and Cardiometabolic Risk Factors in Brazilian Adults and Elderly](https://billster45.github.io/ScienceCritAI/EAT-Lancet_diet_CVD_summary_20241007_203826.html)
+### [APOE Genotype and Insulin Modulate the Impact of Dietary Macronutrients on Cognitive Performance in Older Adults](https://billster45.github.io/ScienceCritAI/macrontrients_dementia_summary_20241007_070459.html)
 **Date:** 2024-10-07
 
 ---
 
-### [APOE Genotype and Insulin Modulate the Impact of Dietary Macronutrients on Cognitive Performance in Older Adults](https://billster45.github.io/ScienceCritAI/macrontrients_dementia_summary_20241007_070459.html)
+### [Association between Adherence to the EAT-Lancet Diet and Cardiometabolic Risk Factors in Brazilian Adults and Elderly](https://billster45.github.io/ScienceCritAI/EAT-Lancet_diet_CVD_summary_20241007_203826.html)
 **Date:** 2024-10-07
 
 ---
@@ -591,27 +601,29 @@ A collection of scientific paper reviews and analyses.
 
 ## Psychology & Mental Health
 
+[↑ Back to top](#sciencecritai)
+
 ### [NARCISSISTIC PERSONALITY DISORDER: PATTERNS, PROCESSES, AND INDICATORS OF CHANGE IN LONG-TERM PSYCHOTHERAPY](https://billster45.github.io/ScienceCritAI/NPDChangeinlong-termpsychotherapy_summary_20250411_190721.html)
-**Authors:** Elsa Ronningstam, Igor Weinberg
+**Date:** 2025-04-11
 **Journal:** Journal of Personality Disorders
 **Institution:** Department of Psychiatry, Harvard Medical School, Boston, Massachusetts
-**Date:** 2025-04-11
+**Authors:** Elsa Ronningstam, Igor Weinberg
 
 ---
 
 ### [Successful application of dietary ketogenic metabolic therapy in patients with glioblastoma: a clinical study](https://billster45.github.io/ScienceCritAI/Glioblastoma_ketogenic_therapy_summary_20250224_193549.html)
-**Authors:** Andreas Kiryttopoulos, Athanasios E. Evangeliou, Irene Katsanika, Ioannis Boukovinas, Nikolaos Foroglou, Basilios Zountsas, Angeliki Cheva, Vaios Nikolopoulos, Thomas Zaramboukas, Tomas Duraj, Thomas N. Seyfried, Martha Spilioti
+**Date:** 2025-02-24
 **Journal:** Frontiers in Nutrition
 **Institution:** Aristotle University of Thessaloniki
-**Date:** 2025-02-24
+**Authors:** Andreas Kiryttopoulos, Athanasios E. Evangeliou, Irene Katsanika, Ioannis Boukovinas, Nikolaos Foroglou, Basilios Zountsas, Angeliki Cheva, Vaios Nikolopoulos, Thomas Zaramboukas, Tomas Duraj, Thomas N. Seyfried, Martha Spilioti
 
 ---
 
 ### [Phenotypic divergence between individuals with self-reported autistic traits and clinically ascertained autism](https://billster45.github.io/ScienceCritAI/Autism_self_report_clinical_ascertained_summary_20250209_100340.html)
-**Authors:** Sarah M. Banker, Miles Harrington, Matthew Schafer, Soojung Na, Matthew Heflin, Sarah Barkley, Jadyn Trayvick, Arabella W. Peters, Abigaël A. Thinakaran, Daniela Schiller, Jennifer H. Foss-Feig, Xiaosi Gu
+**Date:** 2025-02-09
 **Journal:** Nature Mental Health
 **Institution:** Icahn School of Medicine at Mount Sinai, New York, NY, USA
-**Date:** 2025-02-09
+**Authors:** Sarah M. Banker, Miles Harrington, Matthew Schafer, Soojung Na, Matthew Heflin, Sarah Barkley, Jadyn Trayvick, Arabella W. Peters, Abigaël A. Thinakaran, Daniela Schiller, Jennifer H. Foss-Feig, Xiaosi Gu
 
 ---
 
@@ -657,59 +669,61 @@ A collection of scientific paper reviews and analyses.
 
 ## General Science
 
+[↑ Back to top](#sciencecritai)
+
 ### [A Comprehensive Benchmark of Machine and Deep Learning Across Diverse Tabular Datasets](https://billster45.github.io/ScienceCritAI/ML_tabular_benchmark_summary_20250624_071431.html)
-**Authors:** Assaf Shmuel, Oren Glickman, Teddy Lazebnik
+**Date:** 2025-06-24
 **Journal:** arXiv:arXiv:2408.14817v1
 **Institution:** Department of Computer Science, Bar Ilan University, Israel
-**Date:** 2025-06-24
+**Authors:** Assaf Shmuel, Oren Glickman, Teddy Lazebnik
 
 ---
 
 ### [Aligning Evaluation with Clinical Priorities: Calibration, Label Shift, and Error Costs](https://billster45.github.io/ScienceCritAI/ML_Evaluation_summary_20250622_075210.html)
-**Authors:** Gerardo A. Flores, Alyssa H. Smith, Julia A. Fukuyama, Ashia C. Wilson
+**Date:** 2025-06-22
 **Journal:** arXiv:arXiv:2506.14540v2
 **Institution:** Massachusetts Institute of Technology
-**Date:** 2025-06-22
+**Authors:** Gerardo A. Flores, Alyssa H. Smith, Julia A. Fukuyama, Ashia C. Wilson
 
 ---
 
 ### [Pseudo-Mathematics and Financial Charlatanism: The Effects of Backtest Overfitting on Out-of-Sample Performance](https://billster45.github.io/ScienceCritAI/Backtest-overfitting_summary_20250621_082627.html)
-**Authors:** David H. Bailey, Jonathan M. Borwein, Marcos López de Prado, Qiji Jim Zhu
+**Date:** 2025-06-21
 **Journal:** Notices of the AMS
 **Institution:** Lawrence Berkeley National Laboratory
-**Date:** 2025-06-21
+**Authors:** David H. Bailey, Jonathan M. Borwein, Marcos López de Prado, Qiji Jim Zhu
 
 ---
 
 ### [Data Formulator 2: Iterative Creation of Data Visualizations, with AI Transforming Data Along the Way](https://billster45.github.io/ScienceCritAI/Microsfot_data_formulator_summary_20250527_070853.html)
-**Authors:** Chenglong Wang, Bongshin Lee, Steven Drucker, Dan Marshall, Jianfeng Gao
+**Date:** 2025-05-27
 **Journal:** arXiv:arXiv:2408.16119v2
 **Institution:** Microsoft Research
-**Date:** 2025-05-27
+**Authors:** Chenglong Wang, Bongshin Lee, Steven Drucker, Dan Marshall, Jianfeng Gao
 
 ---
 
 ### [Meta-prediction of coronary artery disease risk](https://billster45.github.io/ScienceCritAI/Coronary_Artery_Disease_Risk_summary_20250421_085625.html)
-**Authors:** Shang-Fu Chen, Sang Eun Lee, Hossein Javedani Sadaei, Jun-Bean Park, Ahmed Khattab, Jei-Fu Chen, Corneliu Henegar, Nathan E. Wineinger, Evan D. Muse, Ali Torkamani
+**Date:** 2025-04-21
 **Journal:** nature medicine
 **Institution:** Scripps Research Translational Institute
-**Date:** 2025-04-21
+**Authors:** Shang-Fu Chen, Sang Eun Lee, Hossein Javedani Sadaei, Jun-Bean Park, Ahmed Khattab, Jei-Fu Chen, Corneliu Henegar, Nathan E. Wineinger, Evan D. Muse, Ali Torkamani
 
 ---
 
 ### [Dissociating Artificial Intelligence from Artificial Consciousness](https://billster45.github.io/ScienceCritAI/AI_consciousness_summary_20250314_202748.html)
-**Authors:** Graham Findlay, William Marshall, Larissa Albantakis, Isaac David, William GP Mayner, Christof Koch, Giulio Tononi
+**Date:** 2025-03-14
 **Journal:** arXiv
 **Institution:** University of Wisconsin
-**Date:** 2025-03-14
+**Authors:** Graham Findlay, William Marshall, Larissa Albantakis, Isaac David, William GP Mayner, Christof Koch, Giulio Tononi
 
 ---
 
 ### [The Impact of Generative Al on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers](https://billster45.github.io/ScienceCritAI/GenAI_Critical_Thinking_summary_20250306_184406.html)
-**Authors:** Hao-Ping (Hank) Lee, Advait Sarkar, Lev Tankelevitch, Ian Drosos, Sean Rintel, Richard Banks, Nicholas Wilson
+**Date:** 2025-03-06
 **Journal:** CHI '25
 **Institution:** Carnegie Mellon University
-**Date:** 2025-03-06
+**Authors:** Hao-Ping (Hank) Lee, Advait Sarkar, Lev Tankelevitch, Ian Drosos, Sean Rintel, Richard Banks, Nicholas Wilson
 
 ---
 
@@ -799,6 +813,6 @@ A collection of scientific paper reviews and analyses.
 ---
 
 
-*Last updated: 2025-07-05 07:17:27 UTC*
+*Last updated: 2025-07-05 08:26:58 UTC*
 
 *Total papers: 133*
