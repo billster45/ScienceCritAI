@@ -579,12 +579,12 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 
 ---
 
-### [APOE Genotype and Insulin Modulate the Impact of Dietary Macronutrients on Cognitive Performance in Older Adults](https://billster45.github.io/ScienceCritAI/macrontrients_dementia_summary_20241007_070459.html)
+### [Association between Adherence to the EAT-Lancet Diet and Cardiometabolic Risk Factors in Brazilian Adults and Elderly](https://billster45.github.io/ScienceCritAI/EAT-Lancet_diet_CVD_summary_20241007_203826.html)
 **Date:** 2024-10-07
 
 ---
 
-### [Association between Adherence to the EAT-Lancet Diet and Cardiometabolic Risk Factors in Brazilian Adults and Elderly](https://billster45.github.io/ScienceCritAI/EAT-Lancet_diet_CVD_summary_20241007_203826.html)
+### [APOE Genotype and Insulin Modulate the Impact of Dietary Macronutrients on Cognitive Performance in Older Adults](https://billster45.github.io/ScienceCritAI/macrontrients_dementia_summary_20241007_070459.html)
 **Date:** 2024-10-07
 
 ---
@@ -813,6 +813,6 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 
-*Last updated: 2025-07-05 08:26:58 UTC*
+*Last updated: 2025-07-05 07:29:45 UTC*
 
 *Total papers: 133*
