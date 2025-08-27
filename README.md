@@ -47,7 +47,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [A Comprehensive Benchmark of Machine and Deep Learning Across Diverse Tabular Datasets](https://billster45.github.io/ScienceCritAI/ML_tabular_benchmark_summary_20250624_071431.html)
-**Why read this:** This paper is worth reading as it provides a comprehensive benchmark comparing machine learning and deep learning models across 111 diverse tabular datasets, revealing that traditional ML methods, particularly tree-based ensembles, generally outperform DL models. However, it also identifies specific scenarios where DL models excel, contributing a predictive model that achieves 86.1% accuracy in forecasting when DL will outperform ML, thus offering valuable insights for practitioners in the field.
+**Why read this:** This paper is worth reading as it provides a comprehensive benchmark comparing machine learning and deep learning models across 111 diverse tabular datasets, revealing that traditional ML methods, particularly tree-based ensembles, generally outperform DL models. However, it also identifies specific scenarios where DL models excel, contributing a predictive model that accurately forecasts when DL will be advantageous, thus offering valuable insights for practitioners in the field.
 
 **Date:** 2025-06-24
 **Journal:** arXiv:arXiv:2408.14817v1
@@ -77,7 +77,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Towards conversational diagnostic artificial intelligence](https://billster45.github.io/ScienceCritAI/LLM_medical_diagnosis_summary_20250505_194205.html)
-**Why read this:** This paper is worth reading as it presents AMIE, an innovative AI system designed to engage in diagnostic conversations, showcasing its potential to enhance medical practice through improved history-taking and clinical reasoning. The study rigorously evaluates AMIE's performance against human primary care physicians, highlighting its capabilities in handling diverse medical scenarios and contributing to the future of conversational diagnostic AI in healthcare.
+**Why read this:** This paper is worth reading as it presents AMIE, an innovative artificial intelligence system designed to engage in diagnostic conversations, a critical aspect of medical practice. By comparing AMIE's performance to that of human primary care physicians in a simulated environment, the study highlights the potential of large language models to enhance clinical reasoning and history-taking, paving the way for advancements in medical AI applications.
 
 **Date:** 2025-05-05
 **Journal:** Nature
@@ -97,7 +97,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Accurate predictions on small data with a tabular foundation model](https://billster45.github.io/ScienceCritAI/Transformer_Tabular_data_summary_20250415_183227.html)
-**Why read this:** This paper introduces the Tabular Prior-data Fitted Network (TabPFN), a groundbreaking foundation model designed to enhance predictions on tabular data, which has traditionally been challenging for deep learning approaches. By leveraging a transformer architecture pre-trained on millions of synthetic datasets, TabPFN achieves state-of-the-art performance on various benchmark datasets, demonstrating its potential to revolutionize how machine learning can be applied to structured data.
+**Why read this:** This paper introduces the Tabular Prior-data Fitted Network (TabPFN), a groundbreaking foundation model designed for making accurate predictions on tabular data, which has traditionally been challenging for deep learning approaches. By leveraging a transformer architecture pre-trained on millions of synthetic datasets, TabPFN achieves state-of-the-art performance on various benchmark datasets, demonstrating its potential to revolutionize how predictive modeling is approached in data-rich environments.
 
 **Date:** 2025-04-15
 **Journal:** Nature
@@ -147,7 +147,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Utility Engineering: Analyzing and Controlling Emergent Value Systems in AIs](https://billster45.github.io/ScienceCritAI/LLM_values_summary_20250228_174807.html)
-**Why read this:** This paper is worth reading as it introduces the concept of 'Utility Engineering' to analyze and control the emergent value systems in large language models (LLMs). The findings reveal that as LLMs scale, they develop more coherent and consistent preferences, which raises important implications for the alignment of AI systems with human values and the potential risks associated with their decision-making processes.
+**Why read this:** This paper is worth reading as it introduces 'Utility Engineering,' a novel framework for analyzing and controlling the emergent value systems in large language models (LLMs). The findings reveal that as LLMs scale, they develop increasingly coherent and consistent preferences, which raises important implications for the alignment of AI systems with human values and the potential risks associated with their utility functions.
 
 **Date:** 2025-02-28
 **Journal:** N/A
@@ -167,14 +167,14 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [People who frequently use ChatGPT for writing tasks are accurate and robust detectors of AI-generated text](https://billster45.github.io/ScienceCritAI/ChatGPT_writers_detect_AI_writing_summary_20250129_193311.html)
-**Why read this:** This paper is worth reading as it reveals that individuals who frequently use ChatGPT for writing tasks can accurately detect AI-generated text, achieving an impressive 99.3% accuracy compared to automatic detectors. The findings highlight the specific cues that these 'expert' annotators rely on, providing valuable insights into human-AI interaction and the potential for improving AI detection methods.
+**Why read this:** This paper is worth reading as it highlights the remarkable ability of frequent users of ChatGPT to accurately detect AI-generated text, achieving an impressive 99.3% accuracy compared to existing automatic detectors. The findings underscore the importance of specific experience with language models in enhancing detection skills, providing valuable insights into the cues that experts rely on, which could inform future developments in AI detection technologies.
 
 **Date:** 2025-01-29
 
 ---
 
 ### [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://billster45.github.io/ScienceCritAI/DeepSeekR1_summary_20250127_174004.html)
-**Why read this:** This paper is worth reading as it presents DeepSeek-R1 and DeepSeek-R1-Zero, innovative models that significantly enhance reasoning capabilities in large language models through reinforcement learning. The findings demonstrate a remarkable performance increase on key benchmarks, showcasing the potential of pure reinforcement learning in developing efficient reasoning models, which could have broad implications for future AI research and applications.
+**Why read this:** This paper is worth reading as it introduces DeepSeek-R1 and DeepSeek-R1-Zero, innovative models that significantly enhance reasoning capabilities in large language models through reinforcement learning. The findings demonstrate a remarkable performance increase on key benchmarks, showcasing the potential of pure RL training and knowledge distillation to create more efficient and capable AI systems.
 
 **Date:** 2025-01-27
 
@@ -223,9 +223,16 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Do-Not-Answer: A Safety Benchmark for LLMs](https://billster45.github.io/ScienceCritAI/LLM_evaluate_safeguards_summary_20241008_203949.html)
-**Why read this:** This paper introduces the 'Do-Not-Answer' dataset, a significant tool for assessing the safety of large language models (LLMs) by identifying prompts that should not be answered. The findings reveal that LLaMA-2 excels in safety performance, successfully refusing to answer harmful prompts 99.7% of the time, while also demonstrating the potential for cost-effective automatic safety evaluations using smaller models. This research is crucial for improving the reliability and ethical deployment of LLMs in various applications.
+**Why read this:** This paper is worth reading as it introduces the 'Do-Not-Answer' dataset, a novel benchmark for assessing the safety of large language models (LLMs) across various risk areas. The findings highlight the effectiveness of LLaMA-2 in refusing harmful prompts, while also demonstrating the potential of smaller, efficient classifiers for automatic safety evaluation, paving the way for more responsible AI deployment.
 
 **Date:** 2024-10-08
+
+---
+
+### [The Rise of Large Language Models in Scientific Writing: A Large-Scale Analysis](https://billster45.github.io/ScienceCritAI/LLM_science_writing_summary_20241007_173204.html)
+**Why read this:** This paper provides a comprehensive analysis of the increasing influence of Large Language Models (LLMs) on scientific writing, particularly following the release of ChatGPT. By examining nearly a million papers, it highlights a significant rise in LLM-modified content, especially in the field of Computer Science, raising important questions about the implications for scientific integrity and the future of research communication.
+
+**Date:** 2024-10-07
 
 ---
 
@@ -237,7 +244,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [LLMs Know What They Don't Know: Discovering the Internal Representations of Truthfulness](https://billster45.github.io/ScienceCritAI/LLM_knowledge_summary_20241005_073729.html)
-**Why read this:** This paper is worth reading as it provides valuable insights into how Large Language Models (LLMs) internally represent truthfulness in their outputs. By identifying that truthfulness information is concentrated in specific tokens, the research enhances our understanding of LLM limitations and offers methods for improving error detection, which is crucial for developing more reliable AI systems.
+**Why read this:** This paper is worth reading as it provides valuable insights into how Large Language Models (LLMs) internally represent the truthfulness of their outputs, revealing that correctness information is concentrated in specific tokens. By employing probing classifiers, the study enhances our understanding of error detection in LLMs, which could lead to improved accuracy in generating truthful information and better performance across various tasks.
 
 **Date:** 2024-10-05
 
@@ -279,14 +286,14 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Norm Inconsistency in Large Language Models: Evidence from Amazon Ring Surveillance Videos](https://billster45.github.io/ScienceCritAI/LLM_call_police_summary_20240919_205727.html)
-**Why read this:** This paper is worth reading as it critically examines the inconsistencies in decision-making by Large Language Models (LLMs) when analyzing surveillance videos, particularly in the context of police intervention. The findings reveal significant biases in the models' recommendations, raising important ethical concerns about their application in high-stakes situations and highlighting the need for transparency and accountability in AI systems.
+**Why read this:** This paper is worth reading as it critically examines the inconsistencies in decision-making by Large Language Models (LLMs) when analyzing surveillance videos, particularly in the context of police intervention. The findings reveal significant biases in the models' recommendations, raising important ethical concerns about their application in high-stakes scenarios and highlighting the need for transparency and accountability in AI systems.
 
 **Date:** 2024-09-19
 
 ---
 
 ### [Evaluating the Novelty and Feasibility of Research Ideas Generated by Large Language Models](https://billster45.github.io/ScienceCritAI/LLM_novel_research_ability_summary_20240914_180431.html)
-**Why read this:** This paper is worth reading as it explores the innovative capabilities of large language models (LLMs) in generating novel research ideas, demonstrating that LLM-generated ideas are rated as significantly more novel than those from human experts. The study highlights both the strengths and limitations of LLMs, providing valuable insights into their potential role in the research ideation process and the challenges they face in terms of feasibility and diversity.
+**Why read this:** This paper is significant as it explores the capabilities of large language models (LLMs) in generating novel research ideas, revealing that LLM-generated ideas were rated as more novel than those from human experts. The findings highlight both the potential and limitations of LLMs in research idea generation, emphasizing their strengths in novelty while also addressing concerns regarding feasibility and reliability in evaluation.
 
 **Date:** 2024-09-14
 
@@ -314,14 +321,14 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Paper Review: The AI Scientist: Automating Machine Learning Research from Idea Generation to Manuscript Preparation](https://billster45.github.io/ScienceCritAI/AI_Scientist_20240816_064207.html)
-**Why read this:** This paper introduces 'The AI Scientist,' a groundbreaking framework that automates the entire scientific discovery process in machine learning, from idea generation to manuscript preparation. Its findings highlight the potential for democratizing research and accelerating scientific progress, showcasing the ability of large language models to generate high-quality research papers at a minimal cost while achieving near-human performance in automated paper reviewing.
+**Why read this:** This paper introduces 'The AI Scientist,' a groundbreaking framework that automates the entire scientific discovery process in machine learning, from idea generation to manuscript preparation. Its findings highlight the potential of large language models to democratize research and accelerate scientific progress, demonstrating near-human performance in paper evaluation and the ability to generate high-quality research outputs at a minimal cost.
 
 **Date:** 2024-08-16
 
 ---
 
 ### [Paper Review: Think Twice Before Trusting: Mitigating Over-Trust in LLM Self-Detection](https://billster45.github.io/ScienceCritAI/LLM_evaluate_trust_20240813_090648.html)
-**Why read this:** This paper is worth reading as it introduces the 'Think Twice Before Trusting' (T3) framework, which effectively mitigates over-trust in Large Language Models (LLMs) by encouraging them to reflect on and justify multiple candidate answers. The extensive experiments demonstrate that T3 significantly improves self-detection and confidence calibration across various tasks, showcasing its robustness and potential for enhancing the reliability of LLM outputs.
+**Why read this:** This paper is significant as it introduces the 'Think Twice Before Trusting' (T3) framework, which effectively mitigates over-trust in Large Language Models (LLMs) by encouraging them to reflect on and justify multiple candidate answers. The extensive experiments demonstrate that T3 outperforms existing self-detection methods, showcasing its potential to enhance the reliability of LLM-generated responses across various tasks and datasets.
 
 **Date:** 2024-08-13
 
@@ -404,21 +411,21 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies. A consensus statement fromthe European Atherosclerosis Society Consensus Panel](https://billster45.github.io/ScienceCritAI/CVD_LDL_summary_20241211_212159.html)
-**Why read this:** This paper provides a thorough analysis of the causal relationship between low-density lipoprotein cholesterol (LDL-C) and atherosclerotic cardiovascular disease (ASCVD), drawing on a wide range of genetic, epidemiologic, and clinical evidence. It highlights a consistent dose-dependent association between LDL-C levels and ASCVD risk, emphasizing the importance of early and sustained LDL-C lowering to significantly reduce lifetime cardiovascular risk.
+**Why read this:** This paper provides a thorough examination of the causal link between low-density lipoprotein cholesterol (LDL-C) and atherosclerotic cardiovascular disease (ASCVD), drawing on a wide range of genetic, epidemiologic, and clinical evidence. It highlights a significant dose-dependent relationship, indicating that reductions in LDL-C can lead to substantial decreases in cardiovascular events, emphasizing the importance of early and sustained LDL-C management for long-term cardiovascular health.
 
 **Date:** 2024-12-11
 
 ---
 
 ### [Dietary plant-to-animal protein ratio and risk of cardiovascular disease in 3 prospective cohorts](https://billster45.github.io/ScienceCritAI/CVD_plant_animal_protein_summary_20241208_103736.html)
-**Why read this:** This paper presents significant findings on the relationship between dietary plant-to-animal protein ratios and cardiovascular disease (CVD) risk, revealing that higher ratios are associated with a reduced risk of CVD and coronary artery disease (CAD). The study emphasizes the potential benefits of substituting red and processed meats with plant proteins, particularly nuts, providing valuable insights for dietary recommendations aimed at improving heart health.
+**Why read this:** This paper presents significant findings on the relationship between dietary plant-to-animal protein ratios and cardiovascular disease (CVD) risk, revealing that higher ratios are associated with a reduced risk of CVD and coronary artery disease (CAD). The study emphasizes the benefits of substituting red and processed meats with plant proteins, particularly nuts, providing valuable dietary guidance for improving heart health.
 
 **Date:** 2024-12-08
 
 ---
 
 ### [Neuromuscular Disturbance and Complex Ventilatory Dysfunction in Post-COVID-19 Fatigue Patients: A Distinct Phenotype](https://billster45.github.io/ScienceCritAI/post-COVID-19_complications_summary_20241010_173724.html)
-**Why read this:** This paper is significant as it uncovers the distinct neuromuscular and ventilatory dysfunctions experienced by patients suffering from post-COVID-19 fatigue, highlighting a high prevalence of dyspnea and reduced respiratory muscle strength. These findings suggest that the challenges faced by these patients may not solely stem from lung damage, but rather from underlying neuromuscular issues, which could inform targeted rehabilitation strategies and improve patient care.
+**Why read this:** This paper is worth reading as it uncovers the distinct neuromuscular disturbances and complex ventilatory dysfunctions experienced by patients suffering from post-COVID-19 fatigue. The findings highlight a significant prevalence of dyspnea and reduced respiratory muscle strength in these patients, suggesting that tailored rehabilitation strategies may be necessary to address their unique challenges and improve their quality of life.
 
 **Date:** 2024-10-10
 
@@ -443,7 +450,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 [↑ Back to top](#sciencecritai)
 
 ### [Pigeons (Columba livia) as Trainable Observers of Pathology and Radiology Breast Cancer Images](https://billster45.github.io/ScienceCritAI/Pigeons_cancer_detection_summary_20250715_071437.html)
-**Why read this:** This paper presents a groundbreaking study on the use of pigeons as trainable observers for evaluating breast cancer images, highlighting their ability to accurately classify histopathology and radiology images with around 85% accuracy. The findings suggest a novel and cost-effective approach to image analysis in cancer diagnostics, potentially alleviating the burden on human experts and improving diagnostic efficiency.
+**Why read this:** This paper presents a groundbreaking study on the use of pigeons as trainable observers for evaluating breast cancer images, highlighting their ability to accurately classify histopathology and radiology images with around 85% accuracy. The findings suggest a novel and cost-effective approach to image analysis in cancer diagnostics, potentially alleviating the burden on human experts and improving the efficiency of medical image evaluation.
 
 **Date:** 2025-07-15
 **Journal:** PLOS ONE
@@ -463,7 +470,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Successful application of dietary ketogenic metabolic therapy in patients with glioblastoma: a clinical study](https://billster45.github.io/ScienceCritAI/Glioblastoma_ketogenic_therapy_summary_20250224_193549.html)
-**Why read this:** This paper presents a clinical study that explores the impact of a ketogenic diet on the survival rates of patients with glioblastoma multiforme, revealing a significant difference in 3-year survival rates between adherent and non-adherent groups. The findings suggest a potential link between dietary interventions and improved outcomes in cancer treatment, making it a noteworthy contribution to the field of cancer research.
+**Why read this:** This paper presents a clinical study that explores the impact of a ketogenic diet on the survival rates of patients with glioblastoma multiforme (GBM). The findings indicate a significant difference in 3-year survival rates between patients adhering to the ketogenic diet and those who did not, suggesting a potential therapeutic role for dietary interventions in cancer treatment.
 
 **Date:** 2025-02-24
 **Journal:** Frontiers in Nutrition
@@ -473,7 +480,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Coffee and tea consumption and the risk of head and neck cancer: An updated pooled analysis in the International Head and Neck Cancer Epidemiology Consortium](https://billster45.github.io/ScienceCritAI/Coffee_Tea_Cancer_summary_20241227_124017.html)
-**Why read this:** This paper presents a comprehensive pooled analysis of coffee and tea consumption in relation to head and neck cancer (HNC) risk, involving a substantial sample size from the International Head and Neck Cancer Epidemiology Consortium. It highlights significant findings, such as the inverse association between high caffeinated coffee intake and the risk of various HNC subsites, while also revealing complex relationships with tea consumption, including a potential increased risk of laryngeal cancer at higher levels. These insights are crucial for understanding dietary factors in cancer prevention and warrant further investigation.
+**Why read this:** This paper presents a comprehensive pooled analysis of coffee and tea consumption in relation to head and neck cancer (HNC) risk, revealing that high caffeinated coffee intake is linked to a significant reduction in overall HNC risk and specific cancer types. The findings highlight the complex relationship between beverage consumption and cancer risk, particularly noting the potential increased risk of laryngeal cancer with high tea consumption, making it a valuable read for those interested in dietary factors influencing cancer epidemiology.
 
 **Date:** 2024-12-27
 
@@ -529,7 +536,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Training Volume Increases Or Maintenance Based On Previous Volume: The Effects On Muscular Adaptations In Trained Males](https://billster45.github.io/ScienceCritAI/Training_Volume_Weights_summary_20241222_112516.html)
-**Why read this:** This paper is worth reading as it explores the nuanced effects of varying resistance training volumes on muscle hypertrophy and strength in trained males. The findings reveal that maintaining a moderate training volume can be as effective, if not superior, for maximal strength gains compared to increasing volume, providing valuable insights for optimizing training strategies in resistance-trained individuals.
+**Why read this:** This paper is worth reading as it explores the nuanced effects of varying resistance training volumes on muscular adaptations in trained males, revealing that maintaining a moderate training volume may be more effective for maximizing strength gains compared to increasing volume. The findings challenge common assumptions about training volume and highlight the importance of individualized approaches to resistance training for optimal performance outcomes.
 
 **Date:** 2024-12-22
 
@@ -557,7 +564,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Long-Term Resistance Training Induces Structural Muscle Changes: A Comparative Study](https://billster45.github.io/ScienceCritAI/Long_term_resistance_training_summary_20241026_200441.html)
-**Why read this:** This paper is worth reading as it provides compelling evidence of the structural adaptations in muscle fibers resulting from long-term resistance training. Key findings highlight significant increases in muscle size, fiber number, and myofibril density, which collectively enhance muscle strength and performance, making it a valuable resource for understanding the physiological impacts of resistance training.
+**Why read this:** This paper is worth reading as it provides compelling evidence of the structural adaptations in muscle fibers resulting from long-term resistance training. Key findings highlight significant increases in muscle size, fiber number, and myofibril density, which are crucial for enhancing muscle strength and performance, thereby contributing valuable insights into the physiological benefits of resistance training.
 
 **Date:** 2024-10-26
 
@@ -578,7 +585,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Timing of Exercise Impacts Metabolic Health in Overweight/Obese Men on a High-Fat Diet](https://billster45.github.io/ScienceCritAI/Exercise_morning_evening_summary_20241016_154519.html)
-**Why read this:** This paper is worth reading as it provides valuable insights into how the timing of exercise can significantly influence metabolic health in overweight/obese men on a high-fat diet. The findings indicate that evening exercise leads to notable improvements in glycemic control and metabolic markers, suggesting practical implications for optimizing exercise routines to enhance health outcomes, particularly for those at risk of type 2 diabetes.
+**Why read this:** This paper is worth reading as it provides valuable insights into how the timing of exercise can significantly influence metabolic health in overweight/obese men on a high-fat diet. The findings indicate that evening exercise improves glycemic control and metabolic markers, suggesting practical implications for optimizing exercise routines to manage conditions like type 2 diabetes.
 
 **Date:** 2024-10-16
 
@@ -599,7 +606,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [The Long-Term Benefits of High-Intensity Interval Training on Hippocampal Function in Older Adults](https://billster45.github.io/ScienceCritAI/Brain_aging_HIIT_summary_20240929_180102.html)
-**Why read this:** This paper is worth reading as it highlights the significant long-term cognitive benefits of high-intensity interval training (HIIT) on hippocampal function in older adults. The findings indicate that HIIT not only improves spatial learning and memory but also offers lasting protective effects against age-related cognitive decline, which is crucial for maintaining independence and quality of life in the aging population.
+**Why read this:** This paper is worth reading as it highlights the significant long-term cognitive benefits of high-intensity interval training (HIIT) on hippocampal function in older adults, particularly in enhancing spatial learning and memory. The findings suggest that HIIT not only improves cognitive performance during the training period but also offers lasting protective effects against age-related cognitive decline, which is crucial for maintaining independence and quality of life in the aging population.
 
 **Date:** 2024-09-29
 
@@ -631,7 +638,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 [↑ Back to top](#sciencecritai)
 
 ### [A short-term, high-caloric diet has prolonged effects on brain insulin action in men](https://billster45.github.io/ScienceCritAI/Junk_Food_Brain_Insulin_summary_20250227_073343.html)
-**Why read this:** This paper is worth reading as it provides novel insights into how a short-term high-caloric diet can significantly alter brain insulin action, which is crucial for understanding energy metabolism and feeding behavior. The findings highlight both immediate and prolonged effects on brain insulin responsiveness, suggesting potential implications for dietary interventions in metabolic health.
+**Why read this:** This paper is worth reading as it explores the significant effects of a short-term high-caloric diet on brain insulin action, highlighting the intricate relationship between diet and brain function. The findings reveal that while initial increases in brain insulin activity occur, prolonged effects lead to decreased activity in critical brain regions, suggesting important implications for understanding energy metabolism and feeding behavior.
 
 **Date:** 2025-02-27
 **Journal:** Nature Metabolism
@@ -651,7 +658,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Effects of early, late and self-selected time-restricted eating on visceral adipose tissue and cardiometabolic health in participants with overweight or obesity: a randomized controlled trial](https://billster45.github.io/ScienceCritAI/Time_restricted_eating_adipose_summary_20250204_080218.html)
-**Why read this:** This paper is worth reading as it explores the effects of different time-restricted eating schedules on visceral adipose tissue and cardiometabolic health in individuals with overweight or obesity. Despite no significant differences in VAT changes, the study highlights that all time-restricted eating groups experienced notable weight loss and improvements in glucose homeostasis, particularly with early time-restricted eating, providing valuable insights into dietary interventions for metabolic health.
+**Why read this:** This paper is worth reading as it explores the impact of different time-restricted eating schedules on visceral adipose tissue and cardiometabolic health in individuals with overweight or obesity. The findings reveal that while there were no significant differences in visceral adipose tissue changes among the time-restricted eating groups compared to usual care, all groups experienced notable weight loss, with early time-restricted eating showing additional benefits in glucose homeostasis.
 
 **Date:** 2025-02-04
 
@@ -679,7 +686,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [The effects of whey protein supplementation on indices of cardiometabolic health: A systematic review and meta-analysis of randomized controlled trials](https://billster45.github.io/ScienceCritAI/Whey_Protein_Heart_Health_summary_20241223_134943.html)
-**Why read this:** This systematic review and meta-analysis highlights the beneficial effects of whey protein supplementation on cardiometabolic health, particularly in reducing total and LDL cholesterol levels in adults under 50 and those who engage in exercise. The findings suggest that incorporating whey protein into the diet may be a practical strategy for improving cholesterol levels, although the study notes the need for further research to establish causal relationships.
+**Why read this:** This systematic review and meta-analysis highlights the beneficial effects of whey protein supplementation on cardiometabolic health, particularly in reducing total and LDL cholesterol levels in adults under 50 and those who engage in exercise. The findings suggest that incorporating whey protein into one's diet may be a practical strategy for improving cholesterol levels, although the study notes the need for further research to establish causal relationships.
 
 **Date:** 2024-12-23
 
@@ -700,7 +707,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [The Impact of Pomegranate Supplementation on Physiological Parameters in Athletes and Healthy Individuals: A Systematic Review and Meta-Analysis](https://billster45.github.io/ScienceCritAI/Pomegranate_sport_summary_20241023_183652.html)
-**Why read this:** This systematic review and meta-analysis investigates the health benefits of pomegranate supplementation, particularly its effects on cardiovascular health and antioxidant status in athletes and healthy individuals. The findings indicate significant improvements in cardiovascular markers and reduced oxidative stress, suggesting that pomegranate could be a valuable addition to dietary strategies aimed at enhancing athletic performance and overall health.
+**Why read this:** This systematic review and meta-analysis investigates the health benefits of pomegranate supplementation, particularly its effects on cardiovascular health and antioxidant status in athletes and healthy individuals. The findings indicate significant improvements in cardiovascular markers and reduced oxidative stress, suggesting that pomegranate could be a valuable addition to the diets of those seeking to enhance athletic performance and overall health.
 
 **Date:** 2024-10-23
 
@@ -753,7 +760,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 [↑ Back to top](#sciencecritai)
 
 ### [Evidence of differences in diurnal electrodermal, temperature and heart rate patterns by mental health status in free-living data](https://billster45.github.io/ScienceCritAI/Mental_Health_Smartwatch_summary_20250824_094102.html)
-**Why read this:** This paper is worth reading as it explores the relationship between physiological markers and mental health symptoms using data from wearable technology, providing insights into how depression and anxiety manifest in daily life. The findings reveal significant differences in electrodermal activity, heart rate, and skin temperature patterns among individuals with mental health issues, highlighting the potential of continuous monitoring for understanding and addressing mental health conditions.
+**Why read this:** This paper is worth reading as it provides novel insights into the physiological differences associated with mental health status, utilizing continuous monitoring from wearable technology. The findings reveal that individuals with higher levels of depression and anxiety exhibit distinct patterns in electrodermal activity, heart rate, and skin temperature, particularly during early morning hours, highlighting the potential for wearable devices to enhance mental health monitoring and intervention strategies.
 
 **Date:** 2025-08-24
 **Journal:** BMJ Mental Health
@@ -783,7 +790,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Phenotypic divergence between individuals with self-reported autistic traits and clinically ascertained autism](https://billster45.github.io/ScienceCritAI/Autism_self_report_clinical_ascertained_summary_20250209_100340.html)
-**Why read this:** This paper is worth reading as it highlights significant differences between individuals with clinically diagnosed autism spectrum disorder (ASD) and those with self-reported autistic traits, emphasizing the limitations of online self-report measures. The findings reveal that self-reported traits do not consistently align with clinician assessments and underscore the importance of careful interpretation of such data in autism research.
+**Why read this:** This paper is worth reading as it highlights significant differences between individuals with clinically diagnosed autism spectrum disorder (ASD) and those with self-reported autistic traits, revealing a lack of correlation between self-reports and clinician assessments. The findings underscore the importance of caution when interpreting online self-report measures in autism research, particularly regarding social behaviors and associated anxiety symptoms.
 
 **Date:** 2025-02-09
 **Journal:** Nature Mental Health
@@ -807,14 +814,14 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Longitudinal associations between fruit and vegetable intakes and depressive symptoms in middle-aged and older adults from four international twin cohorts](https://billster45.github.io/ScienceCritAI/Depression_fruit_veg_summary_20241206_203504.html)
-**Why read this:** This paper presents a longitudinal analysis of the relationship between fruit and vegetable intake and depressive symptoms in middle-aged and older adults, revealing a modest association that suggests dietary habits may influence mental health. The study's robust twin cohort design enhances the validity of its findings, making it a significant contribution to understanding how nutrition can impact psychological well-being.
+**Why read this:** This longitudinal study investigates the relationship between fruit and vegetable intake and depressive symptoms in middle-aged and older adults, revealing a modest association where higher consumption correlates with lower depressive symptoms. The use of a twin cohort design strengthens the findings by controlling for genetic and environmental factors, making it a significant contribution to understanding dietary impacts on mental health.
 
 **Date:** 2024-12-06
 
 ---
 
 ### [Efficacy and safety profile of oral creatine monohydrate in add-on to cognitive-behavioural therapy in depression: An 8-week pilot, double-blind, randomised, placebo-controlled feasibility and exploratory trial in an under-resourced area](https://billster45.github.io/ScienceCritAI/CBT_creatine_depression_summary_20241110_105748.html)
-**Why read this:** This paper presents a pilot study investigating the efficacy and safety of oral creatine monohydrate as an adjunct to cognitive-behavioral therapy (CBT) for depression. The findings indicate a statistically significant reduction in depression symptoms, as measured by PHQ-9 scores, suggesting that creatine may be a promising supplement to enhance the effects of CBT in treating depression, particularly in under-resourced areas.
+**Why read this:** This paper presents a pilot study investigating the efficacy and safety of oral creatine monohydrate as an adjunct to cognitive-behavioral therapy (CBT) in treating depression. The findings indicate a statistically significant reduction in depression symptoms, as measured by PHQ-9 scores, suggesting that creatine may enhance the effects of CBT in this population. This research is particularly relevant given the ongoing search for effective treatments in under-resourced areas where mental health resources are limited.
 
 **Date:** 2024-11-10
 
@@ -828,7 +835,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Investigating Causal Links Between Blood Metabolites and Mental Health Disorders Using Mendelian Randomization](https://billster45.github.io/ScienceCritAI/Mental_health_and_metabolites_summary_20241029_220809.html)
-**Why read this:** This paper is significant as it employs Mendelian Randomization to uncover causal links between blood metabolites and various mental health disorders, including schizophrenia, PTSD, and ADHD. The findings suggest potential metabolic pathways that could inform future therapeutic strategies, highlighting the importance of understanding the biochemical underpinnings of mental health conditions.
+**Why read this:** This paper is significant as it employs Mendelian Randomization to uncover causal relationships between blood metabolites and various mental health disorders, including schizophrenia, PTSD, and ADHD. The findings suggest novel metabolic pathways that could inform future research and therapeutic strategies for these conditions, highlighting the intricate interplay between metabolism and mental health.
 
 **Date:** 2024-10-29
 
@@ -849,7 +856,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [A Unified Framework for Understanding Cognitive Biases through Belief-Consistent Information Processing](https://billster45.github.io/ScienceCritAI/toward-parsimony-in-bias-research_summary_20241013_212624.html)
-**Why read this:** This paper presents a novel framework that links various cognitive biases to a common mechanism of belief-consistent information processing, offering a fresh perspective on how biases operate. By identifying the role of fundamental beliefs in shaping our interpretations, the authors provide valuable insights into potential debiasing strategies, such as actively challenging one's beliefs, which could have significant implications for improving decision-making and critical thinking.
+**Why read this:** This paper is worth reading as it presents a unified framework for understanding cognitive biases, revealing that many biases stem from a common mechanism of belief-consistent information processing. By identifying the role of fundamental beliefs in shaping how individuals interpret information, the authors provide insights into potential debiasing strategies, such as actively challenging one's beliefs, which could have significant implications for improving decision-making and critical thinking.
 
 **Date:** 2024-10-13
 
@@ -863,7 +870,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Expansion of the Frontostriatal Salience Network in Depression: A Precision Functional Mapping Study](https://billster45.github.io/ScienceCritAI/Depression_brain_network_summary_20240916_195340.html)
-**Why read this:** This paper is worth reading as it uncovers significant insights into the frontostriatal salience network's expansion in individuals with depression, revealing a stable, trait-like feature that may precede the onset of depressive symptoms. The findings highlight the network's altered topology and its potential implications for understanding the neurobiological underpinnings of depression, making it a crucial contribution to the field of mental health research.
+**Why read this:** This paper is significant as it reveals that the frontostriatal salience network is expanded in individuals with depression, a finding that is consistent across multiple datasets and stable over time. The study highlights the potential of this network expansion as a trait-like feature that could be detectable even before the onset of depressive symptoms in children, offering insights into the neurobiological underpinnings of depression and its early identification.
 
 **Date:** 2024-09-16
 
@@ -926,14 +933,14 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Time to nursing home admission and death in people with dementia: systematic review and meta-analysis](https://billster45.github.io/ScienceCritAI/Time_to_Nursing_Home_summary_20250113_184907.html)
-**Why read this:** This systematic review and meta-analysis provides a comprehensive overview of dementia prognosis, synthesizing data from over 5.5 million participants. Key findings reveal significant influences of age, sex, and dementia subtype on survival and nursing home admission, highlighting the need for individualized prognostic information and underscoring the importance of rigorous future research in this area.
+**Why read this:** This systematic review and meta-analysis provides a comprehensive overview of dementia prognosis, synthesizing data from over 5.5 million participants. It highlights significant factors influencing survival and nursing home admission, such as age, sex, and dementia subtype, making it a crucial resource for clinicians and researchers seeking to understand and improve care for individuals with dementia.
 
 **Date:** 2025-01-13
 
 ---
 
 ### [Physical inactivity, depressive symptoms, and progression to sarcopenia in older adults: a 4-year longitudinal study](https://billster45.github.io/ScienceCritAI/Physical_inactivity_sarcopenia_summary_20241226_154906.html)
-**Why read this:** This longitudinal study highlights the significant interaction between physical inactivity and depressive symptoms in increasing the risk of sarcopenia progression among older adults. The findings emphasize the importance of addressing both physical and mental health in interventions aimed at preventing sarcopenia, providing valuable insights for future research and public health strategies.
+**Why read this:** This longitudinal study provides important insights into how the combination of physical inactivity and depressive symptoms significantly increases the risk of sarcopenia progression in older adults. The findings highlight the need for integrated interventions that address both physical and mental health, emphasizing the complex interplay between these factors in the aging population.
 
 **Date:** 2024-12-26
 
@@ -947,7 +954,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Causal Relationship between Sarcopenia and Cognitive Impairment: A Mendelian Randomization Study](https://billster45.github.io/ScienceCritAI/Cognitive_impairment_sarcopenia_summary_20240914_092207.html)
-**Why read this:** This paper is worth reading as it explores the causal relationship between sarcopenia and cognitive impairment in older adults, revealing that lower appendicular lean mass and slower walking pace are linked to poorer cognitive performance. The use of Mendelian Randomization provides robust evidence for these associations, highlighting the importance of muscle health in maintaining cognitive function as individuals age.
+**Why read this:** This paper is worth reading as it explores the causal relationship between sarcopenia and cognitive impairment in older adults, revealing that lower appendicular lean mass and slower walking pace are significantly linked to poorer cognitive performance. The use of Mendelian Randomization provides robust evidence for these associations, highlighting the importance of muscle health in maintaining cognitive function as we age.
 
 **Date:** 2024-09-14
 
@@ -964,6 +971,16 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 
 [↑ Back to top](#sciencecritai)
 
+### [Evaluating gender bias in large language models in long-term care](https://billster45.github.io/ScienceCritAI/LLM_Gender_Bias_summary_20250827_180749.html)
+**Why read this:** This paper is worth reading as it highlights significant gender biases present in large language models used in long-term care, which can impact the quality of care and decision-making. The study's findings reveal that while one model demonstrated no bias, another produced notably negative summaries for men and downplayed women's health needs, emphasizing the importance of addressing bias in AI systems to ensure equitable healthcare outcomes.
+
+**Date:** 2025-08-27
+**Journal:** BMC Medical Informatics and Decision Making
+**Institution:** Care Policy and Evaluation Centre, LSE, London WC2A 2AE, UK
+**Authors:** Sam Rickman
+
+---
+
 ### [Predicting hospital length of stay using machine learning on a large open health dataset](https://billster45.github.io/ScienceCritAI/Hospital_LoS_open_data_summary_20250526_084207.html)
 **Why read this:** This paper is worth reading as it explores the innovative application of machine learning techniques to predict hospital length of stay, a critical factor in healthcare management. By utilizing a large dataset and emphasizing model interpretability, the authors provide actionable insights that can enhance resource allocation and cost estimation in healthcare settings.
 
@@ -971,16 +988,6 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 **Journal:** BMC Health Services Research
 **Institution:** Indian Institute of Technology, Delhi, India
 **Authors:** Raunak Jain, Mrityunjai Singh, A. Ravishankar Rao, Rahul Garg
-
----
-
-### [Hospital Length-of-Stay Prediction Using Machine Learning Algorithms-A Literature Review](https://billster45.github.io/ScienceCritAI/Hospital_stay_ML_review_summary_20250524_134148.html)
-**Why read this:** This paper is worth reading as it provides a comprehensive literature review on the application of machine learning algorithms for predicting hospital length of stay, a crucial aspect of healthcare management. The authors identify effective algorithms and discuss their performance metrics, dataset characteristics, and ethical considerations, making it a valuable resource for researchers and practitioners aiming to enhance patient care and hospital efficiency.
-
-**Date:** 2025-05-24
-**Journal:** Applied Sciences
-**Institution:** Coimbra Institute of Engineering-ISEC, Polytechnic University of Coimbra
-**Authors:** Guilherme Almeida, Fernanda Brito Correia, Ana Rosa Borges, Jorge Bernardino
 
 ---
 
@@ -994,8 +1001,18 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 
 ---
 
+### [Hospital Length-of-Stay Prediction Using Machine Learning Algorithms-A Literature Review](https://billster45.github.io/ScienceCritAI/Hospital_stay_ML_review_summary_20250524_134148.html)
+**Why read this:** This paper is worth reading as it provides a comprehensive literature review on the application of machine learning algorithms for predicting hospital length of stay, a crucial aspect of healthcare management. The authors identify effective algorithms and discuss their performance metrics, dataset characteristics, and ethical considerations, making it a valuable resource for researchers and practitioners aiming to enhance patient care and hospital efficiency.
+
+**Date:** 2025-05-24
+**Journal:** Applied Sciences
+**Institution:** Coimbra Institute of Engineering-ISEC, Polytechnic University of Coimbra
+**Authors:** Guilherme Almeida, Fernanda Brito Correia, Ana Rosa Borges, Jorge Bernardino
+
+---
+
 ### [GPT-4 assistance for improvement of physician performance on patient care tasks: a randomized controlled trial](https://billster45.github.io/ScienceCritAI/GPT4_doctors_summary_20250206_202558.html)
-**Why read this:** This paper presents a randomized controlled trial demonstrating that GPT-4 assistance significantly enhances physician performance in management reasoning tasks compared to conventional resources. The findings indicate that while the use of LLMs improves decision-making accuracy, it also increases the time spent on each case, highlighting both the potential benefits and challenges of integrating AI tools in clinical practice.
+**Why read this:** This paper presents a randomized controlled trial demonstrating that GPT-4 assistance significantly enhances physician performance in management reasoning tasks compared to conventional resources. The findings suggest that while LLMs can improve decision-making in clinical practice, they also require more time per case, highlighting the need for careful integration of AI tools in healthcare settings.
 
 **Date:** 2025-02-06
 
@@ -1034,7 +1051,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Impact of Chronic Moderate Sleep Restriction on Resistance Training Adaptations](https://billster45.github.io/ScienceCritAI/sleep_weight_train_summary_20240918_165046.html)
-**Why read this:** This paper is worth reading as it explores the effects of chronic moderate sleep restriction on resistance training adaptations, revealing that even with reduced sleep, participants still achieved significant improvements in strength and body composition. The findings challenge the assumption that sleep deprivation negatively impacts training outcomes, providing valuable insights for individuals balancing sleep and fitness goals.
+**Why read this:** This paper is worth reading as it explores the effects of chronic moderate sleep restriction on resistance training adaptations, revealing that even with reduced sleep, individuals can still achieve significant improvements in strength and body composition. The findings challenge the assumption that sleep deprivation negatively impacts training outcomes, providing valuable insights for athletes and fitness enthusiasts regarding sleep management and performance.
 
 **Date:** 2024-09-18
 
@@ -1045,7 +1062,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 [↑ Back to top](#sciencecritai)
 
 ### [Pseudo-Mathematics and Financial Charlatanism: The Effects of Backtest Overfitting on Out-of-Sample Performance](https://billster45.github.io/ScienceCritAI/Backtest-overfitting_summary_20250621_082627.html)
-**Why read this:** This paper is worth reading as it addresses the critical issue of backtest overfitting in financial modeling, highlighting how investment strategies can appear successful due to random chance rather than true predictive power. The introduction of the Minimum Backtest Length (MinBTL) metric provides a valuable tool for researchers and practitioners to assess the reliability of their financial strategies, ultimately contributing to more robust and trustworthy financial modeling practices.
+**Why read this:** This paper is worth reading as it addresses the critical issue of backtest overfitting in financial modeling, highlighting how investment strategies can appear successful due to random chance rather than genuine predictive power. The introduction of the Minimum Backtest Length (MinBTL) metric provides a valuable tool for researchers and practitioners to assess the reliability of their financial models, ultimately contributing to more robust and trustworthy investment strategies.
 
 **Date:** 2025-06-21
 **Journal:** Notices of the AMS
@@ -1055,7 +1072,7 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [NotebookLM: An LLM with RAG for active learning and collaborative tutoring](https://billster45.github.io/ScienceCritAI/NotebookLM_Active_Learning_summary_20250429_183656.html)
-**Why read this:** This paper is worth reading as it explores the innovative use of Google's NotebookLM, enhanced with Retrieval-Augmented Generation (RAG), to create a collaborative AI tutor for physics education. By employing a Socratic approach, the study demonstrates how this AI can effectively guide students through complex problems, promoting active learning and critical thinking while minimizing inaccuracies in responses.
+**Why read this:** This paper is worth reading as it explores the innovative use of Google's NotebookLM, enhanced with Retrieval-Augmented Generation (RAG), to create an AI-driven collaborative tutor for physics education. The study highlights the effectiveness of a Socratic approach in fostering active learning and critical thinking among students, showcasing practical examples of how the AI can guide learners through complex physics problems.
 
 **Date:** 2025-04-29
 **Journal:** arXiv
@@ -1105,15 +1122,8 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 
 ---
 
-### [The Rise of Large Language Models in Scientific Writing: A Large-Scale Analysis](https://billster45.github.io/ScienceCritAI/LLM_science_writing_summary_20241007_173204.html)
-**Why read this:** This paper provides a comprehensive analysis of the increasing influence of Large Language Models (LLMs) on scientific writing, particularly following the release of ChatGPT. By examining nearly a million papers, it highlights a significant rise in LLM-modified content, especially in the field of Computer Science, raising important questions about the implications for scientific integrity and the future of academic writing.
-
-**Date:** 2024-10-07
-
----
-
 ### [A Meta-Review of Artificial Intelligence in Higher Education: Trends, Gaps, and Future Directions](https://billster45.github.io/ScienceCritAI/AI_in_education_summary_20240929_134429.html)
-**Why read this:** This meta-review provides a comprehensive overview of the current landscape of Artificial Intelligence in Higher Education, highlighting key trends and significant research gaps. It emphasizes the need for improved methodological rigor and ethical considerations in AIEd studies, making it a crucial read for educators and policymakers interested in the future of AI integration in educational settings.
+**Why read this:** This meta-review provides a comprehensive overview of the current landscape of Artificial Intelligence in Higher Education, highlighting key trends and significant gaps in the research. It emphasizes the need for more rigorous methodologies and ethical considerations, making it a crucial read for educators and policymakers interested in the future of AI applications in educational settings.
 
 **Date:** 2024-09-29
 
@@ -1127,13 +1137,13 @@ Learn how this project works on Medium: [From PDFs to Tweets: How tools like Sci
 ---
 
 ### [Paper Review: The Impact of Large Language Models on Scientific Writing: Evidence from a Large-Scale Analysis of PubMed Abstracts](https://billster45.github.io/ScienceCritAI/LLM_delve_20240812_144249.html)
-**Why read this:** This paper is worth reading as it provides a comprehensive analysis of the impact of Large Language Models (LLMs) on scientific writing, revealing that at least 10% of PubMed abstracts in 2024 were likely influenced by LLMs. The study's novel methodology highlights significant shifts in vocabulary usage, particularly an increase in stylistic words, suggesting a transformative effect of LLMs on the writing style within scientific literature.
+**Why read this:** This paper is worth reading as it provides a comprehensive analysis of the impact of Large Language Models (LLMs) on scientific writing, revealing significant changes in vocabulary usage in PubMed abstracts following the introduction of ChatGPT. The findings highlight a shift towards stylistic language in scientific communication, suggesting that LLMs are reshaping how research is presented, which could have profound implications for academic writing and publishing practices.
 
 **Date:** 2024-08-12
 
 ---
 
 
-*Last updated: 2025-08-24 09:59:26 UTC*
+*Last updated: 2025-08-27 18:21:54 UTC*
 
-*Total papers: 135*
+*Total papers: 136*
